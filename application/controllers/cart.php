@@ -286,4 +286,8 @@ class Cart extends CI_Controller {
 			return $this->cart_model->get_order_config();
 	}
     
+    function test(){
+	
+	}
+    
 }
