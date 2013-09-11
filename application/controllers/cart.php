@@ -275,6 +275,15 @@ class Cart extends CI_Controller {
 		
     }
 	
-
+	//@return array config
+	function set_order_config(){
+		$d = (object) $this->input->post();
+		if($d->key)	
+			return $this->cart_model->set_order_config( array($d->key=>$d->val));
+	}
+	
+	function getOrderConfig(){
+			return $this->cart_model->get_order_config();
+	}
     
 }
