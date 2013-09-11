@@ -1,0 +1,76 @@
+#reports_wrapper
+{
+	background: #EFEFEF;
+	padding: 20px;
+	position: relative;
+	
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	box-shadow: 0 0 5px #888;
+	-webkit-box-shadow: 0 0 5px #888;
+	-moz-box-shadow: 0 0 5px #888;
+}
+
+#reports_wrapper .item
+{
+	margin: 0px 0px 20px 0px;
+}
+
+#reports_wrapper .item:last-child
+{
+	margin: 0px;
+}
+
+.space_usage
+{
+	font-family: 'league_gothic';
+	font-size: 48px;
+	color: #333;
+	margin: 3px 0px 0px 3px;
+	text-transform: uppercase;
+}
+
+.space_usage span
+{
+	font-size: 35px;
+}
+
+.space_usage_label
+{
+	font-size: 12px;
+	margin: -5px 0px 5px 4px;
+}
+
+.remaining
+{
+	position: relative;
+	height: 75px;
+}
+
+.remaining .size
+{
+	position: absolute;
+	z-index: 200;
+	padding: 6px 10px 8px 0px;
+	top: 16px;
+	right: 20px;
+	left: 20px;
+	text-align: center;
+	color: #444444;
+	font-size: 30px;
+	font-family: 'league_gothic';
+}
+
+.remaining .percent
+{
+	background: url('../../images/bg_graph.png') repeat;
+	margin: 0px 0px 0px 0px;
+	height: 75px;
+}
+
+.remaining .percent .value
+{
+	background: #F9BC38;
+	height: 75px;
+}

@@ -1,0 +1,1 @@
+<img src="<?php echo $logo_path; ?>?<?php echo time(); ?>" />

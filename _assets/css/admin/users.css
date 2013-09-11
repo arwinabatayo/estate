@@ -1,0 +1,140 @@
+#users_wrapper
+{
+	background: #EFEFEF;
+	padding: 20px;
+	position: relative;
+	
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	box-shadow: 0 0 5px #888;
+	-webkit-box-shadow: 0 0 5px #888;
+	-moz-box-shadow: 0 0 5px #888;
+}
+
+#users_add_wrapper,
+#users_edit_wrapper
+{
+	background: #FFF;
+	position: relative;
+}
+
+.avatar_wrapper
+{
+	width: 150px;
+	height: 150px;
+	padding: 10px;
+	background: #EFEFEF;
+	border: 1px solid #CCC;
+	margin: 0px 20px 0px 0px;
+	float: left;
+	
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+}
+
+.avatar_wrapper img
+{
+	width: 150px;
+	height: 150px;
+	display: block;
+}
+
+.user_details_wrapper
+{
+	float: left;
+	width: 677px;
+}
+
+#real_upload
+{
+	display: none;
+	margin: 20px 0px 0px 0px;
+}
+
+#iframe_location
+{
+	background: #FF8;
+	margin: 0px 0px 5px 0px;
+	border: 0px;
+	font-family: arial;
+	width: 0px;
+	height: 0px;
+	visibility: visible;
+	overflow: none;
+	display: none; 
+}
+
+.edit_password_wrapper
+{
+	display: none;
+}
+
+.search_wrapper
+{
+	text-align: right;
+	float: right;
+	display: none;
+	margin: 0px 0px 10px 0px;
+}
+
+#account_name
+{
+	font-size: 58px;
+	margin: 0px 0px 10px 0px;
+	padding: 0px 0px 0px 0px;
+	width: 100%;
+	color: #000000;
+	font-family: league_gothic;
+	letter-spacing: .05em;
+	text-transform: uppercase;
+}
+
+#account_details,
+#account_details_2
+{
+	float: left; 
+}
+
+#account_details_2
+{
+	margin: 0px 0px 0px 20px;
+}
+
+#account_details .username,
+#account_details .member_since,
+#account_details .last_login,
+#account_details .last_login_ip,
+#account_details_2 .company,
+#account_details_2 .user_type,
+#account_details_2 .account_status
+{
+	margin: 0px 0px 6px 0px;
+}
+
+#account_details .username span,
+#account_details .member_since span,
+#account_details .last_login span,
+#account_details .last_login_ip span,
+#account_details_2 .company span,
+#account_details_2 .user_type span,
+#account_details_2 .account_status span
+{
+	font-weight: bold;
+	margin: 0px 5px 0px 0px;
+}
+
+#field_user_type_loading
+{
+	background: #FFFF99;
+	padding: 10px;
+	height: 11px;
+	width: 480px;
+	z-index: 1;
+	position: absolute;
+	top: 65px;
+	left: 197px;
+	text-align: center;
+	display: none;
+}

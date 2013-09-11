@@ -1,0 +1,119 @@
+#client_name
+{
+	font-size: 58px;
+	margin: 0px 0px 10px 0px;
+	padding: 0px 0px 0px 0px;
+	width: 100%;
+	color: #000000;
+	font-family: league_gothic;
+	letter-spacing: .05em;
+	text-transform: uppercase;
+}
+
+#client_details,
+#client_details_2
+{
+	float: left; 
+}
+
+#client_details_2
+{
+	margin: 0px 0px 0px 20px;
+}
+
+
+#client_details .short_name,
+#client_details .contact_name,
+#client_details .email,
+#client_details .client_status,
+#client_details_2 .agent_name,
+#client_details_2 .agent_email,
+#client_details_2 .fee
+{
+	margin: 0px 0px 6px 0px;
+}
+
+#client_details .short_name span,
+#client_details .contact_name span,
+#client_details .email span,
+#client_details .client_status span,
+#client_details_2 .agent_name span,
+#client_details_2 .agent_email span,
+#client_details_2 .fee span
+{
+	font-weight: bold;
+	margin: 0px 5px 0px 0px;
+}
+
+.logo_wrapper
+{
+	padding: 10px;
+	background: #FCFCFC;
+	border: 1px solid #CCC;
+	margin: 0px 0px 10px 0px;
+	
+	box-shadow: 2px 2px 2px #DDD;
+	-webkit-box-shadow: 2px 2px 2px #DDD;
+	-moz-box-shadow: 2px 2px 2px #DDD;
+}
+
+.logo_wrapper img
+{
+	display: block;
+	max-width: 270px;
+}
+
+#real_upload
+{
+	display: none;
+	margin: 20px 0px 0px 0px;
+}
+
+#iframe_location
+{
+	background: #FF8;
+	margin: 0px 0px 5px 0px;
+	border: 0px;
+	font-family: arial;
+	width: 0px;
+	height: 0px;
+	overflow: none;
+	display: none;
+}
+
+.label_agency
+{
+	background: #F9BC38;
+	padding: 2px 6px;
+	margin: 2px 0px 0px 10px !important;
+	font-size: 8px !important; 
+	text-transform: uppercase;
+	display: block;
+	float: right;
+	color: #FFFFFF !important;
+	
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+}
+
+.label_agency_2
+{
+	background: #F9BC38;
+	padding: 2px 6px;
+	margin: 6px 0px 0px 10px !important;
+	font-size: 8px !important; 
+	text-transform: uppercase;
+	display: block;
+	float: right;
+	color: #FFFFFF !important;
+	
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+}
+
+#form_add_client
+{
+	width: 677px;
+}

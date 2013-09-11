@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<site>
+  <site_settings group="site_settings" sub_group="site_settings">
+    <title>Verizon Wireless</title>
+    <description>From the nation's most innovative leader, discover what's new in mobile technology. Find the latest it smartphones, tablets, and mobile phones right here!</description>
+    <keywords>Verizon Wireless, Verizon Phones, Verizon Mobile, Verizon</keywords>
+    <data_version readonly="1">2</data_version>
+  </site_settings>
+  
+  <site_skin_settings group="site_skin" sub_group="items">
+	<company_logo readonly="1" asset="1" dimensions="NNx99">verizon_logo.png</company_logo>
+	<body_color readonly="1" colorpicker="1">#FFFFFF</body_color>
+	<divider_color readonly="1" colorpicker="1">#B00000</divider_color>
+	<footer_background_color readonly="1" colorpicker="1">#B00000</footer_background_color>
+	<slideshow_bullet required="1" asset="1" dimensions="16x14">red-bullet.png</slideshow_bullet>
+	<slideshow_bullet_hover required="1" asset="1" dimensions="16x14">gray-bullet.png</slideshow_bullet_hover>
+	<slideshow_bullet_active required="1" asset="1" dimensions="16x14">white-bullet.png</slideshow_bullet_active>
+	<footer_text>LTE is a trademark of ETSI. DROID is a trademark of Lucasfilm LTE. And its related companies. Used under license.</footer_text>
+	<footer_text_color readonly="1" colorpicker="1">#333333</footer_text_color>
+	<loader_image required="1" readonly="1" asset="1" dimensions="64x64">loader.gif</loader_image>
+	<bottom_lifestyle_slideshow_cross_wrapper required="1" readonly="1" asset="1" dimensions="482x318">bottom-lifestyle-slideshow-cross.png</bottom_lifestyle_slideshow_cross_wrapper>
+	<product_facebook_icon required="1" readonly="1" asset="1" dimensions="16x16">product-social-fb.jpg</product_facebook_icon>
+	<product_twitter_icon required="1" readonly="1" asset="1" dimensions="16x16">product-social-twt.jpg</product_twitter_icon>
+	<product_pinterest_icon required="1" readonly="1" asset="1" dimensions="16x16">product-social-pnt.jpg</product_pinterest_icon>
+	<product_google_plus_icon required="1" readonly="1" asset="1" dimensions="16x16">product-social-gp.jpg</product_google_plus_icon>
+	<product_email_icon required="1" readonly="1" asset="1" dimensions="16x16">product-social-email.jpg</product_email_icon>
+	<order_now_button required="1" readonly="1" asset="1" dimensions="104x32">order-now-btn.jpg</order_now_button>
+	<full_stars required="1" readonly="1" asset="1" dimensions="55x10">full-stars.png</full_stars>
+	<empty_stars required="1" readonly="1" asset="1" dimensions="55x10">empty-stars.png</empty_stars>
+	<arrow_bottom required="1" readonly="1" asset="1" dimensions="38x16">arrow-bottom.jpg</arrow_bottom>
+	<arrow_top required="1" readonly="1" asset="1" dimensions="38x16">arrow-top.jpg</arrow_top>
+	<arrow_left required="1" readonly="1" asset="1" dimensions="16x39">arrow-left.jpg</arrow_left>
+	<arrow_right required="1" readonly="1" asset="1" dimensions="16x39">arrow-right.jpg</arrow_right>
+	<product_close_button required="1" readonly="1" asset="1" dimensions="25x25">product-close-btn.jpg</product_close_button>
+	<default_product_image required="1" readonly="1" asset="1" dimensions="205x270">default_product_image.jpg</default_product_image>
+	<twitter_feed_background_color readonly="1" colorpicker="1">#E6E6E6</twitter_feed_background_color>
+	<product_border_color readonly="1" colorpicker="1">#BFBFBF</product_border_color>
+	<product_background_color readonly="1" colorpicker="1">#FFFFFF</product_background_color>
+	<product_background_color_hover readonly="1" colorpicker="1">#E6E6E6</product_background_color_hover>
+	<product_background_color_active readonly="1" colorpicker="1">#E6E6E6</product_background_color_active>
+	<product_name_color readonly="1" colorpicker="1">#333333</product_name_color>
+	<category_name_color readonly="1" colorpicker="1">#333333</category_name_color>
+	<product_details_border_color readonly="1" colorpicker="1">#BFBFBF</product_details_border_color>
+	<product_details_background_color readonly="1" colorpicker="1">#FFFFFF</product_details_background_color>
+	<product_details_name_color readonly="1" colorpicker="1">#333333</product_details_name_color>
+	<product_details_description_color readonly="1" colorpicker="1">#333333</product_details_description_color>
+	<product_details_price_color readonly="1" colorpicker="1">#333333</product_details_price_color>
+	<product_details_price_dollar_sign_color readonly="1" colorpicker="1">#333333</product_details_price_dollar_sign_color>
+	<product_details_price_whole_number_color readonly="1" colorpicker="1">#333333</product_details_price_whole_number_color>
+	<product_details_price_cents_color readonly="1" colorpicker="1">#333333</product_details_price_cents_color>
+	<product_details_footer_notes_color readonly="1" colorpicker="1">#333333</product_details_footer_notes_color>
+    <product_details_email_to_button_background_color readonly="1" colorpicker="1">#B00000</product_details_email_to_button_background_color>
+    <main_slideshow_speed required="1">4000</main_slideshow_speed>
+    <bottom_slideshow_lifestyle_speed required="1">4000</bottom_slideshow_lifestyle_speed>
+  </site_skin_settings>
+  
+  <general_app_settings group="general_app_settings" sub_group="items">
+	<fb_app_id required="1">592129107474701</fb_app_id>
+	<fb_url required="1" link="1">https://www.facebook.com/vredcheck/app_592129107474701</fb_url>
+	<base_url required="1" link="1">https://s82168.gridserver.com/vzwfbtab/desktop/</base_url>
+	<base_mobile_url required="1" link="1">https://s82168.gridserver.com/vzwfbtab/mobile/</base_mobile_url>
+	<admin_email required="1">do-not-reply@verizonwireless.com</admin_email>
+	<bitly_login required="1">mervinthedeveloper</bitly_login>
+	<bitly_api_key required="1">R_6bd91321b91f022a86dc476071ac971c</bitly_api_key>
+  </general_app_settings>
+  
+  <open_graph_settings group="open_graph_settings" sub_group="items">
+	<title>Verizon Wireless</title>
+	<description>From the nation's most innovative leader, discover what's new in mobile technology. Find the latest it smartphones, tablets, and mobile phones right here!</description>
+	<image readonly="1" asset="1" dimensions="140x140">verizon_share_image.jpg</image>
+  </open_graph_settings>
+  
+  <facebook_settings group="facebook_settings" sub_group="items">
+	<link link="1">https://www.facebook.com/vredcheck/app_592129107474701</link>
+	<picture readonly="1" asset="1" dimensions="140x140">verizon_share_image.jpg</picture>
+	<name>Verizon Rules Facebook</name>
+	<caption>Join the Air. Join Verizon Facebook</caption>
+	<description>Send a strong signal to your friends. Discover mobile technology at its finest. The world clearly hears you with Verizon Wireless.</description>
+  </facebook_settings>
+  
+  <twitter_settings group="twitter_settings" sub_group="items">
+	<twitter_url link="1">https://twitter.com/VerizonWireless</twitter_url>
+	<screen_name>VerizonWireless</screen_name>
+	<widget_id>344249781218078720</widget_id>
+	<link_color readonly="1" colorpicker="1">#B00000</link_color>
+	<border_color readonly="1" colorpicker="1">#C5C5C5</border_color>
+	<twitter_text>Let your voice be clearly heard. Follow us @VerizonWireless and drop us a line at Verizon Rules Facebook.</twitter_text>
+  </twitter_settings>
+  
+  <google_plus_settings group="google_plus_settings" sub_group="items">
+  </google_plus_settings>
+  
+  <pinterest_settings group="pinterest_settings" sub_group="items">
+	<link link="1">https://www.facebook.com/vredcheck/app_592129107474701</link>
+	<picture readonly="1" asset="1" dimensions="140x140">deals_main_image.jpg</picture>
+	<description>Welcome new mobile innovations; experience clarity like never before. When we say "Join the Air," we mean mobile experience superiority. Discover and choose Verizon Wireless.</description>
+  </pinterest_settings>
+  
+  <main_slideshow_images group="main_slideshow" sub_group="slides" dynamic="1" name="main_slide" readonly="1" asset="1" dimensions="810x289">
+    <main_slide_1 readonly="1" asset="1" dimensions="810x289">main_slider_img_1.jpg</main_slide_1>
+	<!--
+    <main_slide_2 readonly="1" asset="1" dimensions="810x289">main_slider_img_2.jpg</main_slide_2>
+    <main_slide_3 readonly="1" asset="1" dimensions="810x289">main_slider_img_3.jpg</main_slide_3>
+	-->
+  </main_slideshow_images>
+  
+  <main_slideshow_links group="main_slideshow" sub_group="slides" dynamic="1" name="main_link" link="1">
+	<!--
+    <main_link_1 link="1">https://www.verizon.com/category/1</main_link_1>
+    <main_link_2 link="1">https://www.verizon.com/category/2</main_link_2>
+    <main_link_3 link="1">https://www.verizon.com/category/3</main_link_3>
+	-->
+  </main_slideshow_links>
+  
+  <category_names group="categories" sub_group="items">
+    <category_name_1 required="1">droid does</category_name_1>
+    <category_name_2 required="1">smartphones</category_name_2>
+    <category_name_3 required="1">tablets</category_name_3>
+    <category_name_4 required="1">accessories</category_name_4>
+    <category_name_5 required="1">deals</category_name_5>
+  </category_names>
+  
+  <category_main_images group="categories" sub_group="items" readonly="1" asset="1" dimensions="318x318">
+    <category_main_image_1 required="1" readonly="1" asset="1" dimensions="318x318">droids_main_image.jpg</category_main_image_1>
+    <category_main_image_2 required="1" readonly="1" asset="1" dimensions="318x318">smartphones_main_image.jpg</category_main_image_2>
+    <category_main_image_3 required="1" readonly="1" asset="1" dimensions="318x318">tablets_main_image.jpg</category_main_image_3>
+    <category_main_image_4 required="1" readonly="1" asset="1" dimensions="318x318">accessories_main_image.jpg</category_main_image_4>
+    <category_main_image_5 required="1" readonly="1" asset="1" dimensions="318x318">deals_main_image.jpg</category_main_image_5>
+  </category_main_images>
+  
+  <category_images group="categories" sub_group="items" readonly="1" asset="1" dimensions="154x154">
+    <category_image_1 required="1" readonly="1" asset="1" dimensions="154x154">droids_image.jpg</category_image_1>
+    <category_image_2 required="1" readonly="1" asset="1" dimensions="154x154">smartphones_image.jpg</category_image_2>
+    <category_image_3 required="1" readonly="1" asset="1" dimensions="154x154">tablets_image.jpg</category_image_3>
+    <category_image_4 required="1" readonly="1" asset="1" dimensions="154x154">accessories_image.jpg</category_image_4>
+    <category_image_5 required="1" readonly="1" asset="1" dimensions="154x154">deals_image.jpg</category_image_5>
+  </category_images>
+  
+  <category_image_hovers group="categories" sub_group="items" readonly="1" asset="1" dimensions="154x154">
+    <category_image_hover_1 required="1" readonly="1" asset="1" dimensions="154x154">droids_image_hover.jpg</category_image_hover_1>
+    <category_image_hover_2 required="1" readonly="1" asset="1" dimensions="154x154">smartphones_image_hover.jpg</category_image_hover_2>
+    <category_image_hover_3 required="1" readonly="1" asset="1" dimensions="154x154">tablets_image_hover.jpg</category_image_hover_3>
+    <category_image_hover_4 required="1" readonly="1" asset="1" dimensions="154x154">accessories_image_hover.jpg</category_image_hover_4>
+    <category_image_hover_5 required="1" readonly="1" asset="1" dimensions="154x154">deals_image_hover.jpg</category_image_hover_5>
+  </category_image_hovers>
+  
+  <small_social_media_images group="social_media" sub_group="items" readonly="1" asset="1" dimensions="154x154">
+	<small_social_media_image_1 readonly="1" asset="1" dimensions="154x154">small_facebook.jpg</small_social_media_image_1>
+	<small_social_media_image_2 readonly="1" asset="1" dimensions="154x154">small_twitter.jpg</small_social_media_image_2>
+	<small_social_media_image_3 readonly="1" asset="1" dimensions="154x154">small_google_plus.jpg</small_social_media_image_3>
+	<small_social_media_image_4 readonly="1" asset="1" dimensions="154x154">small_pinterest.jpg</small_social_media_image_4>
+  </small_social_media_images>
+  
+  <small_social_media_image_hovers group="social_media" sub_group="items" readonly="1" asset="1" dimensions="72x72">
+	<small_social_media_image_hover_1 readonly="1" asset="1" dimensions="72x72">small_facebook_hover.jpg</small_social_media_image_hover_1>
+	<small_social_media_image_hover_2 readonly="1" asset="1" dimensions="72x72">small_twitter_hover.jpg</small_social_media_image_hover_2>
+	<small_social_media_image_hover_3 readonly="1" asset="1" dimensions="72x72">small_google_plus_hover.jpg</small_social_media_image_hover_3>
+	<small_social_media_image_hover_4 readonly="1" asset="1" dimensions="72x72">small_pinterest_hover.jpg</small_social_media_image_hover_4>
+  </small_social_media_image_hovers>
+  
+  <bottom_lifestyle_images group="bottom_lifestyle_images" sub_group="items" readonly="1" asset="1" dimensions="482x318">
+    <bottom_lifestyle_image_1 readonly="1" asset="1" dimensions="482x318">bottom_lifestyle_image.jpg</bottom_lifestyle_image_1>
+  </bottom_lifestyle_images>
+  
+  <category_products group="category_products" sub_group="items" name="category_product">
+    <category_product_1>6972,6973,6977,5993,5892,5947,5985,6691,5845</category_product_1>
+    <category_product_2>6891,5918,5949,6055,5963,6718,5951,5954,6373,5943,5634,5971,5773,5782,6752,6092,6392,6791,6551,6785,5690,5718</category_product_2>
+    <category_product_3>6151,5942,6514,5848,5951,6137,5624,6059</category_product_3>
+    <category_product_4>6397</category_product_4>
+    <category_product_5>5892,5947,6397,6718,5949,5963,6373,5943,5954,5782,6392,6715,5715,5725,6719,5847</category_product_5>
+  </category_products>
+</site>

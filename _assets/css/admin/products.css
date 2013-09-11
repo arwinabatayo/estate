@@ -1,0 +1,37 @@
+.product_image {
+	text-align: center;
+	margin: 0 auto;
+	width: 210px;
+	background: #cccccc;
+}
+
+#product-image-top-overlay{
+	position: absolute;
+	background: black;
+	width: 210px;
+	height: 135px;
+	z-index: 3;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+	filter: alpha(opacity=0);
+	-moz-opacity: 0;
+	-khtml-opacity: 0;
+	opacity: 0;
+}
+
+#product_image_wrapper{
+	height: 135px;
+	width: 210px;
+	text-align: center;
+	margin: 0 auto;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+#change_product_image{
+	cursor: pointer;
+	padding-bottom: 3px;
+}
+
+#upload_result{
+	padding-bottom: 3px;
+}

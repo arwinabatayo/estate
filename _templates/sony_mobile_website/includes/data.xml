@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<site>
+  <site_settings>
+    <title>Sony:make.believe</title>
+    <description/>
+    <keywords/>
+    <data_version readonly="1">1</data_version>
+    <site_logo required="1" readonly="1" asset="1" dimensions="600x085">sony_logo3.png</site_logo>
+    <site_favicon icon="1" readonly="1" asset="1" dimensions="032x032">favicon.png</site_favicon>
+	<site_name customhtml="1"><![CDATA[Sony Network Entertainment International LLC]]></site_name>
+	<site_about customhtml="1"><![CDATA[<p><br>6080 Center Drive, 10th Floor <br>Los Angeles, CA 90045<br>United States of America</p><p><br>On the web: http://www.sonyentertainmentnetwork.com/support<br>By Phone: 855-999-SONY (7669)<br>Sony Computer Entertainment America LLC<br>Consumer Services Department <br>P.O. Box 5888<br>San Mateo, California, 94402-0888<br>United States of America</p><p><br>In the United States and Canada<br>On the web: http://www.us.playstation.com/support/ask<br>By Phone: 877-971-7669</p><p><br>In Latin America<br>On the web: http://esupport.sony.com/LA/perl/support-contacts.pl<br>If you have questions regarding Closed Captions, please contact:<br>Fara Weiner<br>Senior Counsel, Business and Legal Affairs</p><p><br>Tel.: 1-855-999-SONY <br>Fax: 1-301-981-1600 <br>6080 Center Drive, 10th Floor, <br>Los Angeles, California 90045 <br>support@sonyentertainmentnetwork.com</p>		]]></site_about>
+  </site_settings>
+  
+  <body>
+    <background_color readonly="1" colorpicker="1">#000000</background_color>
+    <background_image readonly="1" asset="1" dimensions="NNNxNNN"/>
+	<slider_background_color readonly="1" colorpicker="1">#FFFFFF</slider_background_color>
+	<main_image_background_color readonly="1" colorpicker="1">#FFFFFF</main_image_background_color>
+	<content_background_color readonly="1" colorpicker="1">#FFFFFF</content_background_color>
+	<text_color readonly="1" colorpicker="1">#FFFFFF</text_color>
+  </body>
+  
+  <label>
+  <sub_label customhtml="1"><![CDATA[make.believe is more than just a slogan]]></sub_label>
+  <content customhtml="1"><![CDATA[<p>It's an invitation. And a promise. We promise you that anything you can imagine, you can make real - this is what make.believe means.</p>
+				<p>How do we do it? By using our imagination to unlock the power of your imagination, inventing the most immersive experiences so you can use our technology, our thinking and our spirit of creativity to dream, play, create and innovate. From the music you love to the movies that move you, the games that thrill you to the technology that amazes you. We bring it all together for your ultimate experience.</p>]]></content>
+  </label>
+   
+ 
+  <slider_images dynamic="1" name="image" readonly="1" asset="1" dimensions="230x120">
+    <image_1 readonly="1" asset="1" dimensions="230x120">main_slide_1.png</image_1>
+    <image_2 readonly="1" asset="1" dimensions="230x120">main_slide_2.png</image_2>
+	<image_3 readonly="1" asset="1" dimensions="230x120">main_slide_3.png</image_3>
+  </slider_images>
+  
+  <slider_thumb_images dynamic="1" name="image" readonly="1" asset="1" dimensions="230x120">
+    <image_1 readonly="1" asset="1" dimensions="230x120">thumb_1.png</image_1>
+    <image_2 readonly="1" asset="1" dimensions="230x120">thumb_2.png</image_2>
+	<image_3 readonly="1" asset="1" dimensions="230x120">thumb_3.png</image_3>
+  </slider_thumb_images>
+	
+  <slider_link dynamic="1" name="link" >
+    <link_1 readonly="1" asset="1" dimensions="230x120">#1</link_1>
+    <link_2 readonly="1" asset="1" dimensions="230x120">#2</link_2>
+	<link_3 readonly="1" asset="1" dimensions="230x120">#3</link_3>
+  </slider_link>
+ 
+  <main_image dynamic="1" name="image" readonly="1" asset="1" dimensions="230x120">
+    <image readonly="1" asset="1" dimensions="230x120">large.jpg</image>
+  </main_image>
+  
+  <catalog_image dynamic="1" name="image" readonly="1" asset="1" dimensions="230x120">
+    <image readonly="1" asset="1" dimensions="230x120">Sony_Alpha.jpg</image>
+  </catalog_image>
+  
+  <gallery_images dynamic="1" name="image" readonly="1" asset="1" dimensions="230x120">
+    <image_1 readonly="1" asset="1" dimensions="230x120">g10.jpg</image_1>
+    <image_2 readonly="1" asset="1" dimensions="230x120">large.jpg</image_2>
+	<image_3 readonly="1" asset="1" dimensions="230x120">g11.jpg</image_3>
+  </gallery_images>
+  
+  <featured_images dynamic="1" name="image" readonly="1" asset="1" dimensions="230x120">
+    <image_1 readonly="1" asset="1" dimensions="230x120">featured_6.png</image_1>
+    <image_2 readonly="1" asset="1" dimensions="230x120">featured_2.png</image_2>
+  </featured_images>
+  
+  <featured_link dynamic="1" name="link" >
+    <link_1 readonly="1" asset="1" dimensions="230x120">https://www.facebook.com/</link_1>
+    <link_2 readonly="1" asset="1" dimensions="230x120">https://www.google.com.ph/</link_2>
+  </featured_link>
+  
+  <featured_details dynamic="1" name="title" readonly="1" customhtml="1">
+	<details_1 customhtml="1"><![CDATA[<p><span style="font-size: medium;">VAIO T Series 11/13/14</span></p><p>11.6 (29.5 cms), 13.3 (33.8 cms), 14(35.56cms) Ultrabook&trade; with full featured connectivity</p>]]></details_1>
+	<details_2 customhtml="1"><![CDATA[<p><span style="font-size: medium;">Extreme dimensions</span></p><p>VAIO Z Series is extremely light and easy to carry on the outside, as well as packed with performance on the inside. Its high-resolution Full HD display with anti-reflective glossy finish provides an exquisite image with vivid colours covering nearly all of the Adobe RGB colour gamut.</p>]]></details_2>
+  </featured_details>
+  
+  <nav_menu>
+	<menu_1>Home</menu_1>
+    <menu_2>Featured</menu_2>
+	<menu_3>Catalog</menu_3>
+	<menu_4>Gallery</menu_4>
+	<menu_5>About Us</menu_5>
+  </nav_menu>
+  
+ 
+   <social_link >
+    <facebook>https://www.facebook.com</facebook>
+	<twitter>https://www.twitter.com</twitter>
+	<pinterest>https://www.pinterest.com</pinterest>
+	<googleplus>https://www.google.com</googleplus>
+   </social_link>
+
+</site>

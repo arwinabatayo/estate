@@ -1,0 +1,134 @@
+#account_wrapper
+{
+	background: #EFEFEF;
+	padding: 20px;
+
+	box-shadow: 0 0 5px #888;
+	-webkit-box-shadow: 0 0 5px #888;
+	-moz-box-shadow: 0 0 5px #888;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+
+.avatar_wrapper
+{
+	width: 150px;
+	height: 150px;
+	padding: 10px;
+	background: #FCFCFC;
+	border: 1px solid #CCC;
+	margin: 0px 20px 0px 0px;
+	float: left;
+	
+	box-shadow: 2px 2px 2px #DDD;
+	-webkit-box-shadow: 2px 2px 2px #DDD;
+	-moz-box-shadow: 2px 2px 2px #DDD;
+}
+
+.avatar_wrapper img
+{
+	width: 150px;
+	height: 150px;
+	display: block;
+}
+
+.permission_list
+{
+	list-style-type: square;
+	padding: 0px 0px 0px 15px;
+	margin: 0px;
+}
+
+.permission_list li
+{
+	padding: 0px;
+	margin: 0px 0px 4px 0px;
+}
+
+.permission_list li:last-child
+{
+	margin: 0px;
+}
+
+.permission_list li input
+{
+	float: left;
+	margin: 0px 8px 0px 0px;
+}
+
+#real_upload
+{
+	display: none;
+	margin: 20px 0px 0px 0px;
+}
+
+#iframe_location
+{
+	background: #FF8;
+	margin: 0px 0px 5px 0px;
+	border: 0px;
+	font-family: arial;
+	width: 0px;
+	height: 0px;
+	overflow: none;
+	display: none;
+}
+
+.edit_password_wrapper
+{
+	display: none;
+	margin: 10px 0px 0px 0px;
+}
+
+.edit_password_wrapper .item:first-child
+{
+	border-top: none;
+	margin: 10px 0px 0px 0px;
+}
+
+#account_name
+{
+	font-size: 58px;
+	margin: 0px 0px 10px 0px;
+	padding: 0px 0px 0px 0px;
+	width: 100%;
+	color: #000000;
+	font-family: league_gothic;
+	letter-spacing: .05em;
+	text-transform: uppercase;
+}
+
+#account_details,
+#account_details_2
+{
+	float: left; 
+}
+
+#account_details_2
+{
+	margin: 0px 0px 0px 20px;
+}
+
+#account_details .username,
+#account_details .member_since,
+#account_details .last_login,
+#account_details .last_login_ip,
+#account_details_2 .company,
+#account_details_2 .user_type,
+#account_details_2 .account_status
+{
+	margin: 0px 0px 6px 0px;
+}
+
+#account_details .username span,
+#account_details .member_since span,
+#account_details .last_login span,
+#account_details .last_login_ip span,
+#account_details_2 .company span,
+#account_details_2 .user_type span,
+#account_details_2 .account_status span
+{
+	font-weight: bold;
+	margin: 0px 5px 0px 0px;
+}

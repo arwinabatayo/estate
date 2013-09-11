@@ -1,0 +1,97 @@
+.h_overflowhidden  { overflow: hidden !important; }
+.h_overflowauto  { overflow: auto !important; }
+.h_overflowscroll  { overflow: scroll !important; }
+
+.h_clearboth { clear: both !important; }
+.h_clearleft { clear: left !important; }
+.h_clearright { clear: right !important; }
+
+.h_height33 { height: 33px !important; }
+
+.h_displaynone { display: none !important; }
+.h_displayinline { display: inline !important; }
+.h_displayblock { display: block !important; }
+
+.h_margin0 { margin: 0px !important; }
+.h_margintop3 { margin-top: 3px !important; }
+.h_margintop5 { margin-top: 5px !important; }
+.h_margintop10 { margin-top: 10px !important; }
+.h_margintop20 { margin-top: 20px !important; }
+.h_marginright8 { margin-right: 8px !important; }
+.h_marginright10 { margin-right: 10px !important; }
+.h_marginright20 { margin-right: 20px !important; }
+.h_marginbottom0 { margin-bottom: 0px !important; }
+.h_marginbottom5 { margin-bottom: 5px !important; }
+.h_marginbottom10 { margin-bottom: 10px !important; }
+.h_marginleft10 { margin-left: 10px !important; }
+
+.h_padding0 { padding: 0px !important; }
+.h_padding5 { padding: 5px !important; }
+.h_padding10 { padding: 10px !important; }
+.h_padding12 { padding: 12px !important; }
+.h_padding15 { padding: 15px !important; }
+.h_padding20 { padding: 20px !important; }
+.h_padding30 { padding: 30px !important; }
+.h_paddingtop5{ padding-top: 5px !important; }
+.h_paddingtop10 { padding-top: 10px !important; }
+.h_paddingtop20 { padding-top: 20px !important; }
+.h_paddingtop30 { padding-top: 30px !important; }
+.h_paddingtop45 { padding-top: 45px !important; }
+.h_paddingtop50 { padding-top: 50px !important; }
+.h_paddingtop55 { padding-top: 55px !important; }
+.h_paddingright10 { padding-right: 10px !important; }
+.h_paddingright15 { padding-right: 15px !important; }
+.h_paddingbottom15 { padding-bottom: 15px !important; }
+.h_paddingbottom20 { padding-bottom: 20px !important; }
+.h_paddingleft10 { padding-left: 10px !important; }
+.h_paddingleft15 { padding-left: 15px !important; }
+.h_paddingleft35 { padding-left: 35px !important; }
+.h_paddingleft40 { padding-left: 40px !important; }
+
+.h_fontlucida { font-family: "Lucida Console", Monaco, monospace !important; }
+.h_fontcolorlight { color: #FFFFFF !important; }
+.h_fontcolorsemilight { color: #AAAAAA !important; }
+
+.h_width10percent { width: 10% !important; }
+.h_width15percent { width: 15% !important; }
+.h_width25percent { width: 25% !important; }
+.h_width30percent { width: 30% !important; }
+.h_width35percent { width: 35% !important; }
+.h_width40percent { width: 40% !important; }
+.h_width45percent { width: 45% !important; }
+.h_width50percent { width: 50% !important; }
+.h_width55percent { width: 55% !important; }
+.h_width60percent { width: 60% !important; }
+.h_width65percent { width: 65% !important; }
+.h_width70percent { width: 70% !important; }
+.h_width75percent { width: 75% !important; }
+.h_width85percent { width: 85% !important; }
+.h_width90percent { width: 90% !important; }
+.h_width100percent { width: 100% !important; }
+.h_minheight800 { min-height: 800px !important; }
+.h_width50px { width: 50px !important; }
+.h_width80px { width: 80px !important; }
+.h_width100px { width: 100px !important; }
+.h_widthauto { width: auto !important; }
+
+.h_floatleft { float: left !important; }
+.h_floatright { float: right !important; }
+.h_floatnone { float: none !important; }
+
+.h_backgroundlight { background: #EFEFEF !important; }
+.h_backgrounddark { background: #EEEEEE !important; }
+.h_backgrounddisk { background: #FFFF99 !important; }
+.h_backgroundhover { background: #FFFF99 !important; }
+
+.h_textuppercase { text-transform: uppercase !important; }
+.h_textalignright { text-align: right !important; }
+.h_textalignleft { text-align: left !important; }
+.h_textaligncenter { text-align: center !important; }
+
+.h_liststylenone { list-style-type: none !important; }
+
+.h_bordernone { border: none !important; }
+
+.h_positionabsolute { position: absolute !important; }
+.h_positionfixed { position: fixed !important; }
+.h_positionrelative { position: relative !important; }

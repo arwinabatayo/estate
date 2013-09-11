@@ -1,0 +1,127 @@
+#template_item_wrapper
+{
+	 padding: 30px 0px 0px 30px;
+}
+
+.template_item_wrapper
+{
+	float: left;
+	margin: 0px 30px 30px 0px;
+	width: 410px;
+	padding: 20px;
+	border: 1px solid #CCCCCC;
+	background: #EFEFEF;
+	
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	box-shadow: 0 0 5px #EFEFEF;
+	-webkit-box-shadow: 0 0 5px #EFEFEF;
+	-moz-box-shadow: 0 0 5px #EFEFEF;
+}
+
+.template_item
+{
+	/* background: url("../../images/bg_tpl_screen.png") no-repeat; */
+}
+
+.template_item .screenshot
+{
+	width: 408px;
+	height: 198px;
+	background: #CCCCCC;
+	border: 1px solid #999999;
+	overflow: hidden;
+	position: relative;
+}
+
+.template_item .screenshot .template_description
+{	
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	display: none;
+	background: url("../../images/bg_trans_dark.png") repeat;
+	font-size: 14px;
+}
+
+.template_item .screenshot .template_description table
+{
+	height: 100%;
+}
+
+.template_item .screenshot .template_description table tr td
+{
+	background: none;
+	height: 100%;
+	border: 0px;
+	color: #FFFFFF;
+}
+
+.template_item .screenshot img
+{
+	display: block;
+	width: 100%;
+}
+
+.template_item .details
+{
+	margin: 10px 0px 0px 0px;
+	overflow: hidden;
+}
+
+.template_label
+{
+	padding: 0px 0px 0px 0px;
+	font-size: 25px;
+	color: #000000;
+	font-family: league_gothic;
+	letter-spacing: .05em;
+	text-transform: uppercase;
+	margin: 0px 0px 5px 0px;
+	height: 44px;
+	position: relative;
+}
+
+.template_code
+{
+	font-family: arial;
+	letter-spacing: 0em;
+	font-size: 10px;
+}
+
+.template_icon
+{
+	float: right;
+	margin: 14px 0px 0px 6px;
+}
+
+.template_icon img
+{
+	display: block;
+	height: 25px;
+}
+
+.template_type
+{
+	font-size: 12px;
+	text-transform: uppercase;
+	float: left;
+	font-family: arial;
+	letter-spacing: 0em;
+	margin: 22px 0px 0px 5px;
+	display: none;
+}
+
+.template_item .details .create
+{
+	margin: 0px 0px 0px 0px;
+}
+
+.template_item .details .actions
+{
+	margin: 9px 0px 0px 2px;
+	float: left;
+}

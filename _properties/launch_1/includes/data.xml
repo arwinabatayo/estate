@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<site>
+  <site_settings group="site_settings" sub_group="site_settings">
+    <title>Globe Estate</title>
+    <description>Globe Estate - Description</description>
+    <keywords>Globe Estate - Keywords</keywords>
+    <property_id readonly="1">1</property_id>
+    <data_version readonly="1">1</data_version>
+    <data_date_added readonly="1" datepicker="1" format="yy-mm-dd"></data_date_added>
+  </site_settings>
+  <step_1 group="step_1" sub_group="items">
+    <enabled choice="1" required="1">Yes</enabled>
+    <step_name required="1">Step 1</step_name>
+    <background_color readonly="1" colorpicker="1">#B00000</background_color>
+  </step_1>
+  <step_2 group="step_2" sub_group="items">
+    <enabled choice="1" required="1">Yes</enabled>
+    <step_name required="1">Step 2</step_name>
+    <background_color readonly="1" colorpicker="1">#B00000</background_color>
+  </step_2>
+  <step_3 group="step_3" sub_group="items">
+    <enabled choice="1" required="1">Yes</enabled>
+    <step_name required="1">Step 3</step_name>
+    <background_color readonly="1" colorpicker="1">#B00000</background_color>
+  </step_3>
+  <step_4 group="step_4" sub_group="items">
+    <enabled choice="1" required="1">Yes</enabled>
+    <step_name required="1">Step 4</step_name>
+    <background_color readonly="1" colorpicker="1">#B00000</background_color>
+  </step_4>
+  <step_5 group="step_5" sub_group="items">
+    <enabled choice="1" required="1">Yes</enabled>
+    <step_name required="1">Step 5</step_name>
+    <background_color readonly="1" colorpicker="1">#B00000</background_color>
+  </step_5>
+  <sku_config group="sku_config" sub_group="items">
+    <enabled choice="1" required="1">Yes</enabled>
+    <step_name required="1">SKU Config</step_name>
+  </sku_config>
+</site>

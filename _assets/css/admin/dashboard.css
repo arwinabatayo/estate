@@ -1,0 +1,188 @@
+#dashboard_wrapper
+{
+	background: #EFEFEF;
+	padding: 20px 20px 1px 20px;
+	
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	box-shadow: 0 0 5px #888;
+	-webkit-box-shadow: 0 0 5px #888;
+	-moz-box-shadow: 0 0 5px #888;
+}
+
+.dashboard_item_grp
+{
+	height: 70px;
+	padding: 10px;
+	float: left;
+	background: #FFFFFF;
+	margin: 0px 10px 10px 0px;
+	position: relative;
+	
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+}
+
+.dashboard_item_icon
+{
+	display: block;
+	float: left;
+	margin: 5px 10px 10px 0px;
+	height: 64px;
+	width: 64px;
+}
+
+.dashboard_item_content
+{
+	width: 130px;
+	float: left;
+}
+
+.dashboard_item_label
+{
+	color: #000000;
+	font-weight: bold;
+	text-transform: uppercase;
+	padding: 5px 0px;
+	margin: 0px 0px 0px 0px;
+}
+
+.dashboard_item_desc
+{
+	color: #808080;
+}
+
+.dashboard_item_actions
+{
+	padding: 0px;
+	list-style-type: square;
+	margin: 0px 0px 0px 16px;
+}
+
+.dashboard_item_actions li
+{
+
+}
+
+#datacount
+{
+	height: 238px;
+}
+
+#diskspace
+{
+	float: left;
+	width: 50%;
+}
+
+#diskspace .inner
+{
+	margin: 0px 0px 0px 10px;
+}
+
+#log
+{
+	margin: 20px 0px 0px 0px;
+}
+
+
+#templates_wrapper
+{
+	width: 50%;
+	float: left;
+}
+
+#templates_wrapper_inner
+{
+	margin: 20px 10px 0px 0px;
+}
+
+#properties_wrapper
+{
+	width: 50%;
+	float: left;
+}
+
+#properties_wrapper_inner
+{
+	margin: 20px 0px 0px 10px;
+}
+
+.dashboard_item_full
+{
+	margin: 0px 0px 20px 0px;
+}
+
+.dashboard_item_left
+{
+	margin: 0px 0px 20px 0px;
+	width: 50%;
+	float: left;
+}
+
+.dashboard_item_left .inner
+{
+	margin: 0px 10px 0px 0px;
+}
+
+.dashboard_item_right
+{
+	margin: 0px 0px 20px 0px;
+	width: 50%;
+	float: left;
+}
+
+.dashboard_item_right .inner
+{
+	margin: 0px 0px 0px 10px;
+}
+
+.space_usage
+{
+	font-family: 'league_gothic';
+	font-size: 48px;
+	color: #333;
+	margin: 3px 0px 0px 3px;
+	text-transform: uppercase;
+}
+
+.space_usage_label
+{
+	font-size: 12px;
+	margin: -5px 0px 5px 4px;
+}
+
+.remaining
+{
+	position: relative;
+	height: 75px;
+}
+
+.remaining .size
+{
+	position: absolute;
+	z-index: 200;
+	padding: 6px 10px 8px 0px;
+	top: 16px;
+	right: 20px;
+	left: 20px;
+	text-align: center;
+	color: #444444;
+	font-size: 30px;
+	font-family: 'league_gothic';
+}
+
+.remaining .percent
+{
+	background: url('../../images/bg_graph.png') repeat;
+	margin: 0px 0px 0px 0px;
+	height: 75px;
+}
+
+.remaining .percent .value
+{
+	background: #F9BC38;
+	height: 75px;
+}

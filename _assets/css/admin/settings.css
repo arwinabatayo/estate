@@ -1,0 +1,48 @@
+#settings_logo_wrapper
+{
+	float: left;
+}
+
+#settings_logo_wrapper .label
+{
+	margin: 0px 0px 10px 0px;
+}
+
+#settings_logo
+{
+	padding: 10px;
+	background: #FCFCFC;
+	border: 1px solid #CCC;
+	margin: 0px 20px 0px 0px;
+	max-width: 400px;
+	background: url('../../images/bg_graph.png') repeat;
+	
+	box-shadow: 2px 2px 2px #DDD;
+	-webkit-box-shadow: 2px 2px 2px #DDD;
+	-moz-box-shadow: 2px 2px 2px #DDD;
+}
+
+#settings_logo img
+{
+	display: block;
+	width: 100%;
+}
+
+#real_upload
+{
+	display: none;
+	margin: 20px 0px 0px 0px;
+}
+
+#iframe_location
+{
+	background: #FF8;
+	margin: 0px 0px 5px 0px;
+	border: 0px;
+	font-family: arial;
+	width: 0px;
+	height: 0px;
+	visibility: visible;
+	overflow: none;
+	display: none; 
+}
