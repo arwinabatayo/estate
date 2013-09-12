@@ -1,4 +1,4 @@
-    
+
     <footer>
 		<div id="footer-box" class="row">
 			<br />
@@ -365,6 +365,10 @@
 		    //click continue button in get additional line
 		    $("#additional-line-continue").click(function(){
 		    	$( '#dialog_enter_mobile' ).dialog( "open" );
+		    	//$( '#dialog_enter_mobile' ).dialog( "close" );
+
+		    	$( "#plan-order-page" ).accordion( "option", "active", 1 );
+		        $( "#siderbar-panel" ).accordion( "option", "active", 2 );
 		    }); 
 		    
 		    //PLAN TYPE
