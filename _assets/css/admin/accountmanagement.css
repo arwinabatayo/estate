@@ -1,0 +1,13 @@
+.g_inner_content
+{
+	border-collapse: collapse;
+	width: 100%;
+	border-spacing: 0;
+	border-right: 1px solid #BBB;
+	border-left: 1px solid #BBB;
+	border-bottom: 1px solid #BBB;
+	position: relative;
+	box-shadow: 0 0 5px #DDD;
+	-webkit-box-shadow: 0 0 5px #DDD;
+	-moz-box-shadow: 0 0 5px #DDD;
+}

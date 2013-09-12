@@ -9,6 +9,12 @@
 			<?php } ?>
 		<?php } ?>
 		<?php } ?>
+		
+		<?php if( isset($ecommerce_user_types) && count($ecommerce_user_types) > 0 ){ ?>
+			<?php foreach( $ecommerce_user_types as $ecommercer_user_type => $eut ){ ?>
+				<option value="<?php echo $eut['user_type_id']?>"><?php echo $eut['title']; ?></option>	
+			<?php } ?>
+		<?php } ?>
 	</select>
 </div>
 <div class="h_clearboth"></div>

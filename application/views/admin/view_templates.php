@@ -63,12 +63,11 @@
 									<input type="hidden" name="template_id" value="<?php echo $t['template_id']; ?>" />
 									<input type="submit" class="g_inputbutton h_margin0 h_floatright" value="Use template" />
 								</form>
-								<!--
-								<?php if ($t['template_type_id'] != 4) { ?>
+								
+								<?php if ($t['template_type_id'] != 4 && $t['template_type_id'] != 6) { ?>
 								<input 	type="button" class="g_inputbutton h_margin0 h_marginright10" 
 										onclick="window.open('<?php echo base_url(); ?>preview/t<?php echo $t['template_type_id']; ?>/<?php echo $t['folder']; ?>');" value="Preview" />
 								<?php } ?>
-								-->
 								<div class="h_clearboth"></div>
 							</div>
 						</div>

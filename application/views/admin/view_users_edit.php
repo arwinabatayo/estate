@@ -135,7 +135,12 @@
 									<?php } ?>
 								<?php } ?>
 							<?php } ?>
-							<?php } ?>		
+							<?php } ?>	
+							<?php if( $ecommerce_user_types && count($ecommerce_user_types) > 0 ){ ?>
+								<?php foreach ($ecommerce_user_types as $ecommerce_user_type => $eut) { ?>
+									<option value="<?php echo $eut['user_type_id']; ?>" <?php echo ($user_details['user_type_id'] == $eut['user_type_id']) ? "selected='selected'" : ""; ?>><?php echo $eut['title']; ?></option>
+								<?php } ?>
+							<?php } ?>
 						</select>
 					</div>
 					<div class="h_clearboth"></div>

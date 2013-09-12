@@ -341,7 +341,7 @@
 													<div class="img_holder">
 														<img 	class="tobe_edited" 
 																src="<?php echo $this->config->item('base_property_url') . $property_details['folder_name'] . "/assets/" . $value['value']; ?>"
-																onError="$(this).attr('src', '<?php echo $this->config->item('base_asset_url') . "images/no_filefound.png"; ?>')" />
+																onError="$(this).attr('src', '<?php echo base_url() . $this->config->item('base_asset_url') . "images/no_filefound.png"; ?>')" />
 													</div>
 												<?php } else { ?>
 													<div class="img_holder">

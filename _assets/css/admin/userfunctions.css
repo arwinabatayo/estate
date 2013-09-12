@@ -1,0 +1,15 @@
+.g_table th.no-bg
+{
+	background: none;
+}
+
+.g_table th.uf_eur_header
+{
+	text-align: center;
+}
+
+.g_table td.uf_eur
+{
+	text-align: center;
+	vertical-align: middle;
+}

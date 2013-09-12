@@ -8,7 +8,7 @@
 		<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 		<meta name='description' content='' />
 		<meta name="author" content="">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		
 		<script type="text/javascript" language="javascript" src="<?php echo base_url(); ?>_assets/js/jquery.js"></script>
 		<script type="text/javascript" language="javascript" src="<?php echo base_url(); ?>_assets/js/jquery.jplayer.min.js"></script>

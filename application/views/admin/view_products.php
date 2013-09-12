@@ -32,21 +32,21 @@
 		<table class="g_table zebra">
 		
 			<tr>
-				<th>Configuration Label</th>
+				<th>Product name</th>
 				<th>Status</th>
 				<th>Actions</th>
 			</tr>
 			
 			<?php foreach ($products as $products => $p) { ?>
 			<tr>
-				<td><?php echo $p['configuration_label']; ?></td>
+				<td><?php echo $p['product_name']; ?></td>
 				<td width="50" align="center">
-					<?php if( $p['configuration_status'] != 2 ){ echo 'Disabled'; }else{ echo 'Enabled'; } ; ?>
+					<?php if( $p['product_status_flag'] != 2 ){ echo 'Disabled'; }else{ echo 'Enabled'; } ; ?>
 				</td>
 				
 				<!-- actions -->
 				<td width="53" align="right">
-					<a 	href="<?php echo base_url(); ?>admin/configurations/edit/<?php echo $p['product_id']; ?>"
+					<a 	href="<?php echo base_url(); ?>admin/products/edit/<?php echo $p['product_id']; ?>"
 						class="g_tableicon"
 						title="Edit product">
 						<img src="<?php echo base_url(); ?>_assets/images/global_icon_edit.png" />
@@ -82,21 +82,20 @@ $(function(){
 	zebraTable();
 });
 
-$(".btn_delete_configuration").click(function(){
-	var configuration_id = $(this).attr('data-configuration-id');
-	var property_id = $(this).attr('data-property-id');
+$(".btn_delete_product").click(function(){
+	var product_id = $(this).attr('data-product-id');
 	var current_page = $(this).attr('data-current-page');
 	
-	if (confirm("Are you sure you want to delete this configuration?")) {
+	if (confirm("Are you sure you want to delete this product?")) {
 		displayNotification("message", "Working...")
 		$.ajax({
-			url: "<?php echo base_url(); ?>admin/configurations/process_delete",
+			url: "<?php echo base_url(); ?>admin/products/process_delete",
 			type: "POST",
-			data: "property_id="+property_id+"&configuration_id="+configuration_id+"&current_page="+current_page+"&"+$("#form_pagination").serialize(),
+			data: "product_id="+product_id+"&current_page="+current_page+"&"+$("#form_pagination").serialize(),
 			success: function(response, textStatus, jqXHR){
 				setTimeout(function () {
 					$("#middle_wrapper").html(response);
-					displayNotification("success", "Configuration successfully deleted.");
+					displayNotification("success", "Product successfully deleted.");
 				}, 500);
 			},
 			error: function(jqXHR, textStatus, errorThrown){

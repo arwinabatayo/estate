@@ -208,6 +208,7 @@ img
 #g_side #logo_wrapper
 {
 	overflow: hidden;
+	display: none;
 }
 
 #g_side #logo_wrapper a

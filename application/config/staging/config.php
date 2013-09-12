@@ -42,16 +42,26 @@ $config['time_reference'] = 'local';
 $config['rewrite_short_tags'] = FALSE;
 $config['proxy_ips'] = '';
 
-$config['base_path'] = $_SERVER['DOCUMENT_ROOT'] . '/globe-estate/';
-$config['base_user_path'] = $_SERVER['DOCUMENT_ROOT']."/globe-estate/_users/";
-$config['base_property_path'] = $_SERVER['DOCUMENT_ROOT']."/globe-estate/_properties/";
-$config['base_template_path'] = $_SERVER['DOCUMENT_ROOT']."/globe-estate/_templates/";
-$config['base_asset_path'] = $_SERVER['DOCUMENT_ROOT']."/globe-estate/_assets/";
-$config['base_client_path'] = $_SERVER['DOCUMENT_ROOT']."/globe-estate/_clients/";
-$config['base_product_path'] = $_SERVER['DOCUMENT_ROOT']."/globe-estate/_products/";
-$config['base_property_url'] = "/globe-estate/_properties/";
-$config['base_asset_url'] = "/globe-estate/_assets/";
-$config['base_product_url'] = "/globe-estate/_products/";
+$config['base_path'] = $_SERVER['DOCUMENT_ROOT'] . '/staging-estate/demo/';
+$config['base_user_path'] = $_SERVER['DOCUMENT_ROOT']."/staging-estate/demo/_users/";
+$config['base_property_path'] = $_SERVER['DOCUMENT_ROOT']."/staging-estate/demo/_properties/";
+$config['base_template_path'] = $_SERVER['DOCUMENT_ROOT']."/staging-estate/demo/_templates/";
+$config['base_asset_path'] = $_SERVER['DOCUMENT_ROOT']."/staging-estate/demo/_assets/";
+$config['base_client_path'] = $_SERVER['DOCUMENT_ROOT']."/staging-estate/demo/_clients/";
+$config['base_product_path'] = $_SERVER['DOCUMENT_ROOT']."/staging-estate/demo/_products/";
+$config['base_mainplantype_path'] = $_SERVER['DOCUMENT_ROOT']."/staging-estate/demo/_mainplantypes/";
+$config['base_mainplan_path'] = $_SERVER['DOCUMENT_ROOT']."/staging-estate/demo/_mainplans/";
+$config['base_accessory_path'] = $_SERVER['DOCUMENT_ROOT']."/staging-estate/demo/_accessories/";
+$config['base_addonscategory_path'] = $_SERVER['DOCUMENT_ROOT']."/staging-estate/demo/_addonscategories/";
+$config['base_addon_path'] = $_SERVER['DOCUMENT_ROOT']."/staging-estate/demo/_addons/";
+$config['base_property_url'] = "_properties/";
+$config['base_asset_url'] = "_assets/";
+$config['base_product_url'] = "_products/";
+$config['base_mainplantype_url'] = "_mainplantypes/";
+$config['base_mainplan_url'] = "_mainplans/";
+$config['base_accessory_url'] = "_accessories/";
+$config['base_addonscategory_url'] = "_addonscategories/";
+$config['base_addon_url'] = "_addons/";
 
 //GLOBE ESTATE CONFIG
 $config['globe_estate_template_path'] = "globe-estate/index"; //default template view

@@ -1,0 +1,27 @@
+.mainplan_image {
+	text-align: center;
+	margin: 0 auto;
+	width: 210px;
+	height: 155px;
+	background: #cccccc;
+}
+
+.img_mainplan_image {
+	text-align: center;
+	margin: 0 auto;
+	max-width: 210px;
+	max-height: 135px;
+}
+
+#mainplan_image_wrapper{
+	height: 135px;
+	width: 210px;
+	text-align: center;
+	margin: 0 auto;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+#upload_result{
+	padding-bottom: 3px;
+}

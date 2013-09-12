@@ -20,6 +20,7 @@ function validate_form(form_id)
 	var error_non_zero = false;
 	var error_is_number = false;
 	var error_is_whole_number = false;
+	var error_is_missing_image = false;
 	var message = "";
 	var grp = "";
 	
@@ -43,7 +44,7 @@ function validate_form(form_id)
 		}
 		
 		if ($(this).attr('data-non-zero') == 1) {
-			if ((this_value == '0' ) || (this_value == 0 )) {
+			if ((this_value == '0' ) || (this_value == 0 ) && this_value != '') {
 				error_non_zero = true;
 				$(this).css("border", "1px solid #990000");
 			}
@@ -52,14 +53,16 @@ function validate_form(form_id)
 		if ($(this).attr('data-is-number') == 1) { 
 			if (!isNaN(parseFloat(this_value)) && isFinite(this_value)) {
 			}else{
-				error_is_whole_number = true;
-				$(this).css("border", "1px solid #990000");
+				if(this_value != ''){
+					error_is_number = true;
+					$(this).css("border", "1px solid #990000");
+				}
 			}
 		}
 		
 		if ($(this).attr('data-is-whole-number') == 1) {
-			if (!isUnsignedInteger(this_value)) {
-				error_is_number = true;
+			if (!isUnsignedInteger(this_value) && this_value != '') {
+				error_is_whole_number = true;
 				$(this).css("border", "1px solid #990000");
 			}
 		}
@@ -155,14 +158,31 @@ function validate_form(form_id)
 	});
 	
 	// check all selects
-	$("#"+form_id+" textarea").each(function(){
+	$("#"+form_id+" select").each(function(){
 		$(this).css("border", "1px solid #CCCCCC");
 	
 		var this_value = $(this).val();
 		if ($(this).attr('data-required') == 1) { 
-			if (this_value == "") {
+			if (this_value == "0") {
 				error_missing_fields = true;
 				$(this).css("border", "1px solid #990000");
+				if (form_id == "form_edit_property") { propertyErrorIndicator($(this).attr('data-tab')); }
+			}
+		}
+	});
+	
+	// check all selects
+	$("#"+form_id+" input[type='hidden']").each(function(){
+		var this_value = $(this).val();
+		
+		if ($(this).attr('data-image-required') == 1) {
+			var wrapper = $(this).attr('data-image-wrapper');
+			
+			if ( this_value == '' ) {
+				error_is_missing_image = true;
+				$("#" + wrapper).css("border", "1px solid #990000");
+			}else{
+				$(this).css("border", "1px solid #CCCCCC");
 			}
 		}
 	});
@@ -180,9 +200,10 @@ function validate_form(form_id)
 	if (error_non_zero) { message = message + " Data shouldn't have '0' as a value. "; } 
 	if (error_is_number) { message = message + " Data should be a number. "; } 
 	if (error_is_whole_number) { message = message + " Data should be a whole number. "; } 
+	if (error_is_missing_image) { message = message + " Image is required. "; } 
 	
 	// display error messages
-	if (error_missing_fields || error_email_format || error_link_format || error_hex_format || error_alpha_numeric || error_duplicate || error_data_match || error_minlength || error_matchpassword) { 
+	if (error_missing_fields || error_email_format || error_link_format || error_hex_format || error_alpha_numeric || error_duplicate || error_data_match || error_minlength || error_matchpassword || error_is_missing_image) { 
 		proceed = false;
 		if (form_id == "form_login") {
 			$("#login_message").html(message);

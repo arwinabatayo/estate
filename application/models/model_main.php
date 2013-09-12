@@ -128,10 +128,20 @@ class Model_main extends CI_Model
 	function getUserRoles()
 	{
 		$user_type = $this->session->userdata('user_type');
+		$templates_allowed = $this->session->userdata('templates_allowed');
 		
 		$query = $this->db->query("	SELECT * 
 									FROM user_type
 									WHERE user_type_id <= $user_type
+									ORDER BY user_type_id ASC");
+		return $query->result_array();
+	}
+	
+	function getEcommerceUserRoles(){
+		$query = $this->db->query("	SELECT * 
+									FROM user_type
+									WHERE user_type_id >= 11 
+									AND user_type_id <= 16
 									ORDER BY user_type_id ASC");
 		return $query->result_array();
 	}
