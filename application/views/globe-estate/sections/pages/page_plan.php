@@ -9,7 +9,7 @@
 								<div id="acc-order-type" class="pricing-tables textcenter">
 					
 									<!-- PRICING TABLE -->
-									<span >
+									<div class="option-wrapper">
 										<div class="plan over">
 											<div class="header">
 												<div class="price-wrapper">
@@ -22,11 +22,11 @@
 												<li><button class="btn-large ui-button-success ">Select Order Type!</button></li>
 											</ul>
 										</div>	
-									</span>
+									</div>
 									<!-- END OF PRICING TABLE -->
 									
 									<!-- PRICING TABLE -->
-									<div >						
+									<div class="option-wrapper">						
 										<div class="plan over best-value">
 											<div class="header">
 												<div class="price-wrapper">
@@ -43,7 +43,7 @@
 									<!-- END OF PRICING TABLE -->
 					
 									<!-- PRICING TABLE -->
-									<div >	
+									<div class="option-wrapper">	
 										<div class="plan over">
 											<div class="header">
 												<div class="price-wrapper">
@@ -58,6 +58,11 @@
 										</div>
 									</div>
 									<!-- END OF PRICING TABLE -->
+
+
+									<!-- START OF ADDITIONAL LINE PAGE -->
+									<?php include('page_get_additional_line.php'); ?>
+									<!-- END OF ADDITIONAL LINE PAGE -->
 					
 								</div>
 								<!--END OF ORDER-TYPE TABLE -->
