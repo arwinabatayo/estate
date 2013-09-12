@@ -63,7 +63,7 @@
 			<ul class="nav pull-right">
 				<li class="consultation"><a href="javascript: void(0);">Plan Consultation</a></li>
 				<li class="calculator"><a href="javascript: void(0);">Reset Calculator</a></li>
-				<li class="info" style="margin-right:0"><a href="javascript: void(0);">Status</a></li>
+				<li class="info" style="margin-right:0"><a id="open_application_status" href="javascript: void(0);">Status</a></li>
 			</ul>
 		</div>
 	</div>

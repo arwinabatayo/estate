@@ -54,7 +54,7 @@ switch (ENVIRONMENT)
 {
 	case 'development':
 		$db['default']['username'] = 'root';
-		$db['default']['password'] = 'jdam';
+		$db['default']['password'] = 'root';
 		$db['default']['database'] = 'globe_estate';
 		break;
 	case 'staging':

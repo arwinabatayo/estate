@@ -34,11 +34,17 @@
 		<div>
 			<?php 
 			switch ($sess_user['user_type']) {
-				case ROLE_SUPER_ADMIN : 	echo "Super Administrator privileges"; break;
-				case ROLE_AGENCY_ADMIN : 	echo "Agency Administrator privileges"; break;
-				case ROLE_COMPANY_ADMIN : 	echo "Administrator privileges"; break;
-				case ROLE_COMPANY_USER : 	echo "Limited User privileges"; break;
-				case ROLE_AGENT : 			echo "Agent privileges"; break;
+				case ROLE_ONLINE_SALES : 						echo "Online Sales privileges"; break;
+				case ROLE_GLOBE_BUSINESS_SALES_SUPPORT_TEAM : 	echo "Globe Business Sales Support Team privileges"; break;
+				case ROLE_PLATINUM_QUEUE : 						echo "Platinum Queue privileges"; break;
+				case ROLE_ACCOUNT_MANAGER : 					echo "Account Manager privileges"; break;
+				case ROLE_RELATIONSHIP_MANAGER : 				echo "Relationship Manager privileges"; break;
+				case ROLE_AGENT_ACCESS : 						echo "Agen Access privileges"; break;
+				case ROLE_SUPER_ADMIN : 						echo "Super Administrator privileges"; break;
+				case ROLE_AGENCY_ADMIN : 						echo "Agency Administrator privileges"; break;
+				case ROLE_COMPANY_ADMIN : 						echo "Administrator privileges"; break;
+				case ROLE_COMPANY_USER : 						echo "Limited User privileges"; break;
+				case ROLE_AGENT : 								echo "Agent privileges"; break;
 			}
 			?>
 		</div>
@@ -50,15 +56,18 @@
 	</div>
 	
 	<div id="menu">
-		<a href="<?php echo base_url(); ?>">Globe Estate<img src="<?php echo base_url(); ?>_assets/images/menu/home.png" title="Sitemee Home" /></a>
-		<a class="<?php echo ($page == 'dashboard') ? "active" : ""; ?>" href="<?php echo base_url(); ?>admin/dashboard">Dashboard<img src="<?php echo base_url(); ?>_assets/images/menu/dashboard.png" title="Dashboard" /></a>
-		<?php if ($sess_user['user_type'] >= ROLE_AGENCY_ADMIN) { ?><a class="<?php echo ($page == 'clients') ? "active" : ""; ?>" href="<?php echo base_url(); ?>admin/clients">Clients<img src="<?php echo base_url(); ?>_assets/images/menu/clients.png" title="Clients" /></a><?php } ?>
-		<?php if ($sess_user['templates_access']) { ?><a class="<?php echo ($page == 'templates') ? "active" : ""; ?>" 	href="<?php echo base_url(); ?>admin/templates">Templates<img src="<?php echo base_url(); ?>_assets/images/menu/templates.png" title="Templates" /></a><?php } ?>
-		<a class="<?php echo ($page == 'properties' || $page == 'blogs') ? "active" : ""; ?>"	href="<?php echo base_url(); ?>admin/properties">Properties	<img src="<?php echo base_url(); ?>_assets/images/menu/properties.png" title="Properties" /></a>
-		<a class="<?php echo ($page == 'users') ? "active" : ""; ?>" href="<?php echo base_url(); ?>admin/users">Users<img src="<?php echo base_url(); ?>_assets/images/menu/users.png" title="Users" /></a>
-		<a class="<?php echo ($page == 'reports') ? "active" : ""; ?>" href="<?php echo base_url(); ?>admin/reports">Reports<img src="<?php echo base_url(); ?>_assets/images/menu/reports.png" title="Reports" /></a>
+		<a href="<?php echo base_url(); ?>" target="_blank">Globe Estate<img src="<?php echo base_url(); ?>_assets/images/menu/home.png" title="Globe Home" /></a>
+		<?php if ($sess_user['user_type'] <= ROLE_SUPER_ADMIN) { ?><a class="<?php echo ($page == 'dashboard') ? "active" : ""; ?>" href="<?php echo base_url(); ?>admin/dashboard">Dashboard<img src="<?php echo base_url(); ?>_assets/images/menu/dashboard.png" title="Dashboard" /></a><?php } ?>
+		<?php if ($sess_user['user_type'] >= ROLE_AGENCY_ADMIN && $sess_user['user_type'] <= ROLE_SUPER_ADMIN) { ?><a class="<?php echo ($page == 'clients') ? "active" : ""; ?>" href="<?php echo base_url(); ?>admin/clients">Clients<img src="<?php echo base_url(); ?>_assets/images/menu/clients.png" title="Clients" /></a><?php } ?>
+		<?php if ($sess_user['templates_access'] && $sess_user['user_type'] <= ROLE_SUPER_ADMIN) { ?><a class="<?php echo ($page == 'templates') ? "active" : ""; ?>" 	href="<?php echo base_url(); ?>admin/templates">Templates<img src="<?php echo base_url(); ?>_assets/images/menu/templates.png" title="Templates" /></a><?php } ?>
+		<?php if ($sess_user['user_type'] <= ROLE_SUPER_ADMIN) { ?><a class="<?php echo ($page == 'properties' || $page == 'blogs') ? "active" : ""; ?>"	href="<?php echo base_url(); ?>admin/properties">Properties	<img src="<?php echo base_url(); ?>_assets/images/menu/properties.png" title="Properties" /></a><?php } ?>
+		<?php if (in_array(6, $this->session->userdata('templates_allowed')) && $this->session->userdata('user_type')  == ROLE_SUPER_ADMIN ) { ?><a class="<?php echo ($page == 'ecommerce' || $page == 'userfunctions' || $page == 'accessories' || $page == 'addons' || $page == 'addonscategories' || $page == 'mainplans' || $page == 'mainplantypes' || $page == 'products') ? "active" : ""; ?>" 	href="<?php echo base_url(); ?>admin/ecommerce">E-Commerce<img src="<?php echo base_url(); ?>_assets/images/menu/properties.png" title="E-Commerce" /></a><?php } ?>
+		<?php if (in_array(6, $this->session->userdata('templates_allowed')) && $this->session->userdata('user_type')  > ROLE_SUPER_ADMIN ) { ?><a class="<?php echo ($page == 'accountmanagement') ? "active" : ""; ?>" 	href="<?php echo base_url(); ?>admin/accountmanagement">Account Management<img src="<?php echo base_url(); ?>_assets/images/menu/properties.png" title="Account management" /></a><?php } ?>
+		<?php if (in_array(6, $this->session->userdata('templates_allowed')) && $this->session->userdata('user_type')  > ROLE_SUPER_ADMIN ) { ?><a class="<?php echo ($page == 'ordermanagement') ? "active" : ""; ?>" 	href="<?php echo base_url(); ?>admin/ordermanagement">Order Management<img src="<?php echo base_url(); ?>_assets/images/menu/properties.png" title="Order management" /></a><?php } ?>
+		<?php if ($sess_user['user_type'] <= ROLE_SUPER_ADMIN) { ?><a class="<?php echo ($page == 'users') ? "active" : ""; ?>" href="<?php echo base_url(); ?>admin/users">Users<img src="<?php echo base_url(); ?>_assets/images/menu/users.png" title="Users" /></a><?php } ?>
+		<?php if ($sess_user['user_type'] <= ROLE_SUPER_ADMIN) { ?><a class="<?php echo ($page == 'reports') ? "active" : ""; ?>" href="<?php echo base_url(); ?>admin/reports">Reports<img src="<?php echo base_url(); ?>_assets/images/menu/reports.png" title="Reports" /></a><?php } ?>
 		<?php /* <a class="<?php echo ($page == 'account') ? "active" : ""; ?>" href="<?php echo base_url(); ?>admin/account">My Account<img src="<?php echo base_url(); ?>_assets/images/menu/account.png" title="My Account" /></a> */ ?>
-		<?php if ($sess_user['user_type'] >= ROLE_AGENCY_ADMIN) { ?><a class="<?php echo ($page == 'settings') ? "active" : ""; ?>" href="<?php echo base_url(); ?>admin/settings">Settings<img src="<?php echo base_url(); ?>_assets/images/menu/settings.png" title="Settings" /></a><?php } ?>
+		<?php if ($sess_user['user_type'] >= ROLE_AGENCY_ADMIN && $sess_user['user_type'] <= ROLE_SUPER_ADMIN) { ?><a class="<?php echo ($page == 'settings') ? "active" : ""; ?>" href="<?php echo base_url(); ?>admin/settings">Settings<img src="<?php echo base_url(); ?>_assets/images/menu/settings.png" title="Settings" /></a><?php } ?>
 		<a class="" id="sidetoggle" href="javascript:void(0);">Hide Sidebar<img src="<?php echo base_url(); ?>_assets/images/menu/sidebar_hide.png" title="Toggle Sidebar" /></a>
 		<?php /* <a class="<?php echo ($page == 'logout') ? "active" : ""; ?>" href="<?php echo base_url(); ?>logout">Logout	<img src="<?php echo base_url(); ?>_assets/images/menu/logout.png" title="Logout" /></a> */ ?>
 	</div>

@@ -1,7 +1,5 @@
 <?php 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-					error_reporting(1);
-					ini_set('display_errors',1);
 
 class Products extends MY_Controller 
 {
@@ -9,6 +7,19 @@ class Products extends MY_Controller
 	{
 		parent::__construct();
 		if (!$this->session->userdata['logged_in']) { redirect(site_url('admin/logout')); } // logged in?
+		
+		if( $this->session->userdata('user_type') && $this->session->userdata('user_type') < 10 ){ 
+			// is non-ecommerce users
+			// dont allow access
+			redirect(site_url('admin/dashboard')); 
+		}elseif( $this->session->userdata('user_type') == 10 ){
+			// is superadmin
+			// allow access
+		}else{
+			// is ecommerce users
+			// dont allow access
+			redirect(site_url('admin/accountmanagement')); 
+		}
 	}
 	
 	public function index()
@@ -47,7 +58,7 @@ class Products extends MY_Controller
 								'filter' => $this->input->post('filter'),
 								'labels' => $this->getAlphabet(),
 								'filter_arr' => $filter_arr);
-		$_pagination = array(	'page' => 'configurations',
+		$_pagination = array(	'page' => 'products',
 								'filter_arr' => $filter_arr,
 								'item_count' => $product_total_count,
 								'pagination_limit' => $pagination_limit,
@@ -68,15 +79,170 @@ class Products extends MY_Controller
 	
 	public function add()
 	{
+		$this->load->model('model_properties');
+		
 		// load response
 		$_data['sess_user'] = $this->session->userdata;
 		$_data['page'] = "products";
+		$_data['properties'] = $this->model_properties->getPropertiesByUserId($this->session->userdata('user_id'), "properties.last_edit", "desc", 0, 100);
 		$_data['content'] = $this->load->view('admin/view_products_add', $_data, TRUE);
 		$this->load->view('admin/view_main_back', $_data);
 		return;
 	}
 	
-	public function upload_product_image(){
+	public function process_add()
+	{
+		$this->load->model('model_products');
+		
+		$data									= array();
+		$data['property_id'] 					= $this->cleanStringForDB($this->input->post('property'));
+		$data['product_name'] 					= $this->cleanStringForDB($this->input->post('name'));
+		$data['product_description'] 			= $this->cleanStringForDB($this->input->post('description'));
+		$data['product_size']					= $this->cleanStringForDB($this->input->post('size'));
+		$data['product_color'] 					= $this->cleanStringForDB($this->input->post('color_name'));
+		$data['product_data_capacity']			= $this->cleanStringForDB($this->input->post('data_capacity'));
+		$data['product_network_connectivity']	= $this->cleanStringForDB($this->input->post('network_connectivity'));
+		$data['product_image']					= $this->cleanStringForDB($this->input->post('product-image-name'));
+		$data['product_amount']					= $this->cleanStringForDB($this->input->post('amount'));
+		$data['product_discount']				= $this->cleanStringForDB($this->input->post('discount'));
+		$data['product_peso_value']				= $this->cleanStringForDB($this->input->post('peso_value'));
+		$data['product_date_added']				= $this->cleanStringForDB($this->input->post('date_added'));
+		$data['product_quantity']				= $this->cleanStringForDB($this->input->post('quantity'));
+		if( !$this->input->post('status') 
+			|| $this->input->post('status') == '' 
+			|| $this->input->post('status') == '0' 
+			|| $this->input->post('status') == 0 )
+		{ 
+			$data['product_status_flag'] 		= 1;
+		}else{
+			$data['product_status_flag'] 		= $this->cleanStringForDB($this->input->post('status'));
+		}
+		
+		//move image file
+		$image_file = trim($this->input->post('product-image-name'));
+		
+		if( file_exists( $this->config->item('base_product_path') . '_temp/' . $image_file ) ){
+			@copy($this->config->item('base_product_path') . '_temp/' . $image_file, $this->config->item('base_product_path') . $image_file);
+		
+			//delete image file from _temp folder
+			@unlink($this->config->item('base_product_path') . '_temp/' . $image_file);
+		}
+		
+		//add product
+		$this->model_products->addProduct($data);
+		
+		// log changes
+		$product_name = trim($this->input->post('name'));
+		$log = "Added product " . $product_name;
+		$timestamp = date("Y-m-d H:i:s");
+		$this->model_main->addLog($log, "Add product", $timestamp);
+		
+		$user_type = $this->session->userdata('user_type');	
+		
+		$filter_arr = array();
+		if ($this->input->post('filter')) {
+			$filter_arr['letter'] = $this->input->post('letter');
+		}
+	
+		// retrieve products
+		$pagination_limit = 5;
+		$current_page = 1;
+		$property_id = null;
+		$limit = ($current_page * $pagination_limit) - $pagination_limit;
+		$product_arr = $this->model_products->getProducts(	$property_id, 
+															$user_type, 
+															"estate_product.product_name", 
+															"asc", 
+															$limit,
+															$pagination_limit,
+															$filter_arr);
+		$product_total_count = $product_arr['total_count'];
+		unset($product_arr['total_count']);
+		
+		// get list of items count
+		$item_count = array();
+		$item_count['products'] == $product_total_count;
+		
+		// populate response
+		$_filter = array(		'sess_user' => $this->session->userdata,
+								'current_page' => $current_page,
+								'filter' => $this->input->post('filter'),
+								'labels' => $this->getAlphabet(),
+								'filter_arr' => $filter_arr);
+		$_pagination = array(	'page' => 'products',
+								'filter_arr' => $filter_arr,
+								'item_count' => $product_total_count,
+								'pagination_limit' => $pagination_limit,
+								'current_page' => $current_page);
+		
+		// load response
+		$_data['sess_user'] = $this->session->userdata;
+		$_data['page'] = "products";
+		$_data['item_count'] = $item_count;
+		$_data['products'] = $product_arr;
+		$_data['legend'] = $this->load->view('admin/view_products_legend', NULL, TRUE);
+		$_data['filter'] = $this->load->view('admin/view_products_filter', $_filter, TRUE);
+		$_data['pagination'] = $this->load->view('admin/view_pagination', $_pagination, TRUE);
+		$this->load->view('admin/view_products', $_data);
+		return;
+	}
+	
+	public function process_items()
+	{
+		$this->load->model('model_products');
+	
+		$user_type = $this->session->userdata('user_type');	
+		
+		$filter_arr = array();
+		if ($this->input->post('filter')) {
+			$filter_arr['letter'] = $this->input->post('letter');
+		}
+	
+		// retrieve products
+		$pagination_limit = 5;
+		$current_page = $this->input->post('current_page');
+		$property_id = null;
+		$limit = ($current_page * $pagination_limit) - $pagination_limit;
+		$product_arr = $this->model_products->getProducts(	$property_id, 
+															$user_type, 
+															"estate_product.product_name", 
+															"asc", 
+															$limit,
+															$pagination_limit,
+															$filter_arr);
+		$product_total_count = $product_arr['total_count'];
+		unset($product_arr['total_count']);
+		
+		// get list of items count
+		$item_count = array();
+		$item_count['products'] == $product_total_count;
+		
+		// populate response
+		$_filter = array(		'sess_user' => $this->session->userdata,
+								'current_page' => $current_page,
+								'filter' => $this->input->post('filter'),
+								'labels' => $this->getAlphabet(),
+								'filter_arr' => $filter_arr);
+		$_pagination = array(	'page' => 'products',
+								'filter_arr' => $filter_arr,
+								'item_count' => $product_total_count,
+								'pagination_limit' => $pagination_limit,
+								'current_page' => $current_page);
+		
+		// load response
+		$_data['sess_user'] = $this->session->userdata;
+		$_data['page'] = "products";
+		$_data['item_count'] = $item_count;
+		$_data['products'] = $product_arr;
+		$_data['legend'] = $this->load->view('admin/view_products_legend', NULL, TRUE);
+		$_data['filter'] = $this->load->view('admin/view_products_filter', $_filter, TRUE);
+		$_data['pagination'] = $this->load->view('admin/view_pagination', $_pagination, TRUE);
+		$this->load->view('admin/view_products', $_data);
+		return;
+	}
+	
+	public function upload_product_image()
+	{
 		if (!$this->session->userdata('logged_in')) { redirect('admin/login'); } // logged in?
 		
 		if($_FILES['product_image']['size'] != 0){
@@ -93,7 +259,6 @@ class Products extends MY_Controller
 			
 			if(!$this->upload->do_upload("product_image")){
 				$msg = $this->upload->display_errors();
-				$status = 'error-'.$_FILES['product_image'].'-'.$orig_image_name.'--'.$msg;
 				$upload = array("status" => "error", "msg" => $msg, "filename" => $orig_image_name);
 			}else{
 				$image_data = $this->upload->data();
@@ -138,5 +303,205 @@ class Products extends MY_Controller
 		echo json_encode($upload);
 	}
 	
+	public function edit($product_id=null)
+	{
+		$this->load->model('model_products');
+		$this->load->model('model_properties');
+		
+		if ($product_id == null) { redirect(site_url('admin/products')); } // product_id?
+		
+		// load response
+		$_data['sess_user'] = $this->session->userdata;
+		$_data['page'] = "products";
+		$_data['properties'] = $this->model_properties->getPropertiesByUserId($this->session->userdata('user_id'), "properties.last_edit", "desc", 0, 100);
+		$_data['product_details'] = $this->model_products->getProductDetails($product_id);
+		$_data['content'] = $this->load->view('admin/view_products_edit', $_data, TRUE);
+		$this->load->view('admin/view_main_back', $_data);
+		return;
+	}
+	
+	public function process_edit()
+	{
+		$this->load->model('model_products');
+		
+		$data									= array();
+		$data['property_id'] 					= $this->cleanStringForDB($this->input->post('property'));
+		$data['product_name'] 					= $this->cleanStringForDB($this->input->post('name'));
+		$data['product_description'] 			= $this->cleanStringForDB($this->input->post('description'));
+		$data['product_size']					= $this->cleanStringForDB($this->input->post('size'));
+		$data['product_color'] 					= $this->cleanStringForDB($this->input->post('color_name'));
+		$data['product_data_capacity']			= $this->cleanStringForDB($this->input->post('data_capacity'));
+		$data['product_network_connectivity']	= $this->cleanStringForDB($this->input->post('network_connectivity'));
+		$data['product_image']					= $this->cleanStringForDB($this->input->post('product-image-name'));
+		$data['product_amount']					= $this->cleanStringForDB($this->input->post('amount'));
+		$data['product_discount']				= $this->cleanStringForDB($this->input->post('discount'));
+		$data['product_peso_value']				= $this->cleanStringForDB($this->input->post('peso_value'));
+		$data['product_date_added']				= $this->cleanStringForDB($this->input->post('date_added'));
+		$data['product_quantity']				= $this->cleanStringForDB($this->input->post('quantity'));
+		if( !$this->input->post('status') 
+			|| $this->input->post('status') == '' 
+			|| $this->input->post('status') == '0' 
+			|| $this->input->post('status') == 0 )
+		{ 
+			$data['product_status_flag'] 		= 1;
+		}else{
+			$data['product_status_flag'] 		= $this->cleanStringForDB($this->input->post('status'));
+		}
+		//get product id
+		$product_id = $this->input->post('product_id');
+		
+		//move image file
+		$image_file = trim($this->input->post('product-image-name'));
+		
+		//old image
+		$old_image = $this->input->post('old-product-image-name');
+		
+		if( file_exists( $this->config->item('base_product_path') . '_temp/' . $image_file ) ){
+			@copy($this->config->item('base_product_path') . '_temp/' . $image_file, $this->config->item('base_product_path') . $image_file);
+		
+			//delete image file from _temp folder
+			@unlink($this->config->item('base_product_path') . '_temp/' . $image_file);
+		}
+		
+		//update product
+		$this->model_products->updateProduct($data, $product_id);
+		
+		// log changes
+		$product_name = trim($this->input->post('name'));
+		$log = "Updated product " . $product_name;
+		$timestamp = date("Y-m-d H:i:s");
+		$this->model_main->addLog($log, "Update product", $timestamp);
+		
+		if( trim($old_image) != trim($image_file) ){
+			if( file_exists( $this->config->item('base_product_path') . $old_image ) ){
+				//delete old image
+				@unlink($this->config->item('base_product_path') . $old_image);
+			}
+		}
+		
+		$user_type = $this->session->userdata('user_type');	
+		
+		$filter_arr = array();
+		if ($this->input->post('filter')) {
+			$filter_arr['letter'] = $this->input->post('letter');
+		}
+	
+		// retrieve products
+		$pagination_limit = 5;
+		$current_page = 1;
+		$property_id = null;
+		$limit = ($current_page * $pagination_limit) - $pagination_limit;
+		$product_arr = $this->model_products->getProducts(	$property_id, 
+															$user_type, 
+															"estate_product.product_name", 
+															"asc", 
+															$limit,
+															$pagination_limit,
+															$filter_arr);
+		$product_total_count = $product_arr['total_count'];
+		unset($product_arr['total_count']);
+		
+		// get list of items count
+		$item_count = array();
+		$item_count['products'] == $product_total_count;
+		
+		// populate response
+		$_filter = array(		'sess_user' => $this->session->userdata,
+								'current_page' => $current_page,
+								'filter' => $this->input->post('filter'),
+								'labels' => $this->getAlphabet(),
+								'filter_arr' => $filter_arr);
+		$_pagination = array(	'page' => 'products',
+								'filter_arr' => $filter_arr,
+								'item_count' => $product_total_count,
+								'pagination_limit' => $pagination_limit,
+								'current_page' => $current_page);
+		
+		// load response
+		$_data['sess_user'] = $this->session->userdata;
+		$_data['page'] = "products";
+		$_data['item_count'] = $item_count;
+		$_data['products'] = $product_arr;
+		$_data['legend'] = $this->load->view('admin/view_products_legend', NULL, TRUE);
+		$_data['filter'] = $this->load->view('admin/view_products_filter', $_filter, TRUE);
+		$_data['pagination'] = $this->load->view('admin/view_pagination', $_pagination, TRUE);
+		$this->load->view('admin/view_products', $_data);
+		return;
+	}
+	
+	public function process_delete(){
+		$this->load->model('model_products');
+		
+		if( $this->input->post('product_id') ){
+			$product_id = $this->input->post('product_id');
+		}else{
+			$product_id = 0;
+		}
+		
+		//delete product
+		$product_details = $this->model_products->deleteProduct($product_id);
+		
+		//delete product image
+		if( isset($product_details['product_image']) ){
+			if( file_exists( $this->config->item('base_product_path') . $product_details['product_image'] ) ){
+				@unlink($this->config->item('base_product_path') . $product_details['product_image']);
+			}
+		}
+		
+		// log changes
+		$product_name = trim($product_details['product_name']);
+		$log = "Deleted product " . $product_name;
+		$timestamp = date("Y-m-d H:i:s");
+		$this->model_main->addLog($log, "Delete product", $timestamp);
+		
+		$user_type = $this->session->userdata('user_type');	
+		
+		$filter_arr = array();
+		if ($this->input->post('filter')) {
+			$filter_arr['letter'] = $this->input->post('letter');
+		}
+	
+		// retrieve products
+		$pagination_limit = 5;
+		$current_page = 1;
+		$property_id = null;
+		$limit = ($current_page * $pagination_limit) - $pagination_limit;
+		$product_arr = $this->model_products->getProducts(	$property_id, 
+															$user_type, 
+															"estate_product.product_name", 
+															"asc", 
+															$limit,
+															$pagination_limit,
+															$filter_arr);
+		$product_total_count = $product_arr['total_count'];
+		unset($product_arr['total_count']);
+		
+		// get list of items count
+		$item_count = array();
+		$item_count['products'] == $product_total_count;
+		
+		// populate response
+		$_filter = array(		'sess_user' => $this->session->userdata,
+								'current_page' => $current_page,
+								'filter' => $this->input->post('filter'),
+								'labels' => $this->getAlphabet(),
+								'filter_arr' => $filter_arr);
+		$_pagination = array(	'page' => 'products',
+								'filter_arr' => $filter_arr,
+								'item_count' => $product_total_count,
+								'pagination_limit' => $pagination_limit,
+								'current_page' => $current_page);
+		
+		// load response
+		$_data['sess_user'] = $this->session->userdata;
+		$_data['page'] = "products";
+		$_data['item_count'] = $item_count;
+		$_data['products'] = $product_arr;
+		$_data['legend'] = $this->load->view('admin/view_products_legend', NULL, TRUE);
+		$_data['filter'] = $this->load->view('admin/view_products_filter', $_filter, TRUE);
+		$_data['pagination'] = $this->load->view('admin/view_pagination', $_pagination, TRUE);
+		$this->load->view('admin/view_products', $_data);
+		return;
+	}
 }
 ?>

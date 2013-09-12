@@ -63,10 +63,18 @@
 							<img src="<?php echo base_url(); ?>_assets/images/global_icon_edit.png" />	
 						</a>
 					<?php } else { ?>
-						<a 	href="javascript:void(0);" 
-							class="g_tableicon g_tableiconinactive">
-							<img src="<?php echo base_url(); ?>_assets/images/global_icon_edit_inactive.png" />
-						</a>
+						<?php if( $u['user_type_id'] > ROLE_SUPER_ADMIN ){ ?>
+							<a 	class="g_tableicon" 
+								title="<?php echo ($u['user_id'] == $sess_user['user_id']) ? "Edit my account" : "Edit user details"; ?>"
+								href="<?php echo ($u['user_id'] == $sess_user['user_id']) ? base_url()."admin/account/edit" : base_url()."admin/users/edit/".$u['user_id']; ?>">
+								<img src="<?php echo base_url(); ?>_assets/images/global_icon_edit.png" />	
+							</a>
+						<?php }else{ ?>
+							<a 	href="javascript:void(0);" 
+								class="g_tableicon g_tableiconinactive">
+								<img src="<?php echo base_url(); ?>_assets/images/global_icon_edit_inactive.png" />
+							</a>
+						<?php } ?>
 					<?php } ?>
 					<?php if (($u['account_status']) && ($u['user_type_id'] <= $sess_user['user_type'])) { ?>
 						<a 	href="javascript:void(0);" 
@@ -77,10 +85,20 @@
 							<img src="<?php echo base_url(); ?>_assets/images/global_icon_deactivate.png" />
 						</a>
 					<?php } else { ?>
-						<a 	href="javascript:void(0);" 
-							class="g_tableicon g_tableiconinactive">
-							<img src="<?php echo base_url(); ?>_assets/images/global_icon_deactivate_inactive.png" />
-						</a>
+						<?php if( $u['user_type_id'] > ROLE_SUPER_ADMIN ){ ?>
+							<a 	href="javascript:void(0);" 
+								class="btn_delete_user g_tableicon" 
+								title="Deactivate user"
+								data-user-id="<?php echo $u['user_id']; ?>" 
+								data-current-page="<?php echo $current_page; ?>" >
+								<img src="<?php echo base_url(); ?>_assets/images/global_icon_deactivate.png" />
+							</a>
+						<?php }else{ ?>
+							<a 	href="javascript:void(0);" 
+								class="g_tableicon g_tableiconinactive">
+								<img src="<?php echo base_url(); ?>_assets/images/global_icon_deactivate_inactive.png" />
+							</a>
+						<?php } ?>
 					<?php } ?>
 					<div class="h_clearboth"></div>
 				</td>

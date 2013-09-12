@@ -76,8 +76,20 @@ class Model_addonscategories extends CI_Model
 		return;
 	}
 	
-	function deleteMainPlanType($add_ons_category_id){
-		$addonscategory_details = $this->getMainPlanTypeDetails($add_ons_category_id);
+	function getAddonsCategoryDetails($addonscategory_id)
+	{
+		$this->db->where('add_ons_category_id', $addonscategory_id);
+		$query = $this->db->get('estate_add_ons_category');
+		
+		if( $query->num_rows() > 0 ){
+			return $query->row_array();
+		}else{
+			return array();
+		}
+	}
+	
+	function deleteAddonsCategory($add_ons_category_id){
+		$addonscategory_details = $this->getAddonsCategoryDetails($add_ons_category_id);
 		
 		$this->db->where('add_ons_category_id', $add_ons_category_id);
 		$this->db->delete('estate_add_ons_category'); 

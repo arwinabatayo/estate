@@ -8,6 +8,19 @@ class Configurations extends MY_Controller
 	{
 		parent::__construct();
 		if (!$this->session->userdata['logged_in']) { redirect(site_url('admin/logout')); } // logged in?
+		
+		if( $this->session->userdata('user_type') && $this->session->userdata('user_type') < 10 ){ 
+			// is non-ecommerce users
+			// dont allow access
+			redirect(site_url('admin/dashboard')); 
+		}elseif( $this->session->userdata('user_type') == 10 ){
+			// is superadmin
+			// allow access
+		}else{
+			// is ecommerce users
+			// dont allow access
+			redirect(site_url('admin/accountmanagement')); 
+		}
 	}
 	
 	public function index(){
@@ -100,7 +113,7 @@ class Configurations extends MY_Controller
 			|| $this->input->post('status') == '0' 
 			|| $this->input->post('status') == 0 )
 		{ 
-			$configuration_status = 0;
+			$configuration_status = 1;
 		}else{
 			$configuration_status = $this->input->post('status');
 		}
@@ -110,6 +123,7 @@ class Configurations extends MY_Controller
 		
 		// log changes
 		$log = "Added configuration " . $configuration_details['property_title'];
+		$timestamp = date("Y-m-d H:i:s");
 		$this->model_main->addLog($log, "Add configuration", $timestamp);
 		
 		//
@@ -211,6 +225,7 @@ class Configurations extends MY_Controller
 		
 		// log changes
 		$log = "Edited configuration " . $this->cleanStringForDB($configuration_label);
+		$timestamp = date("Y-m-d H:i:s");
 		$this->model_main->addLog($log, "Edit configuration", $timestamp);
 		
 		//
@@ -346,7 +361,7 @@ class Configurations extends MY_Controller
 		
 		$configuration_id = $this->input->post('configuration_id');
 		$current_page = $this->input->post('current_page');
-		$timestamp = date("Y-m-d H:i:s", now());
+		$timestamp = date("Y-m-d H:i:s");
 		
 		$configuration_details = $this->model_configurations->getConfigurationDetails($configuration_id);
 		
@@ -355,6 +370,7 @@ class Configurations extends MY_Controller
 		
 		// log changes
 		$log = "Deleted configuration " . $property_details['property_title'];
+		$timestamp = date("Y-m-d H:i:s");
 		$this->model_main->addLog($log, "Delete configuration", $timestamp);
 		
 		// just get the number of configurations for this instance

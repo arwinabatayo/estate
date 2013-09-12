@@ -40,7 +40,6 @@ class Model_products extends CI_Model
 											estate_product.product_description AS product_description,
 											estate_product.product_size AS product_size,
 											estate_product.product_color AS product_color,
-											estate_product.product_color_hex AS product_color_hex,
 											estate_product.product_data_capacity AS product_data_capacity,
 											estate_product.product_network_connectivity AS product_network_connectivity,
 											estate_product.product_amount AS product_amount,

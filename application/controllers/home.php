@@ -272,7 +272,40 @@ class Home extends MY_Controller
 		}
 	}
 
+    // validate ref number - gellie
+    function validate_reference_number()
+    {
+        // get reference number
+        $refnum = $this->input->post('refnum', TRUE);
 
+        $data = array();
+
+        // retrieve order using reference number
+        if ($refnum) {
+            // sanitize reference number
+            $refnum = trim($refnum);
+
+            // if order exists -- redirect to status page
+            $this->load->model('estate/order_model');
+            $valid_refnum = $this->order_model->get_order_by_refnum($refnum);
+
+            if ($valid_refnum) {
+                $data['status'] = "success";
+                $data['msg'] = "Successfully Verified. Page is redirecting please wait...";
+                $data['status_page_url'] = base_url().'order?refnum=' . $refnum;
+            } else {
+                $data['status'] = "error";
+                $data['msg'] = "Reference number is not valid";
+            }
+        } else {
+            $data['status'] = "error";
+            $data['msg'] = "Reference number is required";
+        }
+
+        echo json_encode($data);
+        exit;
+
+    }
 }
 
 
