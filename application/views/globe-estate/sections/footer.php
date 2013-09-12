@@ -50,7 +50,7 @@
 					}
 				}]
 			});
-		
+			
 			
 			$('form#enter-mobile button').click( function(){
 					var s =	$('form#enter-mobile div.status');
@@ -158,21 +158,8 @@
 		
 
 		});
-				
-		//for none globe
-		$('#dialog_reserve_form').dialog({
-			autoOpen: false,
-			buttons: [{
-				text: "OK",
-				click: function() {
-					   $( this ).dialog( "close" );
-					   window.location.href = base_url+'home?showtymsg=true';
-				}
-			}]
-		});
-			
-       
-       <?php if($current_method == 'sms_verification'){ ?>
+		
+		    <?php if($current_method == 'sms_verification'){ ?>
 		    
 					$('#dialog_enter_mobile').dialog({
 						autoOpen: true,modal:true,dialogClass: "no-close",
@@ -187,10 +174,6 @@
 							
 					$('#dialog_verify_mobile').dialog({
 						autoOpen: false,width:'auto',modal:true
-					});
-					
-					$('#dialog_enter_captcha').dialog({
-						autoOpen: true,width:'35%',modal:true
 					});
 					
 					$('button#open_verify_mobile').click( function(e){
@@ -214,26 +197,9 @@
 									var resp = jQuery.parseJSON( response );
 									s.addClass('alert-'+resp.status);
 									s.html(resp.msg);
-	
-									//alert ( JSON.stringify(response) );
-								   // return;
-								    
 									if(resp.status == 'success'){
-										if( resp.is_globe_subscriber && resp.order_type == 'reserve'){
-											$('#dialog_reserve_form').dialog( "open" );
-											return;
-										}
-									}else{
-										if(resp.tries < 3){
-											return; // donot redirect yet
-										}
-									
+										window.location = base_url+'plan?token='+resp.token;
 									}
-									
-									
-									
-									window.location.href = base_url+resp.next_page;
-									
 								}, 
 								error: function(){
 									s.html('Some error occured or the system is busy. Please try again later');	
@@ -242,76 +208,9 @@
 								
 					});
 					
-					<?php if( $this->session->userdata('showcaptcha') ){ ?>
-			         function createCaptcha(){
-							$.ajax({
-							    dataType: 'json',
-								url: base_url+'captcha/get_captcha_img',
-							    success: function(response){
-									//var resp = jQuery.parseJSON( response );
-									//alert (  response.src );
-
-									$("#captcha").attr('src',response.src);
-									
-								},
-								error: function(xhr, status, error){
-										alert(xhr.responseText);
-								}	
-							});
-					 }
-					 
-					
-					$('a#refresh_code').click( function(e){
-						e.preventDefault();
-						createCaptcha() ;
-					});	
-					
-					$(window).load( function(){ createCaptcha() });
-					
-					<?php } ?>
-					
-					$('button#btn_resend_vcode').click( function(e){
-						 var code =	$('input#code_id').val();
-						e.preventDefault();
-							$.ajax({
-							    type: 'post',
-							    data: 'input_code='+code,
-								url: base_url+'captcha/validate',
-							    success: function(response){
-									var resp = jQuery.parseJSON( response );
-									//alert ( JSON.stringify(response) )
-									//alert ( resp.status );
-									
-									if(resp.status == 'success'){
-										//alert(resp.msg);
-										//window.location.reload();
-										$('#dialog_enter_captcha').dialog( "close" );
-										$('#dialog_verify_mobile').dialog( "open" );
-									}else{
-										alert(resp.msg);
-										createCaptcha();
-										$('input#code_id').val('');
-									}
-								}	
-							});
-					});
-
-					
-					
 		    <?php } ?>
 	
 		<?php } else if($page == 'landing' ){ ?>
-				
-				$('#dialog_thankyou_reserve').dialog({
-					autoOpen: true,
-					buttons: [{
-						text: "OK",
-						click: function() {
-							   $( this ).dialog( "close" );
-						}
-					}]
-				});
-			
 				
 				$('form#addGadget button').click(function(){
 						var itemid    = $(this).find('input[name=product-id]').val();
@@ -343,13 +242,21 @@
 		        //create ajax call here - add to cart order type
 		        $( "#plan-order-page" ).accordion( "option", "active", 1 );
 		        $( "#siderbar-panel" ).accordion( "option", "active", 2 );
+				
 		    }); 
 		    
 		    //PLAN TYPE
 		    $( "#plantype-options" ).hide();
+			$( "#plantype-combos" ).hide(); // Robert
 		    
 		    $('#plantype-table  button').click(function() {
 				var title = $(this).attr('rel');
+				
+				var id = $(this).attr('id'); // Robert
+				if(id == 3) {// Robert
+					$( "#siderbar-panel" ).accordion( "option", "active", 2 );// Robert
+				}// Robert
+				
 				var btnIndex = $('#plantype-table  button').index(this);
 	
 				showPreloader();
@@ -373,8 +280,19 @@
 			$('.btn-show-plantype').click(function() {
 				$( "#plantype-table" ).slideDown();
 				$( this ).closest('div').slideUp();
+				
 			});
-		
+			$('.btn-show-plans').click(function() {
+				$( "#plantype-options" ).slideDown();
+				$( this ).closest('div').slideUp();
+				
+			});
+			$('.btn-show-plancombos').click(function() {
+				$( "#plantype-plans" ).slideDown();
+				$( this ).closest('div').slideUp();
+				
+			});
+			
 		
 		<?php } else if($current_controller == 'addons' ){ ?>
 			  
@@ -481,9 +399,11 @@
 							type:'post',
 							success: function(response){
 								
-								var resp = jQuery.parseJSON( response );
+								//var resp = jQuery.parseJSON( response );
 								
 								//alert ( JSON.stringify(response) );
+								alert ( response );
+								return;
 								
 								var cartItem = '<div id="prod-item-'+resp.rowid+'" class="item" style="display:none"><div class="fleft"><span class="productName block">'+resp.name+'</span><span class="price block arial italic">'+resp.price_formatted+'</span></div><span class="icoDelete"> <a class="btnDelete" href="javascript:void(0)" id="'+resp.rowid+'"><i class="icon-remove"></i></a> </span><br class="clear" /></div>\n';
 								
@@ -524,7 +444,7 @@
 						
 						$.ajax({
 							url: base_url+'cart/delete',
-							data: 'keyid='+rowid,
+							data: 'keyid='+rowid+'&type',
 							type:'post',
 							success: function(response){
 								
@@ -543,78 +463,263 @@
 						});
 						
 				});
-				
-				$('a.btnAddPlan').click(function(){
-						var itemid    = $(this).attr('data-id');
-						
-						//return;
 
+				// Combos And Boosters
+				$(document).on('click', '.cartWidget a.btnDeleteCombos', function(){
+						var rowid = $(this).attr('id');
+						var prodName = $(this).attr('rel');
+						
+						var selectedPlanCashOut = $(".btnAddCombo").attr("data-cashout");
+						var comboID = $(this).attr("data-id");
+						var comboNAME = $(this).attr("data-name");
+						var comboPV = $(this).attr("data-pv");
+						var planPV = $(this).attr("data-planpv");
+						
+						if( !confirm('Are you sure you want to delete "'+prodName+'"?')) return;
+						
 						$.ajax({
-							url: base_url+'cart/addtocart',
-							data: 'product_type=plan&product_id='+itemid,
+							url: base_url+'cart/update_qty_of_cart',
+							data: 'product_type=combos&product_id='+comboID+'&current_cashout='+selectedPlanCashOut+'&planpv='+planPV+'&combopv='+comboPV,
 							type:'post',
 							success: function(response){
-								
+								alert(response);
 								var resp = jQuery.parseJSON( response );
-								
-								if(resp.status == 'success' && resp.rowid){
-									window.location = '<?php echo base_url() ?>addons';
-								}
-								
-							}, 
-							error: function(){
-								alert('Some error occured or the system is busy. Please try again later');	
-							}
-						});
-				});
-				
-								// set dialog for application status - gellie
-				$('a#open_application_status').on('click', function(){
-					$( '#dialog_application_status' ).dialog( "open" );
-				});
-
-				// validate reference number - gellie
-				$('form#refnum-verification button').on('click', function(){
 			
-						var s =	$('form#refnum-verification div.status');
-						var refnum = $('input#reference_number').val();
-						// reset error class
-						s.removeClass('alert-error');
-						//e.preventDefault();
-						
-						s.show();
-					    s.html('Sending...Please wait...');
-					    
-					    // may problem pa sa cache
-					    //$(this).attr('disabled',true);
-
-						$.ajax({
-							url: base_url+'home/validate_reference_number',
-							data: 'refnum='+refnum,
-							type:'post',
-							success: function(response){
-								var resp = jQuery.parseJSON( response );
-								
 								if(resp.status == 'success'){
-									$('#e_lbl').html(refnum);
-									s.html(resp.msg);
-									// redirect to status page
-									window.location = resp.status_page_url;
-									//$(this).attr('disabled',false);
-									
+									if(resp.qty == 0) {
+										$('#prod-item-'+rowid).slideUp('slow', function(){ $(this).remove() });
+										$('.cashoutLabel').html(resp.total);
+									} else {
+										$('#prod-qty-'+resp.rowid).html("<b>x"+resp.qty+"</b>");
+										$('#prod-item-'+resp.rowid).show('slow');
+									}
 								}else{
-									s.addClass('alert-'+resp.status);
-									s.html(resp.msg);
+									alert(resp.msg);
 								}
-								
 							}, 
 							error: function(){
 								alert('Some error occured or the system is busy. Please try again later');	
 							}
 						});
-				});	
+						
+				});
 				
-	});
-	
+				$('a.btnAddPlan').click(function(e){
+					e.preventDefault();
+					
+					var itemid    = $(this).attr('data-id');
+					var itemname    = $(this).attr('data-name');
+					var plan_pv    = $(this).attr('data-pv');
+					
+					$.ajax({
+						url: base_url+'cart/addtocart',
+						data: 'product_type=plan&product_id='+itemid+'&plan='+itemid+'&device=7',
+						type:'post',
+						success: function(response) {
+							//alert(response);
+							var resp = jQuery.parseJSON(response);
 
+
+							var cartItem = '<div id="prod-item-'+resp.rowid+'" class="item" style="display:none">'+
+							'<div class="fleft"><span class="productName block"><b>'+itemname+
+							'</b></span></div><span class="icoDelete"> <a class="btnDelete" href="javascript:void(0)" id="'+resp.rowid+'">'+
+							'<i class="icon-remove"></i></a> </span><br class="clear" /></div>\n';
+						
+							if(resp.status == 'success' && resp.rowid){
+								$("#PlanCartWidget .item").remove();
+								$("#PlanCartWidget").prepend(cartItem);
+								$('#prod-item-'+resp.rowid).show('slow');
+
+								var cashout = resp.gadget_cash_out; 
+								if(cashout == 0) {
+									// No CashOut
+									$("#cashoutLabel").html("").show('slow');
+								} else {
+									$("#cashoutLabel").html("Php "+cashout).show('slow');
+								}
+								$("#pesovalLabel").attr('data-pv',plan_pv).html(plan_pv).show('slow');
+								
+								$('#cashoutBox,#pesovalBox').animate({backgroundColor: '#fff267'}, 'fast', function(){
+									$('#cashoutBox,#pesovalBox').animate({backgroundColor: '#F4F4F4'}, 'fast');
+								});
+								$("#plan_name").html(itemname);
+								$("#planid").attr('data-id',itemid);
+								$("#planid").attr('data-cashout',cashout);
+								$('#prod-item-'+resp.rowid).show('slow');
+							}
+							
+							
+						}, 
+						error: function(){
+							alert('Some error occured or the system is busy. Please try again later');	
+						}
+					});
+				});
+				
+				$("#goCombos").click(function(e) {
+					e.preventDefault();
+					//var selectedPlanId = $(".btnAddCombo").attr("data-id");
+					var selectedPlanCashOut = $(".btnAddCombo").attr("data-cashout");
+					//var planPV = $(".btnAddCombo").attr("data-pv");
+					
+					
+					$( "#plantype-options" ).slideUp();
+					$( "#plantype-combos" ).slideDown();
+
+
+					$('a.btnAddCombo').click(function(e){
+						e.preventDefault();
+						var comboID = $(this).attr("data-id");
+						var comboNAME = $(this).attr("data-name");
+						var comboPV = $(this).attr("data-pv");
+						var planPV = $(this).attr("data-planpv");
+
+						$.ajax({
+	 						url: base_url+'cart/addtocart',
+	 						data: 'product_type=combos&product_id='+comboID+'&current_cashout='+selectedPlanCashOut+'&planpv='+planPV+'&combopv='+comboPV,
+	 						type:'post',
+	 						success: function(response){
+	 							var resp = jQuery.parseJSON( response );
+	 							alert(response);
+// 								var updCashOut = resp['pvcashout'].upd_cashout;
+// 								var updPlanPV = resp['pvcashout'].upd_planpv;
+
+// 								$("#pesovalLabel").attr('data-pv',updPlanPV).html(updPlanPV).show('slow');
+// 								$("#cashoutLabel").html("Php "+updCashOut).show('slow');
+// 								$('#cashoutBox,#pesovalBox').animate({backgroundColor: '#fff267'}, 'fast', function(){
+// 									$('#cashoutBox,#pesovalBox').animate({backgroundColor: '#F4F4F4'}, 'fast');
+// 								});
+
+	 							var cartItem = '<div id="prod-item-'+resp.rowid+'" class="item" style="display:none">'+
+								'<div class="fleft">'+
+									'<span class="productName block">'+comboNAME+'</span>'+
+									'<span class="productName block" id="prod-qty-'+resp.rowid+'" style="margin-left:15px;"  data-id="'+resp.product_id+'" data-name="'+resp.name+'" data-pv="'+resp.pv+'" data-cashout="" data-planpv="" >'+
+										
+									'</span>'+
+								'</div>'+
+								'<span class="icoDelete">'+
+								'<a class="btnDelete" href="javascript:void(0)" id="'+resp.rowid+'" >'+
+								'<i class="icon-remove"></i></a> </span><br class="clear" /></div>\n';
+							
+								if(resp.status == 'success' && resp.rowid){
+									if( resp.product_type == 'combos'){
+										
+										$("#CombosCartWidget").append(cartItem);
+									} else {
+									    basket.append(resp.name);
+									}
+									$('#prod-qty-'+resp.rowid).html("<b>x"+resp.qty+"</b>");
+									$('#prod-item-'+resp.rowid).show('slow');
+								}
+	 						}, 
+	 						error: function(){
+	 							alert('Some error occured or the system is busy. Please try again later');	
+	 						}
+	 					});
+						
+					});
+// 					alert($("#planid").attr("value"));
+// 					$.ajax({
+// 						url: base_url+'cart/addtocart',
+// 						data: 'product_type=plan&product_id='+itemid,
+// 						type:'post',
+// 						success: function(response){
+							
+// 							var resp = jQuery.parseJSON( response );
+							
+// 							if(resp.status == 'success' && resp.id){
+
+// 								if( resp.product_type == 'plan'){
+// 									$("#plan_name").html(resp.name);
+// 								}else{
+// 								    basket.append(resp.name);
+// 								}
+								
+// 								$('#prod-item-'+resp.id).show('slow');
+// 							}
+// 						}, 
+// 						error: function(){
+// 							alert('Some error occured or the system is busy. Please try again later');	
+// 						}
+// 					});
+				});
+// 				$("a.btnAddCombo").click(function(e){
+// 					e.preventDefault();
+
+// 					var comboid = $(this).attr('data-id');
+// // 					var comboname = $(this).attr('data-name'); 
+
+// 					$.ajax({
+// 						url: base_url+'cart/addtocart',
+// 						data: 'product_type=combos&product_id='+comboid,
+// 						type:'post',
+// 						success: function(response){
+						
+// 							var resp = jQuery.parseJSON( response );
+							
+// 							var cartItem = '<div id="prod-item-'+resp.rowid+'" class="item" style="display:none">'+
+// 								'<div class="fleft"><span class="productName block">'+resp.name+
+// 								'</span><span class="price block arial italic">'+resp.rowid+
+// 								'</span></div><span class="icoDelete"> <a class="btnDelete" href="javascript:void(0)" id="'+resp.rowid+'">'+
+// 								'<i class="icon-remove"></i></a> </span><br class="clear" /></div>\n';
+							
+// 							if(resp.status == 'success' && resp.rowid){
+
+// 								if( resp.product_type == 'combos'){
+// 									$("#CombosCartWidget").append(cartItem);
+// 								}else{
+// 								    basket.append(resp.name);
+// 								}
+							
+// 								$('#prod-item-'+resp.rowid).show('slow');
+// 							}
+// 						}, 
+// 						error: function(){
+// 							alert('Some error occured or the system is busy. Please try again later');	
+// 						}
+// 					});
+					
+// // 					var cartItem = '<div id="prod-item-'+comboid+'" class="item" style="display:none">'+
+// // 						'<div class="fleft"><span class="productName block">'+comboname+
+// // 						'</span><span class="price block arial italic">'+comboid+
+// // 						'</span></div><span class="icoDelete"> <a class="btnDelete" href="javascript:void(0)" id="'+comboid+'">'+
+// // 						'<i class="icon-remove"></i></a> </span><br class="clear" /></div>\n';
+						
+					
+// 				});
+
+				
+				$("#goBoosters").click(function(e) {
+					e.preventDefault();
+					var selectedPlanId = $("#planid").attr("value");
+// 					var selectedPlanId = $("#planid").attr("value");
+					$( "#plantype-combos" ).slideUp();
+					$( "#plantype-boosters" ).slideDown();
+					
+// 					alert($("#planid").attr("value"));
+// 					$.ajax({
+// 						url: base_url+'cart/addtocart',
+// 						data: 'product_type=plan&product_id='+itemid,
+// 						type:'post',
+// 						success: function(response){
+							
+// 							var resp = jQuery.parseJSON( response );
+							
+// 							if(resp.status == 'success' && resp.id){
+
+// 								if( resp.product_type == 'plan'){
+// 									$("#plan_name").html(resp.name);
+// 								}else{
+// 								    basket.append(resp.name);
+// 								}
+								
+// 								$('#prod-item-'+resp.id).show('slow');
+// 							}
+// 						}, 
+// 						error: function(){
+// 							alert('Some error occured or the system is busy. Please try again later');	
+// 						}
+// 					});
+				});
+	});
 </script>
