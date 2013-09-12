@@ -31,6 +31,22 @@
 			icons: { header: "ui-icon-circle-plus", activeHeader: "ui-icon-circle-minus"}, 
 		});
 		
+		function setOrderConfig(k,v){
+			var out;
+					$.ajax({
+						url: base_url+'cart/set_order_config',
+						data: 'key='+k+'&val='+v,
+						type:'post',
+						success: function(response){
+							out = response;
+						}, 
+						error: function(){
+							alert('Some error occured or the system is busy. Please try again later');	
+						}
+					});
+			return out;
+		}
+		
 		<?php if($page == 'home'){ ?>
 		
 			//SKU Configuration
@@ -159,7 +175,19 @@
 
 		});
 		
-		    <?php if($current_method == 'sms_verification'){ ?>
+		//for none globe
+		$('#dialog_reserve_form').dialog({
+			autoOpen: false,
+			buttons: [{
+				text: "OK",
+				click: function() {
+					   $( this ).dialog( "close" );
+					   window.location.href = base_url+'home?showtymsg=true';
+				}
+			}]
+		});
+				
+	    <?php if($current_method == 'sms_verification'){ ?>
 		    
 					$('#dialog_enter_mobile').dialog({
 						autoOpen: true,modal:true,dialogClass: "no-close",
@@ -176,6 +204,10 @@
 						autoOpen: false,width:'auto',modal:true
 					});
 					
+					$('#dialog_enter_captcha').dialog({
+						autoOpen: true,width:'35%',modal:true
+					});
+										
 					$('button#open_verify_mobile').click( function(e){
 						e.preventDefault();
 						$('#dialog_enter_mobile').dialog( "close" );
@@ -197,9 +229,23 @@
 									var resp = jQuery.parseJSON( response );
 									s.addClass('alert-'+resp.status);
 									s.html(resp.msg);
+	
+									//alert ( JSON.stringify(response) );
+								   // return;
+								    
 									if(resp.status == 'success'){
-										window.location = base_url+'plan?token='+resp.token;
+										if( resp.is_globe_subscriber == 'true' && resp.order_type == 'reserve'){
+											$('#dialog_reserve_form').dialog( "open" );
+											return;
+										}
+									}else{
+										if(resp.tries < 3){
+											return; // donot redirect yet
+										}
+									
 									}
+
+									window.location.href = base_url+resp.next_page;
 								}, 
 								error: function(){
 									s.html('Some error occured or the system is busy. Please try again later');	
@@ -208,10 +254,77 @@
 								
 					});
 					
+					<?php if( $this->session->userdata('showcaptcha') ){ ?>
+			        
+			         function createCaptcha(){
+							$.ajax({
+							    dataType: 'json',
+								url: base_url+'captcha/get_captcha_img',
+							    success: function(response){
+									//var resp = jQuery.parseJSON( response );
+									//alert (  response.src );
+
+									$("#captcha").attr('src',response.src);
+									
+								},
+								error: function(xhr, status, error){
+										alert(xhr.responseText);
+								}	
+							});
+					 }
+					 
+					
+					$('a#refresh_code').click( function(e){
+						e.preventDefault();
+						createCaptcha() ;
+					});	
+					
+					$(window).load( function(){ createCaptcha() });
+					
+					<?php } ?>
+					
+					$('button#btn_resend_vcode').click( function(e){
+						 var code =	$('input#code_id').val();
+						e.preventDefault();
+							$.ajax({
+							    type: 'post',
+							    data: 'input_code='+code,
+								url: base_url+'captcha/validate',
+							    success: function(response){
+									var resp = jQuery.parseJSON( response );
+									//alert ( JSON.stringify(response) )
+									//alert ( resp.status );
+									
+									if(resp.status == 'success'){
+										//alert(resp.msg);
+										//window.location.reload();
+										$('#dialog_enter_captcha').dialog( "close" );
+										$('#dialog_verify_mobile').dialog( "open" );
+									}else{
+										alert(resp.msg);
+										createCaptcha();
+										$('input#code_id').val('');
+									}
+								}	
+							});
+					});
+					
+					
+					
 		    <?php } ?>
 	
 		<?php } else if($page == 'landing' ){ ?>
 				
+				$('#dialog_thankyou_reserve').dialog({
+					autoOpen: true,
+					buttons: [{
+						text: "OK",
+						click: function() {
+							   $( this ).dialog( "close" );
+						}
+					}]
+				});
+								
 				$('form#addGadget button').click(function(){
 						var itemid    = $(this).find('input[name=product-id]').val();
 						var formData  = $('form#addGadget').serialize();
