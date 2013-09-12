@@ -1,7 +1,7 @@
 <?php
-class Order_model extends CI_Model
+class Orderitem_model extends CI_Model
 {
-    var $tbl_name = 'estate_orders';
+    var $tbl_name = 'estate_order_items';
 
     function __construct()
     {
@@ -26,16 +26,18 @@ class Order_model extends CI_Model
      * @param  string  what (optional) - specify the fields needed
      * @return array
      */
-    function get_order_by_refnum($refnum, $what='*')
+    function get_orderitems_by_orderid($order_id, $what='*')
     {   
-        if($refnum == NULL) return FALSE;
+        if($order_id == NULL) return FALSE;
 
         $query = $this->db->select($what)
                           ->from($this->tbl_name)
-                          ->where('order_number', $refnum)
+                          ->join('t_product', 'estate_order_items.product_id = t_product.f_product_id')
+                          ->where('order_id', $order_id)
                           ->get();
-        $result = $query->row_array();
-        $query->free_result();
+
+        $result = $query->result();
+
 
         if(count($result) == 0) return FALSE;
         return $result;
