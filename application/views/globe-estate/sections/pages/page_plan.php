@@ -62,9 +62,6 @@
 								</div>
 								<!--END OF ORDER-TYPE TABLE -->
 								
-								
-								
-								
 	                        </div>
 	                    </div>
 	                    <div>
@@ -91,7 +88,7 @@
 											</div>
 											<ul>
 												<li><?php echo $row->f_main_plan_description ?></li>
-												<li><button class="btn-large ui-button-success" rel="<?php echo $row->f_main_plan_title 	?>">Select Plan Type!</button></li>
+												<li><button class="btn-large ui-button-success" rel="<?php echo $row->f_main_plan_title ?>" id="<?php echo $row->f_main_plan_id ?>">Select Plan Type!</button></li>
 											</ul>
 										</div>	
 									</div>
@@ -120,27 +117,80 @@
 									<br />
 									<?php if($plans_options){ 
 										
-											 foreach($plans_options as $plan){
+											 foreach($plans_options as $plan) {
 										?>
-											<div class="fleft" style="margin-right:12px; height:100px;width:200px; background:url('<?php echo $assets_path ?>images/plans/plan_temp.jpg') no-repeat 50% 50%">
-												<p style="padding:10px 20px;color:#FFF;font-size:22px"><a style="color:#FFF" class="btnAddPlan" data-id="<?php echo $plan->f_plan_id ?>" href="javascript:void(0)"><?php echo $plan->f_plan_title ?></a></p>
-												<p style="color:#FFF;font-size:12px"><?php echo $plan->f_plan_description ?></p>
+											<div class="fleft" style="margin-right:12px; height:110px;width:200px; background:url('<?php echo $assets_path ?>images/plans/plan_temp.jpg') no-repeat 50% 50%">
+												<p style="padding:10px 20px 0px 20px;color:#FFF;font-size:22px">
+													<a style="color:#FFF" class="btnAddPlan" data-pv="<?php echo $plan->f_plan_total_pv ?>" data-id="<?php echo $plan->f_plan_id ?>" data-name="<?php echo $plan->f_plan_title ?>" href="javascript:void(0)">
+														<?php echo $plan->f_plan_title ?>
+													</a>
+												</p>
+												<p style="color:#FFF;font-size:10px; padding:0 20px; min-height: 26px;"><b><?php echo $plan->f_plan_description ?></b></p>
+												<p style="color:#FFF;font-size:12px; padding:0 20px;"><b>get <?php echo $plan->f_plan_total_pv ?>PV/mo.</b></p>
 											</div>
+											
+									<?php 
+											}
+									} ?>
+									<div>
+									<p class="textright">
+										<button  class="btn-large ui-button-success" id="goCombos">CONTINUE</button>
+									</p>
+									</div>
+								</div>
+								
+								<!--END OF PLAN-TYPE BUTTONS -->
+								
+								<!--robert-->
+								<div id="plantype-combos" class="textcenter" style="display:none">
+									<p><button class="btn-large ui-button-success btn-show-plans">SHOW PLANS</button></p>
+									<div class="textright">
+										<h4 style="font-size:24px;font-weight:normal">Combos</h4>
+										<p style="font-size:110%">Nullam suscipit ultrices enim. Ut nec sem. Quisque laoreet vulputate dui. Aenean rutrum diam vitae magna rhoncus lobortis. Nunc bibendum, dui in posuere blandit, ante nibh varius felis, a commodo purus leo non risus.</p>
+									
+									</div>
+									<br />
+									<?php if($combos_datas){ 
+											 foreach($combos_datas as $combo) {
+									?>
+										<div class="fleft" style="margin-right:12px; height:100px;width:200px; background:url('<?php echo $assets_path ?>images/plans/plan_temp.jpg') no-repeat 50% 50%">
+											<p style="padding:10px 20px 0px 20px;color:#FFF;font-size:22px"><a style="color:#FFF" class="btnAddCombo" data-id="<?php echo $combo->combo_id ?>" data-name="<?php echo $combo->combo_name ?>" data-pv="<?php echo $combo->required_pv ?>" data-cashout="<?php echo $gadget_cash_out ?>" data-planpv="<?php echo $plan_pv ?>" href="javascript:void(0)"><?php echo $combo->combo_name ?></a></p>
+											<p style="color:#FFF;font-size:12px; padding:0 20px;"><b><?php echo $combo->combo_desc ?></b></p>
+										</div>
 									<?php 
 											}
 									} ?>
 									
-									<!--
-									<p>
-										<img src="<?php echo $assets_path ?>images/plans/plan_299.jpg" alt="" />&nbsp;&nbsp;&nbsp;&nbsp;
-										<img src="<?php echo $assets_path ?>images/plans/plan_499.jpg" alt="" />&nbsp;&nbsp;&nbsp;&nbsp;
-										<img src="<?php echo $assets_path ?>images/plans/plan_999.jpg" alt="" />
+									<p class="textright">
+										<button  class="btn-large ui-button-success" onclick="window.location.href='<?php echo base_url() ?>addons'">CONTINUE</button>
 									</p>
-									-->
-	
-
 								</div>
-								<!--END OF PLAN-TYPE BUTTONS -->
+								<!--END OF PLAN-TYPE COMBOS-->
+								
+								<!--robert-->
+								<div id="plantype-boosters" class="textcenter" style="display:none">
+									<p><button class="btn-large ui-button-success btn-show-plancombos">SHOW COMBOS</button></p>
+									<div class="textright">
+										<h4 style="font-size:24px;font-weight:normal">Combos</h4>
+										<p style="font-size:110%">Nullam suscipit ultrices enim. Ut nec sem. Quisque laoreet vulputate dui. Aenean rutrum diam vitae magna rhoncus lobortis. Nunc bibendum, dui in posuere blandit, ante nibh varius felis, a commodo purus leo non risus.</p>
+									
+									</div>
+									<br />
+									<?php if($boosters_datas){ 
+											 foreach($boosters_datas as $boosters) {
+									?>
+										<div class="fleft" style="margin-right:12px; height:100px;width:200px; background:url('<?php echo $assets_path ?>images/plans/plan_temp.jpg') no-repeat 50% 50%">
+											<p style="padding:10px 20px;color:#FFF;font-size:22px"><a style="color:#FFF" class="btnAddPlan" data-id="<?php echo $boosters->booster_name ?>" href="javascript:void(0)"><?php echo $boosters->booster_name ?></a></p>
+										</div>
+									<?php 
+											}
+									} ?>
+									
+									<p class="textright">
+										<button  class="btn-large ui-button-success" onclick="window.location.href='<?php echo base_url() ?>addons'">CONTINUE</button>
+									</p>
+								</div>
+								<!--END OF PLAN-TYPE BOOSTERS-->
 								
 								
 								<div id="retain-plan" style="display:none">

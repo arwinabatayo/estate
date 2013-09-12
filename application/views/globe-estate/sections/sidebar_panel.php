@@ -2,7 +2,7 @@
 	<?php
 	//hassle to paxencia na, need to separate prod type into basket (accordion)
 		
-		$cartProdFiltered = array('accessories'=>array(),'addon'=>array(),'plan'=>array()); //store it on each key(prod type)
+		$cartProdFiltered = array('accessories'=>array(),'addon'=>array(),'plan'=>array(), 'combos'=>array()); //store it on each key(prod type)
 	
 		$cartItems = $this->cart->contents();
 
@@ -12,6 +12,15 @@
 						$cartProdFiltered[ $item['product_type'] ][] = $item;
 					}
 			}		
+		}
+		$cart_plan='';
+		$cart_plan = @$cartProdFiltered['plan'];
+		if($cart_plan) {
+			foreach($cart_plan as $item) {
+				$plan_name =  $item['name'];
+				$plan_pv =  $item['plan_pv'];
+				$gadget_cash_out =  $item['gadget_cash_out'];
+			}
 		}
 		//print_r($cartProdFiltered);		
 	?>		
@@ -57,21 +66,71 @@
 	                        </div>
 	                    </div>
 	                    <?php
-							$cart_plan = @$cartProdFiltered['plan'][0];
+	                    	$cart_plan='';
+							$cart_plan = @$cartProdFiltered['plan'];
+							
 	                    ?>
 	                    
 	                    <div>
 	                        <h3><a href="#">Choose your Plan</a></h3>
 	                        <div>
-
-									<p><strong>Packaged Plan</strong> <br /> 
+								<div id="PlanCartWidget" class="cartWidget">	
+									<?php
+									if($cart_plan){
+										foreach($cart_plan as $item){
+									?>
+									<div id="prod-item-<?php echo $item['rowid'] ?>" class="item">
+										<div class="fleft">
+											<span class="productName block"><?php echo $item['name'] ?></span>
+										</div>
+										<span class="icoDelete"> <a href="javascript:void(0)" class="btnDelete" id="<?php echo $item['rowid'] ?>" rel="<?php echo $item['name'] ?>"><i class="icon-remove"></i></a> </span>
+										<br class="clear" />
+									</div>
+									<?php 
+											}
+										}	 
+									?>
+									<p>
+										<strong>Combos</strong>
+										<div id="CombosCartWidget" class="cartWidget">
+										<?php
+											$cart_combos='';
+											$cart_combos = @$cartProdFiltered['combos'];
+											
+											if($cart_combos){
+												foreach($cart_combos as $item){
+										?>
+										<div id="prod-item-<?php echo $item['rowid'] ?>" class="item">
+											<div class="fleft">
+												<span class="productName block"><?php echo $item['name'] ?></span>
+												<span class="productName block" id="prod-qty-<?php echo $item['rowid'] ?>" style="margin-left: 15px;">
+													<b>x<?php echo $item['qty'] ?></b>
+												</span>
+											</div>
+											<span class="icoDelete"> 
+												<a href="javascript:void(0)" class="btnDeleteCombos"  data-id="<?php echo $item['product_id'] ?>" data-name="<?php echo $item['name'] ?>" data-pv="<?php echo $item['pv'] ?>" data-cashout="<?php echo $gadget_cash_out ?>" data-planpv="<?php echo $plan_pv ?>"  id="<?php echo $item['rowid'] ?>" rel="<?php echo $item['name'] ?>">
+													<i class="icon-remove"></i>
+												</a>
+											</span>
+											<br class="clear" />
+										</div>
+										<?php 
+												}
+											}	 
+										?>
+										</div>
+									</p>
+										
+								
+								</p>
+									<!-- <p><strong>Packaged Plan</strong> <br /> 
 									<em class="normal" style="font-family:Arial,sans-serif">Plan <?php echo number_format($cart_plan['price'],2) ?></em></p>
 									<p><strong>Monthly Payment:</strong> <?php echo number_format($cart_plan['price_formatted'],2) ?></p>
 									<p><strong>Text:</strong> Unlitext for 30 days</p>
 									<p><strong>Call:</strong> 20mins Free Call/month</p>
 									<p><strong>Surf:</strong> 10 hourse Free Internet Surfing</p>
-									<p><strong>IDD:</strong> Free 2 hours call/month</p>
-		                        
+									<p><strong>IDD:</strong> Free 2 hours call/month</p> -->
+		                        </div>
 	                        </div>
 	                    </div>
 	                    <div>
@@ -83,7 +142,7 @@
 										$cartItems = $cartProdFiltered['addon'];
 										//print_r($cartItems);
 										if($cartItems){
-											foreach($cartItems as $item){
+											foreach($cartItems as $item) {
 									?>
 									
 												<div id="prod-item-<?php echo $item['rowid'] ?>" class="item">
@@ -108,7 +167,7 @@
 	                        <div>
 								<div id="AccessoryCartWidget" class="cartWidget">
 									<?php
-									$cartItems='';
+										$cartItems='';
 										$cartItems = $cartProdFiltered['accessories'];
 										//print_r($cartItems);
 										if($cartItems){
@@ -132,10 +191,24 @@
 	                        </div>
 	                    </div>
 	            </section>   
-	            
-	            <div id="cashoutBox" class="contentbox">
-					<span class="bold">CASHOUT:</span>&nbsp;&nbsp;<span class="cashoutLabel" id="cashoutLabel"><?php echo $this->cart_model->total(true) ?></span>
+	            <div id="pesovalBox" class="contentbox">
+					<span class="bold">PV :</span>&nbsp;&nbsp;<span class="pesovalLabel" id="pesovalLabel"><?php echo $plan_pv; ?></span>
 	            </div>
+	            <div id="cashoutBox" class="contentbox">
+					<span class="bold">CASHOUT :</span>&nbsp;&nbsp;<span class="cashoutLabel" id="cashoutLabel"><?php
+					/**
+					 * Show price if addon and accessories not empty
+					 * 
+					 */
+					$showprice = count($cartProdFiltered['addon']) + count($cartProdFiltered['accessories']);
+					if($showprice > 0) {
+						echo $this->cart_model->total(true);
+					} else {
+						echo number_format($gadget_cash_out,2);
+					}
+					?></span>
+	            </div>
+	            
 	            
 			</div>
 			
