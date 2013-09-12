@@ -25,20 +25,24 @@ class Plan extends MY_Controller
 	{	
 		$this->load->model('estate/accounts_model');
 		
+		$this->load->model('estate/products_model');
+		
 		//TODO: move to model
 		$query = $this->db->get('estate_main_plan');
 		$plans = $query->result();
 		
 		$this->_data->plans = $plans;
 		
-		$query = $this->db->get('estate_plan');
+		$query = $this->db->get('estate_plans');
 		$this->_data->plans_options = $query->result();
 		
 		$this->_data->account_m = $this->accounts_model;
         //temporary token = d25c1265aee883d97ffeec28b7e852cb        
         
-        //$this->products_model->;
-        
+		$this->_data->combos_datas = $this->products_model->get_combos();
+		$this->_data->boosters_datas = $this->products_model->get_boosters();
+		
+		
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
 	
