@@ -240,9 +240,18 @@
 		    $('#acc-order-type  button').click(function() { 
 	            //showPreloader();
 		        //create ajax call here - add to cart order type
-		        $( "#plan-order-page" ).accordion( "option", "active", 1 );
-		        $( "#siderbar-panel" ).accordion( "option", "active", 2 );
-				
+		        /*$( "#plan-order-page" ).accordion( "option", "active", 1 );
+		        $( "#siderbar-panel" ).accordion( "option", "active", 2 );*/
+
+		        $("#acc-order-type .option-wrapper").hide('slow');
+
+		        $("#order-type-section").show('slow');
+
+		    });
+
+		    //click continue button in get additional line
+		    $("#additional-line-continue").click(function(){
+		    	$( '#dialog_enter_mobile' ).dialog( "open" );
 		    }); 
 		    
 		    //PLAN TYPE
