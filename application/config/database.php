@@ -59,7 +59,7 @@ switch (ENVIRONMENT)
 		break;
 	case 'staging':
 		$db['default']['username'] = 'root';
-		$db['default']['password'] = 'root';
+		$db['default']['password'] = '';
 		$db['default']['database'] = 'globe_estate';
 		break;
 	case 'production':

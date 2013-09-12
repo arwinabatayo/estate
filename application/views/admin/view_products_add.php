@@ -18,6 +18,22 @@
 		
 			<form id="form_add_product" class="g_form">
 				
+				<!-- property / launch -->
+				<div class="item">
+					<div class="label">Launch *</div>
+					<div class="input">
+						<select class="g_select" name="property" data-required="1">
+							<option value="0" selected="selected">Select Launch</option>
+							<?php foreach( $properties as $key => $value ){ ?>
+								<?php if( trim($key) != "total_count" ){ ?>
+									<option value="<?php echo $value['property_id']; ?>"><?php echo $value['property_title']; ?></option>
+								<?php } ?>
+							<?php } ?>
+						</select>
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
 				<!-- name -->
 				<div class="item">
 					<div class="label">Name *</div>
@@ -42,7 +58,7 @@
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="description" 
-								maxlength="512"
+								maxlength="255"
 								data-alphanum="1" />
 					</div>
 					<div class="h_clearboth"></div>
@@ -62,22 +78,40 @@
 					<div class="h_clearboth"></div>
 				</div>
 				
-				<!-- color -->
+				<!-- color name -->
 				<div class="item">
-					<div class="label">Color *</div>
+					<div class="label">Color name *</div>
 					<div class="input">
-						<input 	class="	g_inputtext h_fontlucida h_backgroundlight"
-													type="text" 
-													name="color" 
-													maxlength="7" 
-													readonly="readonly" 
-													data-colorpicker="1" 
-													data-required="1" 
-													value="#FFFFFF" />
-						<div 	class="color_indicator" 
-								data-color='#FFFFFF' 
-								style="background: #FFFFFF">
-						</div>
+						<input 	class="g_inputtext" 
+								type="text" 
+								name="color_name" 
+								maxlength="255"
+								data-required="1" />
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
+				<!-- data capacity -->
+				<div class="item">
+					<div class="label">Data capacity</div>
+					<div class="input">
+						<input 	class="g_inputtext" 
+								type="text" 
+								name="data_capacity" 
+								maxlength="255" />
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
+				<!-- network connectivity -->
+				<div class="item">
+					<div class="label">Network connectivity *</div>
+					<div class="input">
+						<input 	class="g_inputtext" 
+								type="text" 
+								name="network_connectivity" 
+								maxlength="255"
+								data-required="1" />
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
@@ -86,11 +120,9 @@
 				<div class="item">
 					<div class="label">Image *</div>
 					<div class="input">
-						<div class="product_image">
-							<div id="product-image-top-overlay">
-								
-							</div>
+						<div class="product_image" id="product_image_wrapper_wrapper">
 							<div id="product_image_wrapper">
+								<input type="hidden" value="" data-image-required="1" data-image-wrapper="product_image_wrapper_wrapper" name="product-image-name" id="product-image-name" />
 							</div>
 							<a id="change_product_image">Upload image</a><div id="upload_result"></div>						
 						</div>
@@ -113,6 +145,19 @@
 					<div class="h_clearboth"></div>
 				</div>
 				
+				<!-- discount -->
+				<div class="item">
+					<div class="label">Discount</div>
+					<div class="input">
+						<input 	class="g_inputtext" 
+								type="text" 
+								name="discount" 
+								maxlength="11"
+								data-is-number="1" />
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
 				<!-- peso value -->
 				<div class="item">
 					<div class="label">Peso value *</div>
@@ -122,6 +167,20 @@
 								name="peso_value" 
 								maxlength="11"
 								data-is-number="1"				
+								data-required="1" />
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
+				<!-- date added -->
+				<div class="item">
+					<div class="label">Date added *</div>
+					<div class="input">
+						<input 	class="g_inputtext dpicker h_backgroundlight" 
+								type="text" 
+								name="date_added" 
+								data-datepicker="1"
+								data-format="yy-mm-dd"		
 								data-required="1" />
 					</div>
 					<div class="h_clearboth"></div>
@@ -153,8 +212,6 @@
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
-				
-				<input type="hidden" name="property_id" value="<?php echo $property_id; ?>" id="property_id">
 			</form>
 			
 		</td></tr>
@@ -166,7 +223,7 @@
 $(function(){
 	placeHolder();
 	checkSidebarStatus();
-	implementColorPicker();
+	implementDatePicker();
 	
 	var btnUpload=$('#change_product_image');
 	var mestatus=$('#upload_result');
@@ -182,14 +239,15 @@ $(function(){
 			displayNotification("message", "Working...");
 		},
 		onComplete: function(file, response){
-			alert(response);
-			return;
 			var data = jQuery.parseJSON(response);
 			files.html('');
 			if(data.status==="success"){
-				var product_image_string = '<input type="hidden" value="' + data.filename + '" name="product-image-name" id="product-image-name">';
-				product_image_string += '<img src="<?php echo $this->config->item('base_product_url') . '_temp/'; ?>'+data.filename+'" title="' + data.filename + '" alt="' + data.filename + '" class="product_image" />';
+				var product_image_string = '<input type="hidden" value="' + data.filename + '" data-image-required="1" data-image-wrapper="product_image_wrapper_wrapper" name="product-image-name" id="product-image-name">';
+				product_image_string += '<img src="<?php echo base_url() . $this->config->item('base_product_url') . '_temp/'; ?>'+data.filename+'" title="' + data.filename + '" alt="' + data.filename + '" class="img_product_image" />';
 				
+				mestatus.html('');
+				
+				$('#product_image_wrapper_wrapper').css('border', '1px solid #CCC');
 				$('#product_image_wrapper').append(product_image_string);
 				displayNotification("success", data.msg);
 			} else{
@@ -200,26 +258,23 @@ $(function(){
 });
 
 $("#btn_add_product").click(function(e){
-	//displayNotification("message", "Working...");
+	displayNotification("message", "Working...");
 	if (validate_form("form_add_product")) {
-		/*
 		$.ajax({
-			url: "<?php echo base_url(); ?>admin/configurations/process_add",
+			url: "<?php echo base_url(); ?>admin/products/process_add",
 			type: "POST",
 			data: $("#form_add_product").serialize(),
 			success: function(response, textStatus, jqXHR){
 				setTimeout(function () {
 					$("#middle_wrapper").html(response);
-					var property_id = <?php echo $property_id; ?>;
-					if (typeof history.pushState != 'undefined') { window.history.pushState("object or string", "Title", "<?php echo base_url(); ?>admin/configurations/property/"+property_id); }
-					displayNotification("success", "New configuration successfully added.");
+					if (typeof history.pushState != 'undefined') { window.history.pushState("object or string", "Title", "<?php echo base_url(); ?>admin/products"); }
+					displayNotification("success", "New product successfully added.");
 				}, 500);
 			},
 			error: function(jqXHR, textStatus, errorThrown){
 				displayNotification("error", "Oops, something went wrong. Your action may or may not have been completed.");
 			}
 		});
-		*/
 	}
 });
 

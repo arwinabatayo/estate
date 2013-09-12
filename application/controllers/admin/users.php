@@ -8,6 +8,18 @@ class Users extends MY_Controller
 	{
 		parent::__construct();
 		if (!$this->session->userdata['logged_in']) { redirect(site_url('admin/logout')); } // logged in?
+		
+		if( $this->session->userdata('user_type') && $this->session->userdata('user_type') < 10 ){ 
+			// is non-ecommerce users
+			// allow access
+		}elseif( $this->session->userdata('user_type') == 10 ){
+			// is superadmin
+			// allow access
+		}else{
+			// is ecommerce users
+			// dont allow access
+			redirect(site_url('admin/accountmanagement')); 
+		}
 	}
 	
 	public function index()
@@ -49,6 +61,13 @@ class Users extends MY_Controller
 								'clients' => $this->populateClients(),
 								'filter_arr' => $filter_arr,  
 								'user_types' => $this->populateUserRoles());
+		//check if capable of ecommerce
+		$templates_allowed = $this->session->userdata('templates_allowed');
+		if( isset($templates_allowed) && count($templates_allowed) > 0 ){
+			if( in_array(6, $templates_allowed) && $this->session->userdata('user_type') == ROLE_SUPER_ADMIN ){
+				$_filter['ecommerce_user_types'] = $this->populateEcommerceUserRoles();
+			}
+		}
 		$_pagination = array(	'page' => 'users',
 								'filter_arr' => $filter_arr,
 								'item_count' => $user_total_count,
@@ -127,7 +146,7 @@ class Users extends MY_Controller
 		$avatar_url = base_url() . "admin/account/avatar/" . $user_id;
 		
 		// determine if permission denied
-		if ($user_type < $user_details['user_type_id']) {
+		if ($user_type < $user_details['user_type_id'] && $user_details['user_type_id'] < ROLE_SUPER_ADMIN) {
 			$_data['sess_user'] = $this->session->userdata;
 			$_data['page'] = "error"; 
 			$_data['content'] = $this->load->view('error/view_error_denied', $_data, TRUE);
@@ -136,6 +155,13 @@ class Users extends MY_Controller
 		}
 	
 		// load response
+		//check if capable of ecommerce
+		$templates_allowed = $this->session->userdata('templates_allowed');
+		if( isset($templates_allowed) && count($templates_allowed) > 0 ){
+			if( in_array(6, $templates_allowed) && $this->session->userdata('user_type') == ROLE_SUPER_ADMIN ){
+				$_data['ecommerce_user_types'] = $this->populateEcommerceUserRoles();
+			}
+		}
 		$_data['sess_user'] = $this->session->userdata;
 		$_data['page'] = "users"; 
 		$_data['user_types'] = $this->populateUserRoles();
@@ -544,9 +570,16 @@ class Users extends MY_Controller
 				$counter++;
 			}
 			}
-		}		
+		}
 		
 		$_data['user_types'] = $user_types;
+		//check if capable of ecommerce
+		$templates_allowed = $this->session->userdata('templates_allowed');
+		if( isset($templates_allowed) && count($templates_allowed) > 0 ){
+			if( in_array(6, $templates_allowed) && $this->session->userdata('user_type') == ROLE_SUPER_ADMIN ){
+				$_data['ecommerce_user_types'] = $this->populateEcommerceUserRoles();
+			}
+		}
 		$_data['sess_user'] = $this->session->userdata;
 		$this->load->view('admin/view_users_add_usertypes', $_data);
 		return;

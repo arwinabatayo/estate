@@ -77,7 +77,7 @@
 	<?php } ?>
 	
 	<!-- user type -->
-	<?php if ($user_types) { ?>
+	<?php if ($user_types || $ecommerce_user_types) { ?>
 	<div class="item h_floatleft h_margin0 h_marginright8">
 		<div class="label h_widthauto h_paddingright10">User Type</div>
 		<div class="input">
@@ -86,6 +86,12 @@
 				<?php foreach ($user_types as $user_type => $ut) { ?>
 					<option value="<?php echo $ut['user_type_id']; ?>" <?php echo ($filter_arr['user_type_id'] == $ut['user_type_id']) ? "selected='selected'" : ""; ?>>
 						<?php echo $ut['title']; ?>
+					</option>
+				<?php } ?>
+				<?php?>
+				<?php foreach( $ecommerce_user_types as $ecommerce_user_type => $eut ){ ?>
+					<option value="<?php echo $eut['user_type_id']; ?>" <?php echo ($filter_arr['user_type_id'] == $eut['user_type_id']) ? "selected='selected'" : ""; ?>>
+						<?php echo $eut['title']; ?>
 					</option>
 				<?php } ?>
 			</select>
