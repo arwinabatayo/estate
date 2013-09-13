@@ -234,7 +234,7 @@
 								   // return;
 								    
 									if(resp.status == 'success'){
-										if( resp.is_globe_subscriber == 'true' && resp.order_type == 'reserve'){
+										if( resp.is_globe_subscriber == 'false' && resp.order_type == 'reserve'){
 											$('#dialog_reserve_form').dialog( "open" );
 											return;
 										}
@@ -524,12 +524,6 @@
 							data: formData,
 							type:'post',
 							success: function(response){
-								
-								//var resp = jQuery.parseJSON( response );
-								
-								//alert ( JSON.stringify(response) );
-								alert ( response );
-								return;
 								
 								var cartItem = '<div id="prod-item-'+resp.rowid+'" class="item" style="display:none"><div class="fleft"><span class="productName block">'+resp.name+'</span><span class="price block arial italic">'+resp.price_formatted+'</span></div><span class="icoDelete"> <a class="btnDelete" href="javascript:void(0)" id="'+resp.rowid+'"><i class="icon-remove"></i></a> </span><br class="clear" /></div>\n';
 								
@@ -847,5 +841,55 @@
 // 						}
 // 					});
 				});
+							
+				// set dialog for application status - gellie
+				$('a#open_application_status').on('click', function(){
+					$( '#dialog_application_status' ).dialog( "open" );
+				});
+
+				// validate reference number - gellie
+				$('form#refnum-verification button').on('click', function(){
+			
+						var s =	$('form#refnum-verification div.status');
+						var refnum = $('input#reference_number').val();
+						// reset error class
+						s.removeClass('alert-error');
+						//e.preventDefault();
+						
+						s.show();
+					    s.html('Sending...Please wait...');
+					    
+					    // may problem pa sa cache
+					    //$(this).attr('disabled',true);
+
+						$.ajax({
+							url: base_url+'home/validate_reference_number',
+							data: 'refnum='+refnum,
+							type:'post',
+							success: function(response){
+								var resp = jQuery.parseJSON( response );
+								
+								if(resp.status == 'success'){
+									$('#e_lbl').html(refnum);
+									s.html(resp.msg);
+									// redirect to status page
+									window.location = resp.status_page_url;
+									//$(this).attr('disabled',false);
+									
+								}else{
+									s.addClass('alert-'+resp.status);
+									s.html(resp.msg);
+								}
+								
+							}, 
+							error: function(){
+								alert('Some error occured or the system is busy. Please try again later');	
+							}
+						});
+				});	
+				
+				
+				
+				
 	});
 </script>

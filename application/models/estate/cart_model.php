@@ -23,7 +23,7 @@ class Cart_model extends CI_Model
 
             $query = $this->db->select($what)
                               ->from($this->tbl_name)
-                              ->where('f_account_id', $account_id)
+                              ->where('account_id', $account_id)
                               ->get();
             $result = $query->row_array();
             $query->free_result();
@@ -43,12 +43,12 @@ class Cart_model extends CI_Model
         if(empty($info) || empty($account_id)) return FALSE;
         if(!is_array($info)) return FALSE;            
 
-        $check_if_exists = $this->_check($account_id, $info);
+        $check_iexists = $this->_check($account_id, $info);
 
-        if($check_if_exists === FALSE) {
+        if($check_iexists === FALSE) {
             $this->delete_cart($account_id);
-            $this->db->set('f_previous_selected', json_encode($info))
-                     ->set('f_account_id', $account_id)
+            $this->db->set('previous_selected', json_encode($info))
+                     ->set('account_id', $account_id)
                      ->insert($this->tbl_name);
             return TRUE;
         } else {
@@ -68,8 +68,8 @@ class Cart_model extends CI_Model
         if(empty($info) || empty($account_id)) return FALSE;
         if(!is_array($info)) return FALSE;            
 
-        $this->db->set('f_previous_selected', json_encode($info))
-                 ->where('f_account_id', $account_id)
+        $this->db->set('previous_selected', json_encode($info))
+                 ->where('account_id', $account_id)
                  ->update($this->tbl_name);
         return TRUE;
     }
@@ -80,10 +80,10 @@ class Cart_model extends CI_Model
                           ->from($this->tbl_name);
 
         if($check_both === TRUE) {
-            $this->db->where('f_account_id', $account_id);
-            $this->db->where('f_previous_selected', json_encode($info));
+            $this->db->where('account_id', $account_id);
+            $this->db->where('previous_selected', json_encode($info));
         } else {
-            $this->db->where('f_account_id', $account_id);
+            $this->db->where('account_id', $account_id);
         }
         $result = $this->db->get();
 
@@ -103,9 +103,9 @@ class Cart_model extends CI_Model
     {
         if($all === FALSE) { 
             if($this->_check($account_id, NULL, FALSE) === FALSE) return false;
-            $this->db->delete($this->tbl_name, array('f_account_id' => $account_id));
+            $this->db->delete($this->tbl_name, array('account_id' => $account_id));
         } else {
-            $this->db->delete($this->tbl_name, array('f_account_id' => $account_id));
+            $this->db->delete($this->tbl_name, array('account_id' => $account_id));
         }
         return TRUE;
     }
@@ -134,59 +134,63 @@ class Cart_model extends CI_Model
     }  
     
     
-    
-    
-    // we must only have 1 gadget on the cart 
+    // we must only have 1 gadget on the cart
     // unset existing then insert new sku configuration
     
-    function remove_gadget() 
+    function remove_gadget_or_plan($type="gadget")
     {
-		
-		$account_id = 1; //TODO get subs id
-		
-		$cart_contents = $this->cart->contents();
-	
-        if(!empty($cart_contents)) {
-			
-            foreach($cart_contents as $k=>$v) {
-        
-				if( $cart_contents[$k]['product_type'] == 'gadget' ){
-	                $item_exist = TRUE;
-	                unset($cart_contents[$k]);
-				}
-
-			}
-        }
-        
-        $this->cart->destroy();
-		
-		$this->cart->insert($cart_contents);
-		
-        /* DB */
-        if(count($cart_contents) == 0 && $item_exist == TRUE) {
-            
-            if( !$this->cart_model->delete_cart($account_id, TRUE) ){
-				die('db error : remove_gadget() ');
-				return FALSE;
-			}
-            
-        } else {
-			
-			$info = array();
-	        
-	        foreach($cart_contents as $kkk=>$vvv) {
-	           unset($vvv['subtotal']);
-	           unset($vvv['rowid']);
-	           $info[] = $vvv;
-	        }
-	        
-            $this->insert_previous_info($account_id, $info);
-            
-        }
-        
-        return TRUE;
-			
-    } 
+    
+    	$account_id = 1; //TODO get subs id
+    
+    	$cart_contents = $this->cart->contents();
+    
+    	if(!empty($cart_contents)) {
+    			
+    		foreach($cart_contents as $k=>$v) {
+    			if($type == "gadget") {
+    				if( $cart_contents[$k]['product_type'] == 'gadget') {
+    					$item_exist = TRUE;
+    					unset($cart_contents[$k]);
+    				}
+    			} elseif ($type == "plan") {
+    				if( $cart_contents[$k]['product_type'] == 'plan') {
+    					$item_exist = TRUE;
+    					unset($cart_contents[$k]);
+    				}
+    			}
+    
+    		}
+    	}
+    
+    	$this->cart->destroy();
+    
+    	$this->cart->insert($cart_contents);
+    
+    	/* DB */
+    	if(count($cart_contents) == 0 && $item_exist == TRUE) {
+    
+    		if( !$this->cart_model->delete_cart($account_id, TRUE) ){
+    			die('db error : remove_gadget() ');
+    			return FALSE;
+    		}
+    
+    	} else {
+    			
+    		$info = array();
+    		 
+    		foreach($cart_contents as $kkk=>$vvv) {
+    			unset($vvv['subtotal']);
+    			unset($vvv['rowid']);
+    			$info[] = $vvv;
+    		}
+    		 
+    		$this->insert_previous_info($account_id, $info);
+    
+    	}
+    
+    	return TRUE;
+    		
+    }
     
 	// store any variable need for cart/order session
 	// Order type, Selected Plan type, etc

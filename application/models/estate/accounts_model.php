@@ -15,8 +15,8 @@ class Accounts_model extends CI_Model
 	{
 		$this->db->trans_start();
 		$query = $this->db->select($what)
-						 ->from('t_accounts')
-						 ->where('f_mobile_number', $mobile_number)
+						 ->from('estate_accounts')
+						 ->where('mobile_number', $mobile_number)
 						 ->get();
                 $result = ($return_array === TRUE) ? $query->row_array() : $query->row();
 		//$query->free_result();
@@ -24,8 +24,24 @@ class Accounts_model extends CI_Model
 		return $result;
 	}
 	
-	function foo(){
-		echo 'BAR';
+	/**
+	 * Get the account address by account_id and address_type.
+	 *
+	 * @param  string  $account_id(required)
+	 * @param  string  $address_type(optional) - (billing or shipping)
+	 * @param  string  what (optional) - specify the fields needed
+	 * @return mixed 
+	 */
+	function get_account_address($account_id, $address_type='billing', $return_array = TRUE, $what = '*')
+	{
+		$query = $this->db->select($what)
+						 ->from('estate_account_addresses')
+						 ->where('address_type', $address_type)
+						 ->where('account_id', $account_id)
+						 ->get();
+                $result = ($return_array === TRUE) ? $query->row_array() : $query->row();
+		if(count($result) == 0) return FALSE;
+		return $result;
 	}
 
 	

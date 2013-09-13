@@ -1,6 +1,6 @@
 		<?php
 			global $breadcrumbs_model; // to do - move this to model
-			
+
 			$breadcrumbs_model = array(
 				1 => array('name'=>'ADD DEVICE','link'=>''),
 				2 => array('name'=>'CHOOSE YOUR PLAN','link'=>'plan'),
@@ -10,7 +10,7 @@
 			);
 
 		?>
-	
+
 	<div class="navbar navbar-inverse navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
@@ -21,11 +21,11 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</a>
-			
+
 				<a class="brand" href="<?php echo base_url(); ?>">Globe Estate</a>
-				
+
 				<div class="nav-collapse">
-					
+
 					<form action="#" class="navbar-search pull-right" method="post" accept-charset="utf-8">						<input type="text" name="term" class="search-query span2" placeholder="Search"/>
 					</form>
 					<ul class="nav pull-right">
@@ -40,23 +40,23 @@
 					<br />
 					<div id="mobile-breadcrumbs">
 						<ul class="nav pull-right">
-						<?php for ($x=1; $x <= count($breadcrumbs_model); $x++){ 	
+						<?php for ($x=1; $x <= count($breadcrumbs_model); $x++){
 							  $cls  = ($x <= $current_step) ? 'current' : '';
 							  $href = ($x <= $current_step) ? base_url(). $breadcrumbs_model[$x]['link'] : 'javascript:void(0)';
 							  $bullet = ($x <= $current_step) ? '<i class="icon-check icon-white"></i>' : $x.'.';
 							?>
 							<li><a id="bc_subnav_step<?php echo $x ?>" href="<?php echo $href ?>" class="<?php echo $cls ?>"><?php echo $bullet ?> <?php echo ucwords( $breadcrumbs_model[$x]['name'] ) ?></a>
-						
+
 						<?php } ?>
                        </ul>
 					</div>
-					
+
 				</div>
 			</div>
 		</div>
 	</div>
-	
-	
+
+
 	<div class="row-fluid">
 		<br />
 		<div class="span7 divcenter sub-menu">
@@ -68,4 +68,28 @@
 		</div>
 	</div>
 
-	
+	<?php // application status - gellie?>
+
+	<div class="globe-dialog" id="dialog_application_status" title="My Application">
+		<div class="span4 textleft noLeftMargin">
+			<p><i class="icon-lock icon-3x fleft"></i>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.<br /> 					<span class="span4 textright">
+
+			</p>
+            <p><a id="lnk_resume_uncomp_transaction" href="javascript: void(0);">Resume Uncompleted Transaction</a></p>
+        </div>
+		<div class="span4">
+        	<form id="refnum-verification" class="form-inline" onsubmit="return false">
+				<fieldset>
+				<div class="control-group ">
+				<label class="control-label">Reference Number</label>
+					<div class="controls">
+						<input type="text" id="reference_number" name="reference_number" class="-medium">
+						<button class="btn btn-primary">Submit</button>
+					</div>
+				</div>
+				<div style="display:none" class="status alert textcenter"></div>
+				</fieldset>
+			</form>
+            <p><a href="javascript: void(0);" id="lnk_forgot_refnum">Forgot Reference Number?</a></p>
+        </div>
+	</div>
