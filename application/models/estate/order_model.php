@@ -13,21 +13,21 @@ class Order_model extends CI_Model
     {
 
     }
-    
+
     function save_order_item()
     {
 
     }
 
     /**
-     * get order by reference number / order number      
+     * get order by reference number / order number
      *
-     * @param  string  order_id 
+     * @param  string  order_id
      * @param  string  what (optional) - specify the fields needed
      * @return array
      */
     function get_order_by_refnum($refnum, $what='*')
-    {   
+    {
         if($refnum == NULL) return FALSE;
 
         $query = $this->db->select($what)
@@ -40,4 +40,5 @@ class Order_model extends CI_Model
         if(count($result) == 0) return FALSE;
         return $result;
     }
+
 }
