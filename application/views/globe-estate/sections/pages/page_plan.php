@@ -124,6 +124,7 @@
 									<?php if($plans_options){ 
 										
 											 foreach($plans_options as $plan) {
+
 										?>
 											<div class="fleft" style="margin-right:12px; height:110px;width:200px; background:url('<?php echo $assets_path ?>images/plans/plan_temp.jpg') no-repeat 50% 50%">
 												<p style="padding:10px 20px 0px 20px;color:#FFF;font-size:22px">
@@ -133,6 +134,7 @@
 												</p>
 												<p style="color:#FFF;font-size:10px; padding:0 20px; min-height: 26px;"><b><?php echo $plan->plan_description ?></b></p>
 												<p style="color:#FFF;font-size:12px; padding:0 20px;"><b>get <?php echo $plan->plan_total_pv ?>PV/mo.</b></p>
+												<div class="my-plan-id" style="display:none"><?php echo $plan->id; ?></div>
 											</div>
 											
 									<?php 
@@ -143,6 +145,35 @@
 										<button  class="btn-large ui-button-success" id="goCombos">CONTINUE</button>
 									</p>
 									</div>
+									<!-- class="row-fluid product-row"-->
+
+									<div id="combo-type" style="display:none;">
+								   							   
+										<div id="combo-type-text" class="span2 product-item" style="display:none;">
+											<img src="http://n-cubator.com/staging-estate/demo/_assets/estate/images/plans/temp/gadget-care-a.png" alt="">
+											<p class="bold">Text</p>
+											<span id="combo-type-text-desc" class="block"></span>
+										</div>	
+										
+										<div id="combo-type-call" class="span2 product-item" style="display:none;">
+											<img src="http://n-cubator.com/staging-estate/demo/_assets/estate/images/plans/temp/gadget-care-a.png" alt="">
+											<p class="bold">Call</p>
+											<span id="combo-type-call-desc" class="block"></span>
+										</div>
+
+										<div id="combo-type-surf" class="span2 product-item" style="display:none;">
+											<img src="http://n-cubator.com/staging-estate/demo/_assets/estate/images/plans/temp/gadget-care-a.png" alt="">
+											<p class="bold">Surf</p>
+											<span id="combo-type-surf-desc" class="block"></span>
+										</div>
+
+										<div id="combo-type-idd" class="span2 product-item" style="display:none;">
+											<img src="http://n-cubator.com/staging-estate/demo/_assets/estate/images/plans/temp/gadget-care-a.png" alt="">
+											<p class="bold">IDD</p>
+											<span id="combo-type-idd-desc" class="block"></span>
+										</div>
+							   		</div>
+
 								</div>
 								
 								<!--END OF PLAN-TYPE BUTTONS -->

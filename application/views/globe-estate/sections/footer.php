@@ -356,9 +356,9 @@
 		        /*$( "#plan-order-page" ).accordion( "option", "active", 1 );
 		        $( "#siderbar-panel" ).accordion( "option", "active", 2 );*/
 
-		        $("#acc-order-type .option-wrapper").hide('slow');
+		        $("#acc-order-type .option-wrapper").hide();
 
-		        $("#order-type-section").show('slow');
+		        $("#order-type-section").show();
 
 		    });
 
@@ -418,6 +418,41 @@
 				$( this ).closest('div').slideUp();
 				
 			});
+
+			$("a.btnAddPlan").parent().parent().each(function(){
+				$(this).click(function(){
+					$.ajax({
+						url: base_url+'plan/getpackageplancombos',
+						data: {'plan_id' : parseInt($(this).children("div.my-plan-id").text()) },
+						type:'post',
+						success: function(response){
+							
+							console.log(response);
+
+							/*console.log(response.data)
+
+							for(var ctr = 0; ctr < response.length; ctr++){
+								console.log(response[ctr]['combo_type']);
+								var combo_type = response[ctr]['combo_type'].toLowerCase();
+								
+								$("#combo-type-" + combo_type).attr('display', 'block')
+							}
+
+							$("#combo-type").show();*/
+							
+						}, 
+						error: function(){
+							alert('Some error occured or the system is busy. Please try again later');	
+						}
+					});
+
+				});
+			})
+
+
+
+			
+
 			
 		
 		<?php } else if($current_controller == 'addons' ){ ?>
