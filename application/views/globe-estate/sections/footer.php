@@ -234,7 +234,7 @@
 								   // return;
 								    
 									if(resp.status == 'success'){
-										if( resp.is_globe_subscriber == 'true' && resp.order_type == 'reserve'){
+										if( resp.is_globe_subscriber == 'false' && resp.order_type == 'reserve'){
 											$('#dialog_reserve_form').dialog( "open" );
 											return;
 										}
@@ -848,6 +848,7 @@
 // 					});
 				});
 				
+				//TEST PUSH;
 			
 				// set dialog for application status - gellie
 				$('a#open_application_status').on('click', function(){
