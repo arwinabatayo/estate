@@ -72,6 +72,7 @@
 	                    <div>
 	                        <h3><a href="#">Choose Your Plan</a></h3>
 	                        <div>
+	                        
 								
 								<!-- START OF PLAN-TYPE TABLE -->
 								<!-- ======================= -->
