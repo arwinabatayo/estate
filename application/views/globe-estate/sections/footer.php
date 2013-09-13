@@ -489,11 +489,11 @@
 					
 					function showHideDelivery(e){
 						if( e == 'pickup'){
-							$("#delivery_pickup").slideUp();
-							$("#delivery_ship").slideDown();
-						}else{
-							$("#delivery_pickup").slideDown();
 							$("#delivery_ship").slideUp();
+							$("#delivery_pickup").slideDown();
+						}else{
+							$("#delivery_ship").slideDown();
+							$("#delivery_pickup").slideUp();
 						}
 					}
 					
@@ -506,6 +506,29 @@
 							$("#shipping_address_field").slideDown();
 						}
 					}
+					
+					// save new shipping address - mark
+					$('form#new-shipping button').click(function(){
+							var formData  = $('form#new-shipping').serialize();
+							var btn = $(this);
+							$.ajax({
+								url: base_url+'order/save_address',
+								data: formData,
+								type:'post',
+								success: function(response){
+									var resp = jQuery.parseJSON( response );
+									//alert(JSON.stringify(resp));
+									if(resp.status == 'success'){
+										alert('New shipping address saved!');
+										btn.attr('disabled',true);
+										$( "#personal-info-page" ).accordion( "option", "active", 2 );
+									}
+								}, 
+								error: function(){
+									alert('Some error occured or the system is busy. Please try again later');	
+								}
+							});
+					});		
 
 			
 		<?php }  ?>
@@ -524,6 +547,8 @@
 							data: formData,
 							type:'post',
 							success: function(response){
+								
+								var resp = jQuery.parseJSON( response );
 								
 								var cartItem = '<div id="prod-item-'+resp.rowid+'" class="item" style="display:none"><div class="fleft"><span class="productName block">'+resp.name+'</span><span class="price block arial italic">'+resp.price_formatted+'</span></div><span class="icoDelete"> <a class="btnDelete" href="javascript:void(0)" id="'+resp.rowid+'"><i class="icon-remove"></i></a> </span><br class="clear" /></div>\n';
 								

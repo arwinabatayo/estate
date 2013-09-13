@@ -43,6 +43,28 @@ class Accounts_model extends CI_Model
 		if(count($result) == 0) return FALSE;
 		return $result;
 	}
+	
+	function save_account_address($data)
+	{
+		if( $this->db->insert('estate_account_addresses',$data) ){
+			return TRUE;
+		}else{
+			return $this->db->_error_message(); 
+		}
+		
+	}
+	
+	function save_personal_info($data)
+	{
+		if( $this->db->insert('estate_account_personal_information',$data) ){
+			return TRUE;
+		}else{
+			return $this->db->_error_message(); 
+		}
+		
+	}
+	
+	
 
 	
 }

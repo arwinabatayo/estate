@@ -27,13 +27,19 @@ class Payment extends MY_Controller
 		$this->_data->current_step        =  5;
 		$this->_data->page                = 'payment';
 		$this->_data->page_title          = 'Payment';
+
 	}
 	
 	public function index()
 	{	
-		//$this->load->model('estate/accounts_model');
 		
-		//$this->_data->account_m = $this->accounts_model;
+		$account_id = 1; //TODO get subs id
+		
+		$this->_data->billing_address = $this->accounts_model->get_account_address($account_id,'billing',FALSE);
+		
+		$this->_data->account_info = $this->accounts_model->get_account_address($account_id);
+		
+		
 		$this->_data->cartItems = $this->cart->contents();
         
 		$this->load->view($this->_data->tpl_view, $this->_data);

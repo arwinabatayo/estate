@@ -44,6 +44,68 @@ class Order extends MY_Controller
 		
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
+	
+	public function save_address()
+	{	
+		$post = (object) $this->input->post();
+		$account_id = 1; //TODO get subs id from
+		
+		//* * * * TODO - validate $post here
+		
+		$out = array(
+			'status' => 'failed',
+			'msg'    => 'Some error occured or the system is busy. Please try again later'
+		);
+		
+		if($_POST){
+			
+			$data = array(
+				'account_id'   => $account_id,	
+				'address_type' => 'shipping',	
+				'unit' 	       => $post->unit,
+				'street' 	   => $post->street,
+				'subdivision'  => '',	
+				'barangay' 	   => $post->barangay,
+				'municipality' => $post->town,	
+				'city' 	       => $post->city,
+				'postal_code'  => $post->postal,
+			);
+			
+			$result = $this->accounts_model->save_account_address($data);
+			
+			if( $result == TRUE ){
+				
+				$this->_save_contact_info($post);
+				$out['status'] = 'success';
+				
+			}else{
+				$out['msg'] = $result;
+			}
+			
+		}
+		
+		echo json_encode($out);
+
+		
+	}
+	
+	private function _save_contact_info($post)
+	{	
+		$account_id = 1; //TODO get subs id from
+		
+		//* * * * TODO - validate $post here
+		
+		$data = array(
+			'account_id'      => $account_id,	
+			'area_code'       => $post->access_code, 
+			'mobile_number'   => $post->mobile_number, 
+			'landline'        => $post->landline, 
+			'network_carrier' => $post->network_carrier,
+
+		);
+		
+		return $this->accounts_model->save_personal_info($data);
+	}
 
 }
 ?>
