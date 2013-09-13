@@ -19,8 +19,8 @@ class Products_model extends CI_Model
             if($category_id == NULL) return FALSE;
             $query = $this->db->select($what)
                                ->from('estate_add_ons')
-                               ->where('f_add_ons_category_id', $category_id)
-                               ->where('f_add_on_status', $status)
+                               ->where('category_id', $category_id)
+                               ->where('status', $status)
                                ->get();
             $result = $query->result_array();
             if(count($result) == 0) return FALSE;
@@ -38,7 +38,7 @@ class Products_model extends CI_Model
 	{
             $query = $this->db->select($what)
                                ->from('estate_accessories')
-                               ->where('f_accessories_status', $status)
+                               ->where('status', $status)
                                ->get();
             $result = $query->result_array();
             if(count($result) == 0) return FALSE;
@@ -55,30 +55,30 @@ class Products_model extends CI_Model
 			
 			if( $type == 'addon' ){
 				
-				$this->db->where('f_add_on_id', $id);
+				$this->db->where('id', $id);
 				$query = $this->db->get('estate_add_ons');
 				$row = $query->row();
-				$out['title']  = $row->f_add_on_title;
-				$out['amount'] = $row->f_add_on_amount;
+				$out['title']  = $row->title;
+				$out['amount'] = $row->amount;
 
 			}else if( $type == 'accessories' ) {
 				
-				$this->db->where('f_accessories_id', $id);
+				$this->db->where('id', $id);
 				$query = $this->db->get('estate_accessories');
 				$row = $query->row();
-				$out['title']  = $row->f_accessories_title;
-				$out['amount'] = $row->f_accessories_amount;
+				$out['title']  = $row->title;
+				$out['amount'] = $row->amount;
 			
 			}else if( $type == 'plan' ){
 				
-				$this->db->where('f_plan_id', $id);
+				$this->db->where('id', $id);
 				$this->db->where('is_active', '1');
 				
 				$query = $this->db->get('estate_plans');
 				$row = $query->row();
-				$out['title']  = $row->f_plan_title;
-				$out['amount'] = $row->f_plan_amount;
-				$out['plan_total_pv'] = $row->f_plan_total_pv;
+				$out['title']  = $row->title;
+				$out['amount'] = $row->amount;
+				$out['plan_total_pv'] = $row->total_pv;
 				
 			}else if( $type == 'gadget' ){
 
@@ -100,12 +100,12 @@ class Products_model extends CI_Model
 	}
 	function get_plan_pv($plan_id) {
 	
-		$this->db->where('f_plan_id', $plan_id);
+		$this->db->where('id', $plan_id);
 	
 		$query = $this->db->get('estate_plans');
 		$row = $query->row();
 		
-		return $row->f_plan_total_pv;
+		return $row->total_pv;
 	}
 	function get_gadget_cash_out($plan_id,$gadget_id) {
 	

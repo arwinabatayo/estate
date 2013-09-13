@@ -265,6 +265,8 @@ class Cart extends CI_Controller {
 			$amount = $_fields['amount'];
 
 			if( $d->product_type == 'combos' ) {
+				$out['is_display'] = "yes";
+				
 				$qty = $this->checkProductIfExist($d->product_type, $d->product_id, "minus");
 		
 				$out['pvcashout'] = $cart_input['pvcashout'] = $this->products_model->compute_cashout($d->current_cashout, $d->planpv, $d->combopv);
@@ -272,7 +274,7 @@ class Cart extends CI_Controller {
 				$pv = $d->combopv;
 				$out['status'] = 'success';
 				if($qty == 0) {
-					$out['is_display'] = 'yes';
+					$deleteStatus = json_decode($this->delete('array'));
 				}
 			}
 				
@@ -361,9 +363,8 @@ class Cart extends CI_Controller {
 		return $qty;
 	}
 	
-    public function delete()
+    public function delete($returnType='json')
     {
-    
 		$d = (object) $this->input->post();
 		$account_id = 1; //TODO get subs id
 		
@@ -418,7 +419,11 @@ class Cart extends CI_Controller {
 		
 		}
         
-		echo json_encode($out);
+		if($returnType == 'array') {
+			return $out;
+		} else {
+			echo json_encode($out);
+		}
 		
     }
     

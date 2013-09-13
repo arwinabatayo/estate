@@ -80,20 +80,20 @@
 									<?php if($plans){ 
 										$i=1;
 											foreach($plans as $row){
-												if($row->f_main_plan_status > 1){
+												if($row->status > 1){
 										?>
 									<!-- PRICING TABLE -->
 									<div class="noLeftMargin">
 										<div class="plan over <?php echo ($i==2) ? 'best-value':''?>">
 											<div class="header">
 												<div class="price-wrapper">
-													<h4><?php echo $row->f_main_plan_title 	?></h4>
+													<h4><?php echo $row->title 	?></h4>
 													<div class="price"><span>Vestibulum Varius</span></div>
 												</div>
 											</div>
 											<ul>
-												<li><?php echo $row->f_main_plan_description ?></li>
-												<li><button class="btn-large ui-button-success" rel="<?php echo $row->f_main_plan_title ?>" id="<?php echo $row->f_main_plan_id ?>">Select Plan Type!</button></li>
+												<li><?php echo $row->description ?></li>
+												<li><button class="btn-large ui-button-success" rel="<?php echo $row->title ?>" id="<?php echo $row->id ?>">Select Plan Type!</button></li>
 											</ul>
 										</div>	
 									</div>
@@ -126,12 +126,12 @@
 										?>
 											<div class="fleft" style="margin-right:12px; height:110px;width:200px; background:url('<?php echo $assets_path ?>images/plans/plan_temp.jpg') no-repeat 50% 50%">
 												<p style="padding:10px 20px 0px 20px;color:#FFF;font-size:22px">
-													<a style="color:#FFF" class="btnAddPlan" data-pv="<?php echo $plan->f_plan_total_pv ?>" data-id="<?php echo $plan->f_plan_id ?>" data-name="<?php echo $plan->f_plan_title ?>" href="javascript:void(0)">
-														<?php echo $plan->f_plan_title ?>
+													<a style="color:#FFF" class="btnAddPlan" data-pv="<?php echo $plan->total_pv ?>" data-id="<?php echo $plan->id ?>" data-name="<?php echo $plan->title ?>" href="javascript:void(0)">
+														<?php echo $plan->title ?>
 													</a>
 												</p>
-												<p style="color:#FFF;font-size:10px; padding:0 20px; min-height: 26px;"><b><?php echo $plan->f_plan_description ?></b></p>
-												<p style="color:#FFF;font-size:12px; padding:0 20px;"><b>get <?php echo $plan->f_plan_total_pv ?>PV/mo.</b></p>
+												<p style="color:#FFF;font-size:10px; padding:0 20px; min-height: 26px;"><b><?php echo $plan->plan_description ?></b></p>
+												<p style="color:#FFF;font-size:12px; padding:0 20px;"><b>get <?php echo $plan->plan_total_pv ?>PV/mo.</b></p>
 											</div>
 											
 									<?php 
