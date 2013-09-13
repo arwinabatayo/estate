@@ -525,12 +525,6 @@
 							type:'post',
 							success: function(response){
 								
-								//var resp = jQuery.parseJSON( response );
-								
-								//alert ( JSON.stringify(response) );
-								alert ( response );
-								return;
-								
 								var cartItem = '<div id="prod-item-'+resp.rowid+'" class="item" style="display:none"><div class="fleft"><span class="productName block">'+resp.name+'</span><span class="price block arial italic">'+resp.price_formatted+'</span></div><span class="icoDelete"> <a class="btnDelete" href="javascript:void(0)" id="'+resp.rowid+'"><i class="icon-remove"></i></a> </span><br class="clear" /></div>\n';
 								
 								if(resp.status == 'success' && resp.rowid){
@@ -847,9 +841,7 @@
 // 						}
 // 					});
 				});
-				
-				//TEST PUSH;
-			
+							
 				// set dialog for application status - gellie
 				$('a#open_application_status').on('click', function(){
 					$( '#dialog_application_status' ).dialog( "open" );

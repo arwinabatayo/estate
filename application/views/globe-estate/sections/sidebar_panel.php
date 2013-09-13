@@ -32,21 +32,55 @@
 				<br class="clear"/>
 	            <section class="jq-accordion" id="siderbar-panel">
 
+						<?php
+							//TODO - move this object to session after authentication - mark
+						    $user = $this->accounts_model->get_account_info_by_id('9151178863',false);	
+						?>
 	                    <div>
 	                        <h3><a href="#">My Account - 0915-2211334</a></h3>
 	                        <div>
-								<p><strong>Mobile Number:</strong> 0915-2211334</p>
-								<p><strong>Account #:</strong> 0023197538299</p>
+							<?php if($user){ ?>
+								<?php if($user->mobile_number){ ?>
+								<p><strong>Mobile Number:</strong> <?php echo $user->mobile_number ?></p>
+								<?php } ?>
+								
+								<?php if($user->account_id ){ ?>
+								<p><strong>Account #:</strong> <?php echo $user->account_id ?></p>
+								<?php } ?>
+								
+								<?php if($user->account_id ){ //TODO: get from account_plan ?>
 								<p><strong>Plan:</strong> 3799</p>
+								<?php } ?>
+								
+								<?php if($user->account_id ){ //TODO get from DB ?>
 								<p><strong>Category:</strong> Consumer</p>
-								<p><strong>Name:</strong> Allan V. Argosino</p>
-								<p><strong>Lock-in Duration:</strong> December 25, 2013</p>
-								<p><strong>Outstanding Balance:</strong> Php 5,500.00</p>
-								<p><strong>Due Date:</strong> October 15, 2013</p>
-								<p><strong>Credit Limit:</strong> Php 10,000</p>
-								<p><strong>Overdue:</strong> Php 8,000</p>
-	                        
-	                        </div>
+								<?php } ?>
+								
+								<?php if($user->name && $user->surname){ ?>
+								<p><strong>Name:</strong> <?php echo $user->name.' '.$user->surname ?></p>
+								<?php } ?>
+								
+								<?php if($user->lockin_duration ){ ?>
+								<p><strong>Lock-in Duration:</strong> <?php echo date('M d, Y',strtotime($user->lockin_duration) ) ?></p>
+								<?php } ?>
+								
+								<?php if($user->outstanding_balance ){ ?>
+								<p><strong>Outstanding Balance:</strong> Php <?php echo number_format($user->outstanding_balance,2) ?></p>
+								<?php } ?>
+								
+								<?php if($user->due_date  ){ ?>
+								<p><strong>Due Date:</strong> <?php echo date('M d, Y',strtotime($user->due_date) ) ?></p>
+								<?php } ?>
+								
+								<?php if($user->credit_limit ){ ?>
+								<p><strong>Credit Limit:</strong> Php <?php echo number_format($user->credit_limit,2) ?></p>
+								<?php } ?>
+								
+								<?php if($user->account_id ){ //TODO not in DB ?>
+								<p><strong>Overdue:</strong> Php <?php echo number_format($user->credit_limit,2) ?></p>
+								<?php } ?>
+								
+							<?php } ?>	
 	                    </div>
 	                    
 	                    <div>
