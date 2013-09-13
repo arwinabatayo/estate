@@ -116,7 +116,7 @@ class Home extends MY_Controller
 		  "token"                => "",
 		  "order_type"           => "",
 		  "next_page"            => "",
-		  "is_globe_subscriber"  => "true", // if false dialogbox(Reserve Form) will show
+		  "is_globe_subscriber"  => "false", // if false dialogbox(Reserve Form) will show
 		);
 		
 		$hasError = false;

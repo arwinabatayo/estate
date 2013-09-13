@@ -1,55 +1,55 @@
 <div id="left-siderbar" class="span3">
 
-	<div class="line-tab">LINE 1</div>	
+	<div class="line-tab">LINE 1</div>
 	<br class="clear"/>
     <section class="jq-accordion" id="siderbar-panel">
             <div>
             	<?php $user = $account;?>
-                <h3><a href="#">My Account - <?php echo $user->f_mobile_number; ?></a></h3>
+                <h3><a href="#">My Account - <?php echo $user->mobile_number; ?></a></h3>
                 <div>
-					<?php if($user->f_mobile_number){ ?>
-					<p><strong>Mobile Number:</strong> <?php echo $user->f_mobile_number ?></p>
+					<?php if($user->mobile_number){ ?>
+					<p><strong>Mobile Number:</strong> <?php echo $user->mobile_number ?></p>
 					<?php } ?>
-					
-					<?php if($user->f_account_id ){ ?>
-					<p><strong>Account #:</strong> <?php echo $user->f_account_id ?></p>
+
+					<?php if($user->account_id ){ ?>
+					<p><strong>Account #:</strong> <?php echo $user->account_id ?></p>
 					<?php } ?>
-					
-					<?php if($user->f_account_id ){ //TODO: get from account_plan ?>
+
+					<?php if($user->account_id ){ //TODO: get from account_plan ?>
 					<p><strong>Plan:</strong> 3799</p>
 					<?php } ?>
-					
-					<?php if($user->f_account_id ){ //TODO get from DB ?>
+
+					<?php if($user->account_id ){ //TODO get from DB ?>
 					<p><strong>Category:</strong> Consumer</p>
 					<?php } ?>
-					
-					<?php if($user->f_name && $user->f_surname){ ?>
-					<p><strong>Name:</strong> <?php echo $user->name.' '.$user->surname ?></p>
+
+					<?php if($user->name && $user->surname){ ?>
+					<p><strong>Name:</strong> <?php echo $user->name . ' ' . $user->surname ?></p>
 					<?php } ?>
-					
-					<?php if($user->f_lockin_duration ){ ?>
-					<p><strong>Lock-in Duration:</strong> <?php echo date('M d, Y',strtotime($user->f_lockin_duration) ) ?></p>
+
+					<?php if($user->lockin_duration ){ ?>
+					<p><strong>Lock-in Duration:</strong> <?php echo date('M d, Y',strtotime($user->lockin_duration) ) ?></p>
 					<?php } ?>
-					
-					<?php if($user->f_outstanding_balance ){ ?>
-					<p><strong>Outstanding Balance:</strong> Php <?php echo number_format($user->f_outstanding_balance,2) ?></p>
+
+					<?php if($user->outstanding_balance ){ ?>
+					<p><strong>Outstanding Balance:</strong> Php <?php echo number_format($user->outstanding_balance,2) ?></p>
 					<?php } ?>
-					
-					<?php if($user->f_due_date){ ?>
-					<p><strong>Due Date:</strong> <?php echo date('M d, Y',strtotime($user->f_due_date) ) ?></p>
+
+					<?php if($user->due_date){ ?>
+					<p><strong>Due Date:</strong> <?php echo date('M d, Y',strtotime($user->due_date) ) ?></p>
 					<?php } ?>
-					
-					<?php if($user->f_credit_limit ){ ?>
-					<p><strong>Credit Limit:</strong> Php <?php echo number_format($user->f_credit_limit,2) ?></p>
+
+					<?php if($user->credit_limit ){ ?>
+					<p><strong>Credit Limit:</strong> Php <?php echo number_format($user->credit_limit,2) ?></p>
 					<?php } ?>
-					
-					<?php if($user->f_account_id ){ //TODO not in DB ?>
-					<p><strong>Overdue:</strong> Php <?php echo number_format($user->f_credit_limit,2) ?></p>
+
+					<?php if($user->account_id ){ //TODO not in DB ?>
+					<p><strong>Overdue:</strong> Php <?php echo number_format($user->credit_limit,2) ?></p>
 					<?php } ?>
                 </div>
             </div>
-    </section>   
-    
+    </section>
+
 </div>
 
 <div id="main-page" class="span9">
@@ -66,53 +66,61 @@
 		                <th>Total</th>
 		              </tr>
 		            </thead>
-		            
-		            <?php 
-		            		foreach ($orders as $item) {
+
+		            <?php
+		            		// load model orderitem
+		            		$this->load->model('estate/orderitem_model');
+		            		$total = 0;
+		            		// display all order items
+		            		foreach ($order_items as $item) {
+		            			// get subtotal per item
+		            			$subtotal = $this->orderitem_model->get_subtotal_by_orderitem_id( $item->id );
 						?>
 				            <tr id="prod-item-<?php echo $item->id; ?>">
-				              <td> 
-				              
+				              <td>
+				              	<img src="<?php echo $item->product_image; ?>" />
 				               </td>
 				              <td>
-								  <span class="fleft"><?php echo $item->f_product_name .'/'. $item->f_size; ?></span>
+								  <span class="fleft"><?php echo $item->product_name . " / " . $item->product_data_capacity; ?></span>
 								  <br/>
-								  <span class="fleft"><?php echo 'package plan test' ?></span>
+								  <span class="fleft"><?php /*TODO*/ echo 'show package plan' ?></span>
 							  </td>
 				              <td align="center" class="textcenter"><?php echo $item->quantity;?></td>
-				              
-				              <td><?php echo $item->f_product_amount; ?></td>
-				              <td> <?php echo isset($item->discount) ? 'source unknown' : '' ?> </td>
-				              <td><?php echo 'Php ' . ($item->quantity * $item->f_product_amount); ?></td>
+
+				              <td><?php echo $item->product_amount; ?></td>
+				              <td> <?php echo $item->percent_discount; ?> </td>
+				              <td><?php echo 'Php ' .  number_format($subtotal, 2); ?></td>
 				            </tr>
-		            
-		            <?php 
-							} 
-						
+
+		            <?php
+		            		// combine all subtotal
+		            		$total += $subtotal;
+						}
 					?>
-						
+
 		            <tr>
 		              <td colspan="4"></td>
 		              <td><strong>Sub total</strong></td>
-		              <?php // TODO : changed to subtotal from orders table ?>
-		              <td><span><?php echo $this->cart_model->get_items_subtotal(true)  ?></span> </td>
+		              <td><span><?php echo 'Php ' . number_format($total, 2);  ?></span> </td>
 		            </tr>
 		            <tr>
 		              <td colspan="4"></td>
 		              <td><strong>Shipping &amp; Handling</strong></td>
-		              <?php // TODO : changed to shipping fee from orders table ?>
-		              <td><?php echo $this->cart_model->get_shipping_fee(true)  ?></td>
+		              <?php // add shipping total and handling fee from orders
+		              		$shipping_handling = $order['shipping_total'] + $order['handling_fee'];
+		              ?>
+		              <td><?php echo $shipping_handling; ?></td>
 		            </tr>
 		            <tr>
 		              <td colspan="4"></td>
 		              <td><strong>Total</strong></td>
-		              <?php // TODO : changed to total from orders table ?>
-		              <td><span class="cashoutLabel"><?php echo $this->cart_model->total(true) ?></span></td>
+		              <?php // compute grand total = subtotal + shipping + handling
+		              		$tax_amount = $order['tax'] ? $total * ($order['tax'] / 100) : 0;
+		              		$grand_total = $shipping_handling + ($total - $tax_amount);
+		              ?>
+		              <td><span class="cashoutLabel"><?php echo  'Php ' . number_format($grand_total, 2); ?></span></td>
 		            </tr>
 			</table>
             </div>
-
-
-    </section> 
-	
+    </section>
 </div>
