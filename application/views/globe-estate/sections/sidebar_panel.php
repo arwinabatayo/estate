@@ -2,6 +2,7 @@
 	<?php
 	//hassle to paxencia na, need to separate prod type into basket (accordion)
 		
+		//TODO - add to table
 		$cartProdFiltered = array('accessories'=>array(),'addon'=>array(),'plan'=>array(), 'combos'=>array(), 'boosters'=>array()); //store it on each key(prod type)
 	
 		$cartItems = $this->cart->contents();

@@ -42,8 +42,9 @@ class Plan extends MY_Controller
 		$this->_data->combos_datas = $this->products_model->get_bundles(2);
 		$this->_data->boosters_datas = $this->products_model->get_bundles(1);
 		
-		
+		//echo "<pre>"; var_dump($this->_data); exit;
 		$this->load->view($this->_data->tpl_view, $this->_data);
+		//$this->load->view("section/plan", $this->_data);
 	}
 	
 
@@ -72,6 +73,48 @@ class Plan extends MY_Controller
 		//var_dump($this->_data->package_plan_gadget_cashout);
 		return $this->_data->package_plan_gadget_cashout;
 	}
+
+	public function sendMail()
+	{
+		$email = $this->input->get('email');
+
+		
+				
+		if($email){
+			if (valid_email($email)) {
+				$this->load->helper('email');
+				$is_sent = $this->_sendMail($email);
+			} else {
+				
+			}
+		} else {
+
+		}
+	}
+
+	private function _sendMail($email_to)
+    {
+       
+        $this->load->library('email');
+        
+        $verification_code = $this->_create_hash($email_to);
+        
+        $message = array(
+         'name'              => $email_to,
+         'verification_code' => $verification_code,
+         'verification_url'  => base_url().'home/verify/'.$verification_code.'?e='.$email_to,
+        );
+        
+        return $this->email->send_email($email_to,'no-reply@project-estate.com','Globe Estate - Account Verification',$message,'view_activation');
+        //$mail_status = $this->email->send_email_api($email_to, 'Globe Estate - Account Verification', 'view_activation', $message);
+    }
+    
+    //move this function to helper -- SOON
+    private function _create_hash($key=''){
+		$secret_key = 'gL0b3-E$sT4te'.date('m-d-y');
+		return md5($key.$secret_key);
+	}
+
 
 }
 ?>

@@ -8,16 +8,66 @@ class Order_model extends CI_Model
             parent::__construct();
     }
 
-
-    function save_order()
+	// cart to order - mark
+    function save_order($data=array())
     {
+		
+		$cartItems = $data['items'];
+		
+		// not needed anymore
+		unset($data['items']);
+		
+		if( count($data)>0 ){
+			
+			$this->db->insert('estate_orders', $data);
+			$id = $this->db->insert_id();
+			
+			//create a unique order number
+			//unix time stamp + unique id of the order just submitted.
+			$order	= array('order_number'=> date('U').$id);
+			
+			$this->db->where('id', $id);
+			$this->db->update('estate_orders', $order);
+						
+			//return the order id 
+			$order_number = $order['order_number'];	
+			
+			//save order items
+			if($cartItems && $id)
+			{
+				// clear existing order items
+				$this->db->where('order_id', $id)->delete('estate_order_items');
+				
+				// update order items
+				foreach($cartItems as $rowid => $item)
+				{
+					// not needed anymore
+					unset($item['rowid']);
+					
+					$save				= array();
+					
+					$save['cid']     	    = '0';
+					$save['order_id']	    = (int) $id;
+					$save['product_id']     = (int) $item['product_id'];
+					$save['quantity'] 	    = (int) $item['qty'];
+					$save['product_type'] 	= $item['product_type'];
+					$save['product_info']	= serialize($item); //save each cart info
 
+					$this->db->insert('estate_order_items', $save);
+				}
+				
+			}
+			
+			return $order_number;
+		
+		}else{
+		
+			return FALSE;
+		}
+		
+		
     }
 
-    function save_order_item()
-    {
-
-    }
 
     /**
      * get order by reference number / order number
