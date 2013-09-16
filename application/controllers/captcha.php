@@ -52,8 +52,6 @@ class Captcha extends CI_Controller {
                         if($sms_status == TRUE) {
                             $this->load->model('estate/networks_model');
                             $this->networks_model->insert_sms_verification($mobile, $verification_code);
-                            $this->session->unset_userdata('current_subscriber_mobileno');
-                            $this->session->set_userdata('current_subscriber_mobileno', $mobile);
                             $result['msg']    = 'SMS successfully sent to you mobile number!';
                         } else {
                             $result['status'] = "error";
