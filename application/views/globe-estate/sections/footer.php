@@ -356,9 +356,32 @@
 		        /*$( "#plan-order-page" ).accordion( "option", "active", 1 );
 		        $( "#siderbar-panel" ).accordion( "option", "active", 2 );*/
 
-		        $("#acc-order-type .option-wrapper").hide('slow');
 
-		        $("#order-type-section").show('slow');
+		        $(this).parent().parent().parent().children("div.header").children("div.price-wrapper").children("h4").each(function(){
+		        	if($(this).text() == "GET ADDITIONAL LINE"){
+				        $("#acc-order-type .option-wrapper").hide('slow');
+
+				        $("#order-type-section").show('slow');
+
+				        $("#plantype-options").show();
+
+				        $("a.btnAddPlan").parent().parent().each(function(){
+				        	$(this).hide();
+				        });
+
+				        $("#goCombos").parent().hide();
+				        $("#goPackagePlanCombos").parent().show();
+
+
+				        $("#goPackagePlanCombos").click(function(){
+				        	window.location = "/estate/addons"
+				        })
+				    }
+
+		        });
+
+
+
 
 		    });
 
@@ -382,6 +405,8 @@
 				});
 
 
+		    	$( "#plan-order-page" ).accordion( "option", "active", 1 );
+		        $( "#siderbar-panel" ).accordion( "option", "active", 2 );
 		    }); 
 		    
 		    //PLAN TYPE
@@ -432,7 +457,7 @@
 				
 			});
 			// jez
-			/*$("a.btnAddPlan").parent().parent().each(function(){
+			$("a.btnAddPackagePlan").parent().parent().each(function(){
 				$(this).click(function(){
 					$.ajax({
 						url: base_url+'plan/getpackageplancombos',
@@ -445,9 +470,9 @@
 
 							for(var ctr = 0; ctr < resp.length; ctr++){
 								//console.log(resp[ctr]['combo_type']);
-								var combo_type = resp[ctr]['combo_type'].toLowerCase();
+								var combo_type = resp[ctr]['category'].toLowerCase();
 								
-								$("#combo-type-" + combo_type + "-desc").text(resp[ctr]['combo_desc']);
+								$("#combo-type-" + combo_type + "-desc").text(resp[ctr]['description']);
 								$("#combo-type-" + combo_type).css('display', 'block')
 
 							}
@@ -481,7 +506,7 @@
 					});
 			
 				});
-			})*/
+			});
 
 
 
@@ -525,8 +550,7 @@
 						}
 					}
 				});
-				
-  <?php } else if($current_controller == 'payment' ){ ?>
+		<?php } else if($current_controller == 'payment' ){ ?>
 					//$( "#personal-info-page" ).accordion({active: 1});
 					
 				    $('#personal-info-page  button.goNext').click(function() {
@@ -561,6 +585,10 @@
 						}else{
 							$("#delivery_ship").slideDown();
 							$("#delivery_pickup").slideUp();
+							$("#delivery_ship").slideDown();
+						}else{
+							$("#delivery_pickup").slideDown();
+							$("#delivery_ship").slideUp();
 						}
 					}
 					
@@ -595,35 +623,9 @@
 									alert('Some error occured or the system is busy. Please try again later');	
 								}
 							});
-					});	
-					
-					// Proceed to Payment Gateway - mark
-					// Store Order Config: Delivery Mode, Shipping Address, Payment Option
-					$('button#btnProceedToPayment').click(function(){
-						var d  = $('input[name="delivery_mode"]:checked').val();
-						var p  = $('input[name="payment_option"]:checked').val();
-						var s  = $('input[name="shipping_address"]:checked').val();
-						
-							$.ajax({
-								url: base_url+'order/save_payment_shipping_config',
-								data: 'delivery_mode='+d+'&payment_option='+p+'&shipping_address='+s,
-								type: 'post',
-								success: function(response){
-
-									var resp = jQuery.parseJSON( response );
-									
-									if(resp.status == 'success'){
-									    window.location.href= base_url+'payment/gateway';
-									}
-								}, 
-								error: function(){
-									alert('Some error occured or the system is busy. Please try again later');	
-								}
-							});
-						
-					});	
+					});		
 			
-		  <?php }  ?>
+		<?php }  ?>
 		
 				$('form.addtoCart img').click(function(){
 						var thisID = $(this).parent('form').attr('id');
@@ -829,14 +831,12 @@
 									if( resp.product_type == 'combos'){
 										$("#CombosCartWidget #prod-item-"+resp.rowid).remove();
 										$("#CombosCartWidget").append('<div id="prod-item-'+resp.rowid+'" class="item" style="display:none">'+
-												'<div class="fleft">'+
-												'<span class="productName block">'+comboNAME+'</span>'+
-												'<span class="productName block" id="prod-qty-'+resp.rowid+'" style="margin-left:15px;"  data-id="'+resp.product_id+'" data-name="'+resp.name+'" data-pv="'+resp.this_pv_value+'" data-cashout="" data-planpv="" >'+
-													
-												'</span>'+
+												'<div class="fleft" style="width:95%;">'+
+												'<span class="productName block fleft"><b>'+comboNAME+'</b></span>'+
+												'<span class="productName block fleft" id="prod-qty-'+resp.rowid+'" style="margin-left:15px;"  data-id="'+resp.product_id+'" data-name="'+resp.name+'" data-pv="'+resp.this_pv_value+'" data-product-type="'+resp.product_type+'" data-cashout="" data-planpv="" ></span>'+
 											'</div>'+
 											'<span class="icoDelete">'+
-											'<a href="javascript:void(0)" class="btnDeleteCombos" data-id="'+resp.product_id+'" data-name="'+resp.name+'" data-pv="'+resp.this_pv_value+'" data-cashout="" data-planpv=""  id="'+resp.rowid+'" rel="'+resp.name+'">'+
+											'<a href="javascript:void(0)" class="btnDeleteCombos" data-id="'+resp.product_id+'" data-name="'+resp.name+'" data-pv="'+resp.this_pv_value+'" data-cashout="" data-planpv="" data-product-type="'+resp.product_type+'"  id="'+resp.rowid+'" rel="'+resp.name+'">'+
 											'<i class="icon-remove"></i></a> </span><br class="clear" /></div>\n');
 									} else {
 									    basket.append(resp.name);
@@ -863,9 +863,9 @@
 												
 												var resp2 = jQuery.parseJSON( response );
 												var cartItem = '<div id="prod-item-'+resp2.rowid+'" class="item" style="display:none">'+
-												'<div class="fleft">'+
-													'<span class="productName block">'+comboNAME+'</span>'+
-													'<span class="productName block" id="prod-qty-'+resp2.rowid+'" style="margin-left:15px;"  data-id="'+resp2.product_id+'" data-name="'+resp2.name+'" data-pv="'+resp2.pv+'" data-cashout="" data-planpv="" >'+
+												'<div class="fleft" style="width:95%;">'+
+													'<span class="productName block fleft"><b>'+comboNAME+'</b></span>'+
+													'<span class="productName block fleft" id="prod-qty-'+resp2.rowid+'" style="margin-left:15px;"  data-id="'+resp2.product_id+'" data-name="'+resp2.name+'" data-pv="'+resp2.pv+'" data-cashout="" data-planpv="" >'+
 														
 													'</span>'+
 												'</div>'+
@@ -933,7 +933,7 @@
 									$("#BoostersCartWidget #prod-item-"+resp.rowid).remove();
 									$("#BoostersCartWidget").append('<div id="prod-item-'+resp.rowid+'" class="item" style="display:none">'+
 											'<div class="fleft">'+
-											'<span class="productName block" style="max-width:199px;">'+resp.name+'</span>'+
+											'<span class="productName block" style="max-width:199px;"><b>'+resp.name+'</b></span>'+
 											'</span>'+
 										'</div>'+
 										'<span class="icoDelete">'+
@@ -961,7 +961,7 @@
 												
 												var cartItem = '<div id="prod-item-'+resp2.rowid+'" class="item" style="display:none">'+
 												'<div class="fleft">'+
-													'<span class="productName block" style="max-width:199px;">'+name+'</span>'+
+													'<span class="productName block" style="max-width:199px;"><b>'+name+'</b></span>'+
 													'</span>'+
 												'</div>'+
 												'<span class="icoDelete">'+
@@ -996,9 +996,7 @@
 	 					});
 						
 					});
-					
 				});
-
 				// set dialog for resume uncomp transaction - gellie
 				$('a#open_resume_uncomp_transaction').on('click', function(){
 					$( '#dialog_application_status' ).dialog( "close" );
@@ -1010,7 +1008,7 @@
 				
 				// validate email and captcha code - gellie
 				$('form#resume-uncomp-transaction button').on('click', function(){
-
+			
 						var s =	$('form#resume-uncomp-transaction div.status');
 						// TODO : add validation for email
 						var email = $('input#email').val();
@@ -1019,10 +1017,14 @@
 
 						// reset error class
 						s.removeClass('alert-error');
+						//e.preventDefault();
 						
 						s.show();
 					    s.html('Sending...Please wait...');
 					    
+					    // may problem pa sa cache
+					    //$(this).attr('disabled',true);
+
 						$.ajax({
 							url: base_url+'home/send_saved_transaction',
 							data: 'email='+email+'&code='+code_id,
