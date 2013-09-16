@@ -75,7 +75,7 @@
 			<p><i class="icon-lock icon-3x fleft"></i>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.<br /> 					<span class="span4 textright">
 
 			</p>
-            <p><a id="lnk_resume_uncomp_transaction" href="javascript: void(0);">Resume Uncompleted Transaction</a></p>
+            <p><a id="open_resume_uncomp_transaction" href="javascript: void(0);">Resume Uncompleted Transaction</a></p>
         </div>
 		<div class="span4">
         	<form id="refnum-verification" class="form-inline" onsubmit="return false">
@@ -91,5 +91,32 @@
 				</fieldset>
 			</form>
             <p><a href="javascript: void(0);" id="lnk_forgot_refnum">Forgot Reference Number?</a></p>
+        </div>
+	</div>
+
+	<div class="globe-dialog" id="dialog_resume_uncomp_transaction" title="Resume Uncompleted Transaction">
+		<div class="span4 textleft noLeftMargin">
+			<p><i class="icon-lock icon-3x fleft"></i>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.<br />
+			 	<span class="span4 textright">
+			</p>
+        </div>
+		<div class="span4">
+        	<form id="resume-uncomp-transaction" class="form-inline" onsubmit="return false">
+				<fieldset>
+				<div class="control-group ">
+				<label class="control-label">Email</label>
+					<div class="controls">
+						<input type="text" id="email" name="email" class="-medium">
+					</div>
+				<label class="control-label">Enter characters you see</label>
+				<!-- INSERT CAPTCHA IMAGE HERE -->
+					<div class="controls">
+						<input type="text" id="captcha-input" name="captcha-input" class="-medium">
+						<button class="btn btn-primary">Submit</button>
+					</div>
+				</div>
+				<div style="display:none" class="status alert textcenter"></div>
+				</fieldset>
+			</form>
         </div>
 	</div>
