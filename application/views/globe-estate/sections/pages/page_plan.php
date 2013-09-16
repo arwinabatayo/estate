@@ -120,9 +120,9 @@
 									
 									</div>
 									<br />
-									<?php if($plans_options){ 
+									<?php var_dump($combos_datas); if($combos_datas){ 
 										
-											 foreach($plans_options as $plan) {
+											 foreach($combos_datas as $plan) {
 										?>
 											<div class="fleft" style="margin-right:12px; height:110px;width:200px; background:url('<?php echo $assets_path ?>images/plans/plan_temp.jpg') no-repeat 50% 50%">
 												<p style="padding:10px 20px 0px 20px;color:#FFF;font-size:22px">

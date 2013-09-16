@@ -364,8 +364,20 @@
 
 		    //click continue button in get additional line
 		    $("#additional-line-continue").click(function(){
-		    	$( '#dialog_enter_mobile' ).dialog( "open" );
+		    	
 		    	//$( '#dialog_enter_mobile' ).dialog( "close" );
+		    	$.ajax({
+					url: base_url+'plan/sendEmail',
+					data: {'email' : "xerenader@gmail.com" },
+					type:'post',
+					success: function(response){
+						$( '#dialog_enter_mobile' ).dialog( "open" );
+						
+					}, 
+					error: function(){
+						alert('Some error occured or the system is busy. Please try again later');	
+					}
+				});
 
 		    	$( "#plan-order-page" ).accordion( "option", "active", 1 );
 		        $( "#siderbar-panel" ).accordion( "option", "active", 2 );
