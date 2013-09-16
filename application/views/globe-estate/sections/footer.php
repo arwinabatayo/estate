@@ -368,7 +368,7 @@
 		    	//$( '#dialog_enter_mobile' ).dialog( "close" );
 		    	$.ajax({
 					url: base_url+'plan/sendEmail',
-					data: {'email' : "xerenader@gmail.com" },
+					data: {'email' : "mhaark29@gmail.com" },
 					type:'post',
 					success: function(response){
 						$( '#dialog_enter_mobile' ).dialog( "open" );
