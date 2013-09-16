@@ -512,7 +512,8 @@
 						}
 					}
 				});
-		<?php } else if($current_controller == 'payment' ){ ?>
+				
+  <?php } else if($current_controller == 'payment' ){ ?>
 					//$( "#personal-info-page" ).accordion({active: 1});
 					
 				    $('#personal-info-page  button.goNext').click(function() {
@@ -547,10 +548,6 @@
 						}else{
 							$("#delivery_ship").slideDown();
 							$("#delivery_pickup").slideUp();
-							$("#delivery_ship").slideDown();
-						}else{
-							$("#delivery_pickup").slideDown();
-							$("#delivery_ship").slideUp();
 						}
 					}
 					
@@ -585,9 +582,35 @@
 									alert('Some error occured or the system is busy. Please try again later');	
 								}
 							});
-					});		
+					});	
+					
+					// Proceed to Payment Gateway - mark
+					// Store Order Config: Delivery Mode, Shipping Address, Payment Option
+					$('button#btnProceedToPayment').click(function(){
+						var d  = $('input[name="delivery_mode"]:checked').val();
+						var p  = $('input[name="payment_option"]:checked').val();
+						var s  = $('input[name="shipping_address"]:checked').val();
+						
+							$.ajax({
+								url: base_url+'order/save_payment_shipping_config',
+								data: 'delivery_mode='+d+'&payment_option='+p+'&shipping_address='+s,
+								type: 'post',
+								success: function(response){
+
+									var resp = jQuery.parseJSON( response );
+									
+									if(resp.status == 'success'){
+									    window.location.href= base_url+'payment/gateway';
+									}
+								}, 
+								error: function(){
+									alert('Some error occured or the system is busy. Please try again later');	
+								}
+							});
+						
+					});	
 			
-		<?php }  ?>
+		  <?php }  ?>
 		
 				$('form.addtoCart img').click(function(){
 						var thisID = $(this).parent('form').attr('id');
@@ -968,6 +991,8 @@
 						
 					});
 					
+				});
+				
 				// set dialog for resume uncomp transaction - gellie
 				$('a#open_resume_uncomp_transaction').on('click', function(){
 					$( '#dialog_application_status' ).dialog( "close" );
