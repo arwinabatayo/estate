@@ -174,6 +174,10 @@
 										</div>
 							   		</div>
 
+							   		<div id="cashoutBox" class="contentbox">
+										<span class="bold">CASHOUT :</span>&nbsp;&nbsp;<span class="cashoutLabel" id="cashoutLabel">0.00</span>
+						            </div>
+
 								</div>
 								
 								<!--END OF PLAN-TYPE BUTTONS -->
