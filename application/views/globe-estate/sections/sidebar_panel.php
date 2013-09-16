@@ -125,34 +125,36 @@
 										}	 
 									?>
 									<p>
-										<strong>Combos</strong>
-										<div id="CombosCartWidget" class="cartWidget">
-										<?php
-											$cart_combos='';
-											$cart_combos = @$cartProdFiltered['combos'];
-											
-											if($cart_combos){
-												foreach($cart_combos as $item){
-										?>
-										<div id="prod-item-<?php echo $item['rowid'] ?>" class="item">
-											<div class="fleft">
-												<span class="productName block"><?php echo $item['name'] ?></span>
-												<span class="productName block" id="prod-qty-<?php echo $item['rowid'] ?>" style="margin-left: 15px;">
-													<b>x<?php echo $item['qty'] ?></b>
+											<strong>Combos</strong>
+											<div id="CombosCartWidget" class="cartWidget">
+											<?php
+												$cart_combos='';
+												$cart_combos = @$cartProdFiltered['combos'];
+												
+												if($cart_combos){
+													foreach($cart_combos as $item){
+											?>
+											<div id="prod-item-<?php echo $item['rowid'] ?>" class="item">
+												<div class="fleft">
+													<span class="productName block"><?php echo $item['name'] ?></span>
+													<span class="productName block" id="prod-qty-<?php echo $item['rowid'] ?>" style="margin-left: 15px;">
+														<b>x<?php echo $item['qty'] ?></b>
+													</span>
+												</div>
+												<span class="icoDelete"> 
+													<a href="javascript:void(0)" class="btnDeleteCombos"  data-id="<?php echo $item['product_id'] ?>" data-name="<?php echo $item['name'] ?>" data-pv="<?php echo $item['pv'] ?>" data-cashout="<?php echo $gadget_cash_out ?>" data-planpv="<?php echo $plan_pv ?>"  id="<?php echo $item['rowid'] ?>" rel="<?php echo $item['name'] ?>">
+														<i class="icon-remove"></i>
+													</a>
 												</span>
+												<br class="clear" />
 											</div>
-											<span class="icoDelete"> 
-												<a href="javascript:void(0)" class="btnDeleteCombos"  data-id="<?php echo $item['product_id'] ?>" data-name="<?php echo $item['name'] ?>" data-pv="<?php echo $item['pv'] ?>" data-cashout="<?php echo $gadget_cash_out ?>" data-planpv="<?php echo $plan_pv ?>"  id="<?php echo $item['rowid'] ?>" rel="<?php echo $item['name'] ?>">
-													<i class="icon-remove"></i>
-												</a>
-											</span>
-											<br class="clear" />
-										</div>
-										<?php 
-												}
-											}	 
-										?>
-										</div>
+											<?php 
+													}
+												}	 
+											?>
+											</div>
+
+
 									</p>
 										
 								

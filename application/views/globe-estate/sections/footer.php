@@ -418,7 +418,7 @@
 				$( this ).closest('div').slideUp();
 				
 			});
-
+			// jez
 			$("a.btnAddPlan").parent().parent().each(function(){
 				$(this).click(function(){
 					$.ajax({
@@ -426,19 +426,40 @@
 						data: {'plan_id' : parseInt($(this).children("div.my-plan-id").text()) },
 						type:'post',
 						success: function(response){
-							
-							console.log(response);
 
-							/*console.log(response.data)
+							var resp = jQuery.parseJSON( response );
+							console.log(resp);
 
-							for(var ctr = 0; ctr < response.length; ctr++){
-								console.log(response[ctr]['combo_type']);
-								var combo_type = response[ctr]['combo_type'].toLowerCase();
+							for(var ctr = 0; ctr < resp.length; ctr++){
+								//console.log(resp[ctr]['combo_type']);
+								var combo_type = resp[ctr]['combo_type'].toLowerCase();
 								
-								$("#combo-type-" + combo_type).attr('display', 'block')
+								$("#combo-type-" + combo_type + "-desc").text(resp[ctr]['combo_desc']);
+								$("#combo-type-" + combo_type).css('display', 'block')
+
 							}
 
-							$("#combo-type").show();*/
+							$("#combo-type").show();
+
+							
+						}, 
+						error: function(){
+							alert('Some error occured or the system is busy. Please try again later');	
+						}
+					});
+
+					$.ajax({
+						url: base_url+'plan/getpackageplangadgetcashout',
+						data: {'plan_id' : parseInt($(this).children("div.my-plan-id").text()) },
+						type:'post',
+						success: function(response){
+
+							var resp = jQuery.parseJSON( response );
+							
+							$(".cashoutLabel").text(resp[0]['cashout_val'])
+
+							
+
 							
 						}, 
 						error: function(){
