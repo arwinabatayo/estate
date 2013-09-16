@@ -419,7 +419,7 @@
 				
 			});
 			// jez
-			$("a.btnAddPlan").parent().parent().each(function(){
+			/*$("a.btnAddPlan").parent().parent().each(function(){
 				$(this).click(function(){
 					$.ajax({
 						url: base_url+'plan/getpackageplancombos',
@@ -468,7 +468,7 @@
 					});
 
 				});
-			})
+			})*/
 
 
 
