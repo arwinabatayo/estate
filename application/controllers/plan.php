@@ -76,20 +76,18 @@ class Plan extends MY_Controller
 
 	public function sendMail()
 	{
-		$email = $this->input->get('email');
-
+		$email = $this->input->post('email');
+		$this->load->helper('email');
 		
 				
-		if($email){
-			if (valid_email($email)) {
-				$this->load->helper('email');
-				$is_sent = $this->_sendMail($email);
-			} else {
-				
-			}
-		} else {
 
-		}
+		if (valid_email($email)) {
+			
+			return $this->_sendMail($email);
+		
+		} 
+			
+		
 	}
 
 	private function _sendMail($email_to)
