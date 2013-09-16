@@ -33,7 +33,7 @@ class Plan extends MY_Controller
 		
 		$this->_data->plans = $plans;
 		
-		$query = $this->db->get('estate_plans');
+		$query = $this->db->query('SELECT * FROM estate_plans WHERE is_active="1"');
 		$this->_data->plans_options = $query->result();
 		
 		$this->_data->account_m = $this->accounts_model;
