@@ -49,7 +49,7 @@ class Products_model extends CI_Model
 	function get_product_fields($type='', $id=0){
 		
 			$out = array(
-				'amount' => 0,
+				'amount' => 0.00,
 				'title'  => '',
 			);
 			
@@ -77,27 +77,41 @@ class Products_model extends CI_Model
 				$query = $this->db->get('estate_plans');
 				$row = $query->row();
 				$out['title']  = $row->title;
-				$out['amount'] = $row->amount;
+				$out['amount'] = number_format($row->amount,2);
 				$out['plan_total_pv'] = $row->total_pv;
 				
 			}else if( $type == 'gadget' ){
 
 				$out['title']  = 'iPhone 5';
 				$out['amount'] = 12500;	
+				
 			}else if($type == 'combos') {
 				
-				$this->db->where('combo_id', $id);
-				$query = $this->db->get('estate_combos');
+				$this->db->where('id', $id);
+				$query = $this->db->get('estate_plan_bundle');
 				$row = $query->row();
 				
-				$out['title']  = $row->combo_name;
-				$out['amount'] = 1; // hack
-				$out['req_pv'] = $row->required_pv;
+				$out['title']  = $row->name;
+				$out['req_pv'] = $row->peso_vlue;
+			}else if($type == 'boosters') {
+				
+				$this->db->where('id', $id);
+				$query = $this->db->get('estate_plan_bundle');
+				$row = $query->row();
+				
+				$out['title']  = $row->name;
+				$out['amount'] = $row->amount;
 			}
 			// combo and booster adding to cart
 			return $out;
 			
 	}
+	/**
+	 * Get Plan Peso Value
+	 * @param unknown $plan_id(required)
+	 * 
+	 * Robert
+	 */
 	function get_plan_pv($plan_id) {
 	
 		$this->db->where('id', $plan_id);
@@ -107,6 +121,13 @@ class Products_model extends CI_Model
 		
 		return $row->total_pv;
 	}
+	/**
+	 * Get Gadget and Plan Cash out Value
+	 * @param unknown $plan_id(required)
+	 * @param unknown $gadget_id(required)
+	 * 
+	 * Robert
+	 */
 	function get_gadget_cash_out($plan_id,$gadget_id) {
 	
 		$this->db->where('plan_id', $plan_id);
@@ -114,38 +135,95 @@ class Products_model extends CI_Model
 		
 		$query = $this->db->get('estate_gadget_cash_out');
 		$row = $query->row();
+		
 		return $row->cashout_val;
 	}
 	
-	function compute_cashout($current_cashout, $planpv, $combopv){
-		/** 
-		 * Get Remaining Peso Value (PV)
-		 * If remaining pv is negative, result add to current cashout
-		 * If remaining pv is positive, deduct to Plan Peso Value 
-		 **/
-		$remainingPV = $planpv - $combopv;
+	/**
+	 * 
+	 * @param string $product_id(required)
+	 */
+	function get_coexist($product_id, $is_acceptable="0") {
+		$product_type = array('combos'=>'combos','boosters'=>'boosters');
 		
-		if($remainingPV < 0) { // Negative
-			$current_cashout += abs($remainingPV);
-			$planpv = 0;
-		} else { // Positive
-			$planpv = $remainingPV;
+		$out = array();
+		$out['coexist'] = TRUE;
+		$cart_contents = $this->cart->contents();
+		
+// 		$this->db->where('corb_id_2', $product_id);
+// 		$this->db->where('corb_id_1', $product_id);
+// 		$this->db->where('is_acceptable', $is_acceptable);
+		
+// 		$query = $this->db->get('estate_coexistence');
+		$query = $this->db->query("SELECT * FROM estate_coexistence WHERE (corb_id_1='{$product_id}' 
+									OR corb_id_2='{$product_id}') 
+									AND is_acceptable='{$is_acceptable}'");
+		
+		
+		$row = $query->result_array();
+		
+		
+		if(!empty($row)) {
+			
+			foreach($row as $key => $value) {
+				if($value['corb_id_1'] == $product_id) {
+					$notValid[$value['corb_id_2']] = $value['corb_type'];
+				} else {
+					$notValid[$value['corb_id_1']] = $value['corb_type'];
+				}
+// 				$notValid[$value['corb_id_1']] = $value['corb_type'];
+				
+			}
+			
+			foreach($cart_contents as $k => $v) {
+				if(array_key_exists(trim($cart_contents[$k]['product_type']), $product_type)) {
+					
+					if(!array_key_exists($cart_contents[$k]['product_id'], $notValid)) {
+						// if not in array, product id is available
+						$out['coexist'] = TRUE;
+					} else {
+						// else if in array, product id is coexist
+						$out['coexist'] = FALSE;
+						$out['product_name'] = $cart_contents[$k]['name'];
+						$out['product_name'] = $cart_contents[$k]['name'];
+						$out['rowid'] = $cart_contents[$k]['rowid'];
+						$out['product_id'] = $cart_contents[$k]['product_id'];
+						$out['coex_product_type'] = $cart_contents[$k]['product_type'];
+						$out['corb_type'] = $notValid[$cart_contents[$k]['product_id']];
+					}
+					
+				}
+			}
 		}
-		$out['upd_cashout'] = $current_cashout;
-		$out['upd_planpv'] = $planpv;
 		
 		return $out;
+	}
+	/**
+	 * Get Booster or Combos
+	 * @param number $bundle_id "REQUIRED"
+	 * @return array
+	 */
+	function get_bundles($bundle_id=2) {
+		$this->db->where('is_active', '1');
+		$this->db->where('bundle_type_id', $bundle_id);
+	
+		$query = $this->db->get('estate_plan_bundle');
+		$row = $query->result();
+	
+		return $row;
 	}
 	
 	function get_combos() {
 		
 		$this->db->where('is_active', '1');
+		$this->db->where('is_active', '2');
 		
 		$query = $this->db->get('estate_combos');
 		$row = $query->result();
 		
 		return $row;
 	}
+	
 	
 	function get_boosters() {
 	

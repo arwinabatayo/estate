@@ -26,7 +26,6 @@ class Plan extends MY_Controller
 		$this->load->model('estate/accounts_model');
 		
 		$this->load->model('estate/products_model');
-
 		
 		//TODO: move to model
 		$query = $this->db->get('estate_main_plan');
@@ -40,12 +39,13 @@ class Plan extends MY_Controller
 		$this->_data->account_m = $this->accounts_model;
         //temporary token = d25c1265aee883d97ffeec28b7e852cb        
         
-		$this->_data->combos_datas = $this->products_model->get_combos();
-		$this->_data->boosters_datas = $this->products_model->get_boosters();
+		$this->_data->combos_datas = $this->products_model->get_bundles(2);
+		$this->_data->boosters_datas = $this->products_model->get_bundles(1);
 		
 		
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
+	
 
 
 	public function getpackageplancombos()
@@ -55,11 +55,23 @@ class Plan extends MY_Controller
 		$plan_id = $this->input->post('plan_id');
 
 		$this->_data->package_plans_combos = $this->packageplan_model->get_package_plan_combos($plan_id);
+		//$this->_data->package_plan_gadget_cashout = $this->packageplan_model->get_package_plan_gadget_cashout($plan_id);
 
-		var_dump($this->_data->package_plans_combos); exit;
+
+		return $this->_data->package_plans_combos;
 	}
-	
 
+	public function getpackageplangadgetcashout()
+	{
+		$this->load->model('estate/packageplan_model');
+
+		$plan_id = $this->input->post('plan_id');
+
+		$this->_data->package_plan_gadget_cashout = $this->packageplan_model->get_package_plan_gadget_cashout($plan_id);
+
+		//var_dump($this->_data->package_plan_gadget_cashout);
+		return $this->_data->package_plan_gadget_cashout;
+	}
 
 }
 ?>

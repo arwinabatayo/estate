@@ -53,6 +53,33 @@ class MY_Email extends CI_Email
         }
         return FALSE;
     }
+    
+    /**
+     * Send email notification using Globe API
+     *
+     * @param string $To (required)
+     * @param string $Subject (required)
+     * @param string $Content_path (required)
+     * @param string $message (optional)
+     * @param string $ReplyToAddress (optional)
+     * @param string $Cc (optional)
+     * @param string $Bcc (optional)
+     * @return boolean TRUE: email sent, FALSE: error
+     */
+    function send_email_api($To = NULL, $Subject = NULL, $Content_path = NULL, $message = NULL, $ReplyToAddress = NULL, $Cc = NULL, $Bcc = NULL)
+    {
+        if ( ! empty($To) && ! empty($Subject) && !empty($Content_path)) {
+                
+                $this->CI =& get_instance();
+                $this->CI->load->library('GlobeWebService','','api_globe');
+                if (is_array($message)) $message = $this->_template($message, $Content_path);
+                $email_status = $this->CI->api_globe->SendEmail($To, $Subject, $message);
+                if($email_status['AppResponseCode'] == 'EMAIL_SENT') {
+			return TRUE;
+		  }                
+        }
+        return FALSE;
+    }
 
     /**
      * Get template for email

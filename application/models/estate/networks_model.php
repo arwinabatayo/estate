@@ -24,4 +24,33 @@ class Networks_model extends CI_Model
             if(count($result) == 0) return FALSE;
             return $result;
 	}
+
+	function insert_sms_verification($msisdn, $code)
+	{
+		$exist = $this->get_sms_verification($msisdn);
+		if(!empty($exist)) {
+			$this->delete_sms_verification($msisdn);
+		}
+
+		$this->db->set('msisdn', $msisdn);
+		$this->db->set('code', $code);
+		$this->db->insert('estate_sms_verification');
+   }
+
+   function get_sms_verification($msisdn)
+   {
+		$query = $this->db->select('*')
+						   ->from('estate_sms_verification')
+						   ->where('msisdn', $msisdn)
+						   ->get();
+		$result = $query->row_array();
+		if(count($result) == 0) return FALSE;
+		return $result;
+   }
+
+   function delete_sms_verification($msisdn)
+   {
+	   $this->db->where('msisdn', $msisdn);
+	   $this->db->delete('estate_sms_verification'); 
+   }
 }

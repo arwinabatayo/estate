@@ -241,8 +241,10 @@ class Cart_model extends CI_Model
 			$cart_total = $cart_total + $shipping_fee;
 		}
 		
-		return ($formated) ? $this->_format_price($cart_total) : $cart_total;		
-		
+		if($this->remaining_pv() < 0) {
+			$cart_total += abs($this->remaining_pv());
+		}
+		return ($formated) ? $this->_format_price($cart_total) : $cart_total;
 	}
 	
 	private function _format_price($price,$show_currency=true)
@@ -251,5 +253,45 @@ class Cart_model extends CI_Model
 		return ($show_currency) ? $currency.' '.number_format($price,2) : $price;
 	}
 	
-    
+	
+	function get_plan_pv() {
+		$cart_contents = $this->cart->contents();
+		
+		foreach($cart_contents as $k=>$v) {
+			
+			if(trim($cart_contents[$k]['product_type']) == "plan") {
+				$qty = $cart_contents[$k]['qty'] + 1;
+				
+			}
+		}
+	}
+	
+	function total_pv($formated=false) {
+		$cart_contents = $this->cart->contents();
+		
+		foreach($cart_contents as $k => $val) {
+			if ( ! is_array($val) OR ! isset($val['this_pv_value'])) continue;
+			
+			if(isset($val['this_pv_value'])) 				
+				$total_pv += ($val['this_pv_value'] * $val['combos_qty']);
+		}
+		return ($formated) ? $this->_format_price($total_pv) : $total_pv;
+	
+	}
+    function remaining_pv($display_negative=false) {
+    	$cart_contents = $this->cart->contents();
+    	
+    	$totalPV = $this->total_pv();
+    	foreach($cart_contents as $k => $v) {
+    		if(trim($cart_contents[$k]['product_type']) == 'plan') {
+    			$plan_pv = intval($cart_contents[$k]['this_pv_value']);
+    		}
+    	}
+    	$retPV = $plan_pv - $totalPV;
+    	if($display_negative == false) {
+    		return ($retPV<0) ? 0 : $retPV;
+    	}
+    	return $retPV;
+    	
+    }
 }
