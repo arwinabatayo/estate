@@ -58,7 +58,7 @@ class Plan extends MY_Controller
 		$this->_data->package_plans_combos = $this->packageplan_model->get_package_plan_combos($plan_id);
 		//$this->_data->package_plan_gadget_cashout = $this->packageplan_model->get_package_plan_gadget_cashout($plan_id);
 
-
+		
 		return $this->_data->package_plans_combos;
 	}
 
