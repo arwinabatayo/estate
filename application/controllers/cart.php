@@ -134,36 +134,66 @@ class Cart extends CI_Controller {
 	}
 	
 	
-    function addtocart(){
+    function addtocart() {
 		$this->load->model('estate/products_model');
 		
 		$d = (object) $this->input->post();
 		$account_id = 1; //TODO get subs id
 		$options = array();
 		$title  = '';
-		$amount = 0;
+		$amount = '0.00';
 		$plan_pv = 0;
 		$pvcashout = 0;
+		$comboqty = 0;
 		$pv = 0;
 		$qty = 1;
 			 
+		$in_coexist['coexist'] = TRUE;
+		$cart_contents = $this->cart->contents();
 		$out = array(
 			'status' => 'failed',
 			'msg'    => 'Some error occured or the system is busy. Please try again later'
 		);
 		
-		if( $d->product_id ){
+		if( $d->product_id ) {
 			
 			 $_fields = $this->products_model->get_product_fields($d->product_type,$d->product_id);
-			 
 			 $title  = $_fields['title'];
 			 $amount = $_fields['amount'];
 			 
+			 // robert :: replace cart item
+			 if($d->tag == "replace_cart_item") {
+			 	
+			 	foreach($cart_contents as $k=>$v) {
+			 		unset($cart_contents[$d->remove_keyid]);
+			 	}
+			 	$this->cart->destroy();
+			 	
+			 	if(!$is_gadget){ //flashout all data if you delete the gadget
+			 		$this->cart->insert($cart_contents);
+			 	}
+			 	
+			 	/* db */
+			 	if(count($cart_contents) == 0 && $item_exist == TRUE) {
+			 			
+			 		if( !$this->cart_model->delete_cart($account_id, TRUE) ) {
+			 			$out = array(
+			 					'status' => 'failed',
+			 					'msg'    => 'Some error occured or the system is busy. Please try again later'
+			 			);
+			 		}
+			 			
+			 	} else {
+			 		$info = $this->_parse_contents();
+			 		$this->cart_model->insert_previous_info($account_id, $info);
+			 	}
+			 }
+			 
+			
 			 if( $d->product_type == 'gadget' ){
 				 
 				//TODO: 
 				$title = 'Nokia Lumia 610';
-				$amount = 1; // 0 is not available to initialize variable, set to 1
 				$options=array(
 					'capacity' => $d->gadget_capacity,
 					'color'    => $d->gadget_color
@@ -175,38 +205,71 @@ class Cart extends CI_Controller {
 			
 			 //TODO:
 			 //peso value, ultima rules
-			 
-			 //   return boolean
-			 //    $this->_call_your_ultima_logic();
-			 //
 			 if( $d->product_type == 'plan' ) {
 				 
 				 $plan_pv = $this->products_model->get_plan_pv($d->plan);
-				 $pvcashout = $this->products_model->get_gadget_cash_out($d->plan, $d->device);
+				 $amount = number_format($this->products_model->get_gadget_cash_out($d->plan, $d->device),2);
+				 
 				 
 				 // remove existing plan
 				 $this->cart_model->remove_gadget_or_plan("plan");
+				 $out['plan_pv'] = $cart_input['plan_pv'] = $plan_pv;
+				 
+
+				 $this_pv_value = $plan_pv;
 			 }
 
 			 if( $d->product_type == 'combos' ) {
-			 	$qty = $this->checkProductIfExist($d->product_type, $d->product_id, "add");
+			 	$comboqty = $this->checkProductIfExist($d->product_type, "combos_qty", $d->product_id, "add");
 			 		
-			 	$out['pvcashout'] = $cart_input['pvcashout'] = $this->products_model->compute_cashout($d->current_cashout, $d->planpv, $d->combopv);
-			 		
-			 	$pv = $d->combopv;
+			 	foreach($cart_contents as $k => $v) {
+					if(trim($cart_contents[$k]['product_type']) == 'plan') {
+ 						$plan_pv = intval($cart_contents[$k]['this_pv_value']);
+ 					 }
+				}
+
 			 	$out['status'] = 'success';
+			 	$in_coexist = $this->products_model->get_coexist($d->product_id);
+			 	
+			 	
+			 	$out['combopv'] = $d->combopv;
+			 	$out['combo_qty'] =  $comboqty;
+			 	$this_pv_value = $d->combopv;
+			 	
+			 	
+			 	// Total PV
+			 	
+			 	$remainingPV = $plan_pv - ($comboqty * $this_pv_value);
+			 	
+			 	if($remainingPV < 0) { // Negative
+			 		$amount = abs($remainingPV); // to be added to cashout
+			 		$remainingpv = 0;
+			 	} else {
+			 		$remainingpv = abs($remainingPV);
+			 		$amount = "0.00";
+			 	}
+			 }
+			 if( $d->product_type == 'boosters' ) {
+			 	$qty = $this->checkProductIfExist($d->product_type, "qty", $d->product_id, "add");
+			 		
+			 	foreach($cart_contents as $k => $v) {
+					if(trim($cart_contents[$k]['product_type']) == 'plan') {
+ 						$plan_pv = intval($cart_contents[$k]['this_pv_value']);
+ 					 }
+				}
+
+			 	$out['status'] = 'success';
+			 	$in_coexist = $this->products_model->get_coexist($d->product_id);
+// 			 	print_r($in_coexist);
+			 	$amount = number_format($qty * $amount,2);
 			 }
 			  
-			
-			 
 			$cart_input = array(
 				'id'              => $d->product_type.'_'.$d->product_id,
 				'qty'             => $qty,
+				'combos_qty'	  => $comboqty, // robert
 				'price'           => $amount,
-				'gadget_pv'		  => $gadget_pv, // Robert
-				'plan_pv'		  => $plan_pv, // Robert
-				'gadget_cash_out' => $pvcashout, // Robert
-				'pv'			  => $pv,
+				'this_pv_value'	  => intval($this_pv_value), // robert
 				'price_formatted' => 'Php '.number_format($amount,2),
 				'name'            => $title,
 				'product_id'      => $d->product_id,
@@ -215,27 +278,34 @@ class Cart extends CI_Controller {
 				'options'         => $options,
 			);
 		
-			 
-	       /* cart */
-	       $out['status'] = 'success';
-	       $out['rowid']  = $rowid = $this->cart->insert($cart_input);
-	       $out['total']  = $this->cart_model->total(true);
-	       
-	       $out = array_merge($cart_input,$out);
-
-	       /* db */       
-	       if($rowid){
-				$this->_data->cartItem  = $info = $this->_parse_contents();
-				$this->cart_model->insert_previous_info($account_id, $info); 
-		   }else{
-				$out['status'] = 'failed';
-			}
-
+			$out['status'] = 'success';
 			
+			/* cart */
+			if($in_coexist['coexist'] == TRUE) {
+				$out['rowid']  = $rowid = $this->cart->insert($cart_input);
+				$out['total']  = $this->cart_model->total(true);
+		       
+		       	$out = array_merge($cart_input,$out);
+	
+		       	/* db */       
+		       	if($rowid){
+					$this->_data->cartItem  = $info = $this->_parse_contents();
+					$this->cart_model->insert_previous_info($account_id, $info); 
+			   	} else {
+					$out['status'] = 'failed';
+				}
+				$out['total_remaining_pv'] = $this->cart_model->remaining_pv(false);
+			} else {
+				$out['status'] = 'coexist';
+				$out['product_name'] = $in_coexist['product_name'];
+				$out['rowid'] = $in_coexist['rowid'];
+				$out['product_id'] = $in_coexist['product_id'];
+				$out['coex_product_type'] = $in_coexist['coex_product_type'];
+
+			}
 		}
-
+    
 		echo json_encode($out);
-
 	}
 	// Robert Hughes
 	// Delete function for Combos&Boosters Qty
@@ -246,11 +316,13 @@ class Cart extends CI_Controller {
 		$account_id = 1; //TODO get subs id
 		$options = array();
 		$title  = '';
-		$amount = 0;
+		$amount = 0.00;
 		$plan_pv = 0;
 		$pvcashout = 0;
 		$pv = 0;
 		$qty = 1;
+		$remainingpv = 0;
+		$comboqty = 0;
 		
 		$out = array(
 				'status' => 'failed',
@@ -267,25 +339,59 @@ class Cart extends CI_Controller {
 			if( $d->product_type == 'combos' ) {
 				$out['is_display'] = "yes";
 				
-				$qty = $this->checkProductIfExist($d->product_type, $d->product_id, "minus");
-		
-				$out['pvcashout'] = $cart_input['pvcashout'] = $this->products_model->compute_cashout($d->current_cashout, $d->planpv, $d->combopv);
-		
-				$pv = $d->combopv;
-				$out['status'] = 'success';
-				if($qty == 0) {
-					$deleteStatus = json_decode($this->delete('array'));
+				$comboqty = $this->checkProductIfExist($d->product_type, "combos_qty", $d->product_id, "minus");
+				
+				foreach($cart_contents as $k => $v) {
+					if(trim($cart_contents[$k]['product_type']) == 'plan') {
+						$plan_pv = intval($cart_contents[$k]['this_pv_value']);
+					}
+				}
+				
+				$this_pv_value = $d->combopv;
+				
+				$remainingPV = $plan_pv + ($comboqty * $this_pv_value);
+				
+				if($remainingPV < 0) { // Negative
+					$amount = abs($remainingPV - $this_pv_value); // to be added to cashout
+					$remainingpv = 0;
+				} else {
+					$remainingpv = abs($remainingPV);
+					$amount = "0.00";
 				}
 			}
+			
+			if( $d->product_type == 'boosters' ) {
+			$out['is_display'] = "yes";
 				
+				$comboqty = $this->checkProductIfExist($d->product_type, "qty", $d->product_id, "minus");
+				
+				foreach($cart_contents as $k => $v) {
+					if(trim($cart_contents[$k]['product_type']) == 'plan') {
+						$plan_pv = intval($cart_contents[$k]['this_pv_value']);
+					}
+				}
+				
+				$amount = number_format($qty * $amount,2);
+			}
+				
+			
+			$out['status'] = 'success';
+			if($comboqty == 0) {
+				$qty = 0;
+				$deleteStatus = json_decode($this->delete('array'));
+				$remainingpv = $this->cart_model->remaining_pv();
+				$out['total_remaining_pv'] = $this->cart_model->remaining_pv(false);
+			} else {
+				$current_rem_pv = $this->cart_model->remaining_pv();
+				$remainingpv = abs($current_rem_pv + $d->combopv);
+			}
+			
 			$cart_input = array(
 					'id'              => $d->product_type.'_'.$d->product_id,
 					'qty'             => $qty,
-					'price'           => $amount,
-					'gadget_pv'		  => $gadget_pv, // Robert
-					'plan_pv'		  => $plan_pv, // Robert
-					'gadget_cash_out' => $pvcashout, // Robert
-					'pv'			  => $pv,
+					'combos_qty'	  => $comboqty, // robert
+					'price'           => number_format($amount,2),
+					'this_pv_value'	  => intval($this_pv_value), // robert
 					'price_formatted' => 'Php '.number_format($amount,2),
 					'name'            => $title,
 					'product_id'      => $d->product_id,
@@ -306,6 +412,8 @@ class Cart extends CI_Controller {
 			if($rowid){
 				$this->_data->cartItem  = $info = $this->_parse_contents();
 				$this->cart_model->insert_previous_info($account_id, $info);
+				
+				$out['total_remaining_pv'] = $this->cart_model->remaining_pv(false);
 			}else{
 				$out['status'] = 'failed';
 			}
@@ -315,6 +423,8 @@ class Cart extends CI_Controller {
 		
 		echo json_encode($out);
 	}
+	// Robert
+	// Get CashOut
 	function createplan() {
 		$this->load->model('estate/products_model');
 		
@@ -325,7 +435,8 @@ class Cart extends CI_Controller {
 		//print_r($_fields);
 		echo json_encode($_fields);
 	}
-	
+	// Compute CashOut
+	// Robert
 	function compute_cashout() {
 		$this->load->model('estate/products_model');
 		
@@ -343,8 +454,10 @@ class Cart extends CI_Controller {
 	 * @param String $addminus
 	 * 
 	 * @return int Quantity
+	 * 
+	 * @name Robert Hughes
 	 */
-	function checkProductIfExist($product_type, $product_id, $addminus="add") {
+	function checkProductIfExist($product_type, $qtyfield='qty', $product_id, $addminus="add") {
 		$qty = 1;
 		$cart_contents = $this->cart->contents();
 		
@@ -353,9 +466,9 @@ class Cart extends CI_Controller {
 			if(trim($cart_contents[$k]['product_type']) == trim($product_type)) {
 				if( $cart_contents[$k]['product_id'] == $product_id) {
 					if($addminus == "add") {
-						$qty = $cart_contents[$k]['qty'] + 1;
+						$qty = $cart_contents[$k][$qtyfield] + 1;
 					} else {
-						$qty = $cart_contents[$k]['qty'] - 1;
+						$qty = $cart_contents[$k][$qtyfield] - 1;
 					}
 				}
 			}
@@ -418,7 +531,7 @@ class Cart extends CI_Controller {
 			$out['total']  = $this->cart_model->total(true);
 		
 		}
-        
+		
 		if($returnType == 'array') {
 			return $out;
 		} else {

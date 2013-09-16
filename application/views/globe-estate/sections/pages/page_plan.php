@@ -72,7 +72,6 @@
 	                    <div>
 	                        <h3><a href="#">Choose Your Plan</a></h3>
 	                        <div>
-	                        
 								
 								<!-- START OF PLAN-TYPE TABLE -->
 								<!-- ======================= -->
@@ -94,7 +93,7 @@
 											</div>
 											<ul>
 												<li><?php echo $row->description ?></li>
-												<li><button class="btn-large ui-button-success" rel="<?php echo $row->title ?>" id="<?php echo $row->id ?>">Select Plan Type!</button></li>
+												<li><button class="btn-large ui-button-success" rel="<?php echo $row->title ?>" id="<?php echo $row->main_plan_id ?>">Select Plan Type!</button></li>
 											</ul>
 										</div>	
 									</div>
@@ -124,7 +123,6 @@
 									<?php if($plans_options){ 
 										
 											 foreach($plans_options as $plan) {
-
 										?>
 											<div class="fleft" style="margin-right:12px; height:110px;width:200px; background:url('<?php echo $assets_path ?>images/plans/plan_temp.jpg') no-repeat 50% 50%">
 												<p style="padding:10px 20px 0px 20px;color:#FFF;font-size:22px">
@@ -132,8 +130,8 @@
 														<?php echo $plan->title ?>
 													</a>
 												</p>
-												<p style="color:#FFF;font-size:10px; padding:0 20px; min-height: 26px;"><b><?php echo $plan->plan_description ?></b></p>
-												<p style="color:#FFF;font-size:12px; padding:0 20px;"><b>get <?php echo $plan->plan_total_pv ?>PV/mo.</b></p>
+												<p style="color:#FFF;font-size:10px; padding:0 20px; min-height: 26px;"><b><?php echo $plan->description ?></b></p>
+												<p style="color:#FFF;font-size:12px; padding:0 20px;"><b>get <?php echo $plan->total_pv ?>PV/mo.</b></p>
 												<div class="my-plan-id" style="display:none"><?php echo $plan->id; ?></div>
 											</div>
 											
@@ -195,15 +193,15 @@
 											 foreach($combos_datas as $combo) {
 									?>
 										<div class="fleft" style="margin-right:12px; height:100px;width:200px; background:url('<?php echo $assets_path ?>images/plans/plan_temp.jpg') no-repeat 50% 50%">
-											<p style="padding:10px 20px 0px 20px;color:#FFF;font-size:22px"><a style="color:#FFF" class="btnAddCombo" data-id="<?php echo $combo->combo_id ?>" data-name="<?php echo $combo->combo_name ?>" data-pv="<?php echo $combo->required_pv ?>" data-cashout="<?php echo $gadget_cash_out ?>" data-planpv="<?php echo $plan_pv ?>" href="javascript:void(0)"><?php echo $combo->combo_name ?></a></p>
-											<p style="color:#FFF;font-size:12px; padding:0 20px;"><b><?php echo $combo->combo_desc ?></b></p>
+											<p style="padding:10px 20px 0px 20px;color:#FFF;font-size:22px"><a style="color:#FFF" class="btnAddCombo" data-id="<?php echo $combo->id ?>" data-name="<?php echo $combo->name ?>" data-pv="<?php echo $combo->peso_value ?>" data-cashout="<?php echo $gadget_cash_out ?>" data-planpv="<?php echo $plan_pv ?>" href="javascript:void(0)"><?php echo $combo->name ?></a></p>
+											<p style="color:#FFF;font-size:12px; padding:0 20px;"><b><?php echo $combo->description ?></b></p>
 										</div>
 									<?php 
 											}
 									} ?>
 									
 									<p class="textright">
-										<button  class="btn-large ui-button-success" onclick="window.location.href='<?php echo base_url() ?>addons'">CONTINUE</button>
+										<button  class="btn-large ui-button-success" id="goBoosters">CONTINUE</button>
 									</p>
 								</div>
 								<!--END OF PLAN-TYPE COMBOS-->
@@ -212,16 +210,17 @@
 								<div id="plantype-boosters" class="textcenter" style="display:none">
 									<p><button class="btn-large ui-button-success btn-show-plancombos">SHOW COMBOS</button></p>
 									<div class="textright">
-										<h4 style="font-size:24px;font-weight:normal">Combos</h4>
+										<h4 style="font-size:24px;font-weight:normal">Boosters</h4>
 										<p style="font-size:110%">Nullam suscipit ultrices enim. Ut nec sem. Quisque laoreet vulputate dui. Aenean rutrum diam vitae magna rhoncus lobortis. Nunc bibendum, dui in posuere blandit, ante nibh varius felis, a commodo purus leo non risus.</p>
 									
 									</div>
 									<br />
 									<?php if($boosters_datas){ 
-											 foreach($boosters_datas as $boosters) {
+											 foreach($boosters_datas as $booster) {
 									?>
 										<div class="fleft" style="margin-right:12px; height:100px;width:200px; background:url('<?php echo $assets_path ?>images/plans/plan_temp.jpg') no-repeat 50% 50%">
-											<p style="padding:10px 20px;color:#FFF;font-size:22px"><a style="color:#FFF" class="btnAddPlan" data-id="<?php echo $boosters->booster_name ?>" href="javascript:void(0)"><?php echo $boosters->booster_name ?></a></p>
+											<p style="padding:10px 20px 0px 20px;color:#FFF;font-size:22px"><a style="color:#FFF" class="btnAddBooster" data-id="<?php echo $booster->id ?>" data-name="<?php echo $booster->name ?>" data-amount="<?php echo $booster->amount ?>" data-cashout="<?php echo $gadget_cash_out ?>" data-planpv="<?php echo $plan_pv ?>" href="javascript:void(0)"><?php echo $booster->name ?></a></p>
+											<p style="color:#FFF;font-size:12px; padding:0 20px;"><b><?php echo $booster->description ?></b></p>
 										</div>
 									<?php 
 											}
