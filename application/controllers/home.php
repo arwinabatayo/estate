@@ -96,8 +96,12 @@ class Home extends MY_Controller
 				
 				$data['status'] = "error";
 				$data['msg'] = "Mobile number should all be numeric";
-			} 
-			
+			} else {
+                            $this->load->model('estate/networks_model');
+                            $this->networks_model->insert_sms_verification($mobile_number);
+                            $this->session->unset_userdata('current_subscriber_mobileno');
+                            $this->session->set_userdata('current_subscriber_mobileno', $mobile_number);
+                        }			
 		} else {
 			$data['status'] = "error";
 			$data['msg'] = "Mobile number is required.";
@@ -118,6 +122,11 @@ class Home extends MY_Controller
 		  "next_page"            => "",
 		  "is_globe_subscriber"  => "false", // if false dialogbox(Reserve Form) will show
 		);
+
+                $data['mobile_number'] = $this->session->userdata('current_subscriber_mobileno');
+                $this->load->model('estate/networks_model');                
+                $mobile =  $this->session->userdata('current_subscriber_mobileno');
+                $verification_info  = $this->networks_model->get_sms_verification($mobile);
 		
 		$hasError = false;
 		
@@ -128,9 +137,10 @@ class Home extends MY_Controller
 			$try = 0;
 		
 		if($verification_code) {
-			if($verification_code === "Globe0917") {
+			if($verification_code == $verification_info['code']) {
 				$data['msg'] = "Successfully Verified. Page is redirecting please wait...";
 				$token =  md5('Globe0917'.'$4Lt*G'); //generate token/session here to access nextpage
+                                $this->networks_model->delete_sms_verification($mobile);
 			} else {
 				$data['status'] = "error";
 				$data['msg'] = "You must enter a valid verification code";
@@ -149,7 +159,7 @@ class Home extends MY_Controller
 		$data['tries'] = $try;
 		
 		if($try > 2){
-			
+			$this->networks_model->delete_sms_verification($mobile);
 			$this->session->unset_userdata('vcode_tries');
 			$this->session->set_userdata('showcaptcha',true);
 			$data['status'] = "error";
@@ -246,7 +256,8 @@ class Home extends MY_Controller
          'verification_url'  => base_url().'home/verify/'.$verification_code.'?e='.$email_to,
         );
         
-        return $this->email->send_email($email_to,'no-reply@project-estate.com','Globe Estate - Account Verification',$message,'view_activation');
+        //return $this->email->send_email($email_to,'no-reply@project-estate.com','Globe Estate - Account Verification',$message,'view_activation');
+        $mail_status = $this->email->send_email_api($email_to, 'Globe Estate - Account Verification', 'view_activation', $message);
     }
     
     //move this function to helper -- SOON

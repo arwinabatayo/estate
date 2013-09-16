@@ -40,6 +40,9 @@ class Captcha extends CI_Controller {
             $verification_code_sent = true; // API CALL - sendVerificationCode
             
             if( $verification_code_sent ){
+                        $this->load->model('estate/networks_model');
+                        $mobile = $this->session->userdata('current_subscriber_mobileno');
+                        $this->networks_model->insert_sms_verification($mobile);
 			//	$this->session->unset_userdata('vcode_tries');
 				$result['msg']    = 'SMS successfully sent to you mobile number!';
 			}else{
