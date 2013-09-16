@@ -97,10 +97,20 @@ class Home extends MY_Controller
 				$data['status'] = "error";
 				$data['msg'] = "Mobile number should all be numeric";
 			} else {
-                            $this->load->model('estate/networks_model');
-                            $this->networks_model->insert_sms_verification($mobile_number);
-                            $this->session->unset_userdata('current_subscriber_mobileno');
-                            $this->session->set_userdata('current_subscriber_mobileno', $mobile_number);
+                            $this->load->library('GlobeWebService','','api_globe');
+                            $verification_code = random_string('alnum', 6);
+                            $message = "Please use this code ".$verification_code." to verify your account.";
+                            $sms_status = $this->api_globe->api_send_sms($mobile_number, $message, "Project Esate");
+                            
+                            if($sms_status == TRUE) {
+                                $this->load->model('estate/networks_model');
+                                $this->networks_model->insert_sms_verification($mobile_number, $verification_code);
+                                $this->session->unset_userdata('current_subscriber_mobileno');
+                                $this->session->set_userdata('current_subscriber_mobileno', $mobile_number);
+                            } else {
+                                $data['status'] = "error";
+								$data['msg'] = "Failed sending sms. Please try again.";
+                            }
                         }			
 		} else {
 			$data['status'] = "error";
