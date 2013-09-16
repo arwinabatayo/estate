@@ -1,7 +1,17 @@
 <div id="g_content">
 
 	<div id="g_tools"> 
-		<a href="javascript: void(0);" id="btn_edit_account"><img class="g_icon" src="<?php echo base_url(); ?>_assets/images/tools/save.png" />Save Changes</a>	
+		<?php if( $account_details['category_id'] == ACCOUNT_CATEGORY_PLATINUM ){ ?>
+			<!--platinum queue-->
+			<?php if( $account_details['rel_mngr_id'] == 0 ){ ?>
+				<a href="javascript: void(0);" id="btn_assign_relationship_manager"><img class="g_icon" src="<?php echo base_url(); ?>_assets/images/tools/save.png" />Assign Relationship Manager</a>
+			<?php } ?>
+		<?php }else{ ?>
+			<!--non platinum queue and non agent access-->
+			<?php if( $this->session->userdata('user_type') != ROLE_AGENT_ACCESS ){ ?>
+				<a href="javascript: void(0);" id="btn_update_account"><img class="g_icon" src="<?php echo base_url(); ?>_assets/images/tools/save.png" />Save Changes</a>	
+			<?php } ?>
+		<?php } ?>
 		<div class="h_clearboth"></div>
 	</div>
 	<div class="h_clearboth"></div>
@@ -164,6 +174,24 @@
 					<div class="h_clearboth"></div>
 				</div>
 				
+				<?php if( $account_details['category_id'] == ACCOUNT_CATEGORY_PLATINUM ){ ?>
+					<?php if( $account_details['rel_mngr_id'] == 0 ){ ?>
+						<!-- relationship managers -->
+						<div class="item">
+							<div class="label">Relationship Managers *</div>
+							<div class="input">
+								<select class="g_select" id="relationship_manager" name="relationship_manager">
+									<option value="0" selected="selected">Select relationship manager</option>
+									<?php foreach( $relationship_managers as $rm ){ ?>
+										<option value="<?php echo $rm['user_id']; ?>"><?php echo $rm['first_name'] . ' ' . $rm['last_name']; ?></option>
+									<?php } ?>
+								</select>
+							</div>
+							<div class="h_clearboth"></div>
+						</div>
+					<?php } ?>
+				<?php } ?>
+				
 			</td></tr>
 		</table>
 		
@@ -243,13 +271,17 @@
 								value="<?php echo $account_details['credit_limit']; ?>" />
 					</div>
 					
-					<!-- view financial documents button -->
-					<div class="item h_floatright h_margin0 h_marginright8">
-						<div class="input">
-							<a href="<?php echo base_url() . 'admin/accountmanagement/viewdocuments/' . $account_details['account_id'] . '/' . $account_details['order_number']; ?>"><input type="button" class="g_inputbutton h_margin0" value="View Financial Documents" /></a>
+					<?php if(	$this->session->userdata('user_type') == ROLE_ACCOUNT_MANAGER 
+								|| $this->session->userdata('user_type') == ROLE_RELATIONSHIP_MANAGER 
+					){ ?>
+						<!-- view financial documents button -->
+						<div class="item h_floatright h_margin0 h_marginright8">
+							<div class="input">
+								<a href="<?php echo base_url() . 'admin/accountmanagement/viewdocuments/' . $account_details['account_id'] . '/' . $account_details['order_number']; ?>"><input type="button" class="g_inputbutton h_margin0" value="View Financial Documents" /></a>
+							</div>
+							<div class="h_clearboth"></div>
 						</div>
-						<div class="h_clearboth"></div>
-					</div>
+					<?php } ?>
 					<div class="h_clearboth"></div>
 				</div>
 				
@@ -259,6 +291,10 @@
 		<input type="hidden" value="<?php echo $account_id; ?>" name="account_id" />
 		<input type="hidden" value="<?php echo $order_number; ?>" name="order_number" />
 	</form>
+	<form id="relationship_manager_assignment">
+		<input type="hidden" id="rm_account_id" name="rm_account_id" value="<?php echo $account_id; ?>" />
+		<input type="hidden" id="rm_relationship_manager_id" name="rm_relationship_manager_id" value="" />
+	</form>
 </div>
 
 <script type="text/javascript" language="javascript" src="<?php echo base_url() . '_assets/js/ajaxupload.3.5.js'; ?>"></script>
@@ -267,6 +303,40 @@ $(function(){
 	placeHolder();
 	checkSidebarStatus();
 	implementDatePicker();
+	
+	//reset relationship manager border color
+	$('#relationship_manager').css('border', '1px solid #CCCCCC');
+});
+
+$("#btn_assign_relationship_manager").click(function(e){
+	var relationship_manager_id = $('#relationship_manager').val();
+	
+	if( relationship_manager_id != 0 ){
+		//reset relationship manager border color
+		$('#relationship_manager').css('border', '1px solid #CCCCCC');
+		$('#rm_relationship_manager_id').val(relationship_manager_id);
+		
+		displayNotification("message", "Working...");
+		$.ajax({
+			url: "<?php echo base_url(); ?>admin/accountmanagement/assign_relationship_value",
+			type: "POST",
+			data: $("#relationship_manager_assignment").serialize(),
+			success: function(response, textStatus, jqXHR){
+				setTimeout(function () {
+					$("#middle_wrapper").html(response);
+					if (typeof history.pushState != 'undefined') { window.history.pushState("object or string", "Title", "<?php echo base_url(); ?>admin/accountmanagement/"); }
+					displayNotification("success", "Account successfully assign to a relationship manager.");
+				}, 500);
+			},
+			error: function(jqXHR, textStatus, errorThrown){
+				displayNotification("error", "Oops, something went wrong. Your action may or may not have been completed.");
+			}
+		});
+	}else{
+		//reset relationship manager border color
+		$('#relationship_manager').css('border', '1px solid #990000');
+		displayNotification("error", "Relationship manager is required.");
+	}
 });
 
 $("#btn_edit_account").click(function(e){

@@ -46,5 +46,16 @@ class Model_ordermanagement extends CI_Model
 		$account_details = $account_details[0];
 		return $account_details;
 	}
+	
+	function mark_order_as_done($account_id, $order_number)
+	{
+		$data = array(
+		   'status' => ORDERSTATUS_DONE,
+		   'status_comments' => 'done'
+		);
+
+		$this->db->where('order_number', $order_number);
+		$this->db->update('estate_orders', $data);
+	}
 }
 ?>

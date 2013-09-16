@@ -94,7 +94,7 @@ class Model_accountmanagement extends CI_Model
 		}elseif( $user_type == ROLE_ACCOUNT_MANAGER ){
 			$additional_query .= " AND (estate_accounts.category_id = " . ACCOUNT_CATEGORY_BUSINESS . " ";
 			$additional_query .= " OR estate_accounts.category_id = " . ACCOUNT_CATEGORY_PERSONAL . ") ";
-			$additional_query .= " AND estate_accounts.rel_mngr_id != 0 ";
+			$additional_query .= " AND estate_accounts.rel_mngr_id = 0 ";
 			$additional_query .= " AND estate_orders.status = " . ORDERSTATUS_FOR_APPROVAL . " ";
 		}elseif( $user_type == ROLE_PLATINUM_QUEUE ){
 			$additional_query .= " AND estate_accounts.category_id = " . ACCOUNT_CATEGORY_PLATINUM . " ";
@@ -103,11 +103,11 @@ class Model_accountmanagement extends CI_Model
 		}elseif( $user_type == ROLE_GLOBE_BUSINESS_SALES_SUPPORT_TEAM ){
 			$additional_query .= " AND estate_accounts.category_id = " . ACCOUNT_CATEGORY_BUSINESS . " ";
 			$additional_query .= " AND estate_accounts.rel_mngr_id = 0 ";
-			$additional_query .= " AND estate_orders.status = " . ORDERSTATUS_FOR_APPROVED . " ";
+			$additional_query .= " AND estate_orders.status = " . ORDERSTATUS_APPROVED . " ";
 		}elseif( $user_type == ROLE_ONLINE_SALES ){
 			$additional_query .= " AND estate_accounts.category_id = " . ACCOUNT_CATEGORY_PERSONAL . " ";
 			$additional_query .= " AND estate_accounts.rel_mngr_id = 0 ";
-			$additional_query .= " AND estate_orders.status = " . ORDERSTATUS_FOR_APPROVED . " ";
+			$additional_query .= " AND estate_orders.status = " . ORDERSTATUS_APPROVED . " ";
 		}else{ //no user_role filter
 			
 		}
@@ -412,10 +412,11 @@ class Model_accountmanagement extends CI_Model
 		}
 	}
 	
-	function getRelationshipMangers($status=null)
+	function getRelationshipManagers($status=null)
 	{
 		if( $status == 1 ){
 			$this->db->where('account_status', 1);
+			$this->db->where('user_type', ROLE_RELATIONSHIP_MANAGER);
 			$query = $this->db->get('users');
 			
 			if( $query->num_rows() > 0 ){
@@ -425,6 +426,7 @@ class Model_accountmanagement extends CI_Model
 			}
 		}elseif( $status == 0 ){
 			$this->db->where('account_status', 0);
+			$this->db->where('user_type', ROLE_RELATIONSHIP_MANAGER);
 			$query = $this->db->get('users');
 			
 			if( $query->num_rows() > 0 ){
@@ -433,6 +435,7 @@ class Model_accountmanagement extends CI_Model
 				return array();
 			}
 		}elseif( $status == null ){
+			$this->db->where('user_type', ROLE_RELATIONSHIP_MANAGER);
 			$query = $this->db->get('users');
 			
 			if( $query->num_rows() > 0 ){
@@ -441,6 +444,7 @@ class Model_accountmanagement extends CI_Model
 				return array();
 			}
 		}else{
+			$this->db->where('user_type', ROLE_RELATIONSHIP_MANAGER);
 			$query = $this->db->get('users');
 			
 			if( $query->num_rows() > 0 ){
@@ -449,6 +453,29 @@ class Model_accountmanagement extends CI_Model
 				return array();
 			}
 		}
+	}
+	
+	function updateAccountRelationshipManager($account_id, $relationship_manager_id)
+	{
+		$data = array(
+		   'rel_mngr_id' => $relationship_manager_id
+		);
+		
+		$this->db->where('account_id', $account_id);
+		$this->db->update('estate_accounts', $data);  
+		
+		return;
+	}
+	
+	function updateOrderStatus($order_number, $status, $comments)
+	{
+		$data = array(
+		   'status' => $status,
+		   'status_comments' => $comments
+		);
+
+		$this->db->where('order_number', $order_number);
+		$this->db->update('estate_orders', $data);
 	}
 }
 ?>
