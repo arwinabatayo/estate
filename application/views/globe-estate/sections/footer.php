@@ -914,51 +914,44 @@
 									$('#prod-item-'+resp.rowid).show('slow');
 								} else if(resp.status == 'coexist') {
 									var confirmCoexist = confirm("You are already subscribed to "+resp.product_name+". Do you wish to continue?");
-										if(confirmCoexist == true) {
-// 											if(resp.coex_product_type == "boosters") {
-												// Replace Booster
-												$.ajax({
-													url: base_url+'cart/addtocart',
-													data: 'tag=replace_cart_item&product_type=boosters&product_id='+id+'&remove_keyid='+resp.rowid+'&remove_product_id='+resp.product_id,
-													type:'post',
-													success: function(response) {
-														
-														var resp2 = jQuery.parseJSON( response );
-														
-														var cartItem = '<div id="prod-item-'+resp2.rowid+'" class="item" style="display:none">'+
-														'<div class="fleft">'+
-															'<span class="productName block" style="max-width:199px;">'+name+'</span>'+
-															'</span>'+
-														'</div>'+
-														'<span class="icoDelete">'+
-														'<a href="javascript:void(0)" class="btnDeleteCombos" data-id="'+resp2.product_id+'" data-name="'+resp2.name+'" data-pv="'+resp2.pv+'" data-cashout="" data-planpv=""  id="'+resp2.rowid+'" rel="'+resp2.name+'">'+
-														'<i class="icon-remove"></i></a> </span><br class="clear" /></div>\n';
-													
-														if(resp2.status == 'success' && resp2.rowid){
-															$('#prod-item-'+resp.rowid).remove();
-															$("#BoostersCartWidget").append(cartItem);
-															
-															$("#cashoutLabel").html(resp2.total).show('slow');
-															$("#pesovalLabel").attr('data-pv',resp2.total_remaining_pv).html(resp2.total_remaining_pv).show('slow');
-															
-															$('#cashoutBox,#pesovalBox').animate({backgroundColor: '#fff267'}, 'fast', function(){
-																$('#cashoutBox,#pesovalBox').animate({backgroundColor: '#F4F4F4'}, 'fast');
-															});
-															$('#prod-qty-'+resp2.rowid).html("<b>x"+resp2.qty+"</b>");
-															$('#prod-item-'+resp2.rowid).show('slow');
-														}
-
-													}, 
-													error: function(){
-														alert('Some error occured or the system is busy. Please try again later');	
-													}
-												});
-// 											} else {
-// 												// Remove Combo and add booster
+									if(confirmCoexist == true) {
+										$.ajax({
+											url: base_url+'cart/addtocart',
+											data: 'tag=replace_cart_item&product_type=boosters&product_id='+id+'&remove_keyid='+resp.rowid+'&remove_product_id='+resp.product_id,
+											type:'post',
+											success: function(response) {
 												
-// 											}
-										}
-									
+												var resp2 = jQuery.parseJSON( response );
+												
+												var cartItem = '<div id="prod-item-'+resp2.rowid+'" class="item" style="display:none">'+
+												'<div class="fleft">'+
+													'<span class="productName block" style="max-width:199px;">'+name+'</span>'+
+													'</span>'+
+												'</div>'+
+												'<span class="icoDelete">'+
+												'<a href="javascript:void(0)" class="btnDeleteCombos" data-id="'+resp2.product_id+'" data-name="'+resp2.name+'" data-pv="'+resp2.pv+'" data-cashout="" data-planpv=""  id="'+resp2.rowid+'" rel="'+resp2.name+'">'+
+												'<i class="icon-remove"></i></a> </span><br class="clear" /></div>\n';
+											
+												if(resp2.status == 'success' && resp2.rowid){
+													$('#prod-item-'+resp.rowid).remove();
+													$("#BoostersCartWidget").append(cartItem);
+													
+													$("#cashoutLabel").html(resp2.total).show('slow');
+													$("#pesovalLabel").attr('data-pv',resp2.total_remaining_pv).html(resp2.total_remaining_pv).show('slow');
+													
+													$('#cashoutBox,#pesovalBox').animate({backgroundColor: '#fff267'}, 'fast', function(){
+														$('#cashoutBox,#pesovalBox').animate({backgroundColor: '#F4F4F4'}, 'fast');
+													});
+													$('#prod-qty-'+resp2.rowid).html("<b>x"+resp2.qty+"</b>");
+													$('#prod-item-'+resp2.rowid).show('slow');
+												}
+
+											}, 
+											error: function(){
+												alert('Some error occured or the system is busy. Please try again later');	
+											}
+										});
+									}
 								}
 	 						}, 
 	 						error: function(){
@@ -967,7 +960,7 @@
 	 					});
 						
 					});
-					
+				});
 				// set dialog for resume uncomp transaction - gellie
 				$('a#open_resume_uncomp_transaction').on('click', function(){
 					$( '#dialog_application_status' ).dialog( "close" );
@@ -1018,9 +1011,5 @@
 							}
 						});
 				});	
-				
-				
-				
-				
 	});
 </script>
