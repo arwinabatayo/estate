@@ -1,4 +1,4 @@
-<div id="order-type-section" style="display:none;">
+<div id="order-type-section" class="textcenter" style="display:none;">
 	<div id="order-type-section-head">
 		<div id="order-type-section-breadcrumbs">
 			<a href="#">Renew Contract</a> | 

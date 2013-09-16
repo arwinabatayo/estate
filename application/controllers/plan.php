@@ -26,6 +26,7 @@ class Plan extends MY_Controller
 		$this->load->model('estate/accounts_model');
 		
 		$this->load->model('estate/products_model');
+
 		
 		//TODO: move to model
 		$query = $this->db->get('estate_main_plan');
@@ -44,6 +45,18 @@ class Plan extends MY_Controller
 		
 		
 		$this->load->view($this->_data->tpl_view, $this->_data);
+	}
+
+
+	public function getpackageplancombos()
+	{
+		$this->load->model('estate/packageplan_model');
+
+		$plan_id = $this->input->post('plan_id');
+
+		$this->_data->package_plans_combos = $this->packageplan_model->get_package_plan_combos($plan_id);
+
+		var_dump($this->_data->package_plans_combos); exit;
 	}
 	
 

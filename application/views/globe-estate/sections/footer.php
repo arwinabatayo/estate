@@ -234,7 +234,7 @@
 								   // return;
 								    
 									if(resp.status == 'success'){
-										if( resp.is_globe_subscriber == 'true' && resp.order_type == 'reserve'){
+										if( resp.is_globe_subscriber == 'false' && resp.order_type == 'reserve'){
 											$('#dialog_reserve_form').dialog( "open" );
 											return;
 										}
@@ -356,9 +356,9 @@
 		        /*$( "#plan-order-page" ).accordion( "option", "active", 1 );
 		        $( "#siderbar-panel" ).accordion( "option", "active", 2 );*/
 
-		        $("#acc-order-type .option-wrapper").hide('slow');
+		        $("#acc-order-type .option-wrapper").hide();
 
-		        $("#order-type-section").show('slow');
+		        $("#order-type-section").show();
 
 		    });
 
@@ -418,6 +418,41 @@
 				$( this ).closest('div').slideUp();
 				
 			});
+
+			$("a.btnAddPlan").parent().parent().each(function(){
+				$(this).click(function(){
+					$.ajax({
+						url: base_url+'plan/getpackageplancombos',
+						data: {'plan_id' : parseInt($(this).children("div.my-plan-id").text()) },
+						type:'post',
+						success: function(response){
+							
+							console.log(response);
+
+							/*console.log(response.data)
+
+							for(var ctr = 0; ctr < response.length; ctr++){
+								console.log(response[ctr]['combo_type']);
+								var combo_type = response[ctr]['combo_type'].toLowerCase();
+								
+								$("#combo-type-" + combo_type).attr('display', 'block')
+							}
+
+							$("#combo-type").show();*/
+							
+						}, 
+						error: function(){
+							alert('Some error occured or the system is busy. Please try again later');	
+						}
+					});
+
+				});
+			})
+
+
+
+			
+
 			
 		
 		<?php } else if($current_controller == 'addons' ){ ?>
@@ -489,11 +524,11 @@
 					
 					function showHideDelivery(e){
 						if( e == 'pickup'){
-							$("#delivery_pickup").slideUp();
-							$("#delivery_ship").slideDown();
-						}else{
-							$("#delivery_pickup").slideDown();
 							$("#delivery_ship").slideUp();
+							$("#delivery_pickup").slideDown();
+						}else{
+							$("#delivery_ship").slideDown();
+							$("#delivery_pickup").slideUp();
 						}
 					}
 					
@@ -506,6 +541,29 @@
 							$("#shipping_address_field").slideDown();
 						}
 					}
+					
+					// save new shipping address - mark
+					$('form#new-shipping button').click(function(){
+							var formData  = $('form#new-shipping').serialize();
+							var btn = $(this);
+							$.ajax({
+								url: base_url+'order/save_address',
+								data: formData,
+								type:'post',
+								success: function(response){
+									var resp = jQuery.parseJSON( response );
+									//alert(JSON.stringify(resp));
+									if(resp.status == 'success'){
+										alert('New shipping address saved!');
+										btn.attr('disabled',true);
+										$( "#personal-info-page" ).accordion( "option", "active", 2 );
+									}
+								}, 
+								error: function(){
+									alert('Some error occured or the system is busy. Please try again later');	
+								}
+							});
+					});		
 
 			
 		<?php }  ?>
@@ -525,11 +583,7 @@
 							type:'post',
 							success: function(response){
 								
-								//var resp = jQuery.parseJSON( response );
-								
-								//alert ( JSON.stringify(response) );
-								alert ( response );
-								return;
+								var resp = jQuery.parseJSON( response );
 								
 								var cartItem = '<div id="prod-item-'+resp.rowid+'" class="item" style="display:none"><div class="fleft"><span class="productName block">'+resp.name+'</span><span class="price block arial italic">'+resp.price_formatted+'</span></div><span class="icoDelete"> <a class="btnDelete" href="javascript:void(0)" id="'+resp.rowid+'"><i class="icon-remove"></i></a> </span><br class="clear" /></div>\n';
 								
@@ -847,5 +901,55 @@
 // 						}
 // 					});
 				});
+							
+				// set dialog for application status - gellie
+				$('a#open_application_status').on('click', function(){
+					$( '#dialog_application_status' ).dialog( "open" );
+				});
+
+				// validate reference number - gellie
+				$('form#refnum-verification button').on('click', function(){
+			
+						var s =	$('form#refnum-verification div.status');
+						var refnum = $('input#reference_number').val();
+						// reset error class
+						s.removeClass('alert-error');
+						//e.preventDefault();
+						
+						s.show();
+					    s.html('Sending...Please wait...');
+					    
+					    // may problem pa sa cache
+					    //$(this).attr('disabled',true);
+
+						$.ajax({
+							url: base_url+'home/validate_reference_number',
+							data: 'refnum='+refnum,
+							type:'post',
+							success: function(response){
+								var resp = jQuery.parseJSON( response );
+								
+								if(resp.status == 'success'){
+									$('#e_lbl').html(refnum);
+									s.html(resp.msg);
+									// redirect to status page
+									window.location = resp.status_page_url;
+									//$(this).attr('disabled',false);
+									
+								}else{
+									s.addClass('alert-'+resp.status);
+									s.html(resp.msg);
+								}
+								
+							}, 
+							error: function(){
+								alert('Some error occured or the system is busy. Please try again later');	
+							}
+						});
+				});	
+				
+				
+				
+				
 	});
 </script>
