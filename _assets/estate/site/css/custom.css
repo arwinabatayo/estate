@@ -16,14 +16,10 @@
 .xsmall     {font-size:10px}
 .fff     {color:#fff}
 .red     {color:red}
-.arial {font-family:Arial,sans-serif}
 .textleft    {text-align:left}
 .textright   {text-align:right}
 .textcenter {text-align:center}
 .divcenter  {float:none!important; margin: 0 auto!important}
-.headerbox  {padding:10px 20px;background:#eee; font-size:18px;margin: 0 0 10px}
-.contentbox {padding:10px 20px;background:#f4f4f4; margin-bottom:10px}
-.contentbox.nobg {padding:10px 20px;background:transparent; }
 
 .noLeftMargin  {margin-left:0!important}
 .noRightMargin {margin-right:0!important}
@@ -46,10 +42,6 @@
   opacity: 0.7;
 }
 
-/* B O X E S */
-#main-page {padding-top:28px}
-footer {background:#222222}
-footer #footer-box {min-height:220px}
 
 /* * * PRELOADER */
 #preLoader {position:fixed; top:0; left:0; right:0; bottom:0; z-index:990; background: url(../img/transparent.png)}
@@ -95,55 +87,13 @@ i.fright {margin:0 0 0 12px}
 /*sidebar panel */
 .line-tab {float:left; font-size:12px; font-weight:bold; padding:4px 20px; margin:0 0 -1px 8px; border:1px solid #ccc; border-bottom:none; -webkit-border-radius:8px 8px 0 0;  -moz-border-radius:8px 8px 0 0; border-radius:8px 8px 0 0}
 
-.cartWidget .item {border-bottom:1px dotted #ddd;padding:10px 0 8px;}
-.cartWidget .item:last-child {border-bottom:none}
-.cartWidget .productName {}
-.cartWidget .price {color:#888}
-.cartWidget .icoDelete {display:block; float:right}
-
-
 /* * * ACCORDION OVERRIDE */
 .ui-accordion .ui-accordion-header a {padding:0.6em 0.6em 0.6em 1.8em; outline:none}
-.accordion a {outline:none}
-.accordion a:hover {text-decoration:none}
 
-/* landing page */
-#landing-page .banner{border:1px solid #000; margin:50px 0px 0px 0px; position:relative; height:300px; margin-bottom:35px}
-#landing-page .textrow {border-bottom:1px solid #CCC; color:#555}
-#landing-page .textrow:first-child {border-top:1px solid #ccc}
-
-#landing-page .textrow .item {float:left; width:50%; font-size:14px; line-height:22px; font-family:arial}
-#landing-page .textrow .item span{display:block; font-size:20px; margin:40px 0px 20px 0px}
-#landing-page .textrow .text { padding: 10px 0px}
-#landing-page .banner img {position:absolute; bottom:0px;  left:80px;  }
-#landing-page .banner .text{position:absolute;  left:380px;  top:60px;  text-align:center}
-#landing-page .banner .lp-label{ font-size:50px;  font-weight:normal;  line-height:55px;  margin-bottom:15px}
-#landing-page .banner .lp-sub{font-size:20px; line-height:30px; color:#222; margin-bottom:35px}
-#landing-page .banner .lp-button{padding:6px 22px 6px; text-align:center; font-size:14px}
-
-#footer-menu {}
-#footer-menu ul
-{
-	list-style-type: none;
-}
-#footer-menu ul li a
-{
-	text-decoration: none;
-	color: #999999;
-	font-size:10px;
-}
-#footer-menu li a:hover
-{
-	color: #FFFFFF;
-}
-#footer-menu ul li.header a
-{
-	font-weight: bold;
-	font-size: 11px;
-	margin: 0px 0px 5px 0px;
-	color: #999999;
-}
-
+/* B O X E S */
+#main-page {padding-top:28px}
+footer {background:#222222}
+footer #footer-box {min-height:220px}
 
 /* * * SKU CONFIGURATION */
 #product_preview {text-align:center}
@@ -155,10 +105,6 @@ i.fright {margin:0 0 0 12px}
 
 .product-row .product-item {text-align:center;float:left}
 .product-row .product-item img {cursor:pointer}
-
-form.addtoCart {margin:0;padding:0}
-
-
 
 /* * *  R E S P O N S I V E  O V E R R I D E S  * * */ 
 
@@ -180,7 +126,7 @@ form.addtoCart {margin:0;padding:0}
 @media (min-width: 768px) and (max-width: 979px) {
 	#mobile-breadcrumbs {display:block}
 	#desktop-breadcrumbs {display:none}
-
+	
 }
 
 /* DESKTOP SCREENS */

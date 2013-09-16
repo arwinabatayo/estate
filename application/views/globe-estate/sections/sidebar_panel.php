@@ -2,7 +2,7 @@
 	<?php
 	//hassle to paxencia na, need to separate prod type into basket (accordion)
 		
-		$cartProdFiltered = array('accessories'=>array(),'addon'=>array(),'plan'=>array(), 'combos'=>array()); //store it on each key(prod type)
+		$cartProdFiltered = array('accessories'=>array(),'addon'=>array(),'plan'=>array(), 'combos'=>array(), 'boosters'=>array()); //store it on each key(prod type)
 	
 		$cartItems = $this->cart->contents();
 
@@ -22,7 +22,6 @@
 				$gadget_cash_out =  $item['gadget_cash_out'];
 			}
 		}
-		//print_r($cartProdFiltered);		
 	?>		
 			
 		
@@ -113,7 +112,7 @@
 									if($cart_plan){
 										foreach($cart_plan as $item){
 									?>
-									<div id="prod-item-<?php echo $item['rowid'] ?>" class="item">
+									<div id="prod-item-<?php echo $item['rowid'] ?>" class="itemPlan">
 										<div class="fleft">
 											<span class="productName block"><?php echo $item['name'] ?></span>
 										</div>
@@ -138,11 +137,11 @@
 											<div class="fleft">
 												<span class="productName block"><?php echo $item['name'] ?></span>
 												<span class="productName block" id="prod-qty-<?php echo $item['rowid'] ?>" style="margin-left: 15px;">
-													<b>x<?php echo $item['qty'] ?></b>
+													<b>x<?php echo $item['combos_qty'] ?></b>
 												</span>
 											</div>
 											<span class="icoDelete"> 
-												<a href="javascript:void(0)" class="btnDeleteCombos"  data-id="<?php echo $item['product_id'] ?>" data-name="<?php echo $item['name'] ?>" data-pv="<?php echo $item['pv'] ?>" data-cashout="<?php echo $gadget_cash_out ?>" data-planpv="<?php echo $plan_pv ?>"  id="<?php echo $item['rowid'] ?>" rel="<?php echo $item['name'] ?>">
+												<a href="javascript:void(0)" class="btnDeleteCombos"  data-id="<?php echo $item['product_id'] ?>" data-product-type="<?php echo $item['product_type'] ?>" data-name="<?php echo $item['name'] ?>" data-pv="<?php echo $item['this_pv_value'] ?>" data-cashout="<?php echo $gadget_cash_out ?>" data-planpv="<?php echo $plan_pv ?>"  id="<?php echo $item['rowid'] ?>" rel="<?php echo $item['name'] ?>">
 													<i class="icon-remove"></i>
 												</a>
 											</span>
@@ -154,7 +153,34 @@
 										?>
 										</div>
 									</p>
-										
+									
+									<p>
+										<strong>Boosters</strong>
+										<div id="BoostersCartWidget" class="cartWidget">
+										<?php
+											$cart_boosters='';
+											$cart_boosters = @$cartProdFiltered['boosters'];
+											
+											if($cart_boosters){
+												foreach($cart_boosters as $item){
+										?>
+										<div id="prod-item-<?php echo $item['rowid'] ?>" class="item">
+											<div class="fleft">
+												<span class="productName block" style="max-width:199px;"><?php echo $item['name'] ?></span>
+											</div>
+											<span class="icoDelete"> 
+												<a href="javascript:void(0)" class="btnDeleteBoosters"  data-id="<?php echo $item['product_id'] ?>" data-product-type="<?php echo $item['product_type'] ?>" data-name="<?php echo $item['name'] ?>" data-amount="<?php echo $item['price'] ?>" id="<?php echo $item['rowid'] ?>" rel="<?php echo $item['name'] ?>">
+													<i class="icon-remove"></i>
+												</a>
+											</span>
+											<br class="clear" />
+										</div>
+										<?php 
+												}
+											}	 
+										?>
+										</div>
+									</p>
 								
 								</p>
 									<!-- <p><strong>Packaged Plan</strong> <br /> 
@@ -232,7 +258,7 @@
 					<span class="bold">CASHOUT :</span>&nbsp;&nbsp;<span class="cashoutLabel" id="cashoutLabel"><?php
 					/**
 					 * Show price if addon and accessories not empty
-					 * 
+					 * robert 
 					 */
 					$showprice = count($cartProdFiltered['addon']) + count($cartProdFiltered['accessories']);
 					if($showprice > 0) {

@@ -40,11 +40,26 @@ class Captcha extends CI_Controller {
             $verification_code_sent = true; // API CALL - sendVerificationCode
             
             if( $verification_code_sent ){
-			//	$this->session->unset_userdata('vcode_tries');
-				$result['msg']    = 'SMS successfully sent to you mobile number!';
-			}else{
-				$result['msg']    = 'Error occured while sending verification code';
-			}
+                        $this->load->model('estate/networks_model');
+                        $mobile = $this->session->userdata('current_subscriber_mobileno');
+                        
+                        
+                        $this->load->library('GlobeWebService','','api_globe');
+                        $verification_code = random_string('alnum', 6);
+                        $message = "Please use this code ".$verification_code." to verify your account.";
+                        $sms_status = $this->api_globe->api_send_sms($mobile, $message, "Project Esate");
+
+                        if($sms_status == TRUE) {
+                            $this->load->model('estate/networks_model');
+                            $this->networks_model->insert_sms_verification($mobile, $verification_code);
+                            $result['msg']    = 'SMS successfully sent to you mobile number!';
+                        } else {
+                            $result['status'] = "error";
+                            $result['msg'] = "Failed sending sms. Please try again.";
+                        }
+                    }else{
+                            $result['msg']    = 'Error occured while sending verification code';
+                    }
 		}
 
 		echo json_encode($result);
