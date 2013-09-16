@@ -25,7 +25,7 @@ class Accountmanagement extends MY_Controller
 	public function index()
 	{
 		$this->load->model('model_plans');
-		$this->load->model('model_accounts');
+		$this->load->model('model_accountmanagement');
 		
 		$user_type = $this->session->userdata('user_type');	
 		
@@ -39,7 +39,7 @@ class Accountmanagement extends MY_Controller
 		$pagination_limit = 5;
 		$current_page = 1;
 		$limit = ($current_page * $pagination_limit) - $pagination_limit;
-		$accounts = $this->model_accounts->getAccounts($user_type,
+		$accounts = $this->model_accountmanagement->getAccounts($user_type,
 																'estate_accounts.name', 
 																'ASC', 
 																$limit, 
@@ -68,7 +68,9 @@ class Accountmanagement extends MY_Controller
 		$_data['page'] = "accountmanagement";
 		$_data['plan_bundles'] = $this->model_plans->getAllPlans();
 		$_data['lock_in_periods'] = $this->model_plans->getAllLockInPeriods();
-		$_data['account_categories'] = $this->model_accounts->getAllAccountCategories();
+		$_data['order_statuses'] = $this->model_accountmanagement->getOrderStatuses();
+		$_data['order_types'] = $this->model_accountmanagement->getOrderTypes();
+		$_data['account_categories'] = $this->model_accountmanagement->getAllAccountCategories();
 		$_data['accounts'] = $accounts;
 		$_data['content'] = $this->load->view('admin/view_accountmanagement', $_data, TRUE);
 		$this->load->view('admin/view_main_back', $_data);
@@ -80,13 +82,32 @@ class Accountmanagement extends MY_Controller
 		if ($account_id==null) { redirect(site_url('admin/accountmanagment')); } // account_id?
 		if ($order_number==null) { redirect(site_url('admin/accountmanagment')); } // account_id?
 		
-		$this->load->model('model_accounts');
+		$this->load->model('model_accountmanagement');
 		
 		// load response
 		$_data['sess_user'] = $this->session->userdata;
 		$_data['page'] = "accountmanagement";
-		$_data['account_details'] = $this->model_accounts->getAccountDetails($account_id, $order_number);
+		$_data['account_id'] = $account_id;
+		$_data['order_number'] = $order_number;
+		$_data['account_details'] = $this->model_accountmanagement->getAccountDetails($account_id, $order_number);
 		$_data['content'] = $this->load->view('admin/view_accountmanagement_viewaccount', $_data, TRUE);
+		$this->load->view('admin/view_main_back', $_data);
+		return;
+	}
+	
+	public function viewdocuments($account_id, $order_number)
+	{
+		if ($account_id==null) { redirect(site_url('admin/accountmanagment')); } // account_id?
+		if ($order_number==null) { redirect(site_url('admin/accountmanagment')); } // account_id?
+		
+		$this->load->model('model_accountmanagement');
+		
+		// load response
+		$_data['sess_user'] = $this->session->userdata;
+		$_data['page'] = "accountmanagement";
+		$_data['order_statuses'] = $this->model_accountmanagement->getOrderStatuses();
+		$_data['account_details'] = $this->model_accountmanagement->getAccountDetails($account_id, $order_number);
+		$_data['content'] = $this->load->view('admin/view_accountmanagement_viewdocuments', $_data, TRUE);
 		$this->load->view('admin/view_main_back', $_data);
 		return;
 	}
