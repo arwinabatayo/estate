@@ -42,6 +42,20 @@
 					<div class="h_clearboth"></div>
 				</div>
 				
+				<!-- application type -->
+				<div class="item">
+					<div class="label">Application type</div>
+					<div class="input">
+						<select class="g_select" name="order_type" data-required="1">
+							<option value="0" selected="selected">Select order type</option>
+							<?php foreach( $order_types as $order_type ){ ?>
+								<option value="<?php echo $order_type['id']; ?>"><?php echo $order_type['title']; ?></option>
+							<?php } ?>
+						</select>
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
 				<!-- plan -->
 				<div class="item">
 					<div class="label">Plan</div>
@@ -165,6 +179,7 @@
 				<th>Due Date</th>
 				<th>Credit Limit</th>
 				<th>Status</th>
+				<th>Order Status</th>
 			</tr>
 			
 			<?php foreach ($accounts as $accounts => $a) { ?>
@@ -179,6 +194,7 @@
 					<td><?php echo date('M-d-Y', strtotime($a['due_date'])); ?></td>
 					<td><?php echo $a['credit_limit']; ?></td>
 					<td><?php if( $a['status'] == 0 ){ echo 'Inactive'; }else{ echo 'Active'; } ?></td>
+					<td><?php echo $a['order_status_name']; ?></td>
 				</tr>
 			<?php } ?> 
 			

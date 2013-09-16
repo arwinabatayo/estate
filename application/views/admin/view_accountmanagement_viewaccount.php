@@ -137,6 +137,20 @@
 					<div class="h_clearboth"></div>
 				</div>
 				
+				<!-- credit limit -->
+				<div class="item">
+					<div class="label">Credit limit *</div>
+					<div class="input">
+						<input 	class="g_inputtext" 
+								type="text" 
+								name="credit_limit" 
+								maxlength="200"
+								value="<?php echo $account_details['credit_limit']; ?>" 
+								data-required="1" />
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
 				<!-- status -->
 				<div class="item">
 					<div class="label">Status *</div>
@@ -203,20 +217,36 @@
 				
 				<!-- credit limit -->
 				<div class="item">
-					<div class="label">Credit limit *</div>
+					<div class="label">Credit limit Increase?</div>
+					<div class="input">
+						<input 	class="" 
+								type="radio" 
+								checked="checked"
+								name="credit_limit_increase" 
+								maxlength="200"
+								value="yes" /> Yes
+						<input 	class="" 
+								type="radio" 
+								name="credit_limit_increase" 
+								maxlength="200"
+								value="no" /> No
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				<div class="item">
+					<div class="label">Credit limit</div>
 					<div class="input">
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="credit_limit" 
 								maxlength="200"
-								value="<?php echo $account_details['credit_limit']; ?>" 
-								data-required="1" />
+								value="<?php echo $account_details['credit_limit']; ?>" />
 					</div>
 					
 					<!-- view financial documents button -->
 					<div class="item h_floatright h_margin0 h_marginright8">
 						<div class="input">
-							<input type="button" class="g_inputbutton h_margin0" value="View Financial Documents" />
+							<a href="<?php echo base_url() . 'admin/accountmanagement/viewdocuments/' . $account_details['account_id'] . '/' . $account_details['order_number']; ?>"><input type="button" class="g_inputbutton h_margin0" value="View Financial Documents" /></a>
 						</div>
 						<div class="h_clearboth"></div>
 					</div>
@@ -225,6 +255,9 @@
 				
 			</td></tr>
 		</table>
+		
+		<input type="hidden" value="<?php echo $account_id; ?>" name="account_id" />
+		<input type="hidden" value="<?php echo $order_number; ?>" name="order_number" />
 	</form>
 </div>
 
@@ -234,37 +267,6 @@ $(function(){
 	placeHolder();
 	checkSidebarStatus();
 	implementDatePicker();
-	
-	var btnUpload=$('#change_addon_image');
-	var mestatus=$('#upload_result');
-	var files=$('#addon_image_wrapper');
-	new AjaxUpload( btnUpload, {
-		action: '<?php echo base_url(); ?>admin/addons/upload_addon_image',
-		name: 'addon_image',
-		onSubmit: function(file, ext){
-			 if (! (ext && /^(jpg|png|jpeg|gif)$/.test(ext))){ 
-				mestatus.text('Only JPG, PNG or GIF files are allowed');
-				return false;
-			}
-			displayNotification("message", "Working...");
-		},
-		onComplete: function(file, response){
-			var data = jQuery.parseJSON(response);
-			files.html('');
-			if(data.status==="success"){
-				var addon_image_string = '<input type="hidden" value="' + data.filename + '" data-image-required="1" data-image-wrapper="addon_image_wrapper_wrapper" name="addon-image-name" id="addon-image-name">';
-				addon_image_string += '<img src="<?php echo base_url() . $this->config->item('base_addon_url') . '_temp/'; ?>'+data.filename+'" title="' + data.filename + '" alt="' + data.filename + '" class="img_addon_image" />';
-				
-				mestatus.html('');
-				
-				$('#addon_image_wrapper_wrapper').css('border', '1px solid #CCC');
-				$('#addon_image_wrapper').append(addon_image_string);
-				displayNotification("success", data.msg);
-			} else{
-				displayNotification("error", data.msg);
-			}
-		}
-	});
 });
 
 $("#btn_edit_account").click(function(e){

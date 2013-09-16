@@ -4,7 +4,7 @@
 	<div class="g_spacer"></div>
 	
 	<div class="g_pagelabel">
-		<div class="g_pagelabel_icon"><img src="<?php echo base_url(); ?>_assets/images/tools/properties.png" /></div>
+		<div class="g_pagelabel_icon"><img src="<?php echo base_url(); ?>_assets/images/tools/generic.png" /></div>
 		<div class="g_pagelabel_text">E-Commerce Dashboard</div>
 	</div>
 	
