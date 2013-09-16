@@ -32,7 +32,7 @@
 	
 	<input type="hidden" name="filter" value="1" />
 	<input type="hidden" name="current_page" value="1" />
-	<input type="hidden" name="addonscategory_id" value="<?php echo $addonscategory_id; ?>" />
+	<input type="hidden" name="category_id" value="<?php echo $category_id; ?>" />
 	<div class="h_clearboth"></div>
 			
 </form>

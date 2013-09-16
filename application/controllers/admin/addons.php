@@ -22,16 +22,16 @@ class Addons extends MY_Controller
 		}
 	}
 	
-	public function index($addonscategory_id=null)
+	public function index($category_id=null)
 	{
-		if ($addonscategory_id==null) { redirect(site_url('admin/addonscategories')); } // addonscategory_id?
+		if ($category_id==null) { redirect(site_url('admin/addonscategories')); } // category_id?
 		
 		$this->load->model('model_addons');
 		
 		$user_type = $this->session->userdata('user_type');	
 		
 		$filter_arr = array();
-		$filter_arr['addonscategory_id'] = $addonscategory_id;
+		$filter_arr['category_id'] = $category_id;
 		if ($this->input->post('filter')) {
 			$filter_arr['letter'] = $this->input->post('letter');
 		}
@@ -39,11 +39,10 @@ class Addons extends MY_Controller
 		// retrieve addons
 		$pagination_limit = 5;
 		$current_page = 1;
-		$addonscategory_id = $addonscategory_id;
 		$limit = ($current_page * $pagination_limit) - $pagination_limit;
-		$addons_arr = $this->model_addons->getAddons(	$addonscategory_id, 
+		$addons_arr = $this->model_addons->getAddons(	$category_id, 
 														$user_type, 
-														"estate_add_ons.f_add_on_title", 
+														"estate_add_ons.title", 
 														"asc", 
 														$limit,
 														$pagination_limit,
@@ -58,12 +57,12 @@ class Addons extends MY_Controller
 		// populate response
 		$_filter = array(		'sess_user' => $this->session->userdata,
 								'current_page' => $current_page,
-								'addonscategory_id' => $addonscategory_id,
+								'category_id' => $category_id,
 								'filter' => $this->input->post('filter'),
 								'labels' => $this->getAlphabet(),
 								'filter_arr' => $filter_arr);
 		$_pagination = array(	'page' => 'addons',
-								'addonscategory_id' => $addonscategory_id,
+								'category_id' => $category_id,
 								'filter_arr' => $filter_arr,
 								'item_count' => $addon_total_count,
 								'pagination_limit' => $pagination_limit,
@@ -72,7 +71,7 @@ class Addons extends MY_Controller
 		// load response
 		$_data['sess_user'] = $this->session->userdata;
 		$_data['page'] = "addons";
-		$_data['addonscategory_id'] = $addonscategory_id;
+		$_data['category_id'] = $category_id;
 		$_data['item_count'] = $item_count;
 		$_data['addons'] = $addons_arr;
 		$_data['legend'] = $this->load->view('admin/view_addons_legend', NULL, TRUE);
@@ -83,9 +82,9 @@ class Addons extends MY_Controller
 		return;
 	}
 	
-	public function add($addonscategory_id=null)
+	public function add($category_id=null)
 	{
-		if ($addonscategory_id==null) { redirect(site_url('admin/addonscategories')); } // main plan id?
+		if ($category_id==null) { redirect(site_url('admin/addonscategories')); } // main plan id?
 		
 		$this->load->model('model_addonscategories');
 		$this->load->model('model_addons');
@@ -94,7 +93,7 @@ class Addons extends MY_Controller
 		$_data['sess_user'] = $this->session->userdata;
 		$_data['page'] = "addons";
 		$_data['addonscategories'] = $this->model_addonscategories->getAllAddonsCategories();
-		$_data['addonscategory_id'] = $addonscategory_id;
+		$_data['category_id'] = $category_id;
 		$_data['content'] = $this->load->view('admin/view_addons_add', $_data, TRUE);
 		$this->load->view('admin/view_main_back', $_data);
 		return;
@@ -105,23 +104,24 @@ class Addons extends MY_Controller
 		$this->load->model('model_addons');
 		
 		$data = array();
-		$data['f_add_ons_category_id'] 			= $this->cleanStringForDB($this->input->post('addon_category_id'));
-		$data['f_add_on_title'] 				= $this->cleanStringForDB($this->input->post('addon_title'));
-		$data['f_add_on_description'] 			= $this->cleanStringForDB($this->input->post('addon_description'));
-		$data['f_add_on_amount'] 				= $this->cleanStringForDB($this->input->post('addon_amount'));
-		$data['f_add_ons_category_id'] 			= $this->cleanStringForDB($this->input->post('addon_category_id'));
-		$data['f_add_ons_quantity'] 			= $this->cleanStringForDB($this->input->post('addon_quantity'));
-		$data['f_add_on_image'] 				= $this->cleanStringForDB($this->input->post('addon-image-name'));
+		$data['category_id'] 			= $this->cleanStringForDB($this->input->post('category_id'));
+		$data['cid'] 					= $this->cleanStringForDB($this->input->post('addon_cid'));
+		$data['title'] 					= $this->cleanStringForDB($this->input->post('addon_title'));
+		$data['description'] 			= $this->cleanStringForDB($this->input->post('addon_description'));
+		$data['amount'] 				= $this->cleanStringForDB($this->input->post('addon_amount'));
+		$data['quantity'] 				= $this->cleanStringForDB($this->input->post('addon_quantity'));
+		$data['image'] 					= $this->cleanStringForDB($this->input->post('addon-image-name'));
 		if( !$this->input->post('status') 
 			|| $this->input->post('status') == '' 
-			|| $this->input->post('status') == '0' 
-			|| $this->input->post('status') == 0 )
+			|| $this->input->post('status') == 'disabled' )
 		{ 
-			$data['f_add_on_status'] 		= 1;
+			$data['status'] 									= 0;
+		}elseif( $this->input->post('status') == 'enabled' ){
+			$data['status'] 									= 1;
 		}else{
-			$data['f_add_on_status'] 		= $this->cleanStringForDB($this->input->post('status'));
+			$data['status'] 									= 0;
 		}
-		$data['f_add_ons_peso_value'] 				= $this->cleanStringForDB($this->input->post('addon_peso_value'));
+		$data['peso_value'] 				= $this->cleanStringForDB($this->input->post('addon_peso_value'));
 		
 		//move image file
 		$image_file = trim($this->input->post('addon-image-name'));
@@ -145,8 +145,8 @@ class Addons extends MY_Controller
 		$user_type = $this->session->userdata('user_type');	
 		
 		$filter_arr = array();
-		$addon_category_id = $this->input->post('addon_category_id');
-		$filter_arr['add_ons_category_id'] = $addon_category_id;
+		$category_id = $this->input->post('category_id');
+		$filter_arr['category_id'] = $category_id;
 		if ($this->input->post('filter')) {
 			$filter_arr['letter'] = $this->input->post('letter');
 		}
@@ -155,9 +155,9 @@ class Addons extends MY_Controller
 		$pagination_limit = 5;
 		$current_page = 1;
 		$limit = ($current_page * $pagination_limit) - $pagination_limit;
-		$addons_arr = $this->model_addons->getAddons(	$addon_category_id, 
+		$addons_arr = $this->model_addons->getAddons(	$category_id, 
 														$user_type, 
-														"estate_add_ons.f_add_on_title", 
+														"estate_add_ons.title", 
 														"asc", 
 														$limit,
 														$pagination_limit,
@@ -172,12 +172,12 @@ class Addons extends MY_Controller
 		// populate response
 		$_filter = array(		'sess_user' => $this->session->userdata,
 								'current_page' => $current_page,
-								'addon_category_id' => $addon_category_id,
+								'category_id' => $category_id,
 								'filter' => $this->input->post('filter'),
 								'labels' => $this->getAlphabet(),
 								'filter_arr' => $filter_arr);
 		$_pagination = array(	'page' => 'addons',
-								'addon_category_id' => $addon_category_id,
+								'category_id' => $category_id,
 								'filter_arr' => $filter_arr,
 								'item_count' => $addon_total_count,
 								'pagination_limit' => $pagination_limit,
@@ -186,8 +186,8 @@ class Addons extends MY_Controller
 		// load response
 		$_data['sess_user'] = $this->session->userdata;
 		$_data['page'] = "addons";
-		$addonscategory_id = $this->input->post('addon_category_id');
-		$_data['addonscategory_id'] = $addonscategory_id;
+		$category_id = $this->input->post('category_id');
+		$_data['category_id'] = $category_id;
 		$_data['item_count'] = $item_count;
 		$_data['addons'] = $addons_arr;
 		$_data['legend'] = $this->load->view('admin/view_addons_legend', NULL, TRUE);
@@ -283,7 +283,7 @@ class Addons extends MY_Controller
 		$user_type = $this->session->userdata('user_type');	
 		
 		$filter_arr = array();
-		$filter_arr['addonscategory_id'] = $this->input->post('addonscategory_id');
+		$filter_arr['category_id'] = $this->input->post('category_id');
 		if ($this->input->post('filter')) {
 			$filter_arr['letter'] = $this->input->post('letter');
 		}
@@ -291,11 +291,11 @@ class Addons extends MY_Controller
 		// retrieve addons
 		$pagination_limit = 5;
 		$current_page = $this->input->post('current_page');
-		$addonscategory_id = $this->input->post('addonscategory_id');
+		$category_id = $this->input->post('category_id');
 		$limit = ($current_page * $pagination_limit) - $pagination_limit;
-		$addons_arr = $this->model_addons->getAddons(	$addonscategory_id, 
+		$addons_arr = $this->model_addons->getAddons(	$category_id, 
 														$user_type, 
-														"estate_add_ons.f_add_on_title", 
+														"estate_add_ons.title", 
 														"asc", 
 														$limit,
 														$pagination_limit,
@@ -310,12 +310,12 @@ class Addons extends MY_Controller
 		// populate response
 		$_filter = array(		'sess_user' => $this->session->userdata,
 								'current_page' => $current_page,
-								'addonscategory_id' => $addonscategory_id,
+								'category_id' => $category_id,
 								'filter' => $this->input->post('filter'),
 								'labels' => $this->getAlphabet(),
 								'filter_arr' => $filter_arr);
 		$_pagination = array(	'page' => 'addons',
-								'addonscategory_id' => $addonscategory_id,
+								'category_id' => $category_id,
 								'filter_arr' => $filter_arr,
 								'item_count' => $addon_total_count,
 								'pagination_limit' => $pagination_limit,
@@ -324,7 +324,7 @@ class Addons extends MY_Controller
 		// load response
 		$_data['sess_user'] = $this->session->userdata;
 		$_data['page'] = "addons";
-		$_data['addonscategory_id'] = $addonscategory_id;
+		$_data['category_id'] = $category_id;
 		$_data['item_count'] = $item_count;
 		$_data['addons'] = $addons_arr;
 		$_data['legend'] = $this->load->view('admin/view_addons_legend', NULL, TRUE);
@@ -339,23 +339,24 @@ class Addons extends MY_Controller
 		$this->load->model('model_addons');
 		
 		$data = array();
-		$data['f_add_ons_category_id'] 			= $this->cleanStringForDB($this->input->post('addonscategory_id'));
-		$data['f_add_on_title'] 				= $this->cleanStringForDB($this->input->post('addon_title'));
-		$data['f_add_on_description'] 			= $this->cleanStringForDB($this->input->post('addon_description'));
-		$data['f_add_on_amount'] 				= $this->cleanStringForDB($this->input->post('addon_amount'));
-		$data['f_add_ons_category_id'] 			= $this->cleanStringForDB($this->input->post('addon_category_id'));
-		$data['f_add_ons_quantity'] 			= $this->cleanStringForDB($this->input->post('addon_quantity'));
-		$data['f_add_on_image'] 				= $this->cleanStringForDB($this->input->post('addon-image-name'));
+		$data['title'] 				= $this->cleanStringForDB($this->input->post('addon_title'));
+		$data['cid'] 				= $this->cleanStringForDB($this->input->post('addon_cid'));
+		$data['description'] 			= $this->cleanStringForDB($this->input->post('addon_description'));
+		$data['amount'] 				= $this->cleanStringForDB($this->input->post('addon_amount'));
+		$data['category_id'] 					= $this->cleanStringForDB($this->input->post('category_id'));
+		$data['quantity'] 			= $this->cleanStringForDB($this->input->post('addon_quantity'));
+		$data['image'] 				= $this->cleanStringForDB($this->input->post('addon-image-name'));
 		if( !$this->input->post('status') 
 			|| $this->input->post('status') == '' 
-			|| $this->input->post('status') == '0' 
-			|| $this->input->post('status') == 0 )
+			|| $this->input->post('status') == 'disabled' )
 		{ 
-			$data['f_add_on_status'] 		= 1;
+			$data['status'] 									= 0;
+		}elseif( $this->input->post('status') == 'enabled' ){
+			$data['status'] 									= 1;
 		}else{
-			$data['f_add_on_status'] 		= $this->cleanStringForDB($this->input->post('status'));
+			$data['status'] 									= 0;
 		}
-		$data['f_add_ons_peso_value'] 				= $this->cleanStringForDB($this->input->post('addon_peso_value'));
+		$data['peso_value'] 				= $this->cleanStringForDB($this->input->post('addon_peso_value'));
 		
 		//get add_on_id
 		$add_on_id = $this->input->post('add_on_id');
@@ -392,8 +393,8 @@ class Addons extends MY_Controller
 		$user_type = $this->session->userdata('user_type');	
 		
 		$filter_arr = array();
-		$addon_category_id = $this->input->post('addon_category_id');
-		$filter_arr['add_ons_category_id'] = $addon_category_id;
+		$category_id = $this->input->post('category_id');
+		$filter_arr['category_id'] = $category_id;
 		if ($this->input->post('filter')) {
 			$filter_arr['letter'] = $this->input->post('letter');
 		}
@@ -402,9 +403,9 @@ class Addons extends MY_Controller
 		$pagination_limit = 5;
 		$current_page = 1;
 		$limit = ($current_page * $pagination_limit) - $pagination_limit;
-		$addons_arr = $this->model_addons->getAddons(	$addon_category_id, 
+		$addons_arr = $this->model_addons->getAddons(	$category_id, 
 														$user_type, 
-														"estate_add_ons.f_add_on_title", 
+														"estate_add_ons.title", 
 														"asc", 
 														$limit,
 														$pagination_limit,
@@ -419,12 +420,12 @@ class Addons extends MY_Controller
 		// populate response
 		$_filter = array(		'sess_user' => $this->session->userdata,
 								'current_page' => $current_page,
-								'addon_category_id' => $addon_category_id,
+								'category_id' => $category_id,
 								'filter' => $this->input->post('filter'),
 								'labels' => $this->getAlphabet(),
 								'filter_arr' => $filter_arr);
 		$_pagination = array(	'page' => 'addons',
-								'addon_category_id' => $addon_category_id,
+								'category_id' => $category_id,
 								'filter_arr' => $filter_arr,
 								'item_count' => $addon_total_count,
 								'pagination_limit' => $pagination_limit,
@@ -433,7 +434,7 @@ class Addons extends MY_Controller
 		// load response
 		$_data['sess_user'] = $this->session->userdata;
 		$_data['page'] = "addons";
-		$_data['addonscategory_id'] = $addon_category_id;
+		$_data['category_id'] = $category_id;
 		$_data['item_count'] = $item_count;
 		$_data['addons'] = $addons_arr;
 		$_data['legend'] = $this->load->view('admin/view_addons_legend', NULL, TRUE);
@@ -444,81 +445,81 @@ class Addons extends MY_Controller
 	}
 	
 	public function process_delete(){
-		$this->load->model('model_mainplans');
+		$this->load->model('model_addons');
 		
-		if( $this->input->post('main_plan_id') ){
-			$main_plan_id = $this->input->post('main_plan_id');
+		if( $this->input->post('addon_id') ){
+			$addon_id = $this->input->post('addon_id');
 		}else{
-			$main_plan_id = 0;
+			$addon_id = 0;
 		}
 		
-		//delete main plan type
-		$mainplan_details = $this->model_mainplans->deleteMainPlan($main_plan_id);
+		//delete addon
+		$addon_details = $this->model_addons->deleteAddon($addon_id);
 		
-		//delete main plan type image
-		if( isset($mainplan_details['type_image']) ){
-			if( file_exists( $this->config->item('base_mainplan_path') . $mainplan_details['type_image'] ) ){
-				@unlink($this->config->item('base_mainplan_path') . $mainplan_details['type_image']);
+		//delete addon image
+		if( isset($addon_details['type_image']) ){
+			if( file_exists( $this->config->item('base_addon_path') . $addon_details['addon_image'] ) ){
+				@unlink($this->config->item('base_addon_path') . $addon_details['addon_image']);
 			}
 		}
 		
 		// log changes
-		$main_plan = trim($mainplan_details['type']);
-		$log = "Deleted main plan " . $main_plan;
+		$addon = trim($addon_details['title']);
+		$log = "Deleted addon " . $addon;
 		$timestamp = date("Y-m-d H:i:s");
-		$this->model_main->addLog($log, "Delete main plan ", $timestamp);
+		$this->model_main->addLog($log, "Delete addon ", $timestamp);
 		
 		$user_type = $this->session->userdata('user_type');	
 		
 		$filter_arr = array();
-		$main_plan_type_id = $this->input->post('main_plan_type_id');
-		$filter_arr['main_plan_type_id'] = $main_plan_type_id;
+		$category_id = $this->input->post('category_id');
+		$filter_arr['category_id'] = $category_id;
 		if ($this->input->post('filter')) {
 			$filter_arr['letter'] = $this->input->post('letter');
 		}
 	
-		// retrieve main plans
+		// retrieve addons
 		$pagination_limit = 5;
 		$current_page = 1;
 		$limit = ($current_page * $pagination_limit) - $pagination_limit;
-		$mainplans_arr = $this->model_mainplans->getMainPlans(	$main_plan_type_id, 
-																$user_type, 
-																"estate_main_plan.f_main_plan_title", 
-																"asc", 
-																$limit,
-																$pagination_limit,
-																$filter_arr);
-		$mainplan_total_count = $mainplans_arr['total_count'];
-		unset($mainplans_arr['total_count']);
+		$addons_arr = $this->model_addons->getAddons(	$category_id, 
+														$user_type, 
+														"estate_add_ons.title", 
+														"asc", 
+														$limit,
+														$pagination_limit,
+														$filter_arr);
+		$addon_total_count = $addons_arr['total_count'];
+		unset($addons_arr['total_count']);
 		
 		// get list of items count
 		$item_count = array();
-		$item_count['mainplanes'] == $mainplan_total_count;
+		$item_count['addons'] == $addon_total_count;
 		
 		// populate response
 		$_filter = array(		'sess_user' => $this->session->userdata,
 								'current_page' => $current_page,
-								'main_plan_type_id' => $main_plan_type_id,
+								'category_id' => $category_id,
 								'filter' => $this->input->post('filter'),
 								'labels' => $this->getAlphabet(),
 								'filter_arr' => $filter_arr);
-		$_pagination = array(	'page' => 'mainplans',
-								'main_plan_type_id' => $main_plan_type_id,
+		$_pagination = array(	'page' => 'addons',
+								'category_id' => $category_id,
 								'filter_arr' => $filter_arr,
-								'item_count' => $mainplan_total_count,
+								'item_count' => $addon_total_count,
 								'pagination_limit' => $pagination_limit,
 								'current_page' => $current_page);
 		
 		// load response
 		$_data['sess_user'] = $this->session->userdata;
-		$_data['page'] = "mainplans";
-		$_data['main_plan_type_id'] = $main_plan_type_id;
+		$_data['page'] = "addons";
+		$_data['category_id'] = $category_id;
 		$_data['item_count'] = $item_count;
-		$_data['mainplans'] = $mainplans_arr;
-		$_data['legend'] = $this->load->view('admin/view_mainplans_legend', NULL, TRUE);
-		$_data['filter'] = $this->load->view('admin/view_mainplans_filter', $_filter, TRUE);
+		$_data['addons'] = $addons_arr;
+		$_data['legend'] = $this->load->view('admin/view_addons_legend', NULL, TRUE);
+		$_data['filter'] = $this->load->view('admin/view_addons_filter', $_filter, TRUE);
 		$_data['pagination'] = $this->load->view('admin/view_pagination', $_pagination, TRUE);
-		$this->load->view('admin/view_mainplans', $_data);
+		$this->load->view('admin/view_addons', $_data);
 		return;
 	}
 }

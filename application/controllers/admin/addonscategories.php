@@ -40,7 +40,7 @@ class Addonscategories extends MY_Controller
 		$limit = ($current_page * $pagination_limit) - $pagination_limit;
 		$addonscategories_arr = $this->model_addonscategories->getAddonsCategories(	$property_id, 
 																					$user_type, 
-																					"estate_add_ons_category.add_ons_category_title", 
+																					"estate_add_ons_category.category_title", 
 																					"asc", 
 																					$limit,
 																					$pagination_limit,
@@ -92,9 +92,19 @@ class Addonscategories extends MY_Controller
 		$this->load->model('model_addonscategories');
 		
 		$data										= array();
-		$data['add_ons_category_title'] 			= $this->cleanStringForDB($this->input->post('add_ons_category_title'));
-		$data['add_ons_category_description'] 		= $this->cleanStringForDB($this->input->post('add_ons_category_description'));
-		$data['add_ons_category_image'] 			= $this->cleanStringForDB($this->input->post('addonscategory-image-name'));
+		$data['category_title'] 			= $this->cleanStringForDB($this->input->post('add_ons_category_title'));
+		$data['category_description'] 		= $this->cleanStringForDB($this->input->post('add_ons_category_description'));
+		$data['category_image'] 			= $this->cleanStringForDB($this->input->post('addonscategory-image-name'));
+		if( !$this->input->post('is_multiple') 
+			|| $this->input->post('is_multiple') == '' 
+			|| $this->input->post('is_multiple') == 'no' )
+		{ 
+			$data['is_multiple'] 									= 0;
+		}elseif( $this->input->post('is_multiple') == 'yes' ){
+			$data['is_multiple'] 									= 1;
+		}else{
+			$data['is_multiple'] 									= 0;
+		}
 		
 		//move image file
 		$image_file = trim($this->input->post('addonscategory-image-name'));
@@ -129,7 +139,7 @@ class Addonscategories extends MY_Controller
 		$limit = ($current_page * $pagination_limit) - $pagination_limit;
 		$addonscategories_arr = $this->model_addonscategories->getAddonsCategories(	$property_id, 
 																					$user_type, 
-																					"estate_add_ons_category.add_ons_category_title", 
+																					"estate_add_ons_category.category_title", 
 																					"asc", 
 																					$limit,
 																					$pagination_limit,
@@ -199,7 +209,7 @@ class Addonscategories extends MY_Controller
 		$limit = ($current_page * $pagination_limit) - $pagination_limit;
 		$addonscategories_arr = $this->model_addonscategories->getAddonsCategories(	$property_id, 
 																					$user_type, 
-																					"estate_add_ons_category.add_ons_category_title", 
+																					"estate_add_ons_category.category_title", 
 																					"asc", 
 																					$limit,
 																					$pagination_limit,
@@ -240,9 +250,19 @@ class Addonscategories extends MY_Controller
 		$this->load->model('model_addonscategories');
 		
 		$data										= array();
-		$data['add_ons_category_title'] 			= $this->cleanStringForDB($this->input->post('add_ons_category_title'));
-		$data['add_ons_category_description'] 		= $this->cleanStringForDB($this->input->post('add_ons_category_description'));
-		$data['add_ons_category_image'] 			= $this->cleanStringForDB($this->input->post('addonscategory-image-name'));
+		$data['category_title'] 			= $this->cleanStringForDB($this->input->post('add_ons_category_title'));
+		$data['category_description'] 		= $this->cleanStringForDB($this->input->post('add_ons_category_description'));
+		$data['category_image'] 			= $this->cleanStringForDB($this->input->post('addonscategory-image-name'));
+		if( !$this->input->post('is_multiple') 
+			|| $this->input->post('is_multiple') == '' 
+			|| $this->input->post('is_multiple') == 'no' )
+		{ 
+			$data['is_multiple'] 									= 0;
+		}elseif( $this->input->post('is_multiple') == 'yes' ){
+			$data['is_multiple'] 									= 1;
+		}else{
+			$data['is_multiple'] 									= 0;
+		}
 		
 		//get addonscategory_id
 		$addonscategory_id = $this->input->post('addonscategory_id');
@@ -290,7 +310,7 @@ class Addonscategories extends MY_Controller
 		$limit = ($current_page * $pagination_limit) - $pagination_limit;
 		$addonscategories_arr = $this->model_addonscategories->getAddonsCategories(	$property_id, 
 																					$user_type, 
-																					"estate_add_ons_category.add_ons_category_title", 
+																					"estate_add_ons_category.category_title", 
 																					"asc", 
 																					$limit,
 																					$pagination_limit,
@@ -401,14 +421,26 @@ class Addonscategories extends MY_Controller
 		$addonscategory_details = $this->model_addonscategories->deleteAddonsCategory($addonscategory_id);
 		
 		//delete addons category image
-		if( isset($addonscategory_details['add_ons_category_image']) ){
-			if( file_exists( $this->config->item('base_addonscategory_path') . $addonscategory_details['add_ons_category_image'] ) ){
-				@unlink($this->config->item('base_addonscategory_path') . $addonscategory_details['add_ons_category_image']);
+		if( isset($addonscategory_details['category_image']) ){
+			if( file_exists( $this->config->item('base_addonscategory_path') . $addonscategory_details['category_image'] ) ){
+				@unlink($this->config->item('base_addonscategory_path') . $addonscategory_details['category_image']);
+			}
+		}
+		
+		//delete addons under addonscategory
+		$addonsCategoryAddons = $this->model_addonscategories->deleteAddonsCategoryAddons($addonscategory_id);
+		
+		//delete images of addons
+		if( count($addonsCategoryAddons) > 0 ){
+			foreach( $addonsCategoryAddons as $addon ){
+				if( file_exists( $this->config->item('base_addon_path') . $addon['image'] ) ){
+					@unlink($this->config->item('base_addon_path') . $addon['image']);
+				}
 			}
 		}
 		
 		// log changes
-		$addonscategory = trim($addonscategory_details['add_ons_category_title']);
+		$addonscategory = trim($addonscategory_details['category_title']);
 		$log = "Deleted addons category " . $addonscategory;
 		$timestamp = date("Y-m-d H:i:s");
 		$this->model_main->addLog($log, "Delete addons category ", $timestamp);
@@ -427,7 +459,7 @@ class Addonscategories extends MY_Controller
 		$limit = ($current_page * $pagination_limit) - $pagination_limit;
 		$addonscategories_arr = $this->model_addonscategories->getAddonsCategories(	$property_id, 
 																					$user_type, 
-																					"estate_add_ons_category.add_ons_category_title", 
+																					"estate_add_ons_category.category_title", 
 																					"asc", 
 																					$limit,
 																					$pagination_limit,

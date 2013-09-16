@@ -10,7 +10,7 @@
 	
 	<div class="g_pagelabel">
 		<div class="g_pagelabel_icon"><img src="<?php echo base_url(); ?>_assets/images/tools/add.png" /></div>
-		<div class="g_pagelabel_text">Edit product - <?php echo $product_details['product_name']; ?></div>
+		<div class="g_pagelabel_text">Edit product</div>
 	</div>
 	
 	<table class="g_table zebra">
@@ -23,7 +23,7 @@
 					<div class="label">Launch *</div>
 					<div class="input">
 						<select class="g_select" name="property" data-required="1">
-							<option value="0">Select Launch</option>
+							<option value="0" selected="selected">Select Launch</option>
 							<?php foreach( $properties as $key => $value ){ ?>
 								<?php if( trim($key) != "total_count" ){ ?>
 									<?php if( $product_details['property_id'] == $value['property_id'] ){ ?>
@@ -45,13 +45,13 @@
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="name" 
-								maxlength="255"
-								value="<?php echo $product_details['product_name']; ?>" 
+								maxlength="100"
+								value="<?php echo $product_details['name']; ?>"
 								data-alphanum="1"				
 								data-unique="1"
-								data-orig-val="<?php echo $product_details['product_name']; ?>"
-								data-field="product_name"
-								data-table="estate_product"
+								data-orig-val="<?php echo $product_details['name']; ?>"
+								data-field="name"
+								data-table="estate_gadgets"
 								data-required="1" />
 					</div>
 					<div class="h_clearboth"></div>
@@ -64,37 +64,38 @@
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="description" 
-								maxlength="255"
-								value="<?php echo $product_details['product_description']; ?>" 
+								maxlength="500"
+								value="<?php echo $product_details['description']; ?>"
 								data-alphanum="1" />
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
 				
-				<!-- size -->
+				<!-- required_pv -->
 				<div class="item">
-					<div class="label">Size *</div>
+					<div class="label">Required Peso Value *</div>
 					<div class="input">
 						<input 	class="g_inputtext" 
 								type="text" 
-								name="size" 
+								name="required_pv" 
 								maxlength="11"
-								value="<?php echo $product_details['product_size']; ?>" 
-								data-is-number="1"				
+								value="<?php echo $product_details['required_pv']; ?>"
+								data-is-whole-number="1"
 								data-required="1" />
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
 				
-				<!-- color name -->
+				<!-- gadget_cid -->
 				<div class="item">
-					<div class="label">Color name *</div>
+					<div class="label">CID *</div>
 					<div class="input">
 						<input 	class="g_inputtext" 
 								type="text" 
-								name="color_name" 
-								maxlength="255"
-								value="<?php echo $product_details['product_color']; ?>" 
+								name="cid" 
+								maxlength="11"
+								value="<?php echo $product_details['cid']; ?>"
+								data-is-whole-number="1"
 								data-required="1" />
 					</div>
 					<div class="h_clearboth"></div>
@@ -107,42 +108,21 @@
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="data_capacity" 
-								value="<?php echo $product_details['product_data_capacity']; ?>" 
-								maxlength="255" />
+								value="<?php echo $product_details['data_capacity']; ?>"
+								maxlength="50" />
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
 				
 				<!-- network connectivity -->
 				<div class="item">
-					<div class="label">Network connectivity *</div>
+					<div class="label">Network connectivity</div>
 					<div class="input">
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="network_connectivity" 
-								maxlength="255"
-								value="<?php echo $product_details['product_network_connectivity']; ?>" 
-								data-required="1" />
-					</div>
-					<div class="h_clearboth"></div>
-				</div>
-				
-				<!-- image -->
-				<div class="item">
-					<div class="label">Image *</div>
-					<div class="input">
-						<div class="product_image" id="product_image_wrapper_wrapper">
-							<div id="product_image_wrapper">
-								<?php if( isset($product_details['product_image']) && trim($product_details['product_image']) != '' ){ ?>
-									<input type="hidden" value="<?php echo trim($product_details['product_image']); ?>" data-image-required="1" data-image-wrapper="product_image_wrapper_wrapper" name="product-image-name" id="product-image-name" />
-									<img src="<?php echo base_url() . $this->config->item('base_product_url') . trim($product_details['product_image']); ?>" title="<?php echo trim($product_details['product_image']); ?>" alt="<?php echo trim($product_details['product_image']); ?>" class="img_product_image" />
-								<?php }else{ ?>
-									<input type="hidden" value="" data-image-required="1" data-image-wrapper="product_image_wrapper_wrapper" name="product-image-name" id="product-image-name">
-								<?php } ?>
-							</div>
-							<a id="change_product_image">Upload image</a><div id="upload_result"></div>						
-						</div>
-						<div class="clearboth"></div>
+								value="<?php echo $product_details['network_connectivity']; ?>"
+								maxlength="120" />
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
@@ -154,8 +134,8 @@
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="amount" 
-								maxlength="11"
-								value="<?php echo $product_details['product_amount']; ?>" 
+								maxlength="10"
+								value="<?php echo $product_details['amount']; ?>"
 								data-is-number="1"				
 								data-required="1" />
 					</div>
@@ -169,9 +149,9 @@
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="discount" 
-								maxlength="11"
-								value="<?php echo $product_details['product_discount']; ?>" 
-								data-is-number="1" />
+								maxlength="4"
+								value="<?php echo $product_details['discount']; ?>"
+								data-is-whole-number="1" />
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
@@ -183,24 +163,9 @@
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="peso_value" 
-								maxlength="11"
-								data-is-number="1"				
-								value="<?php echo $product_details['product_peso_value']; ?>" 
-								data-required="1" />
-					</div>
-					<div class="h_clearboth"></div>
-				</div>
-				
-				<!-- date added -->
-				<div class="item">
-					<div class="label">Date added *</div>
-					<div class="input">
-						<input 	class="g_inputtext dpicker h_backgroundlight" 
-								type="text" 
-								name="date_added" 
-								value="<?php echo date('Y-m-d', strtotime($product_details['product_date_added'])); ?>" 
-								data-datepicker="1"
-								data-format="yy-mm-dd"		
+								maxlength="8"
+								value="<?php echo $product_details['peso_value']; ?>"
+								data-is-whole-number="1"				
 								data-required="1" />
 					</div>
 					<div class="h_clearboth"></div>
@@ -213,9 +178,56 @@
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="quantity" 
-								maxlength="11"
-								value="<?php echo $product_details['product_quantity']; ?>" 
-								data-is-number="1"				
+								maxlength="5"
+								value="<?php echo $product_details['quantity']; ?>"
+								data-is-whole-number="1"				
+								data-required="1" />
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
+				<!-- image -->
+				<div class="item">
+					<div class="label">Image *</div>
+					<div class="input">
+						<div class="product_image" id="product_image_wrapper_wrapper">
+							<div id="product_image_wrapper">
+								<?php if( isset($product_details['image']) && trim($product_details['image']) != '' ){ ?>
+									<input type="hidden" value="<?php echo trim($product_details['image']); ?>" data-image-required="1" data-image-wrapper="product_image_wrapper_wrapper" name="product-image-name" id="product-image-name" />
+									<img src="<?php echo base_url() . $this->config->item('base_product_url') . trim($product_details['image']); ?>" title="<?php echo trim($product_details['image']); ?>" alt="<?php echo trim($product_details['image']); ?>" class="img_product_image" />
+								<?php }else{ ?>
+									<input type="hidden" value="" data-image-required="1" data-image-wrapper="product_image_wrapper_wrapper" name="product-image-name" id="product-image-name">
+								<?php } ?>
+							</div>
+							<a id="change_product_image">Upload image</a><div id="upload_result"></div>						
+						</div>
+						<div class="clearboth"></div>
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
+				<!-- size -->
+				<div class="item">
+					<div class="label">Size</div>
+					<div class="input">
+						<input 	class="g_inputtext" 
+								type="text" 
+								name="size" 
+								value="<?php echo $product_details['size']; ?>"
+								maxlength="50" />
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
+				<!-- color -->
+				<div class="item">
+					<div class="label">Color *</div>
+					<div class="input">
+						<input 	class="g_inputtext" 
+								type="text" 
+								name="color" 
+								maxlength="50" 
+								value="<?php echo $product_details['color']; ?>"
 								data-required="1" />
 					</div>
 					<div class="h_clearboth"></div>
@@ -226,16 +238,16 @@
 					<div class="label">Status *</div>
 					<div class="input">
 						<select class="g_select" name="status" data-required="1">
-							<option value="0" <?php if( isset($product_details['product_status_flag']) && $product_details['product_status_flag'] == 0 ){ echo 'selected="selected"'; } ?>>Select status</option>
-							<option value="1" <?php if( isset($product_details['product_status_flag']) && $product_details['product_status_flag'] == 1 ){ echo 'selected="selected"'; } ?>>Disabled</option>
-							<option value="2" <?php if( isset($product_details['product_status_flag']) && $product_details['product_status_flag'] == 2 ){ echo 'selected="selected"'; } ?>>Enabled</option>
+							<option value="0">Select status</option>
+							<option value="disabled" <?php if( isset($product_details['is_active']) && $product_details['is_active'] == 0 ){ echo 'selected="selected"'; } ?>>Disabled</option>
+							<option value="enabled" <?php if( isset($product_details['is_active']) && $product_details['is_active'] == 1 ){ echo 'selected="selected"'; } ?>>Enabled</option>
 						</select>
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
 				
-						<input type="hidden" value="<?php echo trim($product_details['product_image']); ?>" name="old-product-image-name" />
-				<input type="hidden" value="<?php echo trim($product_details['product_id']); ?>" name="product_id" />
+				<input type="hidden" value="<?php echo trim($product_details['image']); ?>" name="old-product-image-name" />
+				<input type="hidden" value="<?php echo trim($product_details['gadget_id']); ?>" name="gadget_id" />
 			</form>
 			
 		</td></tr>
@@ -247,7 +259,6 @@
 $(function(){
 	placeHolder();
 	checkSidebarStatus();
-	implementDatePicker();
 	
 	var btnUpload=$('#change_product_image');
 	var mestatus=$('#upload_result');
@@ -273,7 +284,6 @@ $(function(){
 				
 				$('#product_image_wrapper_wrapper').css('border', '1px solid #CCC');
 				$('#product_image_wrapper').append(product_image_string);
-				
 				displayNotification("success", data.msg);
 			} else{
 				displayNotification("error", data.msg);
@@ -297,6 +307,7 @@ $("#btn_edit_product").click(function(e){
 				}, 500);
 			},
 			error: function(jqXHR, textStatus, errorThrown){
+					$("#middle_wrapper").html(jqXHR.responseText);
 				displayNotification("error", "Oops, something went wrong. Your action may or may not have been completed.");
 			}
 		});

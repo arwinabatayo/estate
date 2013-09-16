@@ -47,6 +47,11 @@ class MY_Controller extends CI_Controller
 		return $this->model_main->getUserRoles();
 	}
 	
+	function populateEcommerceUserRoles()
+	{
+		return $this->model_main->getEcommerceUserRoles();
+	}
+	
 	function populateClients($order_by='title', $order='ASC')
 	{
 		return $this->model_main->getClients($order_by, $order);

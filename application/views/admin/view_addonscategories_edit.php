@@ -18,34 +18,34 @@
 		
 			<form id="form_edit_addonscategory" class="g_form">
 				
-				<!-- main plan -->
+				<!-- category title -->
 				<div class="item">
 					<div class="label">Addons category *</div>
 					<div class="input">
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="add_ons_category_title" 
-								maxlength="255"
-								value="<?php echo $addonscategory_details['add_ons_category_title']; ?>"
-								data-orig-val="<?php echo $addonscategory_details['add_ons_category_title']; ?>"
+								maxlength="200"
+								value="<?php echo $addonscategory_details['category_title']; ?>"
+								data-orig-val="<?php echo $addonscategory_details['category_title']; ?>"
 								data-alphanum="1"				
 								data-unique="1"
-								data-field="add_ons_category_title"
+								data-field="category_title"
 								data-table="estate_add_ons_category"
 								data-required="1" />
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
 				
-				<!-- plan description -->
+				<!-- category description -->
 				<div class="item">
 					<div class="label">Addons category description</div>
 					<div class="input">
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="add_ons_category_description" 
-								maxlength="255"
-								value="<?php echo $addonscategory_details['add_ons_category_description']; ?>"
+								maxlength="500"
+								value="<?php echo $addonscategory_details['category_description']; ?>"
 								data-alphanum="1" />
 					</div>
 					<div class="h_clearboth"></div>
@@ -57,9 +57,9 @@
 					<div class="input">
 						<div class="addonscategory_image" id="addonscategory_image_wrapper_wrapper">
 							<div id="addonscategory_image_wrapper">
-								<?php if( isset($addonscategory_details['add_ons_category_image']) && trim($addonscategory_details['add_ons_category_image']) != '' ){ ?>
-									<input type="hidden" value="<?php echo $addonscategory_details['add_ons_category_image']; ?>" data-image-required="1" data-image-wrapper="addonscategory_image_wrapper_wrapper" name="addonscategory-image-name" id="addonscategory-image-name" />
-									<img src="<?php echo base_url() . $this->config->item('base_addonscategory_url') . trim($addonscategory_details['add_ons_category_image']); ?>" title="<?php echo trim($addonscategory_details['add_ons_category_image']); ?>" alt="<?php echo trim($addonscategory_details['add_ons_category_image']); ?>" class="img_addonscategory_image" />
+								<?php if( isset($addonscategory_details['category_image']) && trim($addonscategory_details['category_image']) != '' ){ ?>
+									<input type="hidden" value="<?php echo $addonscategory_details['category_image']; ?>" data-image-required="1" data-image-wrapper="addonscategory_image_wrapper_wrapper" name="addonscategory-image-name" id="addonscategory-image-name" />
+									<img src="<?php echo base_url() . $this->config->item('base_addonscategory_url') . trim($addonscategory_details['category_image']); ?>" title="<?php echo trim($addonscategory_details['category_image']); ?>" alt="<?php echo trim($addonscategory_details['category_image']); ?>" class="img_addonscategory_image" />
 								<?php }else{ ?>
 									<input type="hidden" value="" data-image-required="1" data-image-wrapper="addonscategory_image_wrapper_wrapper" name="addonscategory-image-name" id="addonscategory-image-name" />
 								<?php } ?>
@@ -71,8 +71,21 @@
 					<div class="h_clearboth"></div>
 				</div>
 				
+				<!-- is_multiple -->
+				<div class="item">
+					<div class="label">Is multiple *</div>
+					<div class="input">
+						<select class="g_select" name="is_multiple" data-required="1">
+							<option value="0">Select status</option>
+							<option value="no" <?php if( isset($addonscategory_details['is_multiple']) && $addonscategory_details['is_multiple'] == 0 ){ echo 'selected="selected"'; } ?>>No</option>
+							<option value="yes" <?php if( isset($addonscategory_details['is_multiple']) && $addonscategory_details['is_multiple'] == 1 ){ echo 'selected="selected"'; } ?>>Yes</option>
+						</select>
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
 				<input type="hidden" value="<?php echo $addonscategory_id; ?>" name="addonscategory_id" id="addonscategory_id" />
-				<input type="hidden" value="<?php echo $addonscategory_details['add_ons_category_image']; ?>" name="old-addonscategory-image-name" id="old-addonscategory-image-name" />
+				<input type="hidden" value="<?php echo $addonscategory_details['category_image']; ?>" name="old-addonscategory-image-name" id="old-addonscategory-image-name" />
 			</form>
 			
 		</td></tr>

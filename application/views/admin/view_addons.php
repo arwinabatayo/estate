@@ -2,7 +2,7 @@
 
 	<div id="g_tools">
 		<a href="<?php echo base_url(); ?>admin/addonscategories"><img src="<?php echo base_url(); ?>_assets/images/tools/add.png" />Addons Categories List</a>
-		<a href="<?php echo base_url(); ?>admin/addons/add/<?php echo $addonscategory_id; ?>"><img src="<?php echo base_url(); ?>_assets/images/tools/add.png" />Add Addon</a>
+		<a href="<?php echo base_url(); ?>admin/addons/add/<?php echo $category_id; ?>"><img src="<?php echo base_url(); ?>_assets/images/tools/add.png" />Add Addon</a>
 		<div class="h_clearboth"></div>
 	</div>
 	<div class="h_clearboth"></div>
@@ -42,7 +42,7 @@
 			<tr>
 				<td><?php echo $a['add_on_title']; ?></td>
 				<td width="50" align="center">
-					<?php if( $a['add_on_status'] != 2 ){ echo 'Disabled'; }else{ echo 'Enabled'; } ; ?>
+					<?php if( $a['add_on_status'] == 1 ){ echo 'Enabled'; }else{ echo 'Disabled'; } ?>
 				</td>
 				
 				<!-- actions -->
@@ -55,7 +55,7 @@
 					<a 	href="javascript:void(0);" 
 						class="btn_delete_main_plan g_tableicon" 
 						title="Delete main plan"
-						data-add-on-category-id="<?php echo $a['add_ons_category_id']; ?>" 
+						data-category-id="<?php echo $a['add_ons_category_id']; ?>" 
 						data-add-on-id="<?php echo $a['add_on_id']; ?>" 
 						data-current-page="<?php echo $current_page; ?>" >
 						<img src="<?php echo base_url(); ?>_assets/images/global_icon_delete.png" />
@@ -86,15 +86,15 @@ $(function(){
 
 $(".btn_delete_main_plan").click(function(){
 	var addon_id = $(this).attr('data-add-on-id');
-	var addon_category_id = $(this).attr('data-add-on-category-id');
+	var category_id = $(this).attr('data-category-id');
 	var current_page = $(this).attr('data-current-page');
 	
 	if (confirm("Are you sure you want to delete this addon?")) {
 		displayNotification("message", "Working...")
 		$.ajax({
-			url: "<?php echo base_url(); ?>admin/mainplans/process_delete",
+			url: "<?php echo base_url(); ?>admin/addons/process_delete",
 			type: "POST",
-			data: "addon_id="+addon_id+"&addon_category_id="+addon_category_id+"&current_page="+current_page+"&"+$("#form_pagination").serialize(),
+			data: "addon_id="+addon_id+"&category_id="+category_id+"&current_page="+current_page+"&"+$("#form_pagination").serialize(),
 			success: function(response, textStatus, jqXHR){
 				setTimeout(function () {
 					$("#middle_wrapper").html(response);
@@ -102,6 +102,7 @@ $(".btn_delete_main_plan").click(function(){
 				}, 500);
 			},
 			error: function(jqXHR, textStatus, errorThrown){
+					$("#middle_wrapper").html(jqXHR.responseText);
 				displayNotification("error", "Oops, something went wrong. Your action may or may not have been completed.");
 			}
 		});

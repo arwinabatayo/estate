@@ -18,31 +18,31 @@
 		
 			<form id="form_add_addonscategory" class="g_form">
 				
-				<!-- main plan -->
+				<!-- category title -->
 				<div class="item">
 					<div class="label">Addons category *</div>
 					<div class="input">
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="add_ons_category_title" 
-								maxlength="255"
+								maxlength="200"
 								data-alphanum="1"				
 								data-unique="1"
-								data-field="add_ons_category_title"
+								data-field="category_title"
 								data-table="estate_add_ons_category"
 								data-required="1" />
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
 				
-				<!-- plan description -->
+				<!-- category description -->
 				<div class="item">
 					<div class="label">Addons category description</div>
 					<div class="input">
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="add_ons_category_description" 
-								maxlength="255"
+								maxlength="500"
 								data-alphanum="1" />
 					</div>
 					<div class="h_clearboth"></div>
@@ -59,6 +59,19 @@
 							<a id="change_addonscategory_image">Upload image</a><div id="upload_result"></div>						
 						</div>
 						<div class="clearboth"></div>
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
+				<!-- is_multiple -->
+				<div class="item">
+					<div class="label">Is multiple *</div>
+					<div class="input">
+						<select class="g_select" name="is_multiple" data-required="1">
+							<option value="0" selected="selected">Select</option>
+							<option value="no">No</option>
+							<option value="yes">Yes</option>
+						</select>
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
@@ -117,7 +130,7 @@ $("#btn_add_addonscategory").click(function(e){
 				setTimeout(function () {
 					$("#middle_wrapper").html(response);
 					if (typeof history.pushState != 'undefined') { window.history.pushState("object or string", "Title", "<?php echo base_url(); ?>admin/addonscategories"); }
-					displayNotification("success", "New main plan successfully added.");
+					displayNotification("success", "New addons category successfully added.");
 				}, 500);
 			},
 			error: function(jqXHR, textStatus, errorThrown){

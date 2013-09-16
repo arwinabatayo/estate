@@ -97,7 +97,7 @@ $(".btn_delete_add_ons_category").click(function(){
 			success: function(response, textStatus, jqXHR){
 				setTimeout(function () {
 					$("#middle_wrapper").html(response);
-					displayNotification("success", "Main plan type successfully deleted.");
+					displayNotification("success", "Addons category successfully deleted.");
 				}, 500);
 			},
 			error: function(jqXHR, textStatus, errorThrown){
