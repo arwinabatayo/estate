@@ -40,7 +40,7 @@ class Accessories extends MY_Controller
 		$limit = ($current_page * $pagination_limit) - $pagination_limit;
 		$accessories_arr = $this->model_accessories->getAccessories(	$property_id, 
 																		$user_type, 
-																		"estate_accessories.f_accessories_title", 
+																		"estate_accessories.title", 
 																		"asc", 
 																		$limit,
 																		$pagination_limit,
@@ -92,20 +92,22 @@ class Accessories extends MY_Controller
 		$this->load->model('model_accessories');
 		
 		$data										= array();
-		$data['f_accessories_title'] 				= $this->cleanStringForDB($this->input->post('accessories_title'));
-		$data['f_accessories_description'] 			= $this->cleanStringForDB($this->input->post('accessories_description'));
-		$data['f_accessories_amount'] 				= $this->cleanStringForDB($this->input->post('accessories_amount'));
-		$data['f_accessories_quantity'] 			= $this->cleanStringForDB($this->input->post('accessories_quantity'));
-		$data['f_accessories_image'] 				= $this->cleanStringForDB($this->input->post('accessory-image-name'));
-		$data['f_accessories_peso_value'] 			= $this->cleanStringForDB($this->input->post('accessories_peso_value'));
+		$data['title'] 								= $this->cleanStringForDB($this->input->post('accessories_title'));
+		$data['cid'] 								= $this->cleanStringForDB($this->input->post('accessories_cid'));
+		$data['description'] 						= $this->cleanStringForDB($this->input->post('accessories_description'));
+		$data['amount'] 							= $this->cleanStringForDB($this->input->post('accessories_amount'));
+		$data['quantity'] 							= $this->cleanStringForDB($this->input->post('accessories_quantity'));
+		$data['image'] 								= $this->cleanStringForDB($this->input->post('accessory-image-name'));
+		$data['peso_value'] 						= $this->cleanStringForDB($this->input->post('accessories_peso_value'));
 		if( !$this->input->post('status') 
 			|| $this->input->post('status') == '' 
-			|| $this->input->post('status') == '0' 
-			|| $this->input->post('status') == 0 )
+			|| $this->input->post('status') == 'disabled' )
 		{ 
-			$data['f_accessories_status'] 			= 1;
+			$data['status'] 									= 0;
+		}elseif( $this->input->post('status') == 'enabled' ){
+			$data['status'] 									= 1;
 		}else{
-			$data['f_accessories_status'] 			= $this->cleanStringForDB($this->input->post('status'));
+			$data['status'] 									= 0;
 		}
 		
 		//move image file
@@ -141,7 +143,7 @@ class Accessories extends MY_Controller
 		$limit = ($current_page * $pagination_limit) - $pagination_limit;
 		$accessories_arr = $this->model_accessories->getAccessories(	$property_id, 
 																		$user_type, 
-																		"estate_accessories.f_accessories_title", 
+																		"estate_accessories.title", 
 																		"asc", 
 																		$limit,
 																		$pagination_limit,
@@ -211,7 +213,7 @@ class Accessories extends MY_Controller
 		$limit = ($current_page * $pagination_limit) - $pagination_limit;
 		$accessories_arr = $this->model_accessories->getAccessories(	$property_id, 
 																		$user_type, 
-																		"estate_accessories.f_accessories_title", 
+																		"estate_accessories.title", 
 																		"asc", 
 																		$limit,
 																		$pagination_limit,
@@ -251,21 +253,23 @@ class Accessories extends MY_Controller
 		
 		$this->load->model('model_accessories');
 		
-		$data										= array();
-		$data['f_accessories_title'] 				= $this->cleanStringForDB($this->input->post('accessories_title'));
-		$data['f_accessories_description'] 			= $this->cleanStringForDB($this->input->post('accessories_description'));
-		$data['f_accessories_amount'] 				= $this->cleanStringForDB($this->input->post('accessories_amount'));
-		$data['f_accessories_quantity'] 			= $this->cleanStringForDB($this->input->post('accessories_quantity'));
-		$data['f_accessories_image'] 				= $this->cleanStringForDB($this->input->post('accessory-image-name'));
-		$data['f_accessories_peso_value'] 			= $this->cleanStringForDB($this->input->post('accessories_peso_value'));
+		$data													= array();
+		$data['title'] 											= $this->cleanStringForDB($this->input->post('accessories_title'));
+		$data['cid'] 											= $this->cleanStringForDB($this->input->post('accessories_cid'));
+		$data['description'] 									= $this->cleanStringForDB($this->input->post('accessories_description'));
+		$data['amount'] 										= $this->cleanStringForDB($this->input->post('accessories_amount'));
+		$data['quantity'] 										= $this->cleanStringForDB($this->input->post('accessories_quantity'));
+		$data['image'] 											= $this->cleanStringForDB($this->input->post('accessory-image-name'));
+		$data['peso_value'] 									= $this->cleanStringForDB($this->input->post('accessories_peso_value'));
 		if( !$this->input->post('status') 
 			|| $this->input->post('status') == '' 
-			|| $this->input->post('status') == '0' 
-			|| $this->input->post('status') == 0 )
+			|| $this->input->post('status') == 'disabled' )
 		{ 
-			$data['f_accessories_status'] 			= 1;
+			$data['status'] 									= 0;
+		}elseif( $this->input->post('status') == 'enabled' ){
+			$data['status'] 									= 1;
 		}else{
-			$data['f_accessories_status'] 			= $this->cleanStringForDB($this->input->post('status'));
+			$data['status'] 									= 0;
 		}
 		//get accessory_id
 		$accessory_id = $this->input->post('accessory_id');
@@ -313,7 +317,7 @@ class Accessories extends MY_Controller
 		$limit = ($current_page * $pagination_limit) - $pagination_limit;
 		$accessories_arr = $this->model_accessories->getAccessories(	$property_id, 
 																		$user_type, 
-																		"estate_accessories.f_accessories_title", 
+																		"estate_accessories.title", 
 																		"asc", 
 																		$limit,
 																		$pagination_limit,
@@ -414,24 +418,24 @@ class Accessories extends MY_Controller
 	public function process_delete(){
 		$this->load->model('model_accessories');
 		
-		if( $this->input->post('accessories_id') ){
-			$accessories_id = $this->input->post('accessories_id');
+		if( $this->input->post('accessory_id') ){
+			$accessory_id = $this->input->post('accessory_id');
 		}else{
-			$accessories_id = 0;
+			$accessory_id = 0;
 		}
 		
 		//delete accessory
-		$accessory_details = $this->model_accessories->deleteAccessory($accessories_id);
+		$accessory_details = $this->model_accessories->deleteAccessory($accessory_id);
 		
 		//delete accessory image
-		if( isset($accessory_details['accessories_image']) ){
-			if( file_exists( $this->config->item('base_accessory_path') . $accessory_details['accessories_image'] ) ){
-				@unlink($this->config->item('base_accessory_path') . $accessory_details['accessories_image']);
+		if( isset($accessory_details['image']) ){
+			if( file_exists( $this->config->item('base_accessory_path') . $accessory_details['image'] ) ){
+				@unlink($this->config->item('base_accessory_path') . $accessory_details['image']);
 			}
 		}
 		
 		// log changes
-		$accessory = trim($accessory_details['type']);
+		$accessory = trim($accessory_details['title']);
 		$log = "Deleted accessory " . $accessory;
 		$timestamp = date("Y-m-d H:i:s");
 		$this->model_main->addLog($log, "Delete accessory ", $timestamp);
@@ -450,7 +454,7 @@ class Accessories extends MY_Controller
 		$limit = ($current_page * $pagination_limit) - $pagination_limit;
 		$accessories_arr = $this->model_accessories->getAccessories(	$property_id, 
 																		$user_type, 
-																		"estate_accessories.f_accessories_title", 
+																		"estate_accessories.title", 
 																		"asc", 
 																		$limit,
 																		$pagination_limit,

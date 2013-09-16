@@ -40,7 +40,7 @@ class Products extends MY_Controller
 		$limit = ($current_page * $pagination_limit) - $pagination_limit;
 		$product_arr = $this->model_products->getProducts(	$property_id, 
 															$user_type, 
-															"estate_product.product_name", 
+															"estate_gadgets.name", 
 															"asc", 
 															$limit,
 															$pagination_limit,
@@ -94,29 +94,34 @@ class Products extends MY_Controller
 	{
 		$this->load->model('model_products');
 		
-		$data									= array();
-		$data['property_id'] 					= $this->cleanStringForDB($this->input->post('property'));
-		$data['product_name'] 					= $this->cleanStringForDB($this->input->post('name'));
-		$data['product_description'] 			= $this->cleanStringForDB($this->input->post('description'));
-		$data['product_size']					= $this->cleanStringForDB($this->input->post('size'));
-		$data['product_color'] 					= $this->cleanStringForDB($this->input->post('color_name'));
-		$data['product_data_capacity']			= $this->cleanStringForDB($this->input->post('data_capacity'));
-		$data['product_network_connectivity']	= $this->cleanStringForDB($this->input->post('network_connectivity'));
-		$data['product_image']					= $this->cleanStringForDB($this->input->post('product-image-name'));
-		$data['product_amount']					= $this->cleanStringForDB($this->input->post('amount'));
-		$data['product_discount']				= $this->cleanStringForDB($this->input->post('discount'));
-		$data['product_peso_value']				= $this->cleanStringForDB($this->input->post('peso_value'));
-		$data['product_date_added']				= $this->cleanStringForDB($this->input->post('date_added'));
-		$data['product_quantity']				= $this->cleanStringForDB($this->input->post('quantity'));
+		$data													= array();
+		$tmp_data_attr											= array();
+		$data['property_id'] 									= $this->cleanStringForDB($this->input->post('property'));
+		$data['name'] 											= $this->cleanStringForDB($this->input->post('name'));
+		$data['description'] 									= $this->cleanStringForDB($this->input->post('description'));
+		$data['required_pv'] 									= $this->cleanStringForDB($this->input->post('required_pv'));
+		$data['cid'] 											= $this->cleanStringForDB($this->input->post('cid'));
+		$data['data_capacity'] 									= $this->cleanStringForDB($this->input->post('data_capacity'));
+		$data['network_connectivity'] 							= $this->cleanStringForDB($this->input->post('network_connectivity'));
+		$data['amount'] 										= $this->cleanStringForDB($this->input->post('amount'));
+		$data['discount'] 										= $this->cleanStringForDB($this->input->post('discount'));
+		$data['peso_value'] 									= $this->cleanStringForDB($this->input->post('peso_value'));
+		$data['quantity'] 										= $this->cleanStringForDB($this->input->post('quantity'));
+		$data['image'] 											= $this->cleanStringForDB($this->input->post('product-image-name'));
 		if( !$this->input->post('status') 
 			|| $this->input->post('status') == '' 
-			|| $this->input->post('status') == '0' 
-			|| $this->input->post('status') == 0 )
+			|| $this->input->post('status') == 'disabled' )
 		{ 
-			$data['product_status_flag'] 		= 1;
+			$data['is_active'] 									= 0;
+		}elseif( $this->input->post('status') == 'enabled' ){
+			$data['is_active'] 									= 1;
 		}else{
-			$data['product_status_flag'] 		= $this->cleanStringForDB($this->input->post('status'));
+			$data['is_active'] 									= 0;
 		}
+		
+		$tmp_data_attr['size']									= $this->cleanStringForDB($this->input->post('size'));
+		$tmp_data_attr['color']									= $this->cleanStringForDB($this->input->post('color'));
+		$data['date_added']										= $this->cleanStringForDB(date("Y-m-d", time()));
 		
 		//move image file
 		$image_file = trim($this->input->post('product-image-name'));
@@ -129,7 +134,7 @@ class Products extends MY_Controller
 		}
 		
 		//add product
-		$this->model_products->addProduct($data);
+		$this->model_products->addProduct($data, $tmp_data_attr);
 		
 		// log changes
 		$product_name = trim($this->input->post('name'));
@@ -151,7 +156,7 @@ class Products extends MY_Controller
 		$limit = ($current_page * $pagination_limit) - $pagination_limit;
 		$product_arr = $this->model_products->getProducts(	$property_id, 
 															$user_type, 
-															"estate_product.product_name", 
+															"estate_gadgets.name", 
 															"asc", 
 															$limit,
 															$pagination_limit,
@@ -205,7 +210,7 @@ class Products extends MY_Controller
 		$limit = ($current_page * $pagination_limit) - $pagination_limit;
 		$product_arr = $this->model_products->getProducts(	$property_id, 
 															$user_type, 
-															"estate_product.product_name", 
+															"estate_gadgets.name", 
 															"asc", 
 															$limit,
 															$pagination_limit,
@@ -324,31 +329,35 @@ class Products extends MY_Controller
 	{
 		$this->load->model('model_products');
 		
-		$data									= array();
-		$data['property_id'] 					= $this->cleanStringForDB($this->input->post('property'));
-		$data['product_name'] 					= $this->cleanStringForDB($this->input->post('name'));
-		$data['product_description'] 			= $this->cleanStringForDB($this->input->post('description'));
-		$data['product_size']					= $this->cleanStringForDB($this->input->post('size'));
-		$data['product_color'] 					= $this->cleanStringForDB($this->input->post('color_name'));
-		$data['product_data_capacity']			= $this->cleanStringForDB($this->input->post('data_capacity'));
-		$data['product_network_connectivity']	= $this->cleanStringForDB($this->input->post('network_connectivity'));
-		$data['product_image']					= $this->cleanStringForDB($this->input->post('product-image-name'));
-		$data['product_amount']					= $this->cleanStringForDB($this->input->post('amount'));
-		$data['product_discount']				= $this->cleanStringForDB($this->input->post('discount'));
-		$data['product_peso_value']				= $this->cleanStringForDB($this->input->post('peso_value'));
-		$data['product_date_added']				= $this->cleanStringForDB($this->input->post('date_added'));
-		$data['product_quantity']				= $this->cleanStringForDB($this->input->post('quantity'));
+		$data													= array();
+		$tmp_data_attr											= array();
+		$data['property_id'] 									= $this->cleanStringForDB($this->input->post('property'));
+		$data['name'] 											= $this->cleanStringForDB($this->input->post('name'));
+		$data['description'] 									= $this->cleanStringForDB($this->input->post('description'));
+		$data['required_pv'] 									= $this->cleanStringForDB($this->input->post('required_pv'));
+		$data['cid'] 											= $this->cleanStringForDB($this->input->post('cid'));
+		$data['data_capacity'] 									= $this->cleanStringForDB($this->input->post('data_capacity'));
+		$data['network_connectivity'] 							= $this->cleanStringForDB($this->input->post('network_connectivity'));
+		$data['amount'] 										= $this->cleanStringForDB($this->input->post('amount'));
+		$data['discount'] 										= $this->cleanStringForDB($this->input->post('discount'));
+		$data['peso_value'] 									= $this->cleanStringForDB($this->input->post('peso_value'));
+		$data['quantity'] 										= $this->cleanStringForDB($this->input->post('quantity'));
+		$data['image'] 											= $this->cleanStringForDB($this->input->post('product-image-name'));
 		if( !$this->input->post('status') 
 			|| $this->input->post('status') == '' 
-			|| $this->input->post('status') == '0' 
-			|| $this->input->post('status') == 0 )
+			|| $this->input->post('status') == 'disabled' )
 		{ 
-			$data['product_status_flag'] 		= 1;
+			$data['is_active'] 									= 0;
+		}elseif( $this->input->post('status') == 'enabled' ){
+			$data['is_active'] 									= 1;
 		}else{
-			$data['product_status_flag'] 		= $this->cleanStringForDB($this->input->post('status'));
+			$data['is_active'] 									= 0;
 		}
+		
+		$tmp_data_attr['size']									= $this->cleanStringForDB($this->input->post('size'));
+		$tmp_data_attr['color']									= $this->cleanStringForDB($this->input->post('color'));
 		//get product id
-		$product_id = $this->input->post('product_id');
+		$product_id = $this->input->post('gadget_id');
 		
 		//move image file
 		$image_file = trim($this->input->post('product-image-name'));
@@ -364,7 +373,7 @@ class Products extends MY_Controller
 		}
 		
 		//update product
-		$this->model_products->updateProduct($data, $product_id);
+		$this->model_products->updateProduct($data, $tmp_data_attr, $product_id);
 		
 		// log changes
 		$product_name = trim($this->input->post('name'));
@@ -393,7 +402,7 @@ class Products extends MY_Controller
 		$limit = ($current_page * $pagination_limit) - $pagination_limit;
 		$product_arr = $this->model_products->getProducts(	$property_id, 
 															$user_type, 
-															"estate_product.product_name", 
+															"estate_gadgets.name", 
 															"asc", 
 															$limit,
 															$pagination_limit,
@@ -432,8 +441,8 @@ class Products extends MY_Controller
 	public function process_delete(){
 		$this->load->model('model_products');
 		
-		if( $this->input->post('product_id') ){
-			$product_id = $this->input->post('product_id');
+		if( $this->input->post('gadget_id') ){
+			$product_id = $this->input->post('gadget_id');
 		}else{
 			$product_id = 0;
 		}
@@ -442,14 +451,14 @@ class Products extends MY_Controller
 		$product_details = $this->model_products->deleteProduct($product_id);
 		
 		//delete product image
-		if( isset($product_details['product_image']) ){
-			if( file_exists( $this->config->item('base_product_path') . $product_details['product_image'] ) ){
-				@unlink($this->config->item('base_product_path') . $product_details['product_image']);
+		if( isset($product_details['image']) ){
+			if( file_exists( $this->config->item('base_product_path') . $product_details['image'] ) ){
+				@unlink($this->config->item('base_product_path') . $product_details['image']);
 			}
 		}
 		
 		// log changes
-		$product_name = trim($product_details['product_name']);
+		$product_name = trim($product_details['name']);
 		$log = "Deleted product " . $product_name;
 		$timestamp = date("Y-m-d H:i:s");
 		$this->model_main->addLog($log, "Delete product", $timestamp);
@@ -468,7 +477,7 @@ class Products extends MY_Controller
 		$limit = ($current_page * $pagination_limit) - $pagination_limit;
 		$product_arr = $this->model_products->getProducts(	$property_id, 
 															$user_type, 
-															"estate_product.product_name", 
+															"estate_gadgets.name", 
 															"asc", 
 															$limit,
 															$pagination_limit,
