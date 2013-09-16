@@ -356,9 +356,32 @@
 		        /*$( "#plan-order-page" ).accordion( "option", "active", 1 );
 		        $( "#siderbar-panel" ).accordion( "option", "active", 2 );*/
 
-		        $("#acc-order-type .option-wrapper").hide('slow');
 
-		        $("#order-type-section").show('slow');
+		        $(this).parent().parent().parent().children("div.header").children("div.price-wrapper").children("h4").each(function(){
+		        	if($(this).text() == "GET ADDITIONAL LINE"){
+				        $("#acc-order-type .option-wrapper").hide('slow');
+
+				        $("#order-type-section").show('slow');
+
+				        $("#plantype-options").show();
+
+				        $("a.btnAddPlan").parent().parent().each(function(){
+				        	$(this).hide();
+				        });
+
+				        $("#goCombos").parent().hide();
+				        $("#goPackagePlanCombos").parent().show();
+
+
+				        $("#goPackagePlanCombos").click(function(){
+				        	window.location = "/estate/addons"
+				        })
+				    }
+
+		        });
+
+
+
 
 		    });
 
@@ -434,7 +457,7 @@
 				
 			});
 			// jez
-			/*$("a.btnAddPlan").parent().parent().each(function(){
+			$("a.btnAddPackagePlan").parent().parent().each(function(){
 				$(this).click(function(){
 					$.ajax({
 						url: base_url+'plan/getpackageplancombos',
@@ -447,9 +470,9 @@
 
 							for(var ctr = 0; ctr < resp.length; ctr++){
 								//console.log(resp[ctr]['combo_type']);
-								var combo_type = resp[ctr]['combo_type'].toLowerCase();
+								var combo_type = resp[ctr]['category'].toLowerCase();
 								
-								$("#combo-type-" + combo_type + "-desc").text(resp[ctr]['combo_desc']);
+								$("#combo-type-" + combo_type + "-desc").text(resp[ctr]['description']);
 								$("#combo-type-" + combo_type).css('display', 'block')
 
 							}
@@ -483,7 +506,7 @@
 					});
 			
 				});
-			})*/
+			});
 
 
 

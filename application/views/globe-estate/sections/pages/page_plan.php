@@ -120,13 +120,24 @@
 									
 									</div>
 									<br />
-									<?php var_dump($combos_datas); if($combos_datas){ 
+									<?php if($plans_options){ 
 										
-											 foreach($combos_datas as $plan) {
+											 foreach($plans_options as $plan) {
 										?>
 											<div class="fleft" style="margin-right:12px; height:110px;width:200px; background:url('<?php echo $assets_path ?>images/plans/plan_temp.jpg') no-repeat 50% 50%">
 												<p style="padding:10px 20px 0px 20px;color:#FFF;font-size:22px">
 													<a style="color:#FFF" class="btnAddPlan" data-pv="<?php echo $plan->total_pv ?>" data-id="<?php echo $plan->id ?>" data-name="<?php echo $plan->title ?>" href="javascript:void(0)">
+														<?php echo $plan->title ?>
+													</a>
+												</p>
+												<p style="color:#FFF;font-size:10px; padding:0 20px; min-height: 26px;"><b><?php echo $plan->description ?></b></p>
+												<p style="color:#FFF;font-size:12px; padding:0 20px;"><b>get <?php echo $plan->total_pv ?>PV/mo.</b></p>
+												<div class="my-plan-id" style="display:none"><?php echo $plan->id; ?></div>
+											</div>
+
+											<div class="fleft" style="margin-right:12px; height:110px;width:200px; background:url('<?php echo $assets_path ?>images/plans/plan_temp.jpg') no-repeat 50% 50%">
+												<p style="padding:10px 20px 0px 20px;color:#FFF;font-size:22px">
+													<a style="color:#FFF" class="btnAddPackagePlan" data-pv="<?php echo $plan->total_pv ?>" data-id="<?php echo $plan->id ?>" data-name="<?php echo $plan->title ?>" href="javascript:void(0)">
 														<?php echo $plan->title ?>
 													</a>
 												</p>
@@ -141,6 +152,10 @@
 									<div>
 									<p class="textright">
 										<button  class="btn-large ui-button-success" id="goCombos">CONTINUE</button>
+									</p>
+
+									<p class="textright" style="display:none;">
+										<button  class="btn-large ui-button-success" id="goPackagePlanCombos">CONTINUE</button>
 									</p>
 									</div>
 									<!-- class="row-fluid product-row"-->
