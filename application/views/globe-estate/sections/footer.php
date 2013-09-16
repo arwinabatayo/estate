@@ -948,7 +948,55 @@
 						});
 				});	
 				
+				// set dialog for resume uncomp transaction - gellie
+				$('a#open_resume_uncomp_transaction').on('click', function(){
+					$( '#dialog_application_status' ).dialog( "close" );
+					$( '#dialog_resume_uncomp_transaction' ).dialog( "open" );
+				});
 				
+				// validate reference number - gellie
+				$('form#resume-uncomp-transaction button').on('click', function(){
+			
+						var s =	$('form#resume-uncomp-transaction div.status');
+						var email = $('input#email').val();
+						var cap = $('input#captcha-input').val();
+
+						// reset error class
+						s.removeClass('alert-error');
+						//e.preventDefault();
+						
+						s.show();
+					    s.html('Sending...Please wait...');
+					    
+					    // may problem pa sa cache
+					    //$(this).attr('disabled',true);
+
+						$.ajax({
+							url: base_url+'home/send_saved_transaction',
+							data: 'refnum='+refnum,
+							type:'post',
+							success: function(response){
+								var resp = jQuery.parseJSON( response );
+								
+								if(resp.status == 'success'){
+									$('#e_lbl').html(refnum);
+									s.html(resp.msg);
+									// redirect to status page
+									window.location = resp.status_page_url;
+									//$(this).attr('disabled',false);
+									
+								}else{
+									s.addClass('alert-'+resp.status);
+									s.html(resp.msg);
+								}
+								
+							}, 
+							error: function(){
+								alert('Some error occured or the system is busy. Please try again later');	
+							}
+						});
+				});	
+
 				
 				
 	});
