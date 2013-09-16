@@ -24,7 +24,20 @@
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="mobile_number" 
-								maxlength="255" />
+								maxlength="200" />
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
+				<!-- account number -->
+				<div class="item">
+					<div class="label">Account number</div>
+					<div class="input">
+						<input 	class="g_inputtext" 
+								type="text" 
+								name="account_number" 
+								data-is-whole-number="1" 
+								maxlength="20" />
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
@@ -52,7 +65,7 @@
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="lastname" 
-								maxlength="255" />
+								maxlength="200" />
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
@@ -64,20 +77,20 @@
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="firstname" 
-								maxlength="255" />
+								maxlength="200" />
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
 				
-				<!-- account type -->
+				<!-- account category -->
 				<div class="item">
-					<div class="label">Account type</div>
+					<div class="label">Account category</div>
 					<div class="input">
-						<select class="g_select" name="account_type">
-							<option value="0" selected="selected">Select account type</option>
-							<?php if( $account_types && count($account_types) > 0 ){ ?>
-								<?php foreach( $account_types as $account_type ){ ?>
-									<option value="<?php echo $account_type['f_account_type_id']; ?>"><?php echo $account_type['f_account_type_title']; ?></option>
+						<select class="g_select" name="account_category">
+							<option value="0" selected="selected">Select account category</option>
+							<?php if( $account_categories && count($account_category) > 0 ){ ?>
+								<?php foreach( $account_categories as $account_category ){ ?>
+									<option value="<?php echo $account_category['f_account_category_id']; ?>"><?php echo $account_category['f_account_category_title']; ?></option>
 								<?php } ?>
 							<?php } ?>
 						</select>
@@ -85,26 +98,18 @@
 					<div class="h_clearboth"></div>
 				</div>
 				
-				<!-- account number -->
+				<!-- lock-in period -->
 				<div class="item">
-					<div class="label">Account number</div>
+					<div class="label">Lock-in period</div>
 					<div class="input">
-						<input 	class="g_inputtext" 
-								type="text" 
-								name="account_number" 
-								maxlength="255" />
-					</div>
-					<div class="h_clearboth"></div>
-				</div>
-				
-				<!-- lock in duration -->
-				<div class="item">
-					<div class="label">Lock-in duration</div>
-					<div class="input">
-						<input 	class="g_inputtext" 
-								type="text" 
-								name="lock_in_duration" 
-								maxlength="255" />
+						<select class="g_select" name="lock_in_period">
+							<option value="0" selected="selected">Select lock-in period</option>
+							<?php if( $lock_in_periods && count($lock_in_periods) > 0 ){ ?>
+								<?php foreach( $lock_in_periods as $lock_in_period ){ ?>
+									<option value="<?php echo $lock_in_period['lockup_id']; ?>"><?php echo $lock_in_period['lockup_desc']; ?></option>
+								<?php } ?>
+							<?php } ?>
+						</select>
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
@@ -113,9 +118,11 @@
 				<div class="item">
 					<div class="label">Due date</div>
 					<div class="input">
-						<input 	class="g_inputtext" 
+						<input 	class="g_inputtext dpicker h_backgroundlight" 
 								type="text" 
 								name="due_date" 
+								data-datepicker="1"
+								data-format="yy-mm-dd"
 								maxlength="255" />
 					</div>
 					<div class="h_clearboth"></div>
@@ -143,19 +150,54 @@
 		<div class="g_pagelabel_text">Result</div>
 	</div>
 	
-	<table class="g_table">
-		<tr>
-			<td>
-				asdf
-			</td>
-		</tr>
-	</table>
+	<?php if ($accounts) { ?>
+	
+		<table class="g_table zebra">
+		
+			<tr>
+				<th>Account Id</th>
+				<th>Order Number</th>
+				<th>Name</th>
+				<th>Email</th>
+				<th>Mobile Number</th>
+				<th>Lockin Duration</th>
+				<th>Outstanding Balance</th>
+				<th>Due Date</th>
+				<th>Credit Limit</th>
+				<th>Status</th>
+			</tr>
+			
+			<?php foreach ($accounts as $accounts => $a) { ?>
+				<tr>
+					<td><a href="<?php echo base_url() . 'admin/accountmanagement/viewaccount/' . $a['account_id'] . '/' . $a['order_number']; ?>"><?php echo $a['account_id']; ?></a></td>
+					<td><?php echo $a['order_number']; ?></td>
+					<td><?php echo $a['name'] . ' ' . $a['surname']; ?></td>
+					<td><?php echo $a['email']; ?></td>
+					<td><?php echo $a['mobile_number']; ?></td>
+					<td><?php echo $a['lockin_duration']; ?></td>
+					<td><?php echo $a['outstanding_balance']; ?></td>
+					<td><?php echo date('M-d-Y', strtotime($a['due_date'])); ?></td>
+					<td><?php echo $a['credit_limit']; ?></td>
+					<td><?php if( $a['status'] == 0 ){ echo 'Inactive'; }else{ echo 'Active'; } ?></td>
+				</tr>
+			<?php } ?> 
+			
+		</table>
+			
+	<?php } else { ?> 
+		
+		<table class="g_table">
+			<tr><td class="h_padding20"><div class="g_nodata"><div class="icon"></div>No data to display</div></td></tr>
+		</table>
+			
+	<?php } ?>
 	
 </div>
 
 <script type="text/javascript" language="javascript">
 $(function(){
 	zebraTable();
+	implementDatePicker();
 });
 
 $(".input_uf_eur").change(function(){

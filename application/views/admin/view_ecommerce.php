@@ -17,12 +17,6 @@
 		</tr>
 		<tr>
 			<td width="53" align="right">
-				<a 	href="<?php echo base_url(); ?>admin/mainplantypes" class="g_tableicon">Main plan types</a>
-				<div class="h_clearboth"></div>
-			</td>
-		</tr>
-		<tr>
-			<td width="53" align="right">
 				<a 	href="<?php echo base_url(); ?>admin/accessories" class="g_tableicon">Accessories</a>
 				<div class="h_clearboth"></div>
 			</td>

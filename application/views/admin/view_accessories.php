@@ -41,7 +41,7 @@
 			<tr>
 				<td><?php echo $a['accessories_title']; ?></td>
 				<td width="50" align="center">
-					<?php if( $a['accessories_status'] != 2 ){ echo 'Disabled'; }else{ echo 'Enabled'; } ; ?>
+					<?php if( $a['accessories_status'] == 1 ){ echo 'Enabled'; }else{ echo 'Disabled'; } ?>
 				</td>
 				
 				<!-- actions -->
@@ -54,7 +54,7 @@
 					<a 	href="javascript:void(0);" 
 						class="btn_delete_accessory g_tableicon" 
 						title="Delete accessory"
-						data-accessories-id="<?php echo $a['accessories_id']; ?>" 
+						data-accessory-id="<?php echo $a['accessories_id']; ?>" 
 						data-current-page="<?php echo $current_page; ?>" >
 						<img src="<?php echo base_url(); ?>_assets/images/global_icon_delete.png" />
 					</a>
@@ -83,7 +83,7 @@ $(function(){
 });
 
 $(".btn_delete_accessory").click(function(){
-	var accessories_id = $(this).attr('data-accessories-id');
+	var accessory_id = $(this).attr('data-accessory-id');
 	var current_page = $(this).attr('data-current-page');
 	
 	if (confirm("Are you sure you want to delete this accessory?")) {
@@ -91,7 +91,7 @@ $(".btn_delete_accessory").click(function(){
 		$.ajax({
 			url: "<?php echo base_url(); ?>admin/accessories/process_delete",
 			type: "POST",
-			data: "accessories_id="+accessories_id+"&current_page="+current_page+"&"+$("#form_pagination").serialize(),
+			data: "accessory_id="+accessory_id+"&current_page="+current_page+"&"+$("#form_pagination").serialize(),
 			success: function(response, textStatus, jqXHR){
 				setTimeout(function () {
 					$("#middle_wrapper").html(response);

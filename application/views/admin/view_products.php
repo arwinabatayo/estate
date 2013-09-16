@@ -39,14 +39,14 @@
 			
 			<?php foreach ($products as $products => $p) { ?>
 			<tr>
-				<td><?php echo $p['product_name']; ?></td>
+				<td><?php echo $p['name']; ?></td>
 				<td width="50" align="center">
-					<?php if( $p['product_status_flag'] != 2 ){ echo 'Disabled'; }else{ echo 'Enabled'; } ; ?>
+					<?php if( $p['is_active'] == 1 ){ echo 'Enabled'; }else{ echo 'Disabled'; } ?>
 				</td>
 				
 				<!-- actions -->
 				<td width="53" align="right">
-					<a 	href="<?php echo base_url(); ?>admin/products/edit/<?php echo $p['product_id']; ?>"
+					<a 	href="<?php echo base_url(); ?>admin/products/edit/<?php echo $p['gadget_id']; ?>"
 						class="g_tableicon"
 						title="Edit product">
 						<img src="<?php echo base_url(); ?>_assets/images/global_icon_edit.png" />
@@ -54,7 +54,7 @@
 					<a 	href="javascript:void(0);" 
 						class="btn_delete_product g_tableicon" 
 						title="Delete product"
-						data-product-id="<?php echo $p['product_id']; ?>" 
+						data-gadget-id="<?php echo $p['gadget_id']; ?>" 
 						data-current-page="<?php echo $current_page; ?>" >
 						<img src="<?php echo base_url(); ?>_assets/images/global_icon_delete.png" />
 					</a>
@@ -83,7 +83,7 @@ $(function(){
 });
 
 $(".btn_delete_product").click(function(){
-	var product_id = $(this).attr('data-product-id');
+	var gadget_id = $(this).attr('data-gadget-id');
 	var current_page = $(this).attr('data-current-page');
 	
 	if (confirm("Are you sure you want to delete this product?")) {
@@ -91,7 +91,7 @@ $(".btn_delete_product").click(function(){
 		$.ajax({
 			url: "<?php echo base_url(); ?>admin/products/process_delete",
 			type: "POST",
-			data: "product_id="+product_id+"&current_page="+current_page+"&"+$("#form_pagination").serialize(),
+			data: "gadget_id="+gadget_id+"&current_page="+current_page+"&"+$("#form_pagination").serialize(),
 			success: function(response, textStatus, jqXHR){
 				setTimeout(function () {
 					$("#middle_wrapper").html(response);

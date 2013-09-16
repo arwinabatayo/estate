@@ -25,13 +25,28 @@
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="accessories_title" 
-								maxlength="255"
+								maxlength="100"
 								value="<?php echo $accessory_details['accessories_title']; ?>"
 								data-orig-val="<?php echo $accessory_details['accessories_title']; ?>"
 								data-alphanum="1"				
 								data-unique="1"
-								data-field="f_accessories_title"
+								data-field="title"
 								data-table="estate_accessories"
+								data-required="1" />
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
+				<!-- cid -->
+				<div class="item">
+					<div class="label">CID *</div>
+					<div class="input">
+						<input 	class="g_inputtext" 
+								type="text" 
+								name="accessories_cid" 
+								maxlength="11"
+								value="<?php echo $accessory_details['accessories_cid']; ?>"
+								data-is-whole-number="1"
 								data-required="1" />
 					</div>
 					<div class="h_clearboth"></div>
@@ -44,7 +59,7 @@
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="accessories_description" 
-								maxlength="255"
+								maxlength="500"
 								value="<?php echo $accessory_details['accessories_description']; ?>"
 								data-alphanum="1" />
 					</div>
@@ -68,12 +83,12 @@
 				
 				<!-- status -->
 				<div class="item">
-					<div class="label">Status *<?php echo $accessory_details['accessories_status']; ?></div>
+					<div class="label">Status *</div>
 					<div class="input">
 						<select class="g_select" name="status" data-required="1">
-							<option value="0" <?php if( isset($accessory_details['accessories_status']) && $accessory_details['accessories_status'] == 0 ){ echo 'selected="selected"'; } ?>>Select status</option>
-							<option value="1" <?php if( isset($accessory_details['accessories_status']) && $accessory_details['accessories_status'] == 1 ){ echo 'selected="selected"'; } ?>>Disabled</option>
-							<option value="2" <?php if( isset($accessory_details['accessories_status']) && $accessory_details['accessories_status'] == 2 ){ echo 'selected="selected"'; } ?>>Enabled</option>
+							<option value="0">Select status</option>
+							<option value="disabled" <?php if( isset($accessory_details['accessories_status']) && $accessory_details['accessories_status'] == 0 ){ echo 'selected="selected"'; } ?>>Disabled</option>
+							<option value="enabled" <?php if( isset($accessory_details['accessories_status']) && $accessory_details['accessories_status'] == 1 ){ echo 'selected="selected"'; } ?>>Enabled</option>
 						</select>
 					</div>
 					<div class="h_clearboth"></div>
@@ -187,6 +202,7 @@ $("#btn_edit_accessory").click(function(e){
 				}, 500);
 			},
 			error: function(jqXHR, textStatus, errorThrown){
+				alert('x');
 				displayNotification("error", "Oops, something went wrong. Your action may or may not have been completed.");
 			}
 		});

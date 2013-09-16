@@ -25,11 +25,25 @@
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="accessories_title" 
-								maxlength="255"
+								maxlength="100"
 								data-alphanum="1"				
 								data-unique="1"
-								data-field="f_accessories_title"
+								data-field="title"
 								data-table="estate_accessories"
+								data-required="1" />
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
+				<!-- cid -->
+				<div class="item">
+					<div class="label">CID *</div>
+					<div class="input">
+						<input 	class="g_inputtext" 
+								type="text" 
+								name="accessories_cid" 
+								maxlength="11"
+								data-is-whole-number="1"
 								data-required="1" />
 					</div>
 					<div class="h_clearboth"></div>
@@ -42,7 +56,7 @@
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="accessories_description" 
-								maxlength="255"
+								maxlength="500"
 								data-alphanum="1" />
 					</div>
 					<div class="h_clearboth"></div>
@@ -68,8 +82,8 @@
 					<div class="input">
 						<select class="g_select" name="status" data-required="1">
 							<option value="0" selected="selected">Select status</option>
-							<option value="1">Disabled</option>
-							<option value="2">Enabled</option>
+							<option value="disabled">Disabled</option>
+							<option value="enabled">Enabled</option>
 						</select>
 					</div>
 					<div class="h_clearboth"></div>
@@ -173,6 +187,7 @@ $("#btn_add_accessory").click(function(e){
 				}, 500);
 			},
 			error: function(jqXHR, textStatus, errorThrown){
+					$("#middle_wrapper").html(jqXHR.responseText);
 				displayNotification("error", "Oops, something went wrong. Your action may or may not have been completed.");
 			}
 		});

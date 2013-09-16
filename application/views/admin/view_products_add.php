@@ -41,11 +41,11 @@
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="name" 
-								maxlength="255"
+								maxlength="100"
 								data-alphanum="1"				
 								data-unique="1"
-								data-field="product_name"
-								data-table="estate_product"
+								data-field="name"
+								data-table="estate_gadgets"
 								data-required="1" />
 					</div>
 					<div class="h_clearboth"></div>
@@ -58,34 +58,35 @@
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="description" 
-								maxlength="255"
+								maxlength="500"
 								data-alphanum="1" />
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
 				
-				<!-- size -->
+				<!-- required_pv -->
 				<div class="item">
-					<div class="label">Size *</div>
+					<div class="label">Required Peso Value *</div>
 					<div class="input">
 						<input 	class="g_inputtext" 
 								type="text" 
-								name="size" 
+								name="required_pv" 
 								maxlength="11"
-								data-is-number="1"				
+								data-is-whole-number="1"
 								data-required="1" />
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
 				
-				<!-- color name -->
+				<!-- gadget_cid -->
 				<div class="item">
-					<div class="label">Color name *</div>
+					<div class="label">CID *</div>
 					<div class="input">
 						<input 	class="g_inputtext" 
 								type="text" 
-								name="color_name" 
-								maxlength="255"
+								name="cid" 
+								maxlength="11"
+								data-is-whole-number="1"
 								data-required="1" />
 					</div>
 					<div class="h_clearboth"></div>
@@ -98,19 +99,73 @@
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="data_capacity" 
-								maxlength="255" />
+								maxlength="50" />
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
 				
 				<!-- network connectivity -->
 				<div class="item">
-					<div class="label">Network connectivity *</div>
+					<div class="label">Network connectivity</div>
 					<div class="input">
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="network_connectivity" 
-								maxlength="255"
+								maxlength="120" />
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
+				<!-- amount -->
+				<div class="item">
+					<div class="label">Amount *</div>
+					<div class="input">
+						<input 	class="g_inputtext" 
+								type="text" 
+								name="amount" 
+								maxlength="10"
+								data-is-number="1"				
+								data-required="1" />
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
+				<!-- discount -->
+				<div class="item">
+					<div class="label">Discount</div>
+					<div class="input">
+						<input 	class="g_inputtext" 
+								type="text" 
+								name="discount" 
+								maxlength="4"
+								data-is-whole-number="1" />
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
+				<!-- peso value -->
+				<div class="item">
+					<div class="label">Peso value *</div>
+					<div class="input">
+						<input 	class="g_inputtext" 
+								type="text" 
+								name="peso_value" 
+								maxlength="8"
+								data-is-whole-number="1"				
+								data-required="1" />
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
+				<!-- quantity -->
+				<div class="item">
+					<div class="label">Quantity *</div>
+					<div class="input">
+						<input 	class="g_inputtext" 
+								type="text" 
+								name="quantity" 
+								maxlength="5"
+								data-is-whole-number="1"				
 								data-required="1" />
 					</div>
 					<div class="h_clearboth"></div>
@@ -131,70 +186,26 @@
 					<div class="h_clearboth"></div>
 				</div>
 				
-				<!-- amount -->
+				<!-- size -->
 				<div class="item">
-					<div class="label">Amount *</div>
+					<div class="label">Size</div>
 					<div class="input">
 						<input 	class="g_inputtext" 
 								type="text" 
-								name="amount" 
-								maxlength="11"
-								data-is-number="1"				
-								data-required="1" />
+								name="size" 
+								maxlength="50" />
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
 				
-				<!-- discount -->
+				<!-- color -->
 				<div class="item">
-					<div class="label">Discount</div>
+					<div class="label">Color *</div>
 					<div class="input">
 						<input 	class="g_inputtext" 
 								type="text" 
-								name="discount" 
-								maxlength="11"
-								data-is-number="1" />
-					</div>
-					<div class="h_clearboth"></div>
-				</div>
-				
-				<!-- peso value -->
-				<div class="item">
-					<div class="label">Peso value *</div>
-					<div class="input">
-						<input 	class="g_inputtext" 
-								type="text" 
-								name="peso_value" 
-								maxlength="11"
-								data-is-number="1"				
-								data-required="1" />
-					</div>
-					<div class="h_clearboth"></div>
-				</div>
-				
-				<!-- date added -->
-				<div class="item">
-					<div class="label">Date added *</div>
-					<div class="input">
-						<input 	class="g_inputtext dpicker h_backgroundlight" 
-								type="text" 
-								name="date_added" 
-								data-datepicker="1"
-								data-format="yy-mm-dd"		
-								data-required="1" />
-					</div>
-					<div class="h_clearboth"></div>
-				</div>
-				
-				<!-- quantity -->
-				<div class="item">
-					<div class="label">Quantity *</div>
-					<div class="input">
-						<input 	class="g_inputtext" 
-								type="text" 
-								name="quantity" 
-								maxlength="11"
-								data-is-number="1"				
+								name="color" 
+								maxlength="50" 
 								data-required="1" />
 					</div>
 					<div class="h_clearboth"></div>
@@ -206,8 +217,8 @@
 					<div class="input">
 						<select class="g_select" name="status" data-required="1">
 							<option value="0" selected="selected">Select status</option>
-							<option value="1">Disabled</option>
-							<option value="2">Enabled</option>
+							<option value="disabled">Disabled</option>
+							<option value="enabled">Enabled</option>
 						</select>
 					</div>
 					<div class="h_clearboth"></div>
@@ -223,7 +234,6 @@
 $(function(){
 	placeHolder();
 	checkSidebarStatus();
-	implementDatePicker();
 	
 	var btnUpload=$('#change_product_image');
 	var mestatus=$('#upload_result');
@@ -272,6 +282,7 @@ $("#btn_add_product").click(function(e){
 				}, 500);
 			},
 			error: function(jqXHR, textStatus, errorThrown){
+					$("#middle_wrapper").html(jqXHR.responseText);
 				displayNotification("error", "Oops, something went wrong. Your action may or may not have been completed.");
 			}
 		});

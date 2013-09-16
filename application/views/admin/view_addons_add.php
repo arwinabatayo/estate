@@ -1,7 +1,7 @@
 <div id="g_content">
 
 	<div id="g_tools"> 
-		<a href="<?php echo base_url(); ?>admin/addons/index/<?php echo $addonscategory_id; ?>"><img class="g_icon" src="<?php echo base_url(); ?>_assets/images/tools/list.png" />Addons List</a>	
+		<a href="<?php echo base_url(); ?>admin/addons/index/<?php echo $category_id; ?>"><img class="g_icon" src="<?php echo base_url(); ?>_assets/images/tools/list.png" />Addons List</a>	
 		<a href="javascript: void(0);" id="btn_add_addon"><img class="g_icon" src="<?php echo base_url(); ?>_assets/images/tools/save.png" />Save Changes</a>	
 		<div class="h_clearboth"></div>
 	</div>
@@ -25,11 +25,25 @@
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="addon_title" 
-								maxlength="255"
+								maxlength="200"
 								data-alphanum="1"				
 								data-unique="1"
-								data-field="f_add_on_title"
+								data-field="title"
 								data-table="estate_add_ons"
+								data-required="1" />
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
+				<!-- cid -->
+				<div class="item">
+					<div class="label">CID *</div>
+					<div class="input">
+						<input 	class="g_inputtext" 
+								type="text" 
+								name="addon_cid" 
+								maxlength="11"
+								data-is-whole-number="1"				
 								data-required="1" />
 					</div>
 					<div class="h_clearboth"></div>
@@ -42,7 +56,7 @@
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="addon_description" 
-								maxlength="255"
+								maxlength="500"
 								data-alphanum="1" />
 					</div>
 					<div class="h_clearboth"></div>
@@ -68,8 +82,8 @@
 					<div class="input">
 						<select class="g_select" name="status" data-required="1">
 							<option value="0" selected="selected">Select status</option>
-							<option value="1">Disabled</option>
-							<option value="2">Enabled</option>
+							<option value="disabled">Disabled</option>
+							<option value="enabled">Enabled</option>
 						</select>
 					</div>
 					<div class="h_clearboth"></div>
@@ -79,10 +93,10 @@
 				<div class="item">
 					<div class="label">Addon category *</div>
 					<div class="input">
-						<select readonly="readonly" class="g_select" name="addon_category_id" data-required="1">
+						<select readonly="readonly" class="g_select" name="category_id" id="category_id" data-required="1">
 							<option value="0" disabled="disabled">Select addon category</option>
 							<?php foreach( $addonscategories as $value ){ ?>
-								<option <?php if( $value['add_ons_category_id'] == $addonscategory_id ){ echo 'selected="selected"'; }else{ echo 'disabled="disabled"'; } ?> value="<?php echo $value['add_ons_category_id']; ?>"><?php echo $value['add_ons_category_title']; ?></option>
+								<option <?php if( $value['add_ons_category_id'] == $category_id ){ echo 'selected="selected"'; }else{ echo 'disabled="disabled"'; } ?> value="<?php echo $value['add_ons_category_id']; ?>"><?php echo $value['add_ons_category_title']; ?></option>
 							<?php } ?>
 						</select>
 					</div>
@@ -186,7 +200,7 @@ $("#btn_add_addon").click(function(e){
 			success: function(response, textStatus, jqXHR){
 				setTimeout(function () {
 					$("#middle_wrapper").html(response);
-					if (typeof history.pushState != 'undefined') { window.history.pushState("object or string", "Title", "<?php echo base_url(); ?>admin/addonscategories/index/<?php echo $addonscategory_id; ?>"); }
+					if (typeof history.pushState != 'undefined') { window.history.pushState("object or string", "Title", "<?php echo base_url(); ?>admin/addons/index/<?php echo $category_id; ?>"); }
 					displayNotification("success", "Addon successfully added.");
 				}, 500);
 			},
