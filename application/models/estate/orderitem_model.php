@@ -30,22 +30,37 @@ class Orderitem_model extends CI_Model
     {
         if($order_id == NULL) return FALSE;
 
-        // adc computation of subtotal per item less discount
-
+        // add computation of subtotal per item less discount
+        // remove join with estate product since details of item should already be on estate_order_items
         $query = $this->db->select($what)
                           ->from($this->tbl_name)
-                          ->join('estate_product', 'estate_order_items.product_id = estate_product.product_id')
+                          // ->join('estate_product', 'estate_order_items.product_id = estate_product.product_id')
                           ->where('order_id', $order_id)
                           ->get();
 
         $result = $query->result();
 
-
         if(count($result) == 0) return FALSE;
         return $result;
     }
 
-    function get_subtotal_by_orderitem_id($order_item_id)
+    function get_orderitem_by_type(){
+        if($order_id == NULL) return FALSE;
+
+        // add computation of subtotal per item less discount
+        // remove join with estate product since details of item should already be on estate_order_items
+        $query = $this->db->select($what)
+                          ->from($this->tbl_name)
+                          // ->join('estate_product', 'estate_order_items.product_id = estate_product.product_id')
+                          ->where('order_id', $order_id)
+                          ->get();
+
+        $result = $query->result();
+
+        if(count($result) == 0) return FALSE;
+        return $result;
+    }
+/*    function get_subtotal_by_orderitem_id($order_item_id)
     {
          $query = $this->db->select($what)
                           ->from($this->tbl_name)
@@ -55,10 +70,10 @@ class Orderitem_model extends CI_Model
 
         $result = $query->row_array();
 
-        // discount percentage
-        $discount = $result['percent_discount'] ? ($result['percent_discount'] / 100) : 1;
+        // discount percentage 10.5
+        $discount = $result['percent_discount'] ? ( (100 - $result['percent_discount']) / 100 ) : 1;
 
         // compute and return for subtotal
         return ( ( $result['product_amount'] * $result['quantity'] ) * $discount );
-    }
+    }*/
 }
