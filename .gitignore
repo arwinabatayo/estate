@@ -1,5 +1,0 @@
-*application/config/development
-*application/config/production
-*application/config/staging
-*application/config/database.php
-*.DS_Store

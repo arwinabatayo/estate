@@ -109,9 +109,9 @@
 						<input type="text" id="email" name="email" class="-medium">
 					</div>
 				<label class="control-label">Enter characters you see</label>
-				<!-- INSERT CAPTCHA IMAGE HERE -->
+				<p><img src="<?php echo base_url() ?>_assets/estate/_captcha/default.png" alt="" id="captcha" />&nbsp; <a href="javascript:void(0)" id="refresh_code" style="font-size:11px;">Refresh Captcha</a></p>
 					<div class="controls">
-						<input type="text" id="captcha-input" name="captcha-input" class="-medium">
+						<input class="fleft" id="code_id" name="code_id" type="text" autocomplete="false" />&nbsp;<!-- <button id="btn_resend_vcode" class="btn btn-primary">RESET</button> -->
 						<button class="btn btn-primary">Submit</button>
 					</div>
 				</div>
@@ -120,3 +120,14 @@
 			</form>
         </div>
 	</div>
+
+	<div class="globe-dialog" id="dialog_saved_transaction_success" title="Thank You">
+					<p id="msg-success"></p>
+					<span class="span4 textleft noLeftMargin" style="color:#888">
+						<p class="note">NOTE: Kindly make sure to verify your email address. Validity of this link is within 24hours.</p>
+					</span>
+					<span class="span4 textright">
+						<strong>Didn't receive the verification email?</strong> &nbsp;&nbsp;
+						<a href="javascript: void(0);" id="resend_saved_transaction_lnk">Resend link</a>
+					</span>
+	            </div>	

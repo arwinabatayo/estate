@@ -47,6 +47,29 @@
 			return out;
 		}
 		
+		// function that sets captcha img src 
+        function createCaptcha(){
+			$.ajax({
+			    dataType: 'json',
+				url: base_url+'captcha/get_captcha_img',
+			    success: function(response){
+					//var resp = jQuery.parseJSON( response );
+					//alert (  response.src );
+
+					$("#captcha").attr('src',response.src);
+					
+				},
+				error: function(xhr, status, error){
+						alert(xhr.responseText);
+				}	
+			});
+		 }
+
+		$('a#refresh_code').click( function(e){
+			e.preventDefault();
+			createCaptcha() ;
+		});	
+
 		<?php if($page == 'home'){ ?>
 		
 			//SKU Configuration
@@ -253,34 +276,11 @@
 							});
 								
 					});
-					
-					<?php if( $this->session->userdata('showcaptcha') ){ ?>
-			        
-			         function createCaptcha(){
-							$.ajax({
-							    dataType: 'json',
-								url: base_url+'captcha/get_captcha_img',
-							    success: function(response){
-									//var resp = jQuery.parseJSON( response );
-									//alert (  response.src );
-
-									$("#captcha").attr('src',response.src);
-									
-								},
-								error: function(xhr, status, error){
-										alert(xhr.responseText);
-								}	
-							});
-					 }
 					 
-					
-					$('a#refresh_code').click( function(e){
-						e.preventDefault();
-						createCaptcha() ;
-					});	
-					
-					$(window).load( function(){ createCaptcha() });
-					
+					<?php if( $this->session->userdata('showcaptcha') ) { ?>
+						
+						$(window).load( function(){ createCaptcha() });
+						
 					<?php } ?>
 					
 					$('button#btn_resend_vcode').click( function(e){
@@ -391,19 +391,20 @@
 		    	//$( '#dialog_enter_mobile' ).dialog( "close" );
 		    	$.ajax({
 					url: base_url+'plan/sendEmail',
-					data: {'email' : "xerenader@gmail.com" },
+					data: {'email' : "mhaark29@gmail.com" },
 					type:'post',
 					success: function(response){
-						$( '#dialog_enter_mobile' ).dialog( "open" );
 						
+						$( '#dialog_enter_mobile' ).dialog( "open" );
+						$( "#plan-order-page" ).accordion( "option", "active", 1 );
+						$( "#siderbar-panel" ).accordion( "option", "active", 2 );
 					}, 
 					error: function(){
 						alert('Some error occured or the system is busy. Please try again later');	
 					}
 				});
 
-		    	$( "#plan-order-page" ).accordion( "option", "active", 1 );
-		        $( "#siderbar-panel" ).accordion( "option", "active", 2 );
+
 		    }); 
 		    
 		    //PLAN TYPE
@@ -547,7 +548,8 @@
 						}
 					}
 				});
-		<?php } else if($current_controller == 'payment' ){ ?>
+				
+  <?php } else if($current_controller == 'payment' ){ ?>
 					//$( "#personal-info-page" ).accordion({active: 1});
 					
 				    $('#personal-info-page  button.goNext').click(function() {
@@ -582,10 +584,6 @@
 						}else{
 							$("#delivery_ship").slideDown();
 							$("#delivery_pickup").slideUp();
-							$("#delivery_ship").slideDown();
-						}else{
-							$("#delivery_pickup").slideDown();
-							$("#delivery_ship").slideUp();
 						}
 					}
 					
@@ -620,9 +618,35 @@
 									alert('Some error occured or the system is busy. Please try again later');	
 								}
 							});
-					});		
+					});	
+					
+					// Proceed to Payment Gateway - mark
+					// Store Order Config: Delivery Mode, Shipping Address, Payment Option
+					$('button#btnProceedToPayment').click(function(){
+						var d  = $('input[name="delivery_mode"]:checked').val();
+						var p  = $('input[name="payment_option"]:checked').val();
+						var s  = $('input[name="shipping_address"]:checked').val();
+						
+							$.ajax({
+								url: base_url+'order/save_payment_shipping_config',
+								data: 'delivery_mode='+d+'&payment_option='+p+'&shipping_address='+s,
+								type: 'post',
+								success: function(response){
+
+									var resp = jQuery.parseJSON( response );
+									
+									if(resp.status == 'success'){
+									    window.location.href= base_url+'payment/gateway';
+									}
+								}, 
+								error: function(){
+									alert('Some error occured or the system is busy. Please try again later');	
+								}
+							});
+						
+					});	
 			
-		<?php }  ?>
+		  <?php }  ?>
 		
 				$('form.addtoCart img').click(function(){
 						var thisID = $(this).parent('form').attr('id');
@@ -995,47 +1019,48 @@
 	 					});
 						
 					});
+					
 				});
+
 				// set dialog for resume uncomp transaction - gellie
 				$('a#open_resume_uncomp_transaction').on('click', function(){
 					$( '#dialog_application_status' ).dialog( "close" );
 					$( '#dialog_resume_uncomp_transaction' ).dialog( "open" );
+
+					// show captcha image
+					createCaptcha() ;
 				});
 				
-				// validate reference number - gellie
+				// validate email and captcha code - gellie
 				$('form#resume-uncomp-transaction button').on('click', function(){
-			
+
 						var s =	$('form#resume-uncomp-transaction div.status');
+						// TODO : add validation for email
 						var email = $('input#email').val();
-						var cap = $('input#captcha-input').val();
-			
-						var s =	$('form#refnum-verification div.status');
-						var refnum = $('input#reference_number').val();
+						var code_id = $('input#code_id').val();
+
+
 						// reset error class
 						s.removeClass('alert-error');
-						//e.preventDefault();
 						
 						s.show();
 					    s.html('Sending...Please wait...');
 					    
-					    // may problem pa sa cache
-					    //$(this).attr('disabled',true);
-
 						$.ajax({
 							url: base_url+'home/send_saved_transaction',
-							data: 'refnum='+refnum,
+							data: 'email='+email+'&code='+code_id,
 							type:'post',
 							success: function(response){
 								var resp = jQuery.parseJSON( response );
 								
-								if(resp.status == 'success'){
-									$('#e_lbl').html(refnum);
-									s.html(resp.msg);
-									// redirect to status page
-									window.location = resp.status_page_url;
-									//$(this).attr('disabled',false);
-									
-								}else{
+								if(resp.status == 'success') {
+									// close current dialog box
+									$( '#dialog_resume_uncomp_transaction' ).dialog( "close" );
+									// open thank you dialog
+									$( '#dialog_saved_transaction_success' ).dialog( "open" );
+									// show success message
+									$('#msg-success').html(resp.msg);
+								} else {
 									s.addClass('alert-'+resp.status);
 									s.html(resp.msg);
 								}
@@ -1046,5 +1071,18 @@
 							}
 						});
 				});	
+		
+				// resend link
+				$('a#resend_saved_transaction_lnk').on('click', function(){
+					// close thank you dialog
+					$( '#dialog_saved_transaction_success' ).dialog( "close" );
+					// reopen resume uncompleted transaction form
+					$('a#open_resume_uncomp_transaction').click();
+					// reset fields
+					$("input").val('');
+					// remove status
+					$('div.status').hide();
+				});
+				
 	});
 </script>

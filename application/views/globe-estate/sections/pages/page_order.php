@@ -53,6 +53,13 @@
 </div>
 
 <div id="main-page" class="span9">
+	<?php // display here the product_type 'gadget' ?>
+	Status : <?php echo $order['status']; ?>
+	Device : device name
+	Plan : Plan name
+	Forms : 
+	Delivery tracker : 
+
     <section class="jq-accordion" id="plan-order-page">
             <div>
                 <table class="table table-striped table-bordered table-hover table-condensed">
@@ -73,52 +80,51 @@
 		            		$total = 0;
 		            		// display all order items
 		            		foreach ($order_items as $item) {
-		            			// get subtotal per item
-		            			$subtotal = $this->orderitem_model->get_subtotal_by_orderitem_id( $item->id );
+		            			// analyze product info
+		            			$_item = unserialize($item->product_info);
 						?>
-				            <tr id="prod-item-<?php echo $item->id; ?>">
+				            <tr id="prod-item-<?php echo $_item['id']; ?>">
 				              <td>
-				              	<img src="<?php echo $item->product_image; ?>" />
+				              	<img src="<?php echo $_item['product_image']; ?>" />
 				               </td>
 				              <td>
-								  <span class="fleft"><?php echo $item->product_name . " / " . $item->product_data_capacity; ?></span>
+								  <span class="fleft"><?php echo $_item['name']; //. " / " . $_item['product_data_capacity']; ?></span>
 								  <br/>
-								  <span class="fleft"><?php /*TODO*/ echo 'show package plan' ?></span>
 							  </td>
-				              <td align="center" class="textcenter"><?php echo $item->quantity;?></td>
+				              <td align="center" class="textcenter"><?php echo $_item['qty'];?></td>
 
-				              <td><?php echo $item->product_amount; ?></td>
-				              <td> <?php echo $item->percent_discount; ?> </td>
-				              <td><?php echo 'Php ' .  number_format($subtotal, 2); ?></td>
+				              <td><?php echo $_item['price']; ?></td>
+				              <td> <?php echo $_item['discount']; ?> </td>
+				              <td><?php echo 'Php ' .  number_format($_item['subtotal'], 2); ?></td>
 				            </tr>
 
 		            <?php
-		            		// combine all subtotal
-		            		$total += $subtotal;
+
 						}
 					?>
 
 		            <tr>
 		              <td colspan="4"></td>
 		              <td><strong>Sub total</strong></td>
-		              <td><span><?php echo 'Php ' . number_format($total, 2);  ?></span> </td>
+		              <td><span><?php echo 'Php ' . number_format($order['subtotal'], 2);  ?></span> </td>
 		            </tr>
 		            <tr>
 		              <td colspan="4"></td>
 		              <td><strong>Shipping &amp; Handling</strong></td>
-		              <?php // add shipping total and handling fee from orders
-		              		$shipping_handling = $order['shipping_total'] + $order['handling_fee'];
+		              <?php // add shipping total and handling fee from orders TODO : add handling_fee on orders
+		              		$shipping_handling = $order['shipping_fee'] + $order['handling_fee'];
 		              ?>
 		              <td><?php echo $shipping_handling; ?></td>
 		            </tr>
-		            <tr>
+<!-- 		            <tr>
+		              <td colspan="4"></td>
+		              <td><strong>% Tax</strong></td>
+		              <td><?php echo $order['tax']; ?></td>
+		            </tr>
+ -->		            <tr>
 		              <td colspan="4"></td>
 		              <td><strong>Total</strong></td>
-		              <?php // compute grand total = subtotal + shipping + handling
-		              		$tax_amount = $order['tax'] ? $total * ($order['tax'] / 100) : 0;
-		              		$grand_total = $shipping_handling + ($total - $tax_amount);
-		              ?>
-		              <td><span class="cashoutLabel"><?php echo  'Php ' . number_format($grand_total, 2); ?></span></td>
+		              <td><span class="cashoutLabel"><?php echo  'Php ' . number_format($order['total'], 2); ?></span></td>
 		            </tr>
 			</table>
             </div>

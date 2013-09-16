@@ -316,7 +316,7 @@ class Home extends MY_Controller
                 $data['status_page_url'] = base_url().'order?refnum=' . $refnum;
             } else {
                 $data['status'] = "error";
-                $data['msg'] = "Reference number is not valid";
+                $data['msg'] = "Reference number you entered is incorrect. Please retype it again.";
             }
         } else {
             $data['status'] = "error";
@@ -327,6 +327,54 @@ class Home extends MY_Controller
         exit;
 
     }
+
+    function send_saved_transaction()
+    {
+    	$d = (object) $this->input->post();
+		$captcha_code = $this->session->userdata('captcha_code');
+
+		$this->load->helper('email');
+		$email_isvalid = valid_email($d->email);
+
+		$data['status'] = "success";
+
+		// check if captcha matches and email is valid
+		// check if email needs to be registered first with globe
+		if ($d->code == $captcha_code) {
+			if ($email_isvalid) {
+				// send saved transaction link
+				$this->load->library('email');
+
+				$uncomp_trans_lnk = "http://test.com"; // TODO : link to correct transaction page
+				$sender = "no-reply@project-estate.com";
+				$subject = "myGlobe - Saved Transaction Link";
+
+				$msg = array(
+						'name'	=> $d->email,
+						'link'	=> $uncomp_trans_lnk
+					);
+
+				$is_sent = $this->email->send_email($d->email, $sender, $subject, $msg, 'view_transactionlink');
+
+				if ($is_sent) {
+					$data['msg'] = "We have sent an email to " . $d->email . ". Click on the link to resume previously saved transaction. ";
+				} else {
+					$data['status'] = "error";
+					$data['msg'] = "Email is not sent. System error";
+				}
+			} else {
+				$data['status'] = "error";
+				$data['msg'] = "Email is invalid";
+			}
+		} else {
+			$data['status'] = "error";
+			$data['msg'] = "Characters did not match";
+		}
+
+		echo json_encode($data); exit;
+
+    }
+
 }
 
 

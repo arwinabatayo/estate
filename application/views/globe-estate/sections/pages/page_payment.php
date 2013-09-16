@@ -55,7 +55,8 @@
 									</p>
 									<br />
 									<br />
-									<p><button class="btn-large ui-button-success" onclick="window.location.href='<?php echo base_url() ?>payment/gateway'">CONTINUE</button></p>
+									<!--<p><button class="btn-large ui-button-success" onclick="window.location.href='<?php echo base_url() ?>payment/gateway'">CONTINUE</button></p>-->
+									<p><button class="btn-large ui-button-success" id="btnProceedToPayment">CONTINUE</button></p>
 							   </div>
 	                        </div>
 	                    </div>

@@ -47,7 +47,7 @@ class Accounts_model extends CI_Model
 	function save_account_address($data)
 	{
 		if( $this->db->insert('estate_account_addresses',$data) ){
-			return TRUE;
+			return $this->db->insert_id();
 		}else{
 			return $this->db->_error_message(); 
 		}
