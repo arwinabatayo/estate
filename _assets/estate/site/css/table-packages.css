@@ -37,6 +37,10 @@ _______________________________________________________________________*/
     position: relative;
     width:33%; float:left;
 }
+
+.totalcol2 .plan {width:49%;}
+.totalcol1 .plan {width:95%;}
+
 .plan a:hover {
     text-decoration: none;
     cursor: pointer;
