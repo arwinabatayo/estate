@@ -54,11 +54,13 @@
 
 <div id="main-page" class="span9">
 	<?php // display here the product_type 'gadget' ?>
-	Status : <?php echo $order['status']; ?>
-	Device : device name
-	Plan : Plan name
-	Forms : 
-	Delivery tracker : 
+	<ul style="width: auto; height: 70px; list-style: none;">
+		<li style="display: inline; margin-right: 25px;"><span style="font-weight: bold;">Status : </span><?php echo $order['status']; ?></li>
+		<li style="display: inline; margin-right: 25px;"><span style="font-weight: bold;">Device : </span><?php echo $gadget_item['name']; ?></li>
+		<li style="display: inline; margin-right: 25px;"><span style="font-weight: bold;">Plan : </span><?php echo $plan_item['name']; ?></li>
+		<li style="display: inline; margin-right: 25px;"><span style="font-weight: bold;">Forms : </span><a href="#" id="printable-forms">Forms</a></li>
+		<li style="display: inline; margin-right: 25px;"><span style="font-weight: bold;">Delivery tracker : </span><?php echo $order['delivery_type']; ?></li>
+	</ul>
 
     <section class="jq-accordion" id="plan-order-page">
             <div>

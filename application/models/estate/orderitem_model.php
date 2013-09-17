@@ -39,23 +39,24 @@ class Orderitem_model extends CI_Model
                           ->get();
 
         $result = $query->result();
-
         if(count($result) == 0) return FALSE;
         return $result;
     }
 
-    function get_orderitem_by_type(){
-        if($order_id == NULL) return FALSE;
+    function get_orderitem_by_type($refnum, $type){
+
+        if($refnum == NULL) return FALSE;
 
         // add computation of subtotal per item less discount
         // remove join with estate product since details of item should already be on estate_order_items
         $query = $this->db->select($what)
                           ->from($this->tbl_name)
                           // ->join('estate_product', 'estate_order_items.product_id = estate_product.product_id')
-                          ->where('order_id', $order_id)
+                          ->where('product_type', $type)
+                          ->where('order_id', $refnum)
                           ->get();
 
-        $result = $query->result();
+        $result = $query->row_array();
 
         if(count($result) == 0) return FALSE;
         return $result;
