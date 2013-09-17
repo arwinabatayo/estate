@@ -7,6 +7,28 @@
 class Model_plans extends CI_Model
 {
 	
+	function getAllPlans($is_active=2)
+	{
+		$this->db->order_by('disp_order', 'ASC');
+		
+		if( $is_active == 0 ){
+			$this->db->where('is_active', 0);
+			$query = $this->db->get('estate_plans');
+		}elseif( $is_active == 1 ){
+			$this->db->where('is_active', 1);
+			$query = $this->db->get('estate_plans');
+		}else{
+			$query = $this->db->get('estate_plans');
+		}
+		
+		
+		if( $query->num_rows() > 0 ){
+			return $query->result_array();
+		}else{
+			return array();
+		}
+	}
+	
 	function getPlanDetails($plan_id)
 	{
 		$this->db->where('id', $plan_id);

@@ -19,7 +19,9 @@
 			</select>
 		</div>
 		<div>
+			<button id="additional-line-back" class="btn-large ui-button-success ">&laquo; Back</button>
 			<button id="additional-line-continue" class="btn-large ui-button-success ">Continue</button>
+			
 		</div>
 
 		<div class="globe-dialog" id="dialog_enter_mobile" title="Thank You!">

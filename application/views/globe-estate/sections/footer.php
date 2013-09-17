@@ -353,13 +353,12 @@
 		    $('#acc-order-type  button').click(function() { 
 	            //showPreloader();
 		        //create ajax call here - add to cart order type
-		        /*$( "#plan-order-page" ).accordion( "option", "active", 1 );
-		        $( "#siderbar-panel" ).accordion( "option", "active", 2 );*/
-
+	        
+		        var btnIndex = $('#acc-order-type  button').index(this);
 
 		        $(this).parent().parent().parent().children("div.header").children("div.price-wrapper").children("h4").each(function(){
 		        	if($(this).text() == "GET ADDITIONAL LINE"){
-				        $("#acc-order-type .option-wrapper").hide('slow');
+				        $("#acc-order-type .option-wrapper").slideUp();
 
 				        $("#order-type-section").show('slow');
 
@@ -378,14 +377,17 @@
 
 
 				        $("#goPackagePlanCombos").click(function(){
-				        	window.location = "/estate/addons"
+				        	window.location.href = base_url+"addons"
 				        })
 				    }
 
 		        });
-
-
-
+		        
+		        //RENEW CONTRACT is selected
+		        if( btnIndex==0 ){
+						$( "#plan-order-page" ).accordion( "option", "active", 1 );
+						$( "#siderbar-panel" ).accordion( "option", "active", 2 );
+				}
 
 		    });
 
@@ -413,6 +415,13 @@
 		        $( "#siderbar-panel" ).accordion( "option", "active", 2 );
 		    }); 
 		    
+		    $("#additional-line-back").click(function(){
+				
+				$( "#order-type-section" ).slideUp();
+				$("#acc-order-type .option-wrapper").slideDown();
+				
+			});	  
+			
 		    //PLAN TYPE
 		    $( "#plantype-options" ).hide();
 			$( "#plantype-combos" ).hide(); // Robert
@@ -426,7 +435,7 @@
 				}// Robert
 				
 				var btnIndex = $('#plantype-table  button').index(this);
-	
+				
 				showPreloader();
 				
 				setTimeout(function(){ //simulate ajax request
