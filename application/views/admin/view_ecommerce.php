@@ -29,6 +29,12 @@
 		</tr>
 		<tr>
 			<td width="53" align="right">
+				<a 	href="<?php echo base_url(); ?>admin/packageplans" class="g_tableicon">Package Plans</a>
+				<div class="h_clearboth"></div>
+			</td>
+		</tr>
+		<tr>
+			<td width="53" align="right">
 				<a 	href="<?php echo base_url(); ?>admin/gadget_cashout" class="g_tableicon">Gadget Cashout</a>
 				<div class="h_clearboth"></div>
 			</td>
