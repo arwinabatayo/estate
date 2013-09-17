@@ -997,6 +997,53 @@
 						
 					});
 				});
+
+                // set dialog for application status - gellie
+                $('a#open_application_status').on('click', function(){
+                    $( '#dialog_application_status' ).dialog( "open" );
+                });
+
+                // validate reference number - gellie
+                $('form#refnum-verification button').on('click', function(){
+            
+                        var s = $('form#refnum-verification div.status');
+                        var refnum = $('input#reference_number').val();
+                        // reset error class
+                        s.removeClass('alert-error');
+                        //e.preventDefault();
+                        
+                        s.show();
+                        s.html('Sending...Please wait...');
+                        
+                        // may problem pa sa cache
+                        //$(this).attr('disabled',true);
+
+                        $.ajax({
+                            url: base_url+'home/validate_reference_number',
+                            data: 'refnum='+refnum,
+                            type:'post',
+                            success: function(response){
+                                var resp = jQuery.parseJSON( response );
+                                
+                                if(resp.status == 'success'){
+                                    $('#e_lbl').html(refnum);
+                                    s.html(resp.msg);
+                                    // redirect to status page
+                                    window.location = resp.status_page_url;
+                                    //$(this).attr('disabled',false);
+                                    
+                                }else{
+                                    s.addClass('alert-'+resp.status);
+                                    s.html(resp.msg);
+                                }
+                                
+                            }, 
+                            error: function(){
+                                alert('Some error occured or the system is busy. Please try again later');  
+                            }
+                        });
+                }); 
+
 				// set dialog for resume uncomp transaction - gellie
 				$('a#open_resume_uncomp_transaction').on('click', function(){
 					$( '#dialog_application_status' ).dialog( "close" );
