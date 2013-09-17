@@ -1,7 +1,7 @@
 <div id="g_content">
 
 	<div id="g_tools">
-		<a href="<?php echo base_url(); ?>admin/combos/add"><img src="<?php echo base_url(); ?>_assets/images/tools/add.png" />Add Combo</a>
+		<a href="<?php echo base_url(); ?>admin/boosters/add"><img src="<?php echo base_url(); ?>_assets/images/tools/add.png" />Add Booster</a>
 		<div class="h_clearboth"></div>
 	</div>
 	<div class="h_clearboth"></div>
@@ -15,19 +15,19 @@
 	</div>
 	
 	<div id="g_legend">
-		<div class="item"><img src="<?php echo base_url();  ?>_assets/images/global_icon_edit.png" /> Edit combos</div>
-		<div class="item"><img src="<?php echo base_url();  ?>_assets/images/global_icon_delete.png" /> Delete combos</div>
+		<div class="item"><img src="<?php echo base_url();  ?>_assets/images/global_icon_edit.png" /> Edit booster</div>
+		<div class="item"><img src="<?php echo base_url();  ?>_assets/images/global_icon_delete.png" /> Delete booster</div>
 	</div>
 	
 	<div class="h_clearboth"></div>
 	
 	<div class="g_pagelabel">
 		<div class="g_pagelabel_icon"><img src="<?php echo base_url(); ?>_assets/images/tools/properties.png" /></div>
-		<div class="g_pagelabel_text">Combos</div>
+		<div class="g_pagelabel_text">Boosters</div>
 		<?php echo $pagination; ?>
 	</div>
 	
-	<?php if ($combos) { ?>
+	<?php if ($boosters) { ?>
 	
 		<table class="g_table zebra">
 		
@@ -36,25 +36,25 @@
 				<th>Title</th>
 				<th>Description</th>
 				<th>Long Description</th>
-				<th>Peso Value</th>
+				<th>Amount</th>
 				<th>Status</th>
 				<th>Actions</th>
 			</tr>
 			
-			<?php foreach ($combos as $combos => $a) { ?>
+			<?php foreach ($boosters as $boosters => $a) { ?>
 			<tr>
 				<td><?php echo $a['cid']; ?></td>
 				<td><?php echo $a['name']; ?></td>
 				<td><?php echo $a['description']; ?></td>
 				<td><?php echo $a['long_description']; ?></td>
-				<td><?php echo $a['peso_value']; ?></td>
+				<td><?php echo $a['amount']; ?></td>
 				<td width="50" align="center">
 					<?php if( $a['is_active'] == 1 ){ echo 'Enabled'; }else{ echo 'Disabled'; } ?>
 				</td>
 				
 				<!-- actions -->
 				<td width="53" align="right">
-					<a 	href="<?php echo base_url(); ?>admin/combos/edit/<?php echo $a['id']; ?>"
+					<a 	href="<?php echo base_url(); ?>admin/boosters/edit/<?php echo $a['id']; ?>"
 						class="g_tableicon"
 						title="Edit combo">
 						<img src="<?php echo base_url(); ?>_assets/images/global_icon_edit.png" />
@@ -98,13 +98,13 @@ $(".btn_delete").click(function(){
 	if (confirm("Are you sure you want to delete "+name+"?")) {
 		displayNotification("message", "Working...")
 		$.ajax({
-			url: "<?php echo base_url(); ?>admin/combos/process_delete",
+			url: "<?php echo base_url(); ?>admin/boosters/process_delete",
 			type: "POST",
 			data: "id="+id+"&current_page="+current_page+"&"+$("#form_pagination").serialize(),
 			success: function(response, textStatus, jqXHR){
 				
 				setTimeout(function () {
-					displayNotification("success", "Combo "+name+" successfully deleted, Please wait.");
+					displayNotification("success", "Booster "+name+" successfully deleted, Please wait.");
 					$("#middle_wrapper").html(response);
 				}, 500);
 			},
