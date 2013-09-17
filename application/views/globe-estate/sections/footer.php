@@ -1158,6 +1158,8 @@
                                     $( '#dialog_saved_transaction_success' ).dialog( "open" );
                                     // show success message
                                     $('#msg-success').html(resp.msg);
+                                    $('#ty-note').hide();
+                                    $('#resend-link-info').hide();
                                 } else {
                                     s.addClass('alert-'+resp.status);
                                     s.html(resp.msg);

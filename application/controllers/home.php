@@ -378,7 +378,7 @@ class Home extends MY_Controller
                 if ($flow_type == 'saved_transaction') {
                     $success_msg = "We have sent an email to " . $email . ". Click on the link to resume previously saved transaction. ";
                 } else if ($flow_type == 'forgot_refnum') {
-                    $success_msg = "We have sent an email to " . $email . "with your reference number to check the status of your application. ";        
+                    $success_msg = "We have sent an email to " . $email . " with your reference number to check the status of your application. ";        
                 }
 
 				if ($is_sent) {
