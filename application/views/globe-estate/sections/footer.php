@@ -372,6 +372,10 @@
 				        $("#goCombos").parent().hide();
 				        $("#goPackagePlanCombos").parent().show();
 
+				        $("a.btnAddPackagePlan:eq(0)").parent().parent().hide();
+
+				        $("#cashoutBox").show();
+
 
 				        $("#goPackagePlanCombos").click(function(){
 				        	window.location = "/estate/addons"
