@@ -67,7 +67,7 @@ class Ordermanagement extends MY_Controller
 		
 		$_data['sess_user'] = $this->session->userdata;
 		$_data['page'] = "ordermanagement";
-		$_data['plan_bundles'] = $this->model_plans->getAllPlans();
+		$_data['plans'] = $this->model_plans->getAllPlans();
 		$_data['lock_in_periods'] = $this->model_plans->getAllLockInPeriods();
 		$_data['order_statuses'] = $this->model_accountmanagement->getOrderStatuses();
 		$_data['order_types'] = $this->model_accountmanagement->getOrderTypes();
@@ -146,7 +146,7 @@ class Ordermanagement extends MY_Controller
 		
 		$_data['sess_user'] = $this->session->userdata;
 		$_data['page'] = "ordermanagement";
-		$_data['plan_bundles'] = $this->model_plans->getAllPlans();
+		$_data['plans'] = $this->model_plans->getAllPlans();
 		$_data['lock_in_periods'] = $this->model_plans->getAllLockInPeriods();
 		$_data['order_statuses'] = $this->model_accountmanagement->getOrderStatuses();
 		$_data['order_types'] = $this->model_accountmanagement->getOrderTypes();
