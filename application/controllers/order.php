@@ -41,6 +41,13 @@ class Order extends MY_Controller
 		// send order item details to view
 		$this->_data->order_items = $this->orderitem_model->get_orderitems_by_orderid($refnum);
 
+		// get gadget data
+		$gadget_item = $this->orderitem_model->get_orderitem_by_type($refnum, 'gadget');
+		$this->_data->gadget_item = unserialize($gadget_item['product_info']);
+
+		$plan_item = $this->orderitem_model->get_orderitem_by_type($refnum, 'plan');
+		$this->_data->plan_item = unserialize($plan_item['product_info']);		
+
 		//TODO - move to session after authentication
 
 		$this->_data->account = $this->accounts_model->get_account_info_by_id('09173858958', false);
