@@ -385,8 +385,11 @@
 		        
 		        //RENEW CONTRACT is selected
 		        if( btnIndex==0 ){
-						$( "#plan-order-page" ).accordion( "option", "active", 1 );
-						$( "#siderbar-panel" ).accordion( "option", "active", 2 );
+					$("#plantype-table").removeClass('[class^="totalcol"]').addClass('totalcol2');
+					$("#plan-type-1").hide();
+
+					$( "#plan-order-page" ).accordion( "option", "active", 1 );
+					$( "#siderbar-panel" ).accordion( "option", "active", 2 );
 				}
 
 		    });

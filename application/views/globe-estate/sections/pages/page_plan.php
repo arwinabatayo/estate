@@ -84,7 +84,7 @@
 												if($row->status > 0){
 										?>
 									<!-- PRICING TABLE -->
-									<div class="noLeftMargin" id="plan-type-<?php echo $row->f_main_plan_id ?>">
+									<div class="noLeftMargin" id="plan-type-<?php echo $row->main_plan_id ?>">
 										<div class="plan over <?php echo ($i==2) ? 'best-value':''?>">
 											<div class="header">
 												<div class="price-wrapper">
