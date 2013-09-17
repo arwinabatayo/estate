@@ -118,12 +118,7 @@
 		              ?>
 		              <td><?php echo $shipping_handling; ?></td>
 		            </tr>
-<!-- 		            <tr>
-		              <td colspan="4"></td>
-		              <td><strong>% Tax</strong></td>
-		              <td><?php echo $order['tax']; ?></td>
-		            </tr>
- -->		            <tr>
+                    <tr>
 		              <td colspan="4"></td>
 		              <td><strong>Total</strong></td>
 		              <td><span class="cashoutLabel"><?php echo  'Php ' . number_format($order['total'], 2); ?></span></td>
@@ -132,3 +127,12 @@
             </div>
     </section>
 </div>
+
+<div class="globe-dialog" id="dialog_print_forms" title="Print">
+    <ul style="list-style: none;">
+    <li style="display: inline; margin-right: 35px;"><a href="javascript: void(0);" onClick="downloadForm('msa');">MSA Form</a></li>
+    <li style="display: inline; margin-right: 35px;"><a href="javascript: void(0);" onClick="downloadForm('qr');">QR Code</a></li>
+    <li style="display: inline;  margin-right: 35px;"><a href="javascript: void(0);" onClick="downloadForm('receipt');">Receipt</a></li>
+    </ul>
+</div>
+

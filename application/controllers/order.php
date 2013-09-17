@@ -186,5 +186,11 @@ class Order extends MY_Controller
 	
 	}
 
+	function download_form()
+	{
+		$var = $this->input->post();
+		
+
+	}
 }
 ?>

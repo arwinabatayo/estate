@@ -22,7 +22,6 @@
 	//alert('<?php echo $current_controller ?>');
 	
 	$(function () {
-
 		$(".jq-accordion").accordion({
 			header: "h3",
 			navigation: true, 
@@ -638,8 +637,57 @@
 							});
 					});		
 			
-		<?php }  ?>
-		
+		<?php } else if ($current_controller == 'order') {  ?>
+                // show printing forms
+                $('a#printable-forms').on('click', function(){
+                    // open printable forms dialog
+                    $('#dialog_print_forms').dialog( "open" );
+                });
+
+
+
+        <?php } ?>
+
+        		function downloadForm2(_type)
+                {
+                	alert('test');
+                    // call ajax for downloading
+                  /*  $.ajax({
+                        url: base_url+'order/download_form',
+                        data: 'form_type='+_type,
+                        type:'post',
+                        success: function(response){
+                            
+                            var resp = jQuery.parseJSON( response );
+                            
+                            var cartItem = '<div id="prod-item-'+resp.rowid+'" class="item" style="display:none"><div class="fleft"><span class="productName block">'+resp.name+'</span><span class="price block arial italic">'+resp.price_formatted+'</span></div><span class="icoDelete"> <a class="btnDelete" href="javascript:void(0)" id="'+resp.rowid+'"><i class="icon-remove"></i></a> </span><br class="clear" /></div>\n';
+                            
+                            if(resp.status == 'success' && resp.rowid){
+                        
+                                if( resp.product_type == 'accessories'){
+                                    basketAccessory.append(cartItem);
+                                }else{
+                                    basket.append(cartItem);
+                                }
+                                
+                                $('#prod-item-'+resp.rowid).show('slow');
+                                $('#cashoutLabel').html(resp.total);
+                                $('#cashoutBox').animate({backgroundColor: '#fff267'}, 'fast', function(){
+                                    $('#cashoutBox').animate({backgroundColor: '#F4F4F4'}, 'fast');
+                                });
+                                
+                                
+                            }else{
+                                alert(resp.msg);
+                            }
+                            
+                        }, 
+                        error: function(){
+                            alert('Some error occured or the system is busy. Please try again later');  
+                        }
+                    });*/
+                }
+
 				$('form.addtoCart img').click(function(){
 						var thisID = $(this).parent('form').attr('id');
 						var itemname  = $(this).find('input[name=product-name]').val();
@@ -1179,7 +1227,7 @@
                                 alert('Some error occured or the system is busy. Please try again later');  
                             }
                         });
-                }); 
+                });
 				
 	});
 </script>
