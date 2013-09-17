@@ -75,15 +75,16 @@
 								
 								<!-- START OF PLAN-TYPE TABLE -->
 								<!-- ======================= -->
-								<div id="plantype-table" class="pricing-tables textcenter">
+								<?php $total_active_plan = count($plans); ?>
+								<div id="plantype-table" class="pricing-tables textcenter totalcol<?php echo $total_active_plan ?>">
 
 									<?php if($plans){ 
 										$i=1;
 											foreach($plans as $row){
-												if($row->status > 1){
+												if($row->status > 0){
 										?>
 									<!-- PRICING TABLE -->
-									<div class="noLeftMargin">
+									<div class="noLeftMargin" id="plan-type-<?php echo $row->main_plan_id ?>">
 										<div class="plan over <?php echo ($i==2) ? 'best-value':''?>">
 											<div class="header">
 												<div class="price-wrapper">

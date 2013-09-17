@@ -28,6 +28,7 @@ class Plan extends MY_Controller
 		$this->load->model('estate/products_model');
 		
 		//TODO: move to model
+		$this->db->where('status >',0);
 		$query = $this->db->get('estate_main_plan');
 		$plans = $query->result();
 		

@@ -96,7 +96,7 @@
 
 	<div class="globe-dialog" id="dialog_resume_uncomp_transaction" title="Resume Uncompleted Transaction">
 		<div class="span4 textleft noLeftMargin">
-			<p><i class="icon-lock icon-3x fleft"></i>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.<br />
+			<p><i class="icon-envelope icon-3x fleft"></i>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.<br />
 			 	<span class="span4 textright">
 			</p>
         </div>
@@ -109,7 +109,7 @@
 						<input type="text" id="email" name="email" class="-medium">
 					</div>
 				<label class="control-label">Enter characters you see</label>
-				<p><img src="<?php echo base_url() ?>_assets/estate/_captcha/default.png" alt="" id="captcha" />&nbsp; <a href="javascript:void(0)" id="refresh_code" style="font-size:11px;">Refresh Captcha</a></p>
+				<p><img src="<?php echo base_url() ?>_assets/estate/_captcha/default.png" alt="" id="captcha" class="captcha" />&nbsp; <a href="javascript:void(0)" id="refresh_code" style="font-size:11px;">Refresh Captcha</a></p>
 					<div class="controls">
 						<input class="fleft" id="code_id" name="code_id" type="text" autocomplete="false" />&nbsp;<!-- <button id="btn_resend_vcode" class="btn btn-primary">RESET</button> -->
 						<button class="btn btn-primary">Submit</button>
@@ -122,12 +122,39 @@
 	</div>
 
 	<div class="globe-dialog" id="dialog_saved_transaction_success" title="Thank You">
-					<p id="msg-success"></p>
-					<span class="span4 textleft noLeftMargin" style="color:#888">
-						<p class="note">NOTE: Kindly make sure to verify your email address. Validity of this link is within 24hours.</p>
-					</span>
-					<span class="span4 textright">
-						<strong>Didn't receive the verification email?</strong> &nbsp;&nbsp;
-						<a href="javascript: void(0);" id="resend_saved_transaction_lnk">Resend link</a>
-					</span>
-	            </div>	
+		<p id="msg-success"></p>
+		<span id="ty-note" class="span4 textleft noLeftMargin" style="display: none; color:#888">
+			<p class="note">NOTE: Kindly make sure to verify your email address. Validity of this link is within 24hours.</p>
+		</span>
+		<span id="resend-link-info" class="span4 textright" style="display: none;">
+			<strong>Didn't receive the verification email?</strong> &nbsp;&nbsp;
+			<a href="javascript: void(0);" id="resend_saved_transaction_lnk">Resend link</a>
+		</span>
+    </div>
+
+    <div class="globe-dialog" id="dialog_forgot_refnum" title="Forgot reference number">
+		<div class="span4 textleft noLeftMargin">
+			<p><i class="icon-envelope icon-3x fleft"></i>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.<br />
+			 	<span class="span4 textright">
+			</p>
+        </div>
+		<div class="span4">
+        	<form id="forgot-refnum" class="form-inline" onsubmit="return false">
+				<fieldset>
+				<div class="control-group ">
+				<label class="control-label">Email</label>
+					<div class="controls">
+						<input type="text" id="email" name="email" class="-medium">
+					</div>
+				<label class="control-label">Enter characters you see</label>
+				<p><img src="<?php echo base_url() ?>_assets/estate/_captcha/default.png" alt="" id="captcha" class="captcha"/>&nbsp; <a href="javascript:void(0)" id="refresh_code" style="font-size:11px;">Refresh Captcha</a></p>
+					<div class="controls">
+						<input class="fleft" id="code_id" name="code_id" type="text" autocomplete="false" />&nbsp;<!-- <button id="btn_resend_vcode" class="btn btn-primary">RESET</button> -->
+						<button class="btn btn-primary">Submit</button>
+					</div>
+				</div>
+				<div style="display:none" class="status alert textcenter"></div>
+				</fieldset>
+			</form>
+        </div>
+	</div>

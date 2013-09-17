@@ -62,9 +62,9 @@
 					<div class="input">
 						<select class="g_select" name="plan">
 							<option value="0" selected="selected">Select plan</option>
-							<?php if( $plan_bundles && count($plan_bundles) > 0 ){ ?>
-								<?php foreach( $plan_bundles as $plan_bundle ){ ?>
-									<option value="<?php echo $plan_bundle['f_plan_bundle_id']; ?>"><?php echo $plan_bundle['f_plan_bundle_title']; ?></option>
+							<?php if( $plans && count($plans) > 0 ){ ?>
+								<?php foreach( $plans as $plan ){ ?>
+									<option value="<?php echo $plan['id']; ?>"><?php echo $plan['title']; ?></option>
 								<?php } ?>
 							<?php } ?>
 						</select>

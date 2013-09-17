@@ -22,7 +22,6 @@
 	//alert('<?php echo $current_controller ?>');
 	
 	$(function () {
-
 		$(".jq-accordion").accordion({
 			header: "h3",
 			navigation: true, 
@@ -56,7 +55,7 @@
 					//var resp = jQuery.parseJSON( response );
 					//alert (  response.src );
 
-					$("#captcha").attr('src',response.src);
+					$(".captcha").attr('src',response.src);
 					
 				},
 				error: function(xhr, status, error){
@@ -135,7 +134,7 @@
 			$('form#email-verification button').on('click', function(){
 			
 					var s =	$('form#email-verification div.status');
-					var email =	$('input#email').val();
+					var email =	$('form#email-verification input[name="email"]').val();
 
 					//e.preventDefault();
 					
@@ -353,13 +352,12 @@
 		    $('#acc-order-type  button').click(function() { 
 	            //showPreloader();
 		        //create ajax call here - add to cart order type
-		        /*$( "#plan-order-page" ).accordion( "option", "active", 1 );
-		        $( "#siderbar-panel" ).accordion( "option", "active", 2 );*/
-
+	        
+		        var btnIndex = $('#acc-order-type  button').index(this);
 
 		        $(this).parent().parent().parent().children("div.header").children("div.price-wrapper").children("h4").each(function(){
 		        	if($(this).text() == "GET ADDITIONAL LINE"){
-				        $("#acc-order-type .option-wrapper").hide('slow');
+				        $("#acc-order-type .option-wrapper").slideUp();
 
 				        $("#order-type-section").show('slow');
 
@@ -378,14 +376,20 @@
 
 
 				        $("#goPackagePlanCombos").click(function(){
-				        	window.location = "/estate/addons"
+				        	window.location.href = base_url+"addons"
 				        })
 				    }
 
 		        });
+		        
+		        //RENEW CONTRACT is selected
+		        if( btnIndex==0 ){
+					$("#plantype-table").removeClass('[class^="totalcol"]').addClass('totalcol2');
+					$("#plan-type-1").hide();
 
-
-
+					$( "#plan-order-page" ).accordion( "option", "active", 1 );
+					$( "#siderbar-panel" ).accordion( "option", "active", 2 );
+				}
 
 		    });
 
@@ -413,6 +417,13 @@
 		        $( "#siderbar-panel" ).accordion( "option", "active", 2 );
 		    }); 
 		    
+		    $("#additional-line-back").click(function(){
+				
+				$( "#order-type-section" ).slideUp();
+				$("#acc-order-type .option-wrapper").slideDown();
+				
+			});	  
+			
 		    //PLAN TYPE
 		    $( "#plantype-options" ).hide();
 			$( "#plantype-combos" ).hide(); // Robert
@@ -426,7 +437,7 @@
 				}// Robert
 				
 				var btnIndex = $('#plantype-table  button').index(this);
-	
+				
 				showPreloader();
 				
 				setTimeout(function(){ //simulate ajax request
@@ -584,15 +595,12 @@
 					
 					function showHideDelivery(e){
 						if( e == 'pickup'){
-							$("#delivery_ship").slideUp();
 							$("#delivery_pickup").slideDown();
+							$("#delivery_ship").slideUp();
 						}else{
-							$("#delivery_ship").slideDown();
+
 							$("#delivery_pickup").slideUp();
 							$("#delivery_ship").slideDown();
-						}else{
-							$("#delivery_pickup").slideDown();
-							$("#delivery_ship").slideUp();
 						}
 					}
 					
@@ -629,8 +637,57 @@
 							});
 					});		
 			
-		<?php }  ?>
-		
+		<?php } else if ($current_controller == 'order') {  ?>
+                // show printing forms
+                $('a#printable-forms').on('click', function(){
+                    // open printable forms dialog
+                    $('#dialog_print_forms').dialog( "open" );
+                });
+
+
+
+        <?php } ?>
+
+        		function downloadForm2(_type)
+                {
+                	alert('test');
+                    // call ajax for downloading
+                  /*  $.ajax({
+                        url: base_url+'order/download_form',
+                        data: 'form_type='+_type,
+                        type:'post',
+                        success: function(response){
+                            
+                            var resp = jQuery.parseJSON( response );
+                            
+                            var cartItem = '<div id="prod-item-'+resp.rowid+'" class="item" style="display:none"><div class="fleft"><span class="productName block">'+resp.name+'</span><span class="price block arial italic">'+resp.price_formatted+'</span></div><span class="icoDelete"> <a class="btnDelete" href="javascript:void(0)" id="'+resp.rowid+'"><i class="icon-remove"></i></a> </span><br class="clear" /></div>\n';
+                            
+                            if(resp.status == 'success' && resp.rowid){
+                        
+                                if( resp.product_type == 'accessories'){
+                                    basketAccessory.append(cartItem);
+                                }else{
+                                    basket.append(cartItem);
+                                }
+                                
+                                $('#prod-item-'+resp.rowid).show('slow');
+                                $('#cashoutLabel').html(resp.total);
+                                $('#cashoutBox').animate({backgroundColor: '#fff267'}, 'fast', function(){
+                                    $('#cashoutBox').animate({backgroundColor: '#F4F4F4'}, 'fast');
+                                });
+                                
+                                
+                            }else{
+                                alert(resp.msg);
+                            }
+                            
+                        }, 
+                        error: function(){
+                            alert('Some error occured or the system is busy. Please try again later');  
+                        }
+                    });*/
+                }
+
 				$('form.addtoCart img').click(function(){
 						var thisID = $(this).parent('form').attr('id');
 						var itemname  = $(this).find('input[name=product-name]').val();
@@ -1062,8 +1119,8 @@
 			
 						var s =	$('form#resume-uncomp-transaction div.status');
 						// TODO : add validation for email
-						var email = $('input#email').val();
-						var code_id = $('input#code_id').val();
+						var email = $('#resume-uncomp-transaction input#email').val();
+						var code_id = $('#resume-uncomp-transaction input#code_id').val();
 
 
 						// reset error class
@@ -1077,8 +1134,8 @@
 					    //$(this).attr('disabled',true);
 
 						$.ajax({
-							url: base_url+'home/send_saved_transaction',
-							data: 'email='+email+'&code='+code_id,
+							url: base_url+'home/verify_email_captcha',
+							data: 'email='+email+'&code='+code_id+'&flow_type=saved_transaction',
 							type:'post',
 							success: function(response){
 								var resp = jQuery.parseJSON( response );
@@ -1090,6 +1147,8 @@
 									$( '#dialog_saved_transaction_success' ).dialog( "open" );
 									// show success message
 									$('#msg-success').html(resp.msg);
+                                    $('#ty-note').show();
+                                    $('#resend-link-info').show();
 								} else {
 									s.addClass('alert-'+resp.status);
 									s.html(resp.msg);
@@ -1113,6 +1172,62 @@
 					// remove status
 					$('div.status').hide();
 				});
+
+                // forgot reference number link
+                $('a#lnk_forgot_refnum').on('click', function(){
+                    $( '#dialog_application_status' ).dialog( "close" );
+                    $( '#dialog_forgot_refnum' ).dialog( "open" );
+
+                    // show captcha image
+                    createCaptcha() ;
+                });
+
+                // validate email and captcha code - gellie
+                $('form#forgot-refnum button').on('click', function(){
+            
+                        var s = $('form#forgot-refnum div.status');
+                        // TODO : add validation for email
+                        var email = $('#forgot-refnum input#email').val();
+                        var code_id = $('#forgot-refnum input#code_id').val();
+
+
+                        // reset error class
+                        s.removeClass('alert-error');
+                        //e.preventDefault();
+                        
+                        s.show();
+                        s.html('Sending...Please wait...');
+                        
+                        // may problem pa sa cache
+                        //$(this).attr('disabled',true);
+
+                        $.ajax({
+                            url: base_url+'home/verify_email_captcha',
+                            data: 'email='+email+'&code='+code_id+'&flow_type=forgot_refnum',
+                            type:'post',
+                            success: function(response){
+                                var resp = jQuery.parseJSON( response );
+                                
+                                if(resp.status == 'success') {
+                                    // close current dialog box
+                                    $( '#dialog_forgot_refnum' ).dialog( "close" );
+                                    // open thank you dialog
+                                    $( '#dialog_saved_transaction_success' ).dialog( "open" );
+                                    // show success message
+                                    $('#msg-success').html(resp.msg);
+                                    $('#ty-note').hide();
+                                    $('#resend-link-info').hide();
+                                } else {
+                                    s.addClass('alert-'+resp.status);
+                                    s.html(resp.msg);
+                                }
+                                
+                            }, 
+                            error: function(){
+                                alert('Some error occured or the system is busy. Please try again later');  
+                            }
+                        });
+                });
 				
 	});
 </script>

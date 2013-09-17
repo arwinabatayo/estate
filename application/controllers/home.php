@@ -224,7 +224,7 @@ class Home extends MY_Controller
 	
 		if($email){
 			if (valid_email($email)) {
-				$is_sent = $this->_sendMail($email);
+				$is_sent = $this->_sendMail($email, 'verify_account');
 				//$is_sent = true;
 				if($is_sent === false) {
 					$data['status'] = "error";
@@ -253,21 +253,50 @@ class Home extends MY_Controller
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
 
-	private function _sendMail($email_to)
+	private function _sendMail($email_to, $flow_type)
     {
        
         $this->load->library('email');
+
+        switch($flow_type) {
+            case 'verify_account' :
+                $sender = "no-reply@project-estate.com";
+                $subject = "Globe Estate - Account Verification";
+                $email_tpl = 'view_activation';
+            
+                $verification_code = $this->_create_hash($email_to);
         
-        $verification_code = $this->_create_hash($email_to);
-        
-        $message = array(
-         'name'              => $email_to,
-         'verification_code' => $verification_code,
-         'verification_url'  => base_url().'home/verify/'.$verification_code.'?e='.$email_to,
-        );
-        
-        //return $this->email->send_email($email_to,'no-reply@project-estate.com','Globe Estate - Account Verification',$message,'view_activation');
-        $mail_status = $this->email->send_email_api($email_to, 'Globe Estate - Account Verification', 'view_activation', $message);
+                $msg = array(
+                    'name'              => $email_to,
+                    'verification_code' => $verification_code,
+                    'verification_url'  => base_url().'home/verify/'.$verification_code.'?e='.$email_to,
+                );
+            break;
+            case 'saved_transaction' :
+                $uncomp_trans_lnk = "http://test.com"; // TODO : link to correct transaction page
+                $sender = "no-reply@project-estate.com";
+                $subject = "myGlobe - Saved Transaction Link";
+                $email_tpl = 'view_transactionlink';
+
+                $msg = array(
+                        'name'  => $email_to,
+                        'link'  => $uncomp_trans_lnk
+                    );
+            break;
+            case 'forgot_refnum' :
+                $refnum = "1234"; // TODO : value for correct refnumber
+                $sender = "no-reply@project-estate.com";
+                $subject = "myGlobe - Reference Number";
+                $email_tpl = 'view_refnum';
+
+                $msg = array(
+                        'name'  => $email_to,
+                        'refnum'=> $refnum
+                    );
+            break;
+        }
+
+        return $this->email->send_email($email_to, $sender, $subject, $msg, $email_tpl);
     }
     
     //move this function to helper -- SOON
@@ -328,10 +357,12 @@ class Home extends MY_Controller
 
     }
 
-    function send_saved_transaction()
+    function verify_email_captcha()
     {
     	$d = (object) $this->input->post();
 		$captcha_code = $this->session->userdata('captcha_code');
+		$flow_type = $d->flow_type;
+		$email = $d->email;
 
 		$this->load->helper('email');
 		$email_isvalid = valid_email($d->email);
@@ -339,25 +370,19 @@ class Home extends MY_Controller
 		$data['status'] = "success";
 
 		// check if captcha matches and email is valid
-		// check if email needs to be registered first with globe
+		// TODO : check if email needs to be registered first with globe
 		if ($d->code == $captcha_code) {
 			if ($email_isvalid) {
-				// send saved transaction link
-				$this->load->library('email');
+				$is_sent = $this->_sendMail($email, $flow_type);
 
-				$uncomp_trans_lnk = "http://test.com"; // TODO : link to correct transaction page
-				$sender = "no-reply@project-estate.com";
-				$subject = "myGlobe - Saved Transaction Link";
-
-				$msg = array(
-						'name'	=> $d->email,
-						'link'	=> $uncomp_trans_lnk
-					);
-
-				$is_sent = $this->email->send_email($d->email, $sender, $subject, $msg, 'view_transactionlink');
+                if ($flow_type == 'saved_transaction') {
+                    $success_msg = "We have sent an email to " . $email . ". Click on the link to resume previously saved transaction. ";
+                } else if ($flow_type == 'forgot_refnum') {
+                    $success_msg = "We have sent an email to " . $email . " with your reference number to check the status of your application. ";        
+                }
 
 				if ($is_sent) {
-					$data['msg'] = "We have sent an email to " . $d->email . ". Click on the link to resume previously saved transaction. ";
+					$data['msg'] = $success_msg;
 				} else {
 					$data['status'] = "error";
 					$data['msg'] = "Email is not sent. System error";
@@ -369,11 +394,13 @@ class Home extends MY_Controller
 		} else {
 			$data['status'] = "error";
 			$data['msg'] = "Characters did not match";
+            // $data['msg'] .= $d->code . " - " . $captcha_code;
 		}
 
 		echo json_encode($data); exit;
 
     }
+
 
 }
 
