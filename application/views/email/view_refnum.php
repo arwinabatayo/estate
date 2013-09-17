@@ -1,9 +1,6 @@
 <p>Hi <?php echo $name; ?>,</p>
 <br>
-<p>Welcome!</p>
-
-<p>You can resume your uncompleted transaction by visiting  <a href="<?php echo $link; ?>">here</a> or you may copy the url provided below to resume.</p>
-<p><?php echo $link; ?></p>
+<p>Here's your reference number : <p><?php echo $refnum; ?></p>
 <br>
 <p>Thank You!</p>
 <p>The Project Estate Team</p>

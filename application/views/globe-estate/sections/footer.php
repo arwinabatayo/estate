@@ -56,7 +56,7 @@
 					//var resp = jQuery.parseJSON( response );
 					//alert (  response.src );
 
-					$("#captcha").attr('src',response.src);
+					$(".captcha").attr('src',response.src);
 					
 				},
 				error: function(xhr, status, error){
@@ -1062,8 +1062,8 @@
 			
 						var s =	$('form#resume-uncomp-transaction div.status');
 						// TODO : add validation for email
-						var email = $('input#email').val();
-						var code_id = $('input#code_id').val();
+						var email = $('#resume-uncomp-transaction input#email').val();
+						var code_id = $('#resume-uncomp-transaction input#code_id').val();
 
 
 						// reset error class
@@ -1077,8 +1077,8 @@
 					    //$(this).attr('disabled',true);
 
 						$.ajax({
-							url: base_url+'home/send_saved_transaction',
-							data: 'email='+email+'&code='+code_id,
+							url: base_url+'home/verify_email_captcha',
+							data: 'email='+email+'&code='+code_id+'&flow_type=saved_transaction',
 							type:'post',
 							success: function(response){
 								var resp = jQuery.parseJSON( response );
@@ -1090,6 +1090,8 @@
 									$( '#dialog_saved_transaction_success' ).dialog( "open" );
 									// show success message
 									$('#msg-success').html(resp.msg);
+                                    $('#ty-note').show();
+                                    $('#resend-link-info').show();
 								} else {
 									s.addClass('alert-'+resp.status);
 									s.html(resp.msg);
@@ -1113,6 +1115,62 @@
 					// remove status
 					$('div.status').hide();
 				});
+
+                // forgot reference number link
+                $('a#lnk_forgot_refnum').on('click', function(){
+                    $( '#dialog_application_status' ).dialog( "close" );
+                    $( '#dialog_forgot_refnum' ).dialog( "open" );
+
+                    // show captcha image
+                    createCaptcha() ;
+                });
+
+                // validate email and captcha code - gellie
+                $('form#forgot-refnum button').on('click', function(){
+            
+                        var s = $('form#forgot-refnum div.status');
+                        // TODO : add validation for email
+                        var email = $('#forgot-refnum input#email').val();
+                        var code_id = $('#forgot-refnum input#code_id').val();
+
+
+                        // reset error class
+                        s.removeClass('alert-error');
+                        //e.preventDefault();
+                        
+                        s.show();
+                        s.html('Sending...Please wait...');
+                        
+                        // may problem pa sa cache
+                        //$(this).attr('disabled',true);
+
+                        $.ajax({
+                            url: base_url+'home/verify_email_captcha',
+                            data: 'email='+email+'&code='+code_id+'&flow_type=forgot_refnum',
+                            type:'post',
+                            success: function(response){
+                                var resp = jQuery.parseJSON( response );
+                                
+                                if(resp.status == 'success') {
+                                    // close current dialog box
+                                    $( '#dialog_forgot_refnum' ).dialog( "close" );
+                                    // open thank you dialog
+                                    $( '#dialog_saved_transaction_success' ).dialog( "open" );
+                                    // show success message
+                                    $('#msg-success').html(resp.msg);
+                                    $('#ty-note').hide();
+                                    $('#resend-link-info').hide();
+                                } else {
+                                    s.addClass('alert-'+resp.status);
+                                    s.html(resp.msg);
+                                }
+                                
+                            }, 
+                            error: function(){
+                                alert('Some error occured or the system is busy. Please try again later');  
+                            }
+                        });
+                }); 
 				
 	});
 </script>
