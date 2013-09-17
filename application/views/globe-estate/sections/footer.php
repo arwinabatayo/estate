@@ -134,7 +134,7 @@
 			$('form#email-verification button').on('click', function(){
 			
 					var s =	$('form#email-verification div.status');
-					var email =	$('input#email').val();
+					var email =	$('form#email-verification input[name="email"]').val();
 
 					//e.preventDefault();
 					
@@ -384,8 +384,11 @@
 		        
 		        //RENEW CONTRACT is selected
 		        if( btnIndex==0 ){
-						$( "#plan-order-page" ).accordion( "option", "active", 1 );
-						$( "#siderbar-panel" ).accordion( "option", "active", 2 );
+					$("#plantype-table").removeClass('[class^="totalcol"]').addClass('totalcol2');
+					$("#plan-type-1").hide();
+
+					$( "#plan-order-page" ).accordion( "option", "active", 1 );
+					$( "#siderbar-panel" ).accordion( "option", "active", 2 );
 				}
 
 		    });
@@ -592,15 +595,12 @@
 					
 					function showHideDelivery(e){
 						if( e == 'pickup'){
-							$("#delivery_ship").slideUp();
 							$("#delivery_pickup").slideDown();
+							$("#delivery_ship").slideUp();
 						}else{
-							$("#delivery_ship").slideDown();
+
 							$("#delivery_pickup").slideUp();
 							$("#delivery_ship").slideDown();
-						}else{
-							$("#delivery_pickup").slideDown();
-							$("#delivery_ship").slideUp();
 						}
 					}
 					
