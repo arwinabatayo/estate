@@ -160,7 +160,7 @@
 									</div>
 									<!-- class="row-fluid product-row"-->
 
-									<div id="combo-type" style="display:none;">
+									<div id="combo-type" style="display:none; clear:both;">
 								   							   
 										<div id="combo-type-text" class="span2 product-item" style="display:none;">
 											<img src="http://n-cubator.com/staging-estate/demo/_assets/estate/images/plans/temp/gadget-care-a.png" alt="">
@@ -187,7 +187,7 @@
 										</div>
 							   		</div>
 
-							   		<div id="cashoutBox" class="contentbox">
+							   		<div id="cashoutBox" class="contentbox" style="display:none; clear: both; text-align: left; background-color: #515151; color: #FFF;">
 										<span class="bold">CASHOUT :</span>&nbsp;&nbsp;<span class="cashoutLabel" id="cashoutLabel">0.00</span>
 						            </div>
 
