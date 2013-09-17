@@ -135,7 +135,7 @@
 			$('form#email-verification button').on('click', function(){
 			
 					var s =	$('form#email-verification div.status');
-					var email =	$('input#email').val();
+					var email =	$('form#email-verification input[name="email"]').val();
 
 					//e.preventDefault();
 					
@@ -596,15 +596,12 @@
 					
 					function showHideDelivery(e){
 						if( e == 'pickup'){
-							$("#delivery_ship").slideUp();
 							$("#delivery_pickup").slideDown();
+							$("#delivery_ship").slideUp();
 						}else{
-							$("#delivery_ship").slideDown();
+
 							$("#delivery_pickup").slideUp();
 							$("#delivery_ship").slideDown();
-						}else{
-							$("#delivery_pickup").slideDown();
-							$("#delivery_ship").slideUp();
 						}
 					}
 					
