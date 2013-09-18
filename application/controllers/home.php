@@ -306,7 +306,7 @@ class Home extends MY_Controller
             break;
         }
 
-        return $this->email->send_email($email_to, $sender, $subject, $msg, $email_tpl);
+        return $this->email->send_email_api($email_to, $sender, $subject, $msg, $email_tpl);
     }
     
     //move this function to helper -- SOON

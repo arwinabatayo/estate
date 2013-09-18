@@ -63,8 +63,9 @@
 
 		$('a#refresh_code').click( function(e){
 			e.preventDefault();
-			createCaptcha() ;
-		});	
+			var sel = $(this).siblings('img').attr('id');
+			createCaptcha(sel) ;
+		});		
 
 		<?php if($page == 'home'){ ?>
 		
