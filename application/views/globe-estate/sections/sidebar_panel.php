@@ -35,6 +35,7 @@
 						<?php
 							//TODO - move this object to session after authentication - mark
 						    $user = $this->accounts_model->get_account_info_by_id('9151178863',false);	
+						    //print_r($user);
 						?>
 	                    <div>
 	                        <h3><a href="#">My Account - 0915-2211334</a></h3>

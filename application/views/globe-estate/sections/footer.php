@@ -45,7 +45,9 @@
 		}
 		
 		// function that sets captcha img src 
-        /*function createCaptcha( seletorID="captcha" ){
+        function createCaptcha( seletorID ){
+			var seletorID = seletorID ? seletorID : 'captcha';
+
 			$.ajax({
 			    dataType: 'json',
 				url: base_url+'captcha/get_captcha_img',
@@ -63,7 +65,8 @@
 
 		$('a#refresh_code').click( function(e){
 			e.preventDefault();
-			createCaptcha() ;
+			var sel = $(this).siblings('img').attr('id');
+			createCaptcha(sel) ;
 		});	
 
 		<?php if($page == 'home'){ ?>
