@@ -196,7 +196,7 @@
 
 		                        <div id="package-plan-items" style="display:none;">
 		                        	<em>Package Plan</em>
-		                        	<div id="PackagePlanCartWidget" class="cartWidget">
+		                        	<div id="PackagePlanCartWidget" class="cartWidget" style="display:none;">
 
 	                        		</div>
 	                        	</div>	

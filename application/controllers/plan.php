@@ -34,6 +34,7 @@ class Plan extends MY_Controller
 		
 		$this->_data->plans = $plans;
 
+
 		
 		$query = $this->db->query('SELECT * FROM estate_plans WHERE is_active="1"');
 		$this->_data->plans_options = $query->result();
@@ -43,6 +44,10 @@ class Plan extends MY_Controller
         
 		$this->_data->combos_datas = $this->products_model->get_bundles(2);
 		$this->_data->boosters_datas = $this->products_model->get_bundles(1);
+
+		if($this->input->get("get_new_line")){
+			$this->_data->new_line_flag = true;
+		}
 		
 		//echo "<pre>"; var_dump($this->_data); exit;
 		$this->load->view($this->_data->tpl_view, $this->_data);
@@ -115,34 +120,6 @@ class Plan extends MY_Controller
 		return md5($key.$secret_key);
 	}
 
-
-	public function getNewLine()
-	{
-		$this->load->model('estate/accounts_model');
-		
-		$this->load->model('estate/products_model');
-		
-		//TODO: move to model
-		$this->db->where('status >',0);
-		$query = $this->db->get('estate_main_plan');
-		$plans = $query->result();
-		
-		$this->_data->plans = $plans;
-		
-		$query = $this->db->query('SELECT * FROM estate_plans WHERE is_active="1"');
-		$this->_data->plans_options = $query->result();
-		
-		$this->_data->account_m = $this->accounts_model;
-        //temporary token = d25c1265aee883d97ffeec28b7e852cb        
-        
-		$this->_data->combos_datas = $this->products_model->get_bundles(2);
-		$this->_data->boosters_datas = $this->products_model->get_bundles(1);
-		$this->_data->new_line_flag = true;
-
-		//echo "<pre>"; var_dump($this->_data); exit;
-
-		$this->load->view($this->_data->tpl_view, $this->_data);
-	}
 
 
 }

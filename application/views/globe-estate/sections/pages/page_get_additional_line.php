@@ -52,7 +52,7 @@
 		<br/>
 		<div style="padding-bottom: 10px;">
 			<input type="radio" name="new-line-non-globe-option" value="1">Business
-			<input type="radio" name="new-line-non-globe-option" value="1">Personal
+			<input type="radio" name="new-line-non-globe-option" value="2">Personal
 		</div>
 
 		<div id="order-type-new-line-section-footer" style="display:none; padding: 87px; background-color: #515151; color: #FFF;">

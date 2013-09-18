@@ -7,7 +7,8 @@
 
 								<!-- START OF ORDER-TYPE TABLE -->
 								<div id="acc-order-type" class="pricing-tables textcenter">
-					
+									
+									<?php if(!$new_line_flag){ ?>
 									<!-- PRICING TABLE -->
 									<div class="option-wrapper">
 										<div class="plan over">
@@ -40,6 +41,7 @@
 											</ul>
 										</div>
 									</div>
+
 									<!-- END OF PRICING TABLE -->
 					
 									<!-- PRICING TABLE -->
@@ -60,6 +62,10 @@
 									<!-- END OF PRICING TABLE -->
 
 
+									<?php } ?>
+
+
+
 									<!-- START OF ADDITIONAL LINE PAGE -->
 									<?php include('page_get_additional_line.php'); ?>
 									<!-- END OF ADDITIONAL LINE PAGE -->
@@ -75,16 +81,18 @@
 								
 								<!-- START OF PLAN-TYPE TABLE -->
 								<!-- ======================= -->
-								<?php $total_active_plan = count($plans); ?>
-								<div id="plantype-table" class="pricing-tables textcenter totalcol<?php echo $total_active_plan ?>">
+								<div id="plantype-table" class="pricing-tables textcenter">
 
-									<?php if($plans){ 
+									<?php  if($plans){ 
+
 										$i=1;
 											foreach($plans as $row){
-												if($row->status > 0){
+												//var_dump(intval($row->status));
+												if(intval($row->status) == 1){
 										?>
 									<!-- PRICING TABLE -->
-									<div class="noLeftMargin" id="plan-type-<?php echo $row->main_plan_id ?>">
+									<div class="noLeftMargin">
+
 										<div class="plan over <?php echo ($i==2) ? 'best-value':''?>">
 											<div class="header">
 												<div class="price-wrapper">
@@ -125,7 +133,8 @@
 										
 											 foreach($plans_options as $plan) {
 										?>
-											<div class="fleft" style="margin-right:12px; height:110px;width:200px; background:url('<?php echo $assets_path ?>images/plans/plan_temp.jpg') no-repeat 50% 50%">
+											<div class="fleft" style="margin-right:12px; height:110px;width:200px; 
+											background:url('<?php echo $assets_path ?>images/plans/plan_temp.jpg') no-repeat 50% 50%">
 												<p style="padding:10px 20px 0px 20px;color:#FFF;font-size:22px">
 													<a style="color:#FFF" class="btnAddPlan" data-pv="<?php echo $plan->total_pv ?>" data-id="<?php echo $plan->id ?>" data-name="<?php echo $plan->title ?>" href="javascript:void(0)">
 														<?php echo $plan->title ?>
@@ -136,7 +145,8 @@
 												<div class="my-plan-id" style="display:none"><?php echo $plan->id; ?></div>
 											</div>
 
-											<div class="fleft" style="margin-right:12px; height:110px;width:200px; background:url('<?php echo $assets_path ?>images/plans/plan_temp.jpg') no-repeat 50% 50%">
+											<div class="fleft" style="margin-right:12px; height:110px;width:200px; 
+											background:url('<?php echo $assets_path ?>images/plans/plan_temp.jpg') no-repeat 50% 50%">
 												<p style="padding:10px 20px 0px 20px;color:#FFF;font-size:22px">
 													<a style="color:#FFF" class="btnAddPackagePlan" data-pv="<?php echo $plan->total_pv ?>" data-id="<?php echo $plan->id ?>" data-name="<?php echo $plan->title ?>" href="javascript:void(0)">
 														<?php echo $plan->title ?>
