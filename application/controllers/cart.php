@@ -294,8 +294,11 @@ class Cart extends CI_Controller {
 			   	} else {
 					$out['status'] = 'failed';
 				}
+				
 				$out['total_remaining_pv'] = $this->cart_model->remaining_pv(false);
+			
 			} else {
+				
 				$out['status'] = 'coexist';
 				$out['product_name'] = $in_coexist['product_name'];
 				$out['rowid'] = $in_coexist['rowid'];
