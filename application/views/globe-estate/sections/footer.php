@@ -581,14 +581,15 @@
 
 					//add to cart functionality for additional and new line
 
-					/*var itemid    = $(this).attr('my-plan-id');
-					var itemname    = $(this).attr('data-name');
-					var plan_pv    = $(this).attr('data-pv');
+					var itemid    = $(this).find("a").attr('data-id');
+					var itemname    = $(this).find("a").attr('data-name');
+					var plan_pv    = $(this).find("a").attr('data-pv');
 					
+					//alert(itemid + " " + itemname + " " + plan_pv);
 					
 					$.ajax({
 						url: base_url+'cart/addtocart',
-						data: 'product_type=plan&product_id='+itemid+'&plan='+itemid+'&device=7',
+						data: 'product_type=package_plan&product_id='+itemid+'&plan='+itemid+'&device=7',
 						type:'post',
 						success: function(response) {
 							//alert(response);
@@ -623,7 +624,7 @@
 						error: function(){
 							alert('Some error occured or the system is busy. Please try again later');	
 						}
-					});*/
+					});
 
 					// end of add to cart functionality
 				});
@@ -1388,7 +1389,10 @@
                 // download qr code
                 if (resp.img_url) {
 					pwin = window.open(resp.img_url,"_blank");
-					pwin.onload = function () {window.print();}
+					// added focus for new window
+					pwin.focus();
+					pwin.print();
+					//pwin.onload = function () {window.print();}
                 }     
             }, 
             error: function(){
