@@ -51,8 +51,7 @@
 			    dataType: 'json',
 				url: base_url+'captcha/get_captcha_img',
 			    success: function(response){
-//var resp = jQuery.parseJSON( response );
-//alert(response.src);
+
 					$("#"+seletorID).attr('src',response.src);
 					
 				},
