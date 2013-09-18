@@ -1223,9 +1223,16 @@
             success: function(response){
                 var resp = jQuery.parseJSON( response );
                 
+                // download msa form
                 if (resp.file_url) {
                 	window.location = resp.file_url;
-                }         
+                }
+
+                // download qr code
+                if (resp.img_url) {
+					pwin = window.open(resp.img_url,"_blank");
+					pwin.onload = function () {window.print();}
+                }     
             }, 
             error: function(){
                 alert('Some error occured or the system is busy. Please try again later');  

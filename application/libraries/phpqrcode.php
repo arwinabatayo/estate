@@ -22,7 +22,7 @@ class Phpqrcode
 			mkdir($PNG_TEMP_DIR);
 		}
 
-		QRcode::png($str, $filename);
+		QRcode::png($str, $filename, 'M', 10);
 
 		return base_url() . '_assets/estate/qrcode' . $PNG_WEB_DIR . $_filename; // _assets/estate/qrcode
 	}
