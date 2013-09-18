@@ -45,15 +45,14 @@
 		}
 		
 		// function that sets captcha img src 
-        function createCaptcha(){
+        function createCaptcha( seletorID="captcha" ){
 			$.ajax({
 			    dataType: 'json',
 				url: base_url+'captcha/get_captcha_img',
 			    success: function(response){
-					//var resp = jQuery.parseJSON( response );
-					//alert (  response.src );
-
-					$(".captcha").attr('src',response.src);
+//var resp = jQuery.parseJSON( response );
+//alert(response.src);
+					$("#"+seletorID).attr('src',response.src);
 					
 				},
 				error: function(xhr, status, error){
@@ -719,7 +718,33 @@
 									alert('Some error occured or the system is busy. Please try again later');	
 								}
 							});
-					});		
+					});	
+					
+					// Proceed to Payment Gateway - mark
+					// Store Order Config: Delivery Mode, Shipping Address, Payment Option
+					$('button#btnProceedToPayment').click(function(){
+						var d  = $('input[name="delivery_mode"]:checked').val();
+						var p  = $('input[name="payment_option"]:checked').val();
+						var s  = $('input[name="shipping_address"]:checked').val();
+						
+							$.ajax({
+								url: base_url+'order/save_payment_shipping_config',
+								data: 'delivery_mode='+d+'&payment_option='+p+'&shipping_address='+s,
+								type: 'post',
+								success: function(response){
+
+									var resp = jQuery.parseJSON( response );
+									
+									if(resp.status == 'success'){
+									    window.location.href= base_url+'payment/gateway';
+									}
+								}, 
+								error: function(){
+									alert('Some error occured or the system is busy. Please try again later');	
+								}
+							});
+						
+					});
 			
 		<?php } else if ($current_controller == 'order') {  ?>
                 // show printing forms
@@ -1153,7 +1178,7 @@
 					$( '#dialog_resume_uncomp_transaction' ).dialog( "open" );
 
 					// show captcha image
-					createCaptcha() ;
+					createCaptcha('ut_captcha') ;
 				});
 				
 				// validate email and captcha code - gellie
@@ -1221,7 +1246,7 @@
                     $( '#dialog_forgot_refnum' ).dialog( "open" );
 
                     // show captcha image
-                    createCaptcha() ;
+                    createCaptcha('fr_captcha') ;
                 });
 
                 // validate email and captcha code - gellie
@@ -1272,22 +1297,21 @@
                 });
 				
 	});
-
+	
+	// function for downloading print forms on status page -- gellie
 	function downloadForm(_type)
-    {
-    	
+    {	
         // call ajax for downloading
         $.ajax({
             url: base_url+'order/download_form',
             data: 'form_type='+_type,
-            type:'post',
+            type: 'post',
             success: function(response){
                 var resp = jQuery.parseJSON( response );
                 
                 if (resp.file_url) {
                 	window.location = resp.file_url;
-                }
-                
+                }         
             }, 
             error: function(){
                 alert('Some error occured or the system is busy. Please try again later');  

@@ -1,7 +1,7 @@
 <div id="g_content">
 
 	<div id="g_tools">
-		<a href="<?php echo base_url(); ?>admin/accessories/add"><img src="<?php echo base_url(); ?>_assets/images/tools/add.png" />Add Combo</a>
+		<a href="<?php echo base_url(); ?>admin/combos/add"><img src="<?php echo base_url(); ?>_assets/images/tools/add.png" />Add Combo</a>
 		<div class="h_clearboth"></div>
 	</div>
 	<div class="h_clearboth"></div>
@@ -15,8 +15,8 @@
 	</div>
 	
 	<div id="g_legend">
-		<div class="item"><img src="<?php echo base_url();  ?>_assets/images/global_icon_edit.png" /> Edit accessory</div>
-		<div class="item"><img src="<?php echo base_url();  ?>_assets/images/global_icon_delete.png" /> Delete accessory</div>
+		<div class="item"><img src="<?php echo base_url();  ?>_assets/images/global_icon_edit.png" /> Edit combos</div>
+		<div class="item"><img src="<?php echo base_url();  ?>_assets/images/global_icon_delete.png" /> Delete combos</div>
 	</div>
 	
 	<div class="h_clearboth"></div>
@@ -54,15 +54,16 @@
 				
 				<!-- actions -->
 				<td width="53" align="right">
-					<a 	href="<?php echo base_url(); ?>admin/accessories/edit/<?php echo $a['accessories_id']; ?>"
+					<a 	href="<?php echo base_url(); ?>admin/combos/edit/<?php echo $a['id']; ?>"
 						class="g_tableicon"
-						title="Edit accessory">
+						title="Edit combo">
 						<img src="<?php echo base_url(); ?>_assets/images/global_icon_edit.png" />
 					</a>
 					<a 	href="javascript:void(0);" 
-						class="btn_delete_accessory g_tableicon" 
-						title="Delete accessory"
-						data-accessory-id="<?php echo $a['accessories_id']; ?>" 
+						class="btn_delete g_tableicon" 
+						title="Delete combo"
+						data-value-name="<?php echo strtoupper($a['name']); ?>"
+						data-id="<?php echo $a['id']; ?>" 
 						data-current-page="<?php echo $current_page; ?>" >
 						<img src="<?php echo base_url(); ?>_assets/images/global_icon_delete.png" />
 					</a>
@@ -90,20 +91,21 @@ $(function(){
 	zebraTable();
 });
 
-$(".btn_delete_accessory").click(function(){
-	var accessory_id = $(this).attr('data-accessory-id');
+$(".btn_delete").click(function(){
+	var id = $(this).attr('data-id');
 	var current_page = $(this).attr('data-current-page');
-	
-	if (confirm("Are you sure you want to delete this accessory?")) {
+	var name = $(this).attr('data-value-name');	
+	if (confirm("Are you sure you want to delete "+name+"?")) {
 		displayNotification("message", "Working...")
 		$.ajax({
-			url: "<?php echo base_url(); ?>admin/accessories/process_delete",
+			url: "<?php echo base_url(); ?>admin/combos/process_delete",
 			type: "POST",
-			data: "accessory_id="+accessory_id+"&current_page="+current_page+"&"+$("#form_pagination").serialize(),
+			data: "id="+id+"&current_page="+current_page+"&"+$("#form_pagination").serialize(),
 			success: function(response, textStatus, jqXHR){
+				
 				setTimeout(function () {
+					displayNotification("success", "Combo "+name+" successfully deleted, Please wait.");
 					$("#middle_wrapper").html(response);
-					displayNotification("success", "Accessory successfully deleted.");
 				}, 500);
 			},
 			error: function(jqXHR, textStatus, errorThrown){

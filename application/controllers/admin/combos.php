@@ -38,7 +38,7 @@ class combos extends MY_Controller
 		
 		if ($this->input->post('filter')) {
 			$filter_arr['letter'] = $this->input->post('letter');
-			$filter_arr['bundle_type_id'] = 1;
+			$filter_arr['bundle_type_id'] = 2;
 		}
 	
 		
@@ -97,32 +97,25 @@ class combos extends MY_Controller
 		return;
 	}
 	
-	public function process_add()
-	{
-		$this->load->model('model_combos');
+	public function process_add() {
+		$filter_arr = array();
+		$filter_arr['bundle_type_id'] = 2; // combo id
+		$this->load->model('model_planbundles');
 		
 		$data					= array();
-		$data['title'] 			= $this->cleanStringForDB($this->input->post('title'));
-		$data['plan_cid'] 			= $this->cleanStringForDB($this->input->post('cid'));
-		$data['description'] 	= $this->cleanStringForDB($this->input->post('description'));
-		$data['long_desc'] 	= $this->cleanStringForDB($this->input->post('long_desc'));
-		$data['amount'] 		= $this->cleanStringForDB($this->input->post('amount'));
-		$data['max_gadget_pv'] = $this->cleanStringForDB($this->input->post('max_peso_value'));
-		$data['total_pv'] 	= $this->cleanStringForDB($this->input->post('peso_value'));
+		$post = $this->input->post();
 		
-		if( !$this->input->post('status') 
-			|| $this->input->post('status') == '' 
-			|| $this->input->post('status') == 'disabled' )
-		{ 
-			$data['is_active'] 									= 0;
-		}elseif( $this->input->post('status') == 'enabled' ){
-			$data['is_active'] 									= 1;
-		}else{
-			$data['is_active'] 									= 0;
+		foreach($post as $fields => $values) {
+			if($fields == "id") {
+				$id = $values; // get id
+				continue;
+			}
+			$data[$fields] = addslashes($this->cleanStringForDB($values));
 		}
-		
+		$data["bundle_type_id"] = $filter_arr['bundle_type_id'];
+
 		//add plan
-		$this->model_combos->addPlan($data);
+		$this->model_planbundles->addBundle($data);
 		
 		// log changes
 		$plan = trim($this->input->post('combos_title'));
@@ -132,7 +125,7 @@ class combos extends MY_Controller
 		
 		$user_type = $this->session->userdata('user_type');	
 		
-		$filter_arr = array();
+		
 		if ($this->input->post('filter')) {
 			$filter_arr['letter'] = $this->input->post('letter');
 		}
@@ -142,13 +135,13 @@ class combos extends MY_Controller
 		$current_page = 1;
 		$property_id = null;
 		$limit = ($current_page * $pagination_limit) - $pagination_limit;
-		$combos_arr = $this->model_combos->getcombos(	$property_id, 
-																		$user_type, 
-																		"", 
-																		"asc", 
-																		$limit,
-																		$pagination_limit,
-																		$filter_arr);
+		$combos_arr = $this->model_planbundles->getPlanBundles(	$property_id, 
+															$user_type, 
+															"", 
+															"asc", 
+															$limit,
+															$pagination_limit,
+															$filter_arr);
 		$plan_total_count = $combos_arr['total_count'];
 		unset($combos_arr['total_count']);
 		
@@ -240,7 +233,8 @@ class combos extends MY_Controller
 	
 	public function edit($combos_id=null)
 	{
-		$this->load->model('model_combos');
+		
+		$this->load->model('model_planbundles');
 		$this->load->model('model_properties');
 		
 		if ($combos_id == null) { redirect(site_url('admin/combos')); } // combos_id?
@@ -250,8 +244,8 @@ class combos extends MY_Controller
 		$_data['page'] = "combos";
 		
 		$_data['properties'] = $this->model_properties->getPropertiesByUserId($this->session->userdata('user_id'), "properties.last_edit", "desc", 0, 100);
-		$_data['plan_id'] = $combos_id;
-		$_data['combos_details'] = $this->model_combos->getPlanDetails($combos_id);
+		$_data['combos_id'] = $combos_id;
+		$_data['combos_details'] = $this->model_planbundles->getBundleDetails($combos_id, 2);
 		$_data['content'] = $this->load->view('admin/view_combos_edit', $_data, TRUE);
 		
 		
@@ -259,58 +253,36 @@ class combos extends MY_Controller
 		return;
 	}
 	
-	public function process_edit()
-	{
-		$this->load->model('model_combos');
+	public function process_edit() {
+		$filter_arr = array();
+		$filter_arr['bundle_type_id'] = 2; // combo id
+		$this->load->model('model_planbundles');
 		
 		$data					= array();
 		$tmp_data_attr			= array();
-		$data['title'] 			= $this->cleanStringForDB($this->input->post('title'));
-		$data['plan_cid'] 		= $this->cleanStringForDB($this->input->post('cid'));
-		$data['description'] 	= $this->cleanStringForDB($this->input->post('description'));
-		$data['long_desc'] 		= $this->cleanStringForDB($this->input->post('long_desc'));
-		$data['amount'] 		= $this->cleanStringForDB($this->input->post('amount'));
-		$data['max_gadget_pv'] 	= $this->cleanStringForDB($this->input->post('max_peso_value'));
-		$data['total_pv'] 		= $this->cleanStringForDB($this->input->post('peso_value'));
 		
+		$post = $this->input->post();
 		
-		if( !$this->input->post('status') 
-			|| $this->input->post('status') == '' 
-			|| $this->input->post('status') == 'disabled' )
-		{ 
-			$data['is_active'] 									= 0;
-		}elseif( $this->input->post('status') == 'enabled' ){
-			$data['is_active'] 									= 1;
-		}else{
-			$data['is_active'] 									= 0;
+		foreach($post as $fields => $values) {
+			if($fields == "id") {
+				$id = $values; // get id
+				continue;
+			}
+			$data[$fields] = addslashes($this->cleanStringForDB($values));
 		}
 		
-		
-		
-		//get combos id
-		$plan_id = $this->input->post('plan_id');
-		
-		
-		
 		//update combos
-		$this->model_combos->updatePlan($data, $plan_id);
+		$this->model_planbundles->updateBundle($data, $id);
 		
 		// log changes
 		$combos_name = trim($this->input->post('name'));
-		$log = "Updated combos " . $combos_name;
+		$log = "Updated combos " . addslashes($combos_name);
 		$timestamp = date("Y-m-d H:i:s");
 		$this->model_main->addLog($log, "Update combos", $timestamp);
 		
-		if( trim($old_image) != trim($image_file) ){
-			if( file_exists( $this->config->item('base_combos_path') . $old_image ) ){
-				//delete old image
-				@unlink($this->config->item('base_combos_path') . $old_image);
-			}
-		}
-		
 		$user_type = $this->session->userdata('user_type');	
 		
-		$filter_arr = array();
+		
 		if ($this->input->post('filter')) {
 			$filter_arr['letter'] = $this->input->post('letter');
 		}
@@ -320,7 +292,7 @@ class combos extends MY_Controller
 		$current_page = 1;
 		$property_id = null;
 		$limit = ($current_page * $pagination_limit) - $pagination_limit;
-		$combos_arr = $this->model_combos->getcombos(	$property_id, 
+		$combos_arr = $this->model_planbundles->getPlanBundles(	$property_id, 
 															$user_type, 
 															"", 
 															"asc", 
@@ -340,6 +312,7 @@ class combos extends MY_Controller
 								'filter' => $this->input->post('filter'),
 								'labels' => $this->getAlphabet(),
 								'filter_arr' => $filter_arr);
+		
 		$_pagination = array(	'page' => 'combos',
 								'filter_arr' => $filter_arr,
 								'item_count' => $combos_total_count,
@@ -358,24 +331,15 @@ class combos extends MY_Controller
 		return;
 	}
 	
-	public function process_delete(){
+	public function process_delete() {
+		$filter_arr = array();
+		$filter_arr['bundle_type_id'] = 2; // combo id
 		$this->load->model('model_planbundles');
 		
-		if( $this->input->post('gadget_id') ){
-			$combos_id = $this->input->post('gadget_id');
-		}else{
-			$combos_id = 0;
-		}
+		$id = $this->input->post('id');
 		
 		//delete combos
-		$combos_details = $this->model_combos->deletecombos($combos_id);
-		
-		//delete combos image
-		if( isset($combos_details['image']) ){
-			if( file_exists( $this->config->item('base_combos_path') . $combos_details['image'] ) ){
-				@unlink($this->config->item('base_combos_path') . $combos_details['image']);
-			}
-		}
+		$details = $this->model_planbundles->deleteBundle($id);
 		
 		// log changes
 		$combos_name = trim($combos_details['name']);
@@ -385,10 +349,9 @@ class combos extends MY_Controller
 		
 		$user_type = $this->session->userdata('user_type');	
 		
-		$filter_arr = array();
+		
 		if ($this->input->post('filter')) {
 			$filter_arr['letter'] = $this->input->post('letter');
-			$filter_arr['bundle_type_id'] = 1;
 		}
 	
 		// retrieve combos
@@ -396,7 +359,7 @@ class combos extends MY_Controller
 		$current_page = 1;
 		$property_id = null;
 		$limit = ($current_page * $pagination_limit) - $pagination_limit;
-		$combos_arr = $this->model_combos->getcombos(	$property_id, 
+		$combos_arr = $this->model_planbundles->getPlanBundles(	$property_id, 
 															$user_type, 
 															"", 
 															"asc", 
@@ -416,6 +379,7 @@ class combos extends MY_Controller
 								'filter' => $this->input->post('filter'),
 								'labels' => $this->getAlphabet(),
 								'filter_arr' => $filter_arr);
+		
 		$_pagination = array(	'page' => 'combos',
 								'filter_arr' => $filter_arr,
 								'item_count' => $combos_total_count,
@@ -430,6 +394,7 @@ class combos extends MY_Controller
 		$_data['legend'] = $this->load->view('admin/view_combos_legend', NULL, TRUE);
 		$_data['filter'] = $this->load->view('admin/view_combos_filter', $_filter, TRUE);
 		$_data['pagination'] = $this->load->view('admin/view_pagination', $_pagination, TRUE);
+		
 		$this->load->view('admin/view_combos', $_data);
 		return;
 	}

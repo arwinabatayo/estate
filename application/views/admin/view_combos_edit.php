@@ -1,8 +1,7 @@
 <div id="g_content">
-
 	<div id="g_tools"> 
-		<a href="<?php echo base_url(); ?>admin/accessories"><img class="g_icon" src="<?php echo base_url(); ?>_assets/images/tools/list.png" />Accessories List</a>	
-		<a href="javascript: void(0);" id="btn_edit_accessory"><img class="g_icon" src="<?php echo base_url(); ?>_assets/images/tools/save.png" />Save Changes</a>	
+		<a href="<?php echo base_url(); ?>admin/combos"><img class="g_icon" src="<?php echo base_url(); ?>_assets/images/tools/list.png" />Combo List</a>	
+		<a href="javascript: void(0);" id="btn_edit_combos"><img class="g_icon" src="<?php echo base_url(); ?>_assets/images/tools/save.png" />Save Changes</a>	
 		<div class="h_clearboth"></div>
 	</div>
 	<div class="h_clearboth"></div>
@@ -10,28 +9,24 @@
 	
 	<div class="g_pagelabel">
 		<div class="g_pagelabel_icon"><img src="<?php echo base_url(); ?>_assets/images/tools/add.png" /></div>
-		<div class="g_pagelabel_text">Edit accessory - <?php echo $accessory_details['accessories_title']; ?></div>
+		<div class="g_pagelabel_text">Edit combo - <?php echo $combos_details['_name']; ?></div>
 	</div>
 	
 	<table class="g_table zebra">
 		<tr><td class="g_widget">
 		
-			<form id="form_edit_accessory" class="g_form">
+			<form id="form_edit_combo" class="g_form">
 				
-				<!-- accessory title -->
+				<!-- combo title -->
 				<div class="item">
-					<div class="label">Title *</div>
+					<div class="label">Name *</div>
 					<div class="input">
 						<input 	class="g_inputtext" 
 								type="text" 
-								name="accessories_title" 
-								maxlength="100"
-								value="<?php echo $accessory_details['accessories_title']; ?>"
-								data-orig-val="<?php echo $accessory_details['accessories_title']; ?>"
-								data-alphanum="1"				
-								data-unique="1"
-								data-field="title"
-								data-table="estate_accessories"
+								name="name" 
+								value="<?php echo $combos_details['_name']; ?>"
+								data-orig-val="<?php echo $combos_details['_name']; ?>"
+								data-field="name"
 								data-required="1" />
 					</div>
 					<div class="h_clearboth"></div>
@@ -43,38 +38,48 @@
 					<div class="input">
 						<input 	class="g_inputtext" 
 								type="text" 
-								name="accessories_cid" 
-								maxlength="11"
-								value="<?php echo $accessory_details['accessories_cid']; ?>"
+								name="cid" 
+								value="<?php echo $combos_details['_cid']; ?>"
 								data-is-whole-number="1"
 								data-required="1" />
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
 				
-				<!-- accessory description -->
+				<!-- combo description -->
 				<div class="item">
 					<div class="label">Description</div>
 					<div class="input">
 						<input 	class="g_inputtext" 
 								type="text" 
-								name="accessories_description" 
-								maxlength="500"
-								value="<?php echo $accessory_details['accessories_description']; ?>"
-								data-alphanum="1" />
+								name="description" 
+								value="<?php echo $combos_details['_description']; ?>"
+								 />
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
 				
-				<!-- accessory amount -->
+				<!-- combo long description -->
 				<div class="item">
-					<div class="label">Amount *</div>
+					<div class="label">Long Description</div>
 					<div class="input">
 						<input 	class="g_inputtext" 
 								type="text" 
-								name="accessories_amount" 
-								maxlength="11"
-								value="<?php echo $accessory_details['accessories_amount']; ?>"
+								name="long_description" 
+								value="<?php echo $combos_details['_long_desc']; ?>"
+								 />
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
+				<!-- combo amount -->
+				<div class="item">
+					<div class="label">Peso Value *</div>
+					<div class="input">
+						<input 	class="g_inputtext" 
+								type="text" 
+								name="peso_value" 
+								value="<?php echo $combos_details['_peso_value']; ?>"
 								data-is-whole-number="1"
 								data-required="1" />
 					</div>
@@ -85,67 +90,15 @@
 				<div class="item">
 					<div class="label">Status *</div>
 					<div class="input">
-						<select class="g_select" name="status" data-required="1">
-							<option value="0">Select status</option>
-							<option value="disabled" <?php if( isset($accessory_details['accessories_status']) && $accessory_details['accessories_status'] == 0 ){ echo 'selected="selected"'; } ?>>Disabled</option>
-							<option value="enabled" <?php if( isset($accessory_details['accessories_status']) && $accessory_details['accessories_status'] == 1 ){ echo 'selected="selected"'; } ?>>Enabled</option>
+						<select class="g_select" name="is_active" data-required="0">
+							<option value="">Select status</option>
+							<option value="0" <?php if( isset($combos_details['_status']) && $combos_details['_status'] == 0 ){ echo 'selected="selected"'; } ?>>Disabled</option>
+							<option value="1" <?php if( isset($combos_details['_status']) && $combos_details['_status'] == 1 ){ echo 'selected="selected"'; } ?>>Enabled</option>
 						</select>
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
-				
-				<!-- accessory quantity -->
-				<div class="item">
-					<div class="label">Quantity *</div>
-					<div class="input">
-						<input 	class="g_inputtext" 
-								type="text" 
-								name="accessories_quantity" 
-								maxlength="11"
-								value="<?php echo $accessory_details['accessories_quantity']; ?>"
-								data-is-whole-number="1"
-								data-required="1" />
-					</div>
-					<div class="h_clearboth"></div>
-				</div>
-				
-				<!-- image -->
-				<div class="item">
-					<div class="label">Image *</div>
-					<div class="input">
-						<div class="accessory_image" id="accessory_image_wrapper_wrapper">
-							<div id="accessory_image_wrapper">
-								<?php if( isset($accessory_details['accessories_image']) && trim($accessory_details['accessories_image']) != '' ){ ?>
-									<input type="hidden" value="<?php echo $accessory_details['accessories_image']; ?>" data-image-required="1" data-image-wrapper="accessory_image_wrapper_wrapper" name="accessory-image-name" id="accessory-image-name" />
-									<img src="<?php echo base_url() . $this->config->item('base_accessory_url') . trim($accessory_details['accessories_image']); ?>" title="<?php echo trim($accessory_details['accessories_image']); ?>" alt="<?php echo trim($accessory_details['accessories_image']); ?>" class="img_accessory_image" />
-								<?php }else{ ?>
-									<input type="hidden" value="" data-image-required="1" data-image-wrapper="accessory_image_wrapper_wrapper" name="accessory-image-name" id="accessory-image-name" />
-								<?php } ?>
-							</div>
-							<a id="change_accessory_image">Upload image</a><div id="upload_result"></div>						
-						</div>
-						<div class="clearboth"></div>
-					</div>
-					<div class="h_clearboth"></div>
-				</div>
-				
-				<!-- accessory peso value -->
-				<div class="item">
-					<div class="label">Peso value *</div>
-					<div class="input">
-						<input 	class="g_inputtext" 
-								type="text" 
-								name="accessories_peso_value" 
-								maxlength="11"
-								value="<?php echo $accessory_details['accessories_peso_value']; ?>"
-								data-is-whole-number="1"
-								data-required="1" />
-					</div>
-					<div class="h_clearboth"></div>
-				</div>
-				
-				<input type="hidden" value="<?php echo $accessory_id; ?>" name="accessory_id" id="accessory_id" />
-				<input type="hidden" value="<?php echo $accessory_details['accessories_image']; ?>" name="old-accessory-image-name" id="old-accessory-image-name" />
+				<input type="hidden" value="<?php echo $combos_id; ?>" name="id" id="id" />
 			</form>
 			
 		</td></tr>
@@ -158,55 +111,29 @@ $(function(){
 	placeHolder();
 	checkSidebarStatus();
 	
-	var btnUpload=$('#change_accessory_image');
-	var mestatus=$('#upload_result');
-	var files=$('#accessory_image_wrapper');
-	new AjaxUpload( btnUpload, {
-		action: '<?php echo base_url(); ?>admin/accessories/upload_accessory_image',
-		name: 'accessory_image',
-		onSubmit: function(file, ext){
-			 if (! (ext && /^(jpg|png|jpeg|gif)$/.test(ext))){ 
-				mestatus.text('Only JPG, PNG or GIF files are allowed');
-				return false;
-			}
-			displayNotification("message", "Working...");
-		},
-		onComplete: function(file, response){
-			var data = jQuery.parseJSON(response);
-			files.html('');
-			if(data.status==="success"){
-				var accessory_image_string = '<input type="hidden" value="' + data.filename + '" data-image-required="1" data-image-wrapper="accessory_image_wrapper_wrapper" name="accessory-image-name" id="accessory-image-name">';
-				accessory_image_string += '<img src="<?php echo base_url() . $this->config->item('base_accessory_url') . '_temp/'; ?>'+data.filename+'" title="' + data.filename + '" alt="' + data.filename + '" class="img_accessory_image" />';
-				
-				$('#accessory_image_wrapper').append(accessory_image_string);
-				displayNotification("success", data.msg);
-			} else{
-				displayNotification("error", data.msg);
-			}
+	$("#btn_edit_combos").click(function(e){
+		displayNotification("message", "Working...");
+		if (validate_form("form_edit_combo")) {
+			$.ajax({
+				url: "<?php echo base_url(); ?>admin/combos/process_edit",
+				type: "POST",
+				data: $("#form_edit_combo").serialize(),
+				success: function(response, textStatus, jqXHR){
+					setTimeout(function () {
+						$("#middle_wrapper").html(response);
+						if (typeof history.pushState != 'undefined') { window.history.pushState("object or string", "Title", "<?php echo base_url(); ?>admin/combos"); }
+						displayNotification("success", "Combo successfully updated.");
+					}, 500);
+				},
+				error: function(jqXHR, textStatus, errorThrown){
+					alert('x');
+					displayNotification("error", "Oops, something went wrong. Your action may or may not have been completed.");
+				}
+			});
 		}
 	});
 });
 
-$("#btn_edit_accessory").click(function(e){
-	displayNotification("message", "Working...");
-	if (validate_form("form_edit_accessory")) {
-		$.ajax({
-			url: "<?php echo base_url(); ?>admin/accessories/process_edit",
-			type: "POST",
-			data: $("#form_edit_accessory").serialize(),
-			success: function(response, textStatus, jqXHR){
-				setTimeout(function () {
-					$("#middle_wrapper").html(response);
-					if (typeof history.pushState != 'undefined') { window.history.pushState("object or string", "Title", "<?php echo base_url(); ?>admin/accessories"); }
-					displayNotification("success", "Accessory successfully updated.");
-				}, 500);
-			},
-			error: function(jqXHR, textStatus, errorThrown){
-				alert('x');
-				displayNotification("error", "Oops, something went wrong. Your action may or may not have been completed.");
-			}
-		});
-	}
-});
+
 
 </script>
