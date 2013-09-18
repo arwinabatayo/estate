@@ -26,11 +26,15 @@ class Packageplan_model extends CI_Model
 									 WHERE
 										 estate_plan_bundle.is_active = '1'
 									 AND
+									 	 estate_plan_bundle.bundle_type_id = 2
+									 AND
 										 estate_package_plan_combos.plan_id = " . $plan_id
 								 );
 
 
         $result = $query->result_array();
+
+
 
 
         if(count($result) == 0) return FALSE;

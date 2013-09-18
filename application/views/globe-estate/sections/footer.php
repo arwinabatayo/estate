@@ -193,6 +193,20 @@
 		
 
 		});
+
+		// for new line - non globe subscriber jez
+		$("#non-globe-new-line").click(function(){
+			$("#dialog_new_line").dialog("open");
+
+			$("#new-line-plan").click(function(){
+				window.location = "/estate/plan/getNewLine"
+			});
+
+			
+		})
+
+
+
 		
 		//for none globe
 		$('#dialog_reserve_form').dialog({
@@ -358,11 +372,10 @@
 
 				        $("#order-type-section").show('slow');
 
-				        $("#plantype-options").show();
+				        //$("#plantype-options").show();
 
-				        $("a.btnAddPlan").parent().parent().each(function(){
-				        	$(this).hide();
-				        });
+
+				        $("a.btnAddPlan").parent().parent().hide();
 
 				        $("#goCombos").parent().hide();
 				        $("#goPackagePlanCombos").parent().show();
@@ -451,6 +464,40 @@
 					closePreloader();
 				},500)
 				
+
+				$(this).parent().parent().parent().children("div.header").children("div.price-wrapper").children("h4").each(function(){
+		        	if($(this).text() == "Package Plan"){
+				        //$("#acc-order-type .option-wrapper").slideUp();
+
+				        //$("#order-type-section").show('slow');
+
+				        //$("#plantype-options").show();
+
+
+				        $("a.btnAddPlan").parent().parent().hide();
+
+				        $("#goCombos").parent().hide();
+				        $("#goPackagePlanCombos").parent().show();
+
+				        $("a.btnAddPackagePlan:eq(0)").parent().parent().hide();
+
+				        $("#cashoutBox").show();
+
+				        $( "#siderbar-panel" ).accordion( "option", "active", 2 );
+
+				        // showing only package plan in sidebar panel
+				        $( "#siderbar-panel h3.ui-state-active" ).parent().children().not("h3").children().not("div#package-plan-items").hide()
+				        $("div#package-plan-items").show();
+
+
+				        $("#goPackagePlanCombos").click(function(){
+				        	window.location.href = base_url+"addons"
+				        })
+				    }
+
+		        });
+
+
 			});
 			//toggle button
 			$('.btn-show-plantype').click(function() {
@@ -470,7 +517,8 @@
 			});
 			// jez
 			$("a.btnAddPackagePlan").parent().parent().each(function(){
-				$(this).click(function(){
+				$(this).click(function(i){
+					var that = $(this);
 					$.ajax({
 						url: base_url+'plan/getpackageplancombos',
 						data: {'plan_id' : parseInt($(this).children("div.my-plan-id").text()) },
@@ -478,8 +526,7 @@
 						success: function(response){
 
 							var resp = jQuery.parseJSON( response );
-							console.log(resp);
-
+							//console.log(resp)
 							for(var ctr = 0; ctr < resp.length; ctr++){
 								//console.log(resp[ctr]['combo_type']);
 								var combo_type = resp[ctr]['category'].toLowerCase();
@@ -490,6 +537,10 @@
 							}
 
 							$("#combo-type").show();
+
+							var plan_payment = that.find("a").text().split("Plan ")[1];
+
+							$("#PackagePlanCartWidget").html("<br /><p><b>Plan:</b> " + plan_payment + "</p><p><b>Monthly Payment:</b> " + plan_payment + "</p><p><b>Text:</b> " + $("#combo-type-text-desc").text() + "</p><p><b>Call:</b> " + $("#combo-type-call-desc").text() + "</p><p><b>Surf:</b> " + $("#combo-type-surf-desc").text() + "</p><p><b>IDD:</b> " + $("#combo-type-idd-desc").text() + "</p>");
 
 							
 						}, 
@@ -520,7 +571,42 @@
 				});
 			});
 
+			//jez
+			if($("#order-type-new-line-section").length != 0){
+				$("input[name=new-line-non-globe-option]").each(function(){
+					$(this).click(function(){
+						$("#order-type-new-line-section-footer").slideDown();
+					});
+				});
 
+
+				$("#new-line-continue").click(function(){
+		    	
+			    	//$( '#dialog_enter_mobile' ).dialog( "close" );
+			    	$.ajax({
+						url: base_url+'plan/sendEmail',
+						data: {'email' : "xerenader@gmail.com" },
+						type:'post',
+						success: function(response){
+							
+							$( '#dialog_enter_mobile' ).dialog( "open" );
+							$( "#plan-order-page" ).accordion( "option", "active", 1 );
+							$( "#siderbar-panel" ).accordion( "option", "active", 2 );
+						}, 
+						error: function(){
+							alert('Some error occured or the system is busy. Please try again later');	
+						}
+					});
+
+
+			    	$( "#plan-order-page" ).accordion( "option", "active", 1 );
+			        $( "#siderbar-panel" ).accordion( "option", "active", 2 );
+
+			        //$("#plantype-options").show();
+			        $("a.btnAddPackagePlan").parent().parent().show();
+			    }); 
+
+			}
 
 		
 		<?php } else if($current_controller == 'addons' ){ ?>
