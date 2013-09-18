@@ -1186,22 +1186,21 @@
                 });
 				
 	});
-
+	
+	// function for downloading print forms on status page -- gellie
 	function downloadForm(_type)
-    {
-    	
+    {	
         // call ajax for downloading
         $.ajax({
             url: base_url+'order/download_form',
             data: 'form_type='+_type,
-            type:'post',
+            type: 'post',
             success: function(response){
                 var resp = jQuery.parseJSON( response );
                 
                 if (resp.file_url) {
                 	window.location = resp.file_url;
-                }
-                
+                }         
             }, 
             error: function(){
                 alert('Some error occured or the system is busy. Please try again later');  

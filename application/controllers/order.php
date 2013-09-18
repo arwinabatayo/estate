@@ -189,20 +189,21 @@ class Order extends MY_Controller
 	function download_form()
 	{
 		$var = (object) $this->input->post();
-		$this->load->add_package_path('third_party/phpqrcode/');
-		$this->load->library('qrlib');
-		
-		$svgCode = QRcode::svg('PHP QR Code :)');
-    
-    	echo $svgCode; 
-		// $this->load->helper('download');
+
+		$this->load->helper('download');
 
 		switch($var->form_type) {
 			case 'msa' :
 				$d['file_url'] = base_url() . "_assets/estate/msa-form.xlsx";
 				echo json_encode($d); exit;
 			break;
-			case 'qr' : echo 'qr';
+			case 'qr' :
+				$this->load->library('phpqrcode');
+				$status_url = $_SERVER['HTTP_REFERER'];
+
+        		$filename = $this->phpqrcode->getQrcodePng($status_url, 'status-url-qrcode' . md5($status_url) . '.png');
+				$d['file_url'] = $filename;
+				echo json_encode($d); exit;
 			break;
 			case 'receipt' : echo 'receipt';
 			break;
