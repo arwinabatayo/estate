@@ -109,7 +109,7 @@
 						<input type="text" id="email" name="email" class="-medium">
 					</div>
 				<label class="control-label">Enter characters you see</label>
-				<p><img src="<?php echo base_url() ?>_assets/estate/_captcha/default.png" alt="" id="captcha" class="captcha" />&nbsp; <a href="javascript:void(0)" id="refresh_code" style="font-size:11px;">Refresh Captcha</a></p>
+				<p><img src="<?php echo base_url() ?>_assets/estate/_captcha/default.png" alt="" id="ut_captcha" class="captcha" />&nbsp; <a href="javascript:void(0)" id="refresh_code" style="font-size:11px;">Refresh Captcha</a></p>
 					<div class="controls">
 						<input class="fleft" id="code_id" name="code_id" type="text" autocomplete="false" />&nbsp;<!-- <button id="btn_resend_vcode" class="btn btn-primary">RESET</button> -->
 						<button class="btn btn-primary">Submit</button>
@@ -147,7 +147,7 @@
 						<input type="text" id="email" name="email" class="-medium">
 					</div>
 				<label class="control-label">Enter characters you see</label>
-				<p><img src="<?php echo base_url() ?>_assets/estate/_captcha/default.png" alt="" id="captcha" class="captcha"/>&nbsp; <a href="javascript:void(0)" id="refresh_code" style="font-size:11px;">Refresh Captcha</a></p>
+				<p><img src="<?php echo base_url() ?>_assets/estate/_captcha/default.png" alt="" id="fr_captcha" class="captcha"/>&nbsp; <a href="javascript:void(0)" id="refresh_code" style="font-size:11px;">Refresh Captcha</a></p>
 					<div class="controls">
 						<input class="fleft" id="code_id" name="code_id" type="text" autocomplete="false" />&nbsp;<!-- <button id="btn_resend_vcode" class="btn btn-primary">RESET</button> -->
 						<button class="btn btn-primary">Submit</button>
