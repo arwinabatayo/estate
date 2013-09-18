@@ -202,7 +202,7 @@ class Order extends MY_Controller
 				$status_url = $_SERVER['HTTP_REFERER'];
 
         		$filename = $this->phpqrcode->getQrcodePng($status_url, 'status-url-qrcode' . md5($status_url) . '.png');
-				$d['file_url'] = $filename;
+				$d['img_url'] = $filename;
 				echo json_encode($d); exit;
 			break;
 			case 'receipt' : echo 'receipt';
