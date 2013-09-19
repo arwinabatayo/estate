@@ -198,8 +198,12 @@
 			$("#dialog_new_line").dialog("open");
 
 			$("#new-line-plan").click(function(){
-				window.location = "/estate/plan/getNewLine"
+				window.location = "/estate/plan?get_new_line=true"
 			});
+
+			$("#new-line-prepaid-kit").click(function(){
+				window.location = "/estate/payment"
+			})
 
 			
 		})
