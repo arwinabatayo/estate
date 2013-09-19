@@ -360,8 +360,6 @@
 		
 		<?php } else if($current_controller == 'plan' ){ ?>
 			
-
-
 			//ORDER TYPE
 		    $('#acc-order-type  button').click(function() { 
 	            //showPreloader();
@@ -681,6 +679,10 @@
 
 			}
 
+			$('a#get-prepaid-kit').click(function(){
+				// show bubble info where add to cart link is present
+				$('#tooltip-prepaid-kit').dialog("open");
+			});
 		
 		<?php } else if($current_controller == 'addons' ){ ?>
 			  
