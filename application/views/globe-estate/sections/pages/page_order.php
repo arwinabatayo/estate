@@ -130,9 +130,9 @@
 
 <div class="globe-dialog" id="dialog_print_forms" title="Print">
     <ul style="list-style: none;">
-    <li style="display: inline; margin-right: 35px;"><a href="javascript: void(0);" onClick="downloadForm('msa');">MSA Form</a></li>
-    <li style="display: inline; margin-right: 35px;"><a href="javascript: void(0);" onClick="downloadForm('qr');">QR Code</a></li>
-    <li style="display: inline;  margin-right: 35px;"><a href="javascript: void(0);" onClick="downloadForm('receipt');">Receipt</a></li>
+    <li style="display: inline; margin-right: 35px;"><button class="btn btn-primary" onClick="downloadForm('msa');">Print</button>&nbsp;MSA Form</li>
+    <li style="display: inline; margin-right: 35px;"><button class="btn btn-primary" onClick="downloadForm('qr');">Print</button>&nbsp;QR Code</li>
+    <li style="display: inline;  margin-right: 35px;"><button class="btn btn-primary" onClick="downloadForm('receipt');">Print</button>&nbsp;Receipt</li>
     </ul>
 </div>
 

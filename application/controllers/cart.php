@@ -175,7 +175,7 @@ class Cart extends CI_Controller {
 			 	
 			 	/* db */
 			 	if(count($cart_contents) == 0 && $item_exist == TRUE) {
-			 			
+			 		echo $this->cart_model->delete_cart($account_id, TRUE);	exit;
 			 		if( !$this->cart_model->delete_cart($account_id, TRUE) ) {
 			 			$out = array(
 			 					'status' => 'failed',
@@ -294,8 +294,11 @@ class Cart extends CI_Controller {
 			   	} else {
 					$out['status'] = 'failed';
 				}
+				
 				$out['total_remaining_pv'] = $this->cart_model->remaining_pv(false);
+			
 			} else {
+				
 				$out['status'] = 'coexist';
 				$out['product_name'] = $in_coexist['product_name'];
 				$out['rowid'] = $in_coexist['rowid'];

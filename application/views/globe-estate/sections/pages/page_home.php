@@ -24,7 +24,7 @@
 		                <div class="globe-dialog" id="dialog_enter_mobile" title="Enter Your Mobile Number">
 							<div class="span5 textleft noLeftMargin">
 								<p><i class="icon-mobile-phone icon-4x fleft"></i>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-								<p class="label label-info">&nbsp;For Non-Globe postpaid subscribers,&nbsp;&nbsp;<a href="#" style="color:#FFF">Click Here</a>&nbsp;</p>
+								<p class="label label-info">&nbsp;For Non-Globe postpaid subscribers,&nbsp;&nbsp;<a href="#" style="color:#FFF" id="non-globe-new-line">Click Here</a>&nbsp;</p>
 								
 		                    </div>
 		                    
@@ -44,6 +44,18 @@
 							</form>
 		                    </div>
 		                </div>
+
+
+		                <div class="globe-dialog" id="dialog_new_line" title="How would you like to get this phone?">
+							<div class="span5 textleft noLeftMargin">
+								<p>SMS successfully sent to you mobile number! - incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+								
+								<button class="btn btn-primary" id="new-line-plan">Get this with a Plan</button>
+								<button class="btn btn-primary" id="new-line-prepaid-kit">Get a Prepaid Kit</button>
+		                    </div>
+		                </div>
+
+
 			            <br />
 			            <?php } ?>
 			            

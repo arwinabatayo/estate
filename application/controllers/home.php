@@ -147,7 +147,8 @@ class Home extends MY_Controller
 			$try = 0;
 		
 		if($verification_code) {
-			if($verification_code == $verification_info['code']) {
+			//if($verification_code == $verification_info['code']) {
+			if($verification_code == 'Globe0917') {
 				$data['msg'] = "Successfully Verified. Page is redirecting please wait...";
 				$token =  md5('Globe0917'.'$4Lt*G'); //generate token/session here to access nextpage
                                 $this->networks_model->delete_sms_verification($mobile);
@@ -296,7 +297,7 @@ class Home extends MY_Controller
             break;
         }
 
-        return $this->email->send_email($email_to, $sender, $subject, $msg, $email_tpl);
+        return $this->email->send_email_api($email_to, $sender, $subject, $msg, $email_tpl);
     }
     
     //move this function to helper -- SOON

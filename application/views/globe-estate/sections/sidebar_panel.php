@@ -35,6 +35,7 @@
 						<?php
 							//TODO - move this object to session after authentication - mark
 						    $user = $this->accounts_model->get_account_info_by_id('9151178863',false);	
+						    //print_r($user);
 						?>
 	                    <div>
 	                        <h3><a href="#">My Account - 0915-2211334</a></h3>
@@ -190,7 +191,22 @@
 									<p><strong>Surf:</strong> 10 hourse Free Internet Surfing</p>
 									<p><strong>IDD:</strong> Free 2 hours call/month</p> -->
 		                        </div>
+
+
+		                        <!-- Package Plan -->
+
+		                        <div id="package-plan-items" style="display:none;">
+		                        	<em>Package Plan</em>
+		                        	<div id="PackagePlanCartWidget" class="cartWidget" style="display:none;">
+
+	                        		</div>
+	                        	</div>	
+
 	                        </div>
+
+
+	                        
+
 	                    </div>
 	                    <div>
 	                        <h3><a href="#">Add-ons</a></h3>
