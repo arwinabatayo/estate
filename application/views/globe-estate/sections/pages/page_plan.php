@@ -300,7 +300,17 @@
 	                        </div>
 	                    </div>
 
-	            </section> 
+	            </section> 		
 			</div>
+
+			<a href="javascript: void(0);" id="get-prepaid-kit" style="float: right; margin-top: 10px">Get a Prepaid Kit</a>
 			
-			
+			<div class="globe-dialog" id="tooltip-prepaid-kit">
+			    <div style="width: 400px; text-align: center;">
+			    	<h4>iPhone 5 /16GB</h4>
+			    	Lorem ipsum dolor sit amet, usu at utinam interpretaris. Ne sed legendos volutpat. Ius facer delenit ex. Te quo oratio elaboraret, usu omnesque similique et, eos et mutat erant dicam. Utroque consulatu his id, pericula conceptam mei no.
+					Error perpetua cum at, te pro graeco animal meliore. Ex autem dignissim pri. Voluptua singulis repudiandae no mei. Ipsum nonumes at per, eu vis vide animal.
+					<h4>Price: 36, 750.00</h4>
+					<a href="javascript: void(0);">Add to Cart</a>
+			    </div>
+			</div>
