@@ -157,7 +157,12 @@ class Cart_model extends CI_Model
     					$item_exist = TRUE;
     					unset($cart_contents[$k]);
     				}
-    			}
+    			} elseif ($type == "package_plan") { //jez added package plan
+                    if( $cart_contents[$k]['product_type'] == 'package_plan') {
+                        $item_exist = TRUE;
+                        unset($cart_contents[$k]);
+                    }
+                }
     
     		}
     	}

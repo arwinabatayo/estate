@@ -176,7 +176,6 @@ class Cart extends CI_Controller {
 			 	
 			 	/* db */
 			 	if(count($cart_contents) == 0 && $item_exist == TRUE) {
-			 		echo $this->cart_model->delete_cart($account_id, TRUE);	exit;
 			 		if( !$this->cart_model->delete_cart($account_id, TRUE) ) {
 			 			$out = array(
 			 					'status' => 'failed',
@@ -263,6 +262,21 @@ class Cart extends CI_Controller {
 // 			 	print_r($in_coexist);
 			 	$amount = number_format($qty * $amount,2);
 			 }
+
+
+			 //jez
+			 if($d->product_type == "package_plan"){
+			 	$plan_pv = $this->products_model->get_plan_pv($d->plan);
+				 $amount = number_format($this->products_model->get_gadget_cash_out($d->plan, $d->device),2);
+				 
+				 
+				 // remove existing plan
+				 $this->cart_model->remove_gadget_or_plan("package_plan");
+				 $out['plan_pv'] = $cart_input['plan_pv'] = $plan_pv;
+				 
+
+				 $this_pv_value = $plan_pv;
+			 }
 			  
 			$cart_input = array(
 				'id'              => $d->product_type.'_'.$d->product_id,
@@ -270,7 +284,7 @@ class Cart extends CI_Controller {
 				'combos_qty'	  => $comboqty, // robert
 				'price'           => $amount,
 				'this_pv_value'	  => intval($this_pv_value), // robert
-				'price_formatted' => 'Php '.number_format($amount,2),
+				'price_formatted' => 'Php '.$amount, //jez
 				'name'            => $title,
 				'product_id'      => $d->product_id,
 				'discount'        => $d->product_discount,
@@ -282,14 +296,16 @@ class Cart extends CI_Controller {
 			
 			/* cart */
 			if($in_coexist['coexist'] == TRUE) {
+
 				$out['rowid']  = $rowid = $this->cart->insert($cart_input);
 				$out['total']  = $this->cart_model->total(true);
 		       
 		       	$out = array_merge($cart_input,$out);
-	
+				//echo $rowid; exit;
 		       	/* db */       
 		       	if($rowid){
 					$this->_data->cartItem  = $info = $this->_parse_contents();
+					//echo "<pre>"; var_dump($this->_data->cartItem); exit;
 					$this->cart_model->insert_previous_info($account_id, $info); 
 			   	} else {
 					$out['status'] = 'failed';
