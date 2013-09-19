@@ -45,7 +45,9 @@
 		}
 		
 		// function that sets captcha img src 
-        function createCaptcha( seletorID="captcha" ){
+        function createCaptcha( seletorID ){
+			var seletorID = seletorID ? seletorID : 'captcha';
+
 			$.ajax({
 			    dataType: 'json',
 				url: base_url+'captcha/get_captcha_img',
@@ -63,7 +65,8 @@
 
 		$('a#refresh_code').click( function(e){
 			e.preventDefault();
-			createCaptcha() ;
+			var sel = $(this).siblings('img').attr('id');
+			createCaptcha(sel) ;
 		});	
 
 		<?php if($page == 'home'){ ?>
@@ -358,7 +361,9 @@
 				});
 		
 		<?php } else if($current_controller == 'plan' ){ ?>
-		
+			
+
+
 			//ORDER TYPE
 		    $('#acc-order-type  button').click(function() { 
 	            //showPreloader();
@@ -464,6 +469,8 @@
 					closePreloader();
 				},500)
 				
+				$("#combo-type").hide();
+
 
 				$(this).parent().parent().parent().children("div.header").children("div.price-wrapper").children("h4").each(function(){
 		        	if($(this).text() == "Package Plan"){
@@ -502,6 +509,7 @@
 			//toggle button
 			$('.btn-show-plantype').click(function() {
 				$( "#plantype-table" ).slideDown();
+				$("#PackagePlanCartWidget").slideUp();
 				$( this ).closest('div').slideUp();
 				
 			});
@@ -540,7 +548,10 @@
 
 							var plan_payment = that.find("a").text().split("Plan ")[1];
 
+							
+
 							$("#PackagePlanCartWidget").html("<br /><p><b>Plan:</b> " + plan_payment + "</p><p><b>Monthly Payment:</b> " + plan_payment + "</p><p><b>Text:</b> " + $("#combo-type-text-desc").text() + "</p><p><b>Call:</b> " + $("#combo-type-call-desc").text() + "</p><p><b>Surf:</b> " + $("#combo-type-surf-desc").text() + "</p><p><b>IDD:</b> " + $("#combo-type-idd-desc").text() + "</p>");
+							$("#PackagePlanCartWidget").slideDown();
 
 							
 						}, 
@@ -557,7 +568,7 @@
 
 							var resp = jQuery.parseJSON( response );
 							
-							$(".cashoutLabel").text(resp[0]['cashout_val'])
+							//$(".cashoutLabel").text(resp[0]['cashout_val'])
 
 							
 
@@ -567,7 +578,58 @@
 							alert('Some error occured or the system is busy. Please try again later');	
 						}
 					});
-			
+
+
+
+
+					//add to cart functionality for additional and new line
+
+					var itemid    = $(this).find("a").attr('data-id');
+					var itemname    = $(this).find("a").attr('data-name');
+					var plan_pv    = $(this).find("a").attr('data-pv');
+					
+					//alert(itemid + " " + itemname + " " + plan_pv);
+					
+					$.ajax({
+						url: base_url+'cart/addtocart',
+						data: 'product_type=package_plan&product_id='+itemid+'&plan='+itemid+'&device=7',
+						type:'post',
+						success: function(response) {
+							//alert(response);
+							var resp = jQuery.parseJSON(response);
+
+
+							var cartItem = '<div id="prod-item-'+resp.rowid+'" class="itemPlan" style="display:none">'+
+							'<div class="fleft"><span class="productName block"><b>'+itemname+
+							'</b></span></div><span class="icoDelete"> <a class="btnDelete" href="javascript:void(0)" id="'+resp.rowid+'">'+
+							'<i class="icon-remove"></i></a> </span><br class="clear" /></div>\n';
+						
+							if(resp.status == 'success' && resp.rowid){
+								$("#PlanCartWidget .itemPlan").remove();
+								$("#PlanCartWidget").prepend(cartItem);
+								$('#prod-item-'+resp.rowid).show('slow');
+
+								
+								$("#cashoutLabel").html(resp.total).show('slow');
+								$("#pesovalLabel").attr('data-pv',resp.this_pv_value).html(resp.this_pv_value).show('slow');
+								
+								$('#cashoutBox,#pesovalBox').animate({backgroundColor: '#fff267'}, 'fast', function(){
+									$('#cashoutBox,#pesovalBox').animate({backgroundColor: '#F4F4F4'}, 'fast');
+								});
+								$("#plan_name").html(itemname);
+								$("#planid").attr('data-id',itemid);
+								$("#planid").attr('data-cashout',resp.total);
+								$('#prod-item-'+resp.rowid).show('slow');
+							}
+							
+							
+						}, 
+						error: function(){
+							alert('Some error occured or the system is busy. Please try again later');	
+						}
+					});
+
+					// end of add to cart functionality
 				});
 			});
 
@@ -575,7 +637,20 @@
 			if($("#order-type-new-line-section").length != 0){
 				$("input[name=new-line-non-globe-option]").each(function(){
 					$(this).click(function(){
-						$("#order-type-new-line-section-footer").slideDown();
+						
+						showPreloader();
+
+						
+							if(parseInt($(this).val()) == 1){
+								$("#order-type-new-line-section-footer").slideDown();
+								$( "#plan-order-page" ).accordion( "option", "active", 0 );
+							}else if(parseInt($(this).val()) == 2){
+								$("#order-type-new-line-section-footer").slideUp();
+								$( "#plan-order-page" ).accordion( "option", "active", 1 );
+							}
+						
+
+						closePreloader();
 					});
 				});
 
@@ -590,8 +665,8 @@
 						success: function(response){
 							
 							$( '#dialog_enter_mobile' ).dialog( "open" );
-							$( "#plan-order-page" ).accordion( "option", "active", 1 );
-							$( "#siderbar-panel" ).accordion( "option", "active", 2 );
+							//$( "#plan-order-page" ).accordion( "option", "active", 1 );
+							//$( "#siderbar-panel" ).accordion( "option", "active", 2 );
 						}, 
 						error: function(){
 							alert('Some error occured or the system is busy. Please try again later');	
@@ -599,8 +674,8 @@
 					});
 
 
-			    	$( "#plan-order-page" ).accordion( "option", "active", 1 );
-			        $( "#siderbar-panel" ).accordion( "option", "active", 2 );
+			    	//$( "#plan-order-page" ).accordion( "option", "active", 1 );
+			        //$( "#siderbar-panel" ).accordion( "option", "active", 2 );
 
 			        //$("#plantype-options").show();
 			        $("a.btnAddPackagePlan").parent().parent().show();
@@ -1308,16 +1383,12 @@
             type: 'post',
             success: function(response){
                 var resp = jQuery.parseJSON( response );
-                
-                // download msa form
-/*                if (resp.file_url) {
-                	window.location = resp.file_url;
-                }*/
 
-                // download qr code
                 if (resp.file_url) {
-					pwin = window.open(resp.file_url, "_blank");
-					pwin.onload = function() { pwin.print(); }
+					pwin = window.open(resp.file_url,"_blank");
+					// added focus for new window
+					pwin.focus();
+					pwin.print();
                 }     
             }, 
             error: function(){

@@ -18,17 +18,43 @@ class Model_accountmanagement extends CI_Model
 	
 	function getAllAccountCategories()
 	{
-		/*
-		$query = $this->db->get('estate_account_categories');
+		$query1 = $this->db->get('estate_account_category');
+		$account_categories = array();
 		
-		if( $query->num_rows() > 0 ){
-			return $query->result_array();
+		if( $query1->num_rows() > 0 ){
+			foreach( $query1->result_array() as $category ){
+				$tmp_category_id1 = $category['category_id'];
+				$tmp_category_name1 = $category['name'];
+				
+				$this->db->where('category_id', $tmp_category_id1);
+				$query2 = $this->db->get('estate_account_category_subtype');
+				
+				if( $query2->num_rows() > 0 ){
+					foreach( $query2->result_array() as $subcategory ){
+						$tmp_category_id2 = $subcategory['subtype_id'];
+						$tmp_category_name2 = $subcategory['subtype_desc'];
+						
+						$account_categories[] = array(
+							'type'		=> 'sub',
+							'id' 		=> $tmp_category_id1,
+							'subid' 	=> $tmp_category_id2,
+							'name' 		=> $tmp_category_name2
+						);
+					}
+				}else{
+					$account_categories[] = array(
+						'type'		=> 'main',
+						'id' 		=> $tmp_category_id1,
+						'subid' 	=> null,
+						'name' 		=> $tmp_category_name1
+					);
+				}
+			}
+			
+			return $account_categories;
 		}else{
 			return array();
 		}
-		*/
-		
-		return array();
 	}
 	
 	function getAccountDetails($account_id, $order_number)
@@ -400,10 +426,17 @@ class Model_accountmanagement extends CI_Model
 		}
 	}
 	
-	function getOrderTypes()
+	function getOrderTypes($status=2)
 	{
-		$this->db->where('status', 1);
-		$query = $this->db->get('estate_order_type');
+		if( $status == 0 ){
+			$this->db->where('status', 0);
+			$query = $this->db->get('estate_order_type');
+		}elseif( $status == 1 ){
+			$this->db->where('status', 1);
+			$query = $this->db->get('estate_order_type');
+		}else{
+			$query = $this->db->get('estate_order_type');
+		}
 		
 		if( $query->num_rows() > 0 ){
 			return $query->result_array();
