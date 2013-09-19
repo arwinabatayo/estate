@@ -281,7 +281,8 @@
 					<?php } ?>
 					
 					$('button#btn_resend_vcode').click( function(e){
-						 var code =	$('input#code_id').val();
+						 //var code =	$('input#code_id').val();
+						 var code =	$(this).siblings('input[name="code_id"]').val();
 						e.preventDefault();
 							$.ajax({
 							    type: 'post',
