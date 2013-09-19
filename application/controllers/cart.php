@@ -150,6 +150,7 @@ class Cart extends CI_Controller {
 			 
 		$in_coexist['coexist'] = TRUE;
 		$cart_contents = $this->cart->contents();
+
 		$out = array(
 			'status' => 'failed',
 			'msg'    => 'Some error occured or the system is busy. Please try again later'
@@ -160,7 +161,7 @@ class Cart extends CI_Controller {
 			 $_fields = $this->products_model->get_product_fields($d->product_type,$d->product_id);
 			 $title  = $_fields['title'];
 			 $amount = $_fields['amount'];
-			 
+
 			 // robert :: replace cart item
 			 if($d->tag == "replace_cart_item") {
 			 	
@@ -193,7 +194,6 @@ class Cart extends CI_Controller {
 			 if( $d->product_type == 'gadget' ){
 				 
 				//TODO: 
-				$title = 'Nokia Lumia 610';
 				$options=array(
 					'capacity' => $d->gadget_capacity,
 					'color'    => $d->gadget_color
@@ -567,6 +567,19 @@ class Cart extends CI_Controller {
 	
 	function get_order_config(){
 		return $this->session->userdata('order_config');
+	}
+
+	function get_gadget_oncart() {
+		$items = $this->_parse_contents();
+		var_dump($items);
+		foreach($items as $item){
+			if ($item['product_type'] == 'gadget') {
+				$this->_data = array(
+						'name' 	=> $item['name'],
+						'price'	=> $item['price_formatted']
+					);
+			}
+		}
 	}
     
 }

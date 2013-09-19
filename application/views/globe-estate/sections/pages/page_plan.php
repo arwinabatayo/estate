@@ -303,9 +303,8 @@
 	            </section> 		
 			</div>
 
-			<a href="javascript: void(0);" id="get-prepaid-kit" style="float: right; margin-top: 10px">Get a Prepaid Kit</a>
-			
-			<?php // change to tooltip ?>
+			<a href="javascript: void(0);" id="get-prepaid-kit" style="float: right; margin-top: 10px">Get a Prepaid Kit</a>		
+			<?php // TODO : change to tooltip and show correct present gadget added to cart ?>
 			<div class="globe-dialog" id="tooltip-prepaid-kit">
 			    <div style="width: 400px; text-align: center;">
 			    	<h4>iPhone 5 /16GB</h4>
