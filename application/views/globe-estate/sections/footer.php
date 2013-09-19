@@ -47,15 +47,11 @@
 		// function that sets captcha img src 
         function createCaptcha( seletorID ){
 			var seletorID = seletorID ? seletorID : 'captcha';
-
 			$.ajax({
 			    dataType: 'json',
 				url: base_url+'captcha/get_captcha_img',
 			    success: function(response){
-//var resp = jQuery.parseJSON( response );
-//alert(response.src);
-					$("#"+seletorID).attr('src',response.src);
-					
+					$("#"+seletorID).attr('src',response.src);	
 				},
 				error: function(xhr, status, error){
 						alert(xhr.responseText);
@@ -297,7 +293,9 @@
 					<?php } ?>
 					
 					$('button#btn_resend_vcode').click( function(e){
-						 var code =	$('input#code_id').val();
+						 //var code =	$('input#code_id').val();
+						var code =	$(this).siblings('input[name="code_id"]').val();
+
 						e.preventDefault();
 							$.ajax({
 							    type: 'post',
