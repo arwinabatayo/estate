@@ -101,6 +101,14 @@ class Products_model extends CI_Model
 				
 				$out['title']  = $row->name;
 				$out['amount'] = $row->amount;
+			}else if($type == 'prepaid_kit') {
+				$this->db->where('gadget_id', $id);
+
+				$query = $this->db->get("estate_gadgets");
+
+				$row = $query->result();
+
+				
 			}
 			// combo and booster adding to cart
 			return $out;
@@ -245,6 +253,7 @@ class Products_model extends CI_Model
 		// From here get the corbid2 and set not acceptable
 		return $row;
 	}
+
 	
 	
 	

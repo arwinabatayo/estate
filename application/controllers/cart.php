@@ -138,6 +138,7 @@ class Cart extends CI_Controller {
 		$this->load->model('estate/products_model');
 		
 		$d = (object) $this->input->post();
+
 		$account_id = 1; //TODO get subs id
 		$options = array();
 		$title  = '';
@@ -156,6 +157,12 @@ class Cart extends CI_Controller {
 			'msg'    => 'Some error occured or the system is busy. Please try again later'
 		);
 		
+
+		// for prepaid kit - jez
+		$gadget_info = $this->products_model->get_gadget_by_id($d->device_id);
+
+		
+
 		if( $d->product_id ) {
 			
 			 $_fields = $this->products_model->get_product_fields($d->product_type,$d->product_id);
