@@ -17,18 +17,6 @@
 		
 			<form id="form_add_accessory" class="g_form">
 				
-				<!-- mobile number -->
-				<div class="item">
-					<div class="label">Mobile number</div>
-					<div class="input">
-						<input 	class="g_inputtext" 
-								type="text" 
-								name="mobile_number" 
-								maxlength="200" />
-					</div>
-					<div class="h_clearboth"></div>
-				</div>
-				
 				<!-- account number -->
 				<div class="item">
 					<div class="label">Account number</div>
@@ -42,12 +30,24 @@
 					<div class="h_clearboth"></div>
 				</div>
 				
+				<!-- mobile number -->
+				<div class="item">
+					<div class="label">Mobile number</div>
+					<div class="input">
+						<input 	class="g_inputtext" 
+								type="text" 
+								name="mobile_number" 
+								maxlength="200" />
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
 				<!-- application type -->
 				<div class="item">
 					<div class="label">Application type</div>
 					<div class="input">
 						<select class="g_select" name="order_type" data-required="1">
-							<option value="0" selected="selected">Select order type</option>
+							<option value="0" selected="selected">Select application type</option>
 							<?php foreach( $order_types as $order_type ){ ?>
 								<option value="<?php echo $order_type['id']; ?>"><?php echo $order_type['title']; ?></option>
 							<?php } ?>
@@ -102,9 +102,13 @@
 					<div class="input">
 						<select class="g_select" name="account_category">
 							<option value="0" selected="selected">Select account category</option>
-							<?php if( $account_categories && count($account_category) > 0 ){ ?>
+							<?php if( $account_categories && count($account_categories) > 0 ){ ?>
 								<?php foreach( $account_categories as $account_category ){ ?>
-									<option value="<?php echo $account_category['f_account_category_id']; ?>"><?php echo $account_category['f_account_category_title']; ?></option>
+									<?php if( $account_category['type'] == 'main' ){ ?>
+										<option value="<?php echo $account_category['id']; ?>"><?php echo $account_category['name']; ?></option>
+									<?php }else{ ?>
+										<option value="<?php echo $account_category['id'] . '_' . $account_category['subid']; ?>"><?php echo $account_category['name']; ?></option>
+									<?php } ?>
 								<?php } ?>
 							<?php } ?>
 						</select>
@@ -169,17 +173,13 @@
 		<table class="g_table zebra">
 		
 			<tr>
-				<th>Account Id</th>
-				<th>Order Number</th>
-				<th>Name</th>
-				<th>Email</th>
-				<th>Mobile Number</th>
+				<th>Order Ref #</th>
+				<th>Fullname</th>
+				<th>Account Category</th>
 				<th>Lockin Duration</th>
 				<th>Outstanding Balance</th>
 				<th>Due Date</th>
 				<th>Credit Limit</th>
-				<th>Status</th>
-				<th>Order Status</th>
 			</tr>
 			
 			<?php foreach ($accounts as $accounts => $a) { ?>
