@@ -828,6 +828,10 @@
                     $('#dialog_print_forms').dialog( "open" );
                 });
 
+                $('a#delivery-tracker').on('click', function(){
+					$('#dialog_delivery_tracker').dialog( "open" );
+                });
+
         <?php } ?>
 
 				$('form.addtoCart img').click(function(){
