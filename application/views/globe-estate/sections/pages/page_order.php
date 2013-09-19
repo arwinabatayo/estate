@@ -59,7 +59,7 @@
 		<li style="display: inline; margin-right: 25px;"><span style="font-weight: bold;">Device : </span><?php echo $gadget_item['name']; ?></li>
 		<li style="display: inline; margin-right: 25px;"><span style="font-weight: bold;">Plan : </span><?php echo $plan_item['name']; ?></li>
 		<li style="display: inline; margin-right: 25px;"><span style="font-weight: bold;">Forms : </span><a href="#" id="printable-forms">Forms</a></li>
-		<li style="display: inline; margin-right: 25px;"><span style="font-weight: bold;">Delivery tracker : </span><?php echo $order['delivery_type']; ?></li>
+		<li style="display: inline; margin-right: 25px;"><span style="font-weight: bold;">Delivery tracker : </span><a href="javascript: void(0);" id="delivery-tracker">.</a><br/><span>Est. Delivery - <?php echo $delivery_info['est_delivery_date']; ?></span></li>
 	</ul>
 
     <section class="jq-accordion" id="plan-order-page">
@@ -136,3 +136,35 @@
     </ul>
 </div>
 
+<div class="globe-dialog" id="dialog_delivery_tracker" title="Tracking Number : <?php echo $order['tracking_id']; ?>">
+    <h4><?php echo $delivery_info['short_summary']; ?></h4>
+    <div style="width: 500px;" class="textcenter">    
+        <div id="desktop-breadcrumbs" class="row textcenter">
+            <div class="steps">
+                <a class="current" id="bc_step1">Initiated</a>
+
+                <a class="current" id="bc_step2">Picked-up</a>
+
+                <a class="current" id="bc_step3">In-transit</a>
+
+                <a class="" id="bc_step4">Delivered</a>         
+            </div>
+            <br>        
+            <br>
+            <h5>On globe vehicle for delivery </h5>
+            <h3><?php echo $delivery_info['delivery_dest']; ?></h3>
+                    <div style="width: 100%; margin-left: 10px;">
+            <div class="left" style="float: left; width: 50%;">
+                Shipment Dates <br/><br/>
+                Ship Date : <?php echo date("F j, Y", strtotime($delivery_info['shipment_date'])); ?> <br/>
+                Estimated Delivery : <?php echo date("F j, Y", strtotime($delivery_info['est_delivery_date']));   ?>
+            </div>
+            <div class="right" style="float: right; width: 50%">
+                Destination <br/><br/>
+                <?php echo $delivery_info['shipment_dest']; ?>
+            </div>
+
+        </div>
+        </div>
+    </div>
+</div>

@@ -47,21 +47,17 @@
 		// function that sets captcha img src 
         function createCaptcha( seletorID ){
 			var seletorID = seletorID ? seletorID : 'captcha';
-
 			$.ajax({
 			    dataType: 'json',
 				url: base_url+'captcha/get_captcha_img',
 			    success: function(response){
-//var resp = jQuery.parseJSON( response );
-//alert(response.src);
-					$("#"+seletorID).attr('src',response.src);
-					
+					$("#"+seletorID).attr('src',response.src);	
 				},
 				error: function(xhr, status, error){
 						alert(xhr.responseText);
 				}	
 			});
-		 }*/
+		 }
 
 		$('a#refresh_code').click( function(e){
 			e.preventDefault();
@@ -297,7 +293,9 @@
 					<?php } ?>
 					
 					$('button#btn_resend_vcode').click( function(e){
-						 var code =	$('input#code_id').val();
+						 //var code =	$('input#code_id').val();
+						var code =	$(this).siblings('input[name="code_id"]').val();
+
 						e.preventDefault();
 							$.ajax({
 							    type: 'post',
@@ -362,8 +360,6 @@
 		
 		<?php } else if($current_controller == 'plan' ){ ?>
 			
-
-
 			//ORDER TYPE
 		    $('#acc-order-type  button').click(function() { 
 	            //showPreloader();
@@ -560,7 +556,7 @@
 						}
 					});
 
-					$.ajax({
+					/*$.ajax({
 						url: base_url+'plan/getpackageplangadgetcashout',
 						data: {'plan_id' : parseInt($(this).children("div.my-plan-id").text()) },
 						type:'post',
@@ -577,7 +573,7 @@
 						error: function(){
 							alert('Some error occured or the system is busy. Please try again later');	
 						}
-					});
+					});*/
 
 
 
@@ -592,7 +588,7 @@
 					
 					$.ajax({
 						url: base_url+'cart/addtocart',
-						data: 'product_type=package_plan&product_id='+itemid+'&plan='+itemid+'&device=7',
+						data: 'product_type=package_plan&product_id='+itemid+'&plan='+itemid+'&device=1',
 						type:'post',
 						success: function(response) {
 							//alert(response);
@@ -683,6 +679,10 @@
 
 			}
 
+			$('a#get-prepaid-kit').click(function(){
+				// show bubble info where add to cart link is present
+				$('#tooltip-prepaid-kit').dialog("open");
+			});
 		
 		<?php } else if($current_controller == 'addons' ){ ?>
 			  
@@ -724,10 +724,9 @@
 					}
 				});
 		<?php } else if($current_controller == 'payment' ){ ?>
-					//$( "#personal-info-page" ).accordion({active: 1});
 					
 				    $('#personal-info-page  button.goNext').click(function() {
-						var btnIndex = $('#personal-info-page  button').index(this);
+						var btnIndex = $('#personal-info-page  button.goNext').index(this);
 						$( "#personal-info-page" ).accordion({active: btnIndex+1});
 					});		
 					
@@ -826,6 +825,10 @@
                 $('a#printable-forms').on('click', function(){
                     // open printable forms dialog
                     $('#dialog_print_forms').dialog( "open" );
+                });
+
+                $('a#delivery-tracker').on('click', function(){
+					$('#dialog_delivery_tracker').dialog( "open" );
                 });
 
         <?php } ?>
@@ -1383,19 +1386,12 @@
             type: 'post',
             success: function(response){
                 var resp = jQuery.parseJSON( response );
-                
-                // download msa form
-                if (resp.file_url) {
-                	window.location = resp.file_url;
-                }
 
-                // download qr code
-                if (resp.img_url) {
-					pwin = window.open(resp.img_url,"_blank");
+                if (resp.file_url) {
+					pwin = window.open(resp.file_url,"_blank");
 					// added focus for new window
 					pwin.focus();
 					pwin.print();
-					//pwin.onload = function () {window.print();}
                 }     
             }, 
             error: function(){

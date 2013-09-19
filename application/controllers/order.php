@@ -36,7 +36,8 @@ class Order extends MY_Controller
 		$refnum = $this->input->get('refnum', TRUE);
 
 		// send order detals to view
-		$this->_data->order = $this->order_model->get_order_by_refnum($refnum);
+		$order = $this->order_model->get_order_by_refnum($refnum);
+		$this->_data->order = $order;
 
 		// send order item details to view
 		$this->_data->order_items = $this->orderitem_model->get_orderitems_by_orderid($refnum);
@@ -51,6 +52,8 @@ class Order extends MY_Controller
 		//TODO - move to session after authentication
 
 		$this->_data->account = $this->accounts_model->get_account_info_by_id('09173858958', false);
+
+		$this->_data->delivery_info = $this->getdeliveryinfo($order['tracking_id']);
 
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
@@ -186,7 +189,7 @@ class Order extends MY_Controller
 	
 	}
 
-	function download_form()
+	private function download_form()
 	{
 		$var = (object) $this->input->post();
 
@@ -194,20 +197,40 @@ class Order extends MY_Controller
 
 		switch($var->form_type) {
 			case 'msa' :
-				$d['file_url'] = base_url() . "_assets/estate/msa-form.xlsx";
-				echo json_encode($d); exit;
+				$d['file_url'] = base_url() . "_assets/estate/msa-form.pdf";
 			break;
 			case 'qr' :
 				$this->load->library('phpqrcode');
 				$status_url = $_SERVER['HTTP_REFERER'];
 
         		$filename = $this->phpqrcode->getQrcodePng($status_url, 'status-url-qrcode' . md5($status_url) . '.png');
-				$d['img_url'] = $filename;
-				echo json_encode($d); exit;
+				$d['file_url'] = $filename;
 			break;
-			case 'receipt' : echo 'receipt';
+			case 'receipt' : echo 'receipt'; // TODO : integrate the receipt to be done by sir mark
 			break;
 		}
+
+		echo json_encode($d); exit;
+	}
+
+	private function getdeliveryinfo($tracking_id)
+	{
+		// TODO use track id to get delivery info
+		$_shp_date = "09/18/2013";
+		$_est_delivery_date = "09/20/2013";
+
+		$data = array(
+			'tracking_id'		=> $tracking_id,
+			'short_summary'		=> 'On Schedule',
+			'delivery_status_id'=> 'In-transit',
+			'delivery_dest'		=> 'Quezon City, Metro Manila',
+			'shipment_date'		=> $_shp_date,
+			'est_delivery_date'	=> $_est_delivery_date,
+			'shipment_dest'		=> 'San Jose Village, Paseo de Sta. Rosa',
+			'status'			=> 'success'
+		);
+
+		return $data;
 	}
 }
 ?>
