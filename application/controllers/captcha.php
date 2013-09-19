@@ -48,6 +48,11 @@ class Captcha extends CI_Controller {
                         $verification_code = random_string('alnum', 6);
                         $message = "Please use this code ".$verification_code." to verify your account.";
                         $sms_status = $this->api_globe->api_send_sms($mobile, $message, "Project Esate");
+						
+						/* Temporary Code For SAT and UAT Purposes */
+						$email = $this->session->userdata('current_subscriber_email');
+						$this->load->library('GlobeWebService','','api_globe');
+						$email_status = $this->api_globe->SendEmail($email, "Project Estate SMS Verification Code", $verification_code);
 
                         if($sms_status == TRUE) {
                             $this->load->model('estate/networks_model');
