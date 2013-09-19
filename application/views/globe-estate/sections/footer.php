@@ -556,7 +556,7 @@
 						}
 					});
 
-					$.ajax({
+					/*$.ajax({
 						url: base_url+'plan/getpackageplangadgetcashout',
 						data: {'plan_id' : parseInt($(this).children("div.my-plan-id").text()) },
 						type:'post',
@@ -573,7 +573,7 @@
 						error: function(){
 							alert('Some error occured or the system is busy. Please try again later');	
 						}
-					});
+					});*/
 
 
 
@@ -588,7 +588,7 @@
 					
 					$.ajax({
 						url: base_url+'cart/addtocart',
-						data: 'product_type=package_plan&product_id='+itemid+'&plan='+itemid+'&device=7',
+						data: 'product_type=package_plan&product_id='+itemid+'&plan='+itemid+'&device=1',
 						type:'post',
 						success: function(response) {
 							//alert(response);

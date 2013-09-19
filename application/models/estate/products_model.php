@@ -69,7 +69,7 @@ class Products_model extends CI_Model
 				$out['title']  = $row->title;
 				$out['amount'] = $row->amount;
 			
-			}else if( $type == 'plan' ){
+			}else if( $type == 'plan' || $type == 'package_plan'){ //added package  plan
 				
 				$this->db->where('id', $id);
 				$this->db->where('is_active', '1');

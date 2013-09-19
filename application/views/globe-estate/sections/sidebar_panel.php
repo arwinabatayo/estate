@@ -3,7 +3,7 @@
 	//hassle to paxencia na, need to separate prod type into basket (accordion)
 		
 		//TODO - add to table
-		$cartProdFiltered = array('accessories'=>array(),'addon'=>array(),'plan'=>array(), 'combos'=>array(), 'boosters'=>array()); //store it on each key(prod type)
+		$cartProdFiltered = array('accessories'=>array(),'addon'=>array(),'plan'=>array(), 'combos'=>array(), 'boosters'=>array(), 'packageplan'=>array()); //store it on each key(prod type)
 	
 		$cartItems = $this->cart->contents();
 
@@ -195,7 +195,7 @@
 
 		                        <!-- Package Plan -->
 
-		                        <div id="package-plan-items" style="display:none;">
+		                        <div id="package-plan-items">
 		                        	<em>Package Plan</em>
 		                        	<div id="PackagePlanCartWidget" class="cartWidget" style="display:none;">
 
