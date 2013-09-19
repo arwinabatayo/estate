@@ -39,7 +39,19 @@
 							   <p class="textright"><button class="btn-large ui-button-success goNext" >CONTINUE</button></p>
 	                        </div>
 	                    </div>
+	                    
+	                    <div>
+	                        <h3><a href="#">Confirm Your Order</a></h3>
+	                       
+							<div>
+								<?php include('partials/payment_order_confirm.php') ?>
+								
+								<br class="clear">
+								<br />	
 
+	                        </div>
+	                    </div>
+	                    
 	                    <div>
 	                        <h3><a href="#">Pay Your Order</a></h3>
 	                        <div>

@@ -724,10 +724,9 @@
 					}
 				});
 		<?php } else if($current_controller == 'payment' ){ ?>
-					//$( "#personal-info-page" ).accordion({active: 1});
 					
 				    $('#personal-info-page  button.goNext').click(function() {
-						var btnIndex = $('#personal-info-page  button').index(this);
+						var btnIndex = $('#personal-info-page  button.goNext').index(this);
 						$( "#personal-info-page" ).accordion({active: btnIndex+1});
 					});		
 					

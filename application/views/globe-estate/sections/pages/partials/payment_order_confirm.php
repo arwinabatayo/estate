@@ -28,10 +28,7 @@
 							  <span class="fleft"><?php echo $item['name'] ?></span>
 							  <span class="icoDelete fright"> <a href="javascript:void(0)" class="btnDelete" id="<?php echo $item['rowid'] ?>" rel="<?php echo $item['name'] ?>"><i class="icon-remove"></i></a>&nbsp;</span>
 						  </td>
-			              <td align="center" class="textcenter">
-							  <!--<input name="qty" type="text" value="1" style="width:25px">-->
-							  <?php echo $item['qty'] ?>
-			              </td>
+			              <td align="center" class="textcenter"><?php echo $item['qty'] ?></td>
 			              
 			              <td><?php echo $item['price_formatted'] ?></td>
 			              <td> <?php echo isset($item['discount']) ? $item['discount'] : '' ?> </td>
@@ -56,13 +53,18 @@
 	            <tr>
 	              <td colspan="4"></td>
 	              <td><strong>Total</strong></td>
-	              <td><span class="cashoutLabel"><?php echo $this->cart_model->total(true) ?></span></td>
+	              <td><span class="cashoutLabel"><?php echo $this->cart_model->total(true) ?></span>
+	              </td>
 	            </tr>
 		</table>
-		<?php } else { ?>
-		
-		<p>Your shopping cart is empty.</p>
-		
 		<?php } ?>
+		
+		<hr />
+		<br />
+		<div class="textcenter">
+			<p><input type="checkbox" value="1" /> <a href="#">I Agree to the Terms &amp; Conditions</a></p>
+			<button class="btn-large ui-button-success goNext">CONFIRM ORDER</button>
+		</div>
+									    
 	</div>
 	
