@@ -194,20 +194,20 @@ class Order extends MY_Controller
 
 		switch($var->form_type) {
 			case 'msa' :
-				$d['file_url'] = base_url() . "_assets/estate/msa-form.xlsx";
-				echo json_encode($d); exit;
+				$d['file_url'] = base_url() . "_assets/estate/msa-form.pdf";
 			break;
 			case 'qr' :
 				$this->load->library('phpqrcode');
 				$status_url = $_SERVER['HTTP_REFERER'];
 
         		$filename = $this->phpqrcode->getQrcodePng($status_url, 'status-url-qrcode' . md5($status_url) . '.png');
-				$d['img_url'] = $filename;
-				echo json_encode($d); exit;
+				$d['file_url'] = $filename;
 			break;
-			case 'receipt' : echo 'receipt';
+			case 'receipt' : echo 'receipt'; // TODO : integrate the receipt to be done by sir mark
 			break;
 		}
+
+		echo json_encode($d); exit;
 	}
 }
 ?>

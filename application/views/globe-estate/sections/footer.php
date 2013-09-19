@@ -1310,14 +1310,14 @@
                 var resp = jQuery.parseJSON( response );
                 
                 // download msa form
-                if (resp.file_url) {
+/*                if (resp.file_url) {
                 	window.location = resp.file_url;
-                }
+                }*/
 
                 // download qr code
-                if (resp.img_url) {
-					pwin = window.open(resp.img_url,"_blank");
-					pwin.onload = function () {window.print();}
+                if (resp.file_url) {
+					pwin = window.open(resp.file_url, "_blank");
+					pwin.onload = function() { pwin.print(); }
                 }     
             }, 
             error: function(){
