@@ -15,7 +15,7 @@
 	<table class="g_table">
 		<tr><td class="g_widget">
 		
-			<form id="form_add_accessory" class="g_form">
+			<form id="form_filter" class="g_form">
 				
 				<!-- account number -->
 				<div class="item">
@@ -24,6 +24,7 @@
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="account_number" 
+								value="<?php echo $this->input->post('account_number'); ?>" 
 								data-is-whole-number="1" 
 								maxlength="20" />
 					</div>
@@ -37,6 +38,7 @@
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="mobile_number" 
+								value="<?php echo $this->input->post('mobile_number'); ?>" 
 								maxlength="200" />
 					</div>
 					<div class="h_clearboth"></div>
@@ -47,9 +49,13 @@
 					<div class="label">Application type</div>
 					<div class="input">
 						<select class="g_select" name="order_type" data-required="1">
-							<option value="0" selected="selected">Select application type</option>
+							<option value="0">Select application type</option>
 							<?php foreach( $order_types as $order_type ){ ?>
-								<option value="<?php echo $order_type['id']; ?>"><?php echo $order_type['title']; ?></option>
+								<?php if( $order_type['id'] == $this->input->post('order_type') ){ ?>
+									<option value="<?php echo $order_type['id']; ?>" selected="selected"><?php echo $order_type['title']; ?></option>
+								<?php }else{ ?>
+									<option value="<?php echo $order_type['id']; ?>"><?php echo $order_type['title']; ?></option>
+								<?php } ?>
 							<?php } ?>
 						</select>
 					</div>
@@ -57,10 +63,11 @@
 				</div>
 				
 				<!-- plan -->
+				<!--
 				<div class="item">
 					<div class="label">Plan</div>
 					<div class="input">
-						<select class="g_select" name="plan">
+						<select class="g_select" name="current_plan">
 							<option value="0" selected="selected">Select plan</option>
 							<?php if( $plans && count($plans) > 0 ){ ?>
 								<?php foreach( $plans as $plan ){ ?>
@@ -71,6 +78,7 @@
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
+				-->
 				
 				<!-- lastname -->
 				<div class="item">
@@ -79,6 +87,7 @@
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="lastname" 
+								value="<?php echo $this->input->post('lastname'); ?>" 
 								maxlength="200" />
 					</div>
 					<div class="h_clearboth"></div>
@@ -91,6 +100,7 @@
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="firstname" 
+								value="<?php echo $this->input->post('firstname'); ?>" 
 								maxlength="200" />
 					</div>
 					<div class="h_clearboth"></div>
@@ -101,13 +111,21 @@
 					<div class="label">Account category</div>
 					<div class="input">
 						<select class="g_select" name="account_category">
-							<option value="0" selected="selected">Select account category</option>
+							<option value="0">Select account category</option>
 							<?php if( $account_categories && count($account_categories) > 0 ){ ?>
 								<?php foreach( $account_categories as $account_category ){ ?>
 									<?php if( $account_category['type'] == 'main' ){ ?>
-										<option value="<?php echo $account_category['id']; ?>"><?php echo $account_category['name']; ?></option>
+										<?php if( $account_category['id'] == $this->input->post('account_category') ){ ?>
+											<option value="<?php echo $account_category['id']; ?>" selected="selected"><?php echo $account_category['name']; ?></option>
+										<?php }else{ ?>
+											<option value="<?php echo $account_category['id']; ?>"><?php echo $account_category['name']; ?></option>
+										<?php } ?>
 									<?php }else{ ?>
-										<option value="<?php echo $account_category['id'] . '_' . $account_category['subid']; ?>"><?php echo $account_category['name']; ?></option>
+										<?php if( $account_category['id'] . '_' . $account_category['subid'] == $this->input->post('account_category') ){ ?>
+											<option value="<?php echo $account_category['id'] . '_' . $account_category['subid']; ?>"><?php echo $account_category['name']; ?></option>
+										<?php }else{ ?>
+											<option value="<?php echo $account_category['id'] . '_' . $account_category['subid']; ?>"><?php echo $account_category['name']; ?></option>
+										<?php } ?>
 									<?php } ?>
 								<?php } ?>
 							<?php } ?>
@@ -117,6 +135,7 @@
 				</div>
 				
 				<!-- lock-in period -->
+				<!--
 				<div class="item">
 					<div class="label">Lock-in period</div>
 					<div class="input">
@@ -131,6 +150,7 @@
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
+				-->
 				
 				<!-- due date -->
 				<div class="item">
@@ -141,6 +161,7 @@
 								name="due_date" 
 								data-datepicker="1"
 								data-format="yy-mm-dd"
+								value="<?php echo $this->input->post('due_date'); ?>" 
 								maxlength="255" />
 					</div>
 					<div class="h_clearboth"></div>
@@ -150,14 +171,17 @@
 				<div class="item">
 					<div class="label">Status</div>
 					<div class="input">
-						<select class="g_select" name="acccount_status">
-							<option value="0" selected="selected">Select account status</option>
-							<option value="active">Active</option>
-							<option value="inactive">Inactive</option>
+						<select class="g_select" name="account_status">
+							<option value="0">Select account status</option>
+							<option value="active" <?php if( $this->input->post('account_status') == 'active' ){ echo 'selected="selected"'; } ?>>Active</option>
+							<option value="inactive" <?php if( $this->input->post('account_status') == 'inactive' ){ echo 'selected="selected"'; } ?>>Inactive</option>
 						</select>
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
+				
+				<input type="hidden" name="filter" value="1" />
+				<input type="hidden" name="current_page" value="1" />
 			</form>
 			
 		</td></tr>
@@ -166,6 +190,7 @@
 	<div class="g_pagelabel">
 		<div class="g_pagelabel_icon"><img src="<?php echo base_url(); ?>_assets/images/tools/generic.png" /></div>
 		<div class="g_pagelabel_text">Result</div>
+		<?php echo $pagination; ?>
 	</div>
 	
 	<?php if ($accounts) { ?>
@@ -175,26 +200,26 @@
 			<tr>
 				<th>Order Ref #</th>
 				<th>Fullname</th>
+				<th>Mobile #</th>
+				<th>Current Plan</th>
 				<th>Account Category</th>
 				<th>Lockin Duration</th>
-				<th>Outstanding Balance</th>
+				<th>Overdue Balance</th>
 				<th>Due Date</th>
 				<th>Credit Limit</th>
 			</tr>
 			
 			<?php foreach ($accounts as $accounts => $a) { ?>
 				<tr>
-					<td><a href="<?php echo base_url() . 'admin/accountmanagement/viewaccount/' . $a['account_id'] . '/' . $a['order_number']; ?>"><?php echo $a['account_id']; ?></a></td>
-					<td><?php echo $a['order_number']; ?></td>
-					<td><?php echo $a['name'] . ' ' . $a['surname']; ?></td>
-					<td><?php echo $a['email']; ?></td>
+					<td width="80"><a href="<?php echo base_url() . 'admin/accountmanagement/viewaccount/' . $a['account_id'] . '/' . $a['order_number']; ?>"><?php echo $a['order_number']; ?></a></td>
+					<td><?php echo $a['fullname']; ?></td>
 					<td><?php echo $a['mobile_number']; ?></td>
+					<td><?php echo $a['main_plan_description']; ?></td>
+					<td><?php echo $a['category_name']; ?></td>
 					<td><?php echo $a['lockin_duration']; ?></td>
 					<td><?php echo $a['outstanding_balance']; ?></td>
 					<td><?php echo date('M-d-Y', strtotime($a['due_date'])); ?></td>
 					<td><?php echo $a['credit_limit']; ?></td>
-					<td><?php if( $a['status'] == 0 ){ echo 'Inactive'; }else{ echo 'Active'; } ?></td>
-					<td><?php echo $a['order_status_name']; ?></td>
 				</tr>
 			<?php } ?> 
 			
@@ -208,6 +233,8 @@
 			
 	<?php } ?>
 	
+	<div class="g_pagination_wrapper"><?php echo $pagination; ?></div>
+	
 </div>
 
 <script type="text/javascript" language="javascript">
@@ -216,29 +243,20 @@ $(function(){
 	implementDatePicker();
 });
 
-$(".input_uf_eur").change(function(){
-	var function_id = $(this).attr('data-uf');
-	var user_type_id = $(this).attr('data-eur');
-	var is_checked = 0;
-	
-	if(	$(this).is(":checked")	){
-		is_checked = 1;
-	}else{
-		is_checked = 0;
-	}
-	
-	displayNotification("message", "Working...")
+$("#btn_filter").click(function(){
+	displayNotification("message", "Working...");
 	$.ajax({
-		url: "<?php echo base_url(); ?>admin/userfunctions/update_userfunction_vs_ecommerceuserrole",
+		url: "<?php echo base_url(); ?>admin/accountmanagement/process_filter",
 		type: "POST",
-		data: "function_id="+function_id+"&user_type_id="+user_type_id+"&is_checked="+is_checked,
+		data: $("#form_filter").serialize(),
 		success: function(response, textStatus, jqXHR){
 			setTimeout(function () {
-				displayNotification("success", "User functions successfully updated.");
+				$("#middle_wrapper").html(response);
+				displayNotification('success', 'Displaying filtered results');
 			}, 500);
 		},
 		error: function(jqXHR, textStatus, errorThrown){
-			$('#middle_wrapper').html(jqXHR.responseText);
+			$("#middle_wrapper").html(jqXHR.responseText);
 			displayNotification("error", "Oops, something went wrong. Your action may or may not have been completed.");
 		}
 	});
