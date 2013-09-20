@@ -285,6 +285,20 @@ class Cart extends CI_Controller {
 				 $this_pv_value = $plan_pv;
 			 }
 			  
+			 if( $d->product_type == 'prepaid_kit' ) {
+				 
+				 $plan_pv = $this->products_model->get_package_plan_pv($d->plan);
+				 $amount = number_format($this->get_package_plan_gadget_amount($d->plan, $d->device),2);
+				 
+				 //var_dump($d->device); exit;
+				 // remove existing plan
+				 $this->cart_model->remove_gadget_or_plan("package_plan");
+				 $out['package_plan_pv'] = $cart_input['package_plan_pv'] = $plan_pv;
+				 
+
+				 $this_pv_value = $plan_pv;
+			 }
+
 			$cart_input = array(
 				'id'              => $d->product_type.'_'.$d->product_id,
 				'qty'             => $qty,
@@ -306,12 +320,13 @@ class Cart extends CI_Controller {
 
 			/* cart */
 			if($in_coexist['coexist'] == TRUE) {
+				//print_r($cart_input); exit;
 				$out['rowid']  = $rowid = $this->cart->insert($cart_input);
 				$out['total']  = $this->cart_model->total(true);
 		       
 		       	$out = array_merge($cart_input,$out);
 
-		       	
+
 	
 		       	/* db */       
 		       	if($rowid){
@@ -402,8 +417,6 @@ class Cart extends CI_Controller {
 				
 				$amount = number_format($qty * $amount,2);
 			}
-
-			echo "put";
 				
 			
 			$out['status'] = 'success';
