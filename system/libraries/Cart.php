@@ -125,7 +125,6 @@ class CI_Cart {
 		if ($save_cart == TRUE)
 		{
 			$this->_save_cart();
-
 			return isset($rowid) ? $rowid : TRUE;
 		}
 
@@ -146,7 +145,7 @@ class CI_Cart {
 		// Was any cart data passed? No? Bah...
 		if ( ! is_array($items) OR count($items) == 0)
 		{
-			log_message('error', 'The insert method must be passed an array containing data.'); echo "test1";
+			log_message('error', 'The insert method must be passed an array containing data.');
 			return FALSE;
 		}
 
@@ -155,7 +154,7 @@ class CI_Cart {
 		// Does the $items array contain an id, quantity, price, and name?  These are required
 		if ( ! isset($items['id']) OR ! isset($items['qty']) OR ! isset($items['price']) OR ! isset($items['name']))
 		{
-			log_message('error', 'The cart array must contain a product ID, quantity, price, and name.'); echo "test2";
+			log_message('error', 'The cart array must contain a product ID, quantity, price, and name.');
 			return FALSE;
 		}
 
@@ -179,7 +178,7 @@ class CI_Cart {
 		// Note: These can be user-specified by setting the $this->product_id_rules variable.
 		if ( ! preg_match("/^[".$this->product_id_rules."]+$/i", $items['id']))
 		{
-			log_message('error', 'Invalid product ID.  The product ID can only contain alpha-numeric characters, dashes, and underscores'); echo "test3";
+			log_message('error', 'Invalid product ID.  The product ID can only contain alpha-numeric characters, dashes, and underscores');
 			return FALSE;
 		}
 
@@ -189,7 +188,7 @@ class CI_Cart {
 		// Note: These can be user-specified by setting the $this->product_name_rules variable.
 		if ( ! preg_match("/^[".$this->product_name_rules."]+$/i", $items['name']))
 		{
-			log_message('error', 'An invalid name was submitted as the product name: '.$items['name'].' The name can only contain alpha-numeric characters, dashes, underscores, colons, and spaces'); echo "test4";
+			log_message('error', 'An invalid name was submitted as the product name: '.$items['name'].' The name can only contain alpha-numeric characters, dashes, underscores, colons, and spaces');
 			return FALSE;
 		}
 
@@ -203,7 +202,7 @@ class CI_Cart {
 		// Is the price a valid number?
 		if ( ! is_numeric($items['price']))
 		{
-			log_message('error', 'An invalid price was submitted for product ID: '.$items['id']); echo "test5";
+			log_message('error', 'An invalid price was submitted for product ID: '.$items['id']);
 			return FALSE;
 		}
 

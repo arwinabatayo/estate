@@ -321,3 +321,24 @@
 				// show bubble info where add to cart link is present
 				$('#tooltip-prepaid-kit').dialog("open");
 			});
+
+			$('a#add-prepaid-to-cart').click(function(){
+				$.ajax({
+					url: base_url+'cart/addprepaidtocart',
+					success: function(response){
+						
+						var resp = jQuery.parseJSON( response );
+					
+						if (resp.status == 'success') {
+					       window.location = resp.cart_url;
+						} else {
+							alert(resp.msg);
+						}
+						
+					}, 
+					error: function(){
+						alert('Some error occured or the system is busy. Please try again later');	
+					}
+				});
+
+			});

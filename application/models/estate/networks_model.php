@@ -16,11 +16,13 @@ class Networks_model extends CI_Model
 	function check_number_prefix($network = NULL, $what = '*')
 	{
             if($network == NULL) return FALSE;
+            // echo $network; exit;
             $query = $this->db->select($what)
                                ->from('estate_network_number_prefixes')
                                ->where('f_network', $network)
                                ->get();
             $result = $query->result_array();
+            // var_dump($result);
             if(count($result) == 0) return FALSE;
             return $result;
 	}

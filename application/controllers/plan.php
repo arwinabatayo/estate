@@ -27,6 +27,8 @@ class Plan extends MY_Controller
 		
 		$this->load->model('estate/products_model');
 		
+		$this->load->model('estate/cart_model');
+
 		//TODO: move to model
 		$this->db->where('status >',0);
 		$query = $this->db->get('estate_main_plan');
@@ -44,7 +46,8 @@ class Plan extends MY_Controller
         
 		$this->_data->combos_datas = $this->products_model->get_bundles(2);
 		$this->_data->boosters_datas = $this->products_model->get_bundles(1);
-
+		$this->_data->gadget_data = $this->cart_model->get_gadget_oncart();
+		
 		if($this->input->get("get_new_line")){
 			$this->_data->new_line_flag = true;
 		}
