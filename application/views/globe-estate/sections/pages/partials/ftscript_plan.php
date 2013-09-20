@@ -1,4 +1,7 @@
-//ORDER TYPE
+	//ORDER TYPE
+			//$("#plan-combos").show();
+			//$("#package-plan-combos").hide();
+
 		    $('#acc-order-type  button').click(function() { 
 	            //showPreloader();
 		        //create ajax call here - add to cart order type
@@ -23,7 +26,7 @@
 
 				        $("#cashoutBox").show();
 
-
+				        
 				        $("#goPackagePlanCombos").click(function(){
 				        	window.location.href = base_url+"addons"
 				        })
@@ -120,7 +123,7 @@
 				        $("#goCombos").parent().hide();
 				        $("#goPackagePlanCombos").parent().show();
 
-				        $("a.btnAddPackagePlan:eq(0)").parent().parent().hide();
+				        //$("a.btnAddPackagePlan:eq(0)").parent().parent().hide();
 
 				        $("#cashoutBox").show();
 

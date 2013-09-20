@@ -26,7 +26,9 @@ class Cart extends CI_Controller {
     {
         $cart_contents = $this->cart->contents();
         
+        //unset($cart_contents['df09e86c48f8745446e0f0c224b64bbf']);
         print_r($cart_contents);
+
         
         //echo json_encode($cart_contents);
     }
@@ -136,8 +138,11 @@ class Cart extends CI_Controller {
 	
     function addtocart() {
 		$this->load->model('estate/products_model');
-		
+			
 		$d = (object) $this->input->post();
+		
+
+
 		$account_id = 1; //TODO get subs id
 		$options = array();
 		$title  = '';
@@ -149,6 +154,7 @@ class Cart extends CI_Controller {
 		$qty = 1;
 			 
 		$in_coexist['coexist'] = TRUE;
+
 		$cart_contents = $this->cart->contents();
 		$out = array(
 			'status' => 'failed',
@@ -156,8 +162,10 @@ class Cart extends CI_Controller {
 		);
 		
 		if( $d->product_id ) {
-			
+
+
 			 $_fields = $this->products_model->get_product_fields($d->product_type,$d->product_id);
+
 			 $title  = $_fields['title'];
 			 $amount = $_fields['amount'];
 			 
@@ -175,7 +183,7 @@ class Cart extends CI_Controller {
 			 	
 			 	/* db */
 			 	if(count($cart_contents) == 0 && $item_exist == TRUE) {
-			 		echo $this->cart_model->delete_cart($account_id, TRUE);	exit;
+			 		
 			 		if( !$this->cart_model->delete_cart($account_id, TRUE) ) {
 			 			$out = array(
 			 					'status' => 'failed',
@@ -262,6 +270,20 @@ class Cart extends CI_Controller {
 // 			 	print_r($in_coexist);
 			 	$amount = number_format($qty * $amount,2);
 			 }
+
+			 if( $d->product_type == 'package_plan' ) {
+				 
+				 $plan_pv = $this->products_model->get_package_plan_pv($d->plan);
+				 $amount = number_format($this->get_package_plan_gadget_amount($d->plan, $d->device),2);
+				 
+				 //var_dump($d->device); exit;
+				 // remove existing plan
+				 $this->cart_model->remove_gadget_or_plan("package_plan");
+				 $out['package_plan_pv'] = $cart_input['package_plan_pv'] = $plan_pv;
+				 
+
+				 $this_pv_value = $plan_pv;
+			 }
 			  
 			$cart_input = array(
 				'id'              => $d->product_type.'_'.$d->product_id,
@@ -281,13 +303,15 @@ class Cart extends CI_Controller {
 
 
 			$out['status'] = 'success';
-			
+
 			/* cart */
 			if($in_coexist['coexist'] == TRUE) {
 				$out['rowid']  = $rowid = $this->cart->insert($cart_input);
 				$out['total']  = $this->cart_model->total(true);
 		       
 		       	$out = array_merge($cart_input,$out);
+
+		       	
 	
 		       	/* db */       
 		       	if($rowid){
@@ -378,6 +402,8 @@ class Cart extends CI_Controller {
 				
 				$amount = number_format($qty * $amount,2);
 			}
+
+			echo "put";
 				
 			
 			$out['status'] = 'success';
@@ -600,8 +626,15 @@ class Cart extends CI_Controller {
 			$data['msg'] = 'Error occurred.';
 		}
 
-		echo json_encode($data); exit;
+		echo json_encode($data); 
 		// redirect customer to cart page
 	}
     
+	public function get_package_plan_gadget_amount($package_plan_id, $gadget_id){
+		$this->load->model('estate/products_model');
+		$amount = $this->products_model->get_gadget_cash_out_package_plan(intval($package_plan_id), intval($gadget_id));
+
+		return $amount;
+	}
+
 }
