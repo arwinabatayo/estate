@@ -157,12 +157,7 @@ class Cart_model extends CI_Model
     					$item_exist = TRUE;
     					unset($cart_contents[$k]);
     				}
-    			} elseif ($type == "package_plan") { //jez added package plan
-                    if( $cart_contents[$k]['product_type'] == 'package_plan') {
-                        $item_exist = TRUE;
-                        unset($cart_contents[$k]);
-                    }
-                }
+    			}
     
     		}
     	}
@@ -298,5 +293,23 @@ class Cart_model extends CI_Model
     	}
     	return $retPV;
     	
+    }
+
+    function get_gadget_oncart() {
+        $items = $this->parse_contents();
+
+        foreach($items as $item){
+            if ($item['product_type'] == 'gadget') {
+                $data = array(
+                        'gadget_name'   => $item['name'],
+                        'gadget_price'  => $item['price_formatted'],
+                        'gadget_specs'  => $item['options'],
+                        'id'     => $item['product_id'],
+                        'type'  => $item['product_type']
+                    );
+            }
+        }
+
+        return $data;
     }
 }

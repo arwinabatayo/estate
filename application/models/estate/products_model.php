@@ -101,6 +101,15 @@ class Products_model extends CI_Model
 				
 				$out['title']  = $row->name;
 				$out['amount'] = $row->amount;
+			}else if($type == 'prepaid_kit') {
+				$this->db->where('gadget_id', $id);
+
+				$query = $this->db->get("estate_gadgets");
+
+				$row = $query->result();
+
+				print_r($row);
+				
 			}
 			// combo and booster adding to cart
 			return $out;
@@ -129,12 +138,17 @@ class Products_model extends CI_Model
 	 * Robert
 	 */
 	function get_gadget_cash_out($plan_id,$gadget_id) {
-	
-		$this->db->where('plan_id', $plan_id);
+		
+		
+		//var_dump($plan_id_where); exit;
+		$this->db->where('plan', $plan_id);
 		$this->db->where('gadget_id', $gadget_id);
 		
 		$query = $this->db->get('estate_gadget_cash_out');
+
 		$row = $query->row();
+
+		
 		
 		return $row->cashout_val;
 	}
@@ -245,7 +259,51 @@ class Products_model extends CI_Model
 		// From here get the corbid2 and set not acceptable
 		return $row;
 	}
+
+
+	function get_package_plan() {
+		$this->db->where('is_active', 1);
+
+		$query = $this->db->get('estate_package_plans');
+		$row = $query->result();
+
+		return $row;
+	}
+
+	function get_package_plan_bundle() {
+		$this->db->where('is_active', '1');
+		$this->db->where('bundle_type_id', 2);
 	
+		$query = $this->db->get('estate_package_plan_bundle');
+		$row = $query->result();
 	
+		return $row;
+	}
+	
+	function get_package_plan_pv($plan_id) {
+	
+		$this->db->where('id', $plan_id);
+	
+		$query = $this->db->get('estate_package_plans');
+		$row = $query->row();
+		
+		return $row->total_pv;
+	}
+
+	function get_gadget_cash_out_package_plan($package_plan_id, $gadget_id) {
+		
+		
+		//var_dump($plan_id_where); exit;
+		$this->db->where('package_plan_id', $package_plan_id);
+		$this->db->where('gadget_id', $gadget_id);
+		
+		$query = $this->db->get('estate_gadget_cash_out');
+
+		$row = $query->row();
+
+		
+		
+		return $row->cashout_val;
+	}
 	
 }

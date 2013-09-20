@@ -4,18 +4,18 @@
 </div>
 
 <div id="g_filter">
-<form id="form_filter_accessories" class="g_form">
+<form id="form_filter_coexistence" class="g_form">
 	
 	<!-- label -->
 	<?php if ($labels) { ?>
 	<div class="item h_floatleft h_margin0 h_marginright8">
-		<div class="label h_widthauto h_paddingright10">Title</div>
+		<div class="label h_widthauto h_paddingright10">Type</div>
 		<div class="input">
-			<select name="letter" class="g_select h_width100px">
-				<option value="">All</option>
-				<?php foreach ($labels as $label => $l) { ?>
-					<option <?php echo ($filter_arr['letter'] == $l) ? "selected='selected'" : ""; ?>><?php echo $l; ?></option>
-				<?php } ?>
+			<select name="coextype" class="g_select h_width200px">
+				<option value="b2b">Boosters / Boosters</option>
+				<option value="c2b">Boosters / Combos</option>
+				<option value="c2c">Combos / Combos</option>
+				
 			</select>
 		</div>
 		<div class="h_clearboth"></div>
@@ -44,9 +44,9 @@
 $(".filter_button").click(function(){ 
 	displayNotification("message", "Working...");
 	$.ajax({
-		url: "<?php echo base_url(); ?>admin/packageplans/process_items",
+		url: "<?php echo base_url(); ?>admin/coexistence/process_items",
 		type: "POST",
-		data: $("#form_filter_accessories").serialize(),
+		data: $("#form_filter_coexistence").serialize(),
 		success: function(response, textStatus, jqXHR){
 			setTimeout(function () {
 				$("#middle_wrapper").html(response);

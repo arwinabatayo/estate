@@ -129,11 +129,57 @@
 			$("#dialog_new_line").dialog("open");
 
 			$("#new-line-plan").click(function(){
-				window.location = "/estate/plan/getNewLine"
+				window.location = "/estate/plan?get_new_line=true"
 			});
 
+			$("#new-line-prepaid-kit").click(function(){
+				var itemid    = $(this).find("a").attr('data-id');
+				var itemname    = $(this).find("a").attr('data-name');
+				var plan_pv    = $(this).find("a").attr('data-pv');
+
+				$.ajax({
+					url: base_url+'cart/addtocart',
+					data: 'product_type=prepaid_kit&product_id=1',
+					type:'post',
+					success: function(response) {
+						//alert(response);
+						//window.location = "/estate/payment";
+						var resp = jQuery.parseJSON(response);
+
+
+						var cartItem = '<div id="prod-item-'+resp.rowid+'" class="itemPlan" style="display:none">'+
+						'<div class="fleft"><span class="productName block"><b>'+itemname+
+						'</b></span></div><span class="icoDelete"> <a class="btnDelete" href="javascript:void(0)" id="'+resp.rowid+'">'+
+						'<i class="icon-remove"></i></a> </span><br class="clear" /></div>\n';
+					
+						if(resp.status == 'success' && resp.rowid){
+							$("#PlanCartWidget .itemPlan").remove();
+							$("#PlanCartWidget").prepend(cartItem);
+							$('#prod-item-'+resp.rowid).show('slow');
+
+							
+							$("#cashoutLabel").html(resp.total).show('slow');
+							$("#pesovalLabel").attr('data-pv',resp.this_pv_value).html(resp.this_pv_value).show('slow');
+							
+							$('#cashoutBox,#pesovalBox').animate({backgroundColor: '#fff267'}, 'fast', function(){
+								$('#cashoutBox,#pesovalBox').animate({backgroundColor: '#F4F4F4'}, 'fast');
+							});
+							$("#plan_name").html(itemname);
+							$("#planid").attr('data-id',itemid);
+							$("#planid").attr('data-cashout',resp.total);
+							$('#prod-item-'+resp.rowid).show('slow');
+						}
+						
+						
+					}, 
+					error: function(){
+						alert('Some error occured or the system is busy. Please try again later');	
+					}
+				});
+			})
+
 			
-		})
+		});
 		
 		//for none globe
 		$('#dialog_reserve_form').dialog({

@@ -4,7 +4,7 @@
 </div>
 
 <div id="g_filter">
-<form id="form_filter_accessories" class="g_form">
+<form id="form_filter_gadgets" class="g_form">
 	
 	<!-- label -->
 	<?php if ($labels) { ?>
@@ -44,9 +44,9 @@
 $(".filter_button").click(function(){ 
 	displayNotification("message", "Working...");
 	$.ajax({
-		url: "<?php echo base_url(); ?>admin/packageplans/process_items",
+		url: "<?php echo base_url(); ?>admin/gadgets/process_items",
 		type: "POST",
-		data: $("#form_filter_accessories").serialize(),
+		data: $("#form_filter_gadgets").serialize(),
 		success: function(response, textStatus, jqXHR){
 			setTimeout(function () {
 				$("#middle_wrapper").html(response);
