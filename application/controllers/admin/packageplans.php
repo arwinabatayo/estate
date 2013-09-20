@@ -191,6 +191,7 @@ class Packageplans extends MY_Controller
 		$_data['plan_id'] = $plan_id;
 		$_data['combos'] = $this->model_packageplans->getCombos();
 		$_data['plan_details'] = $this->model_packageplans->getPackagePlanDetails($plan_id);
+		$_data['active_flag'] = $this->model_packageplans->getPackagePlans($plan_id);
 		//echo "<pre>";
 		//var_dump($_data['combos']); exit;
 
@@ -242,7 +243,7 @@ class Packageplans extends MY_Controller
 	
 	public function process_items()
 	{
-		$this->load->model('model_accessories');
+		$this->load->model('model_packageplans');
 	
 		$user_type = $this->session->userdata('user_type');	
 		
@@ -251,24 +252,26 @@ class Packageplans extends MY_Controller
 			$filter_arr['letter'] = $this->input->post('letter');
 		}
 	
-		// retrieve accessories
+		// retrieve package plans
 		$pagination_limit = 5;
-		$current_page = $this->input->post('current_page');
+		$current_page = 1;
 		$property_id = null;
 		$limit = ($current_page * $pagination_limit) - $pagination_limit;
-		$accessories_arr = $this->model_accessories->getAccessories(	$property_id, 
-																		$user_type, 
-																		"estate_accessories.title", 
-																		"asc", 
-																		$limit,
-																		$pagination_limit,
-																		$filter_arr);
-		$accessory_total_count = $accessories_arr['total_count'];
-		unset($accessories_arr['total_count']);
+		$plans_arr = $this->model_packageplans->getFilterPlans(	$property_id, 
+															$user_type, 
+															"", 
+															"asc", 
+															$limit,
+															$pagination_limit,
+															$filter_arr);
+
+		$package_plans_arr = $this->model_packageplans->getPackagePlans();
+		$package_plans_total_count = $package_plans_arr['total_count'];
+		unset($package_plans_arr['total_count']);
 		
 		// get list of items count
 		$item_count = array();
-		$item_count['accessories'] == $accessory_total_count;
+		$item_count['package_plans'] == $package_plans_total_count;
 		
 		// populate response
 		$_filter = array(		'sess_user' => $this->session->userdata,
@@ -276,21 +279,22 @@ class Packageplans extends MY_Controller
 								'filter' => $this->input->post('filter'),
 								'labels' => $this->getAlphabet(),
 								'filter_arr' => $filter_arr);
-		$_pagination = array(	'page' => 'accessories',
+		$_pagination = array(	'page' => 'packageplans',
 								'filter_arr' => $filter_arr,
-								'item_count' => $accessory_total_count,
+								'item_count' => $package_plans_total_count,
 								'pagination_limit' => $pagination_limit,
 								'current_page' => $current_page);
 		
 		// load response
 		$_data['sess_user'] = $this->session->userdata;
-		$_data['page'] = "accessories";
+		$_data['page'] = "packageplans";
 		$_data['item_count'] = $item_count;
-		$_data['accessories'] = $accessories_arr;
-		$_data['legend'] = $this->load->view('admin/view_accessories_legend', NULL, TRUE);
-		$_data['filter'] = $this->load->view('admin/view_accessories_filter', $_filter, TRUE);
+		$_data['packge_plans'] = $package_plans_arr;
+		$_data['legend'] = $this->load->view('admin/view_packageplans_legend', NULL, TRUE);
+		$_data['filter'] = $this->load->view('admin/view_packageplans_filter', $_filter, TRUE);
 		$_data['pagination'] = $this->load->view('admin/view_pagination', $_pagination, TRUE);
-		$this->load->view('admin/view_accessories', $_data);
+		$_data['content'] = $this->load->view('admin/view_packageplans', $_data, TRUE);
+		$this->load->view('admin/view_main_back', $_data);
 		return;
 	}
 	
@@ -338,6 +342,7 @@ class Packageplans extends MY_Controller
 		$data['combo_idd'] 										= $idd;*/
 		$data['combo_ids']										= $combo_ids;
 		$data['plan_id'] 										= $this->cleanStringForDB($this->input->post('plan_id'));
+		$data['status']											= $this->cleanStringForDB($this->input->post('status'));
 
 		/*if( !$this->input->post('status') 
 			|| $this->input->post('status') == '' 
@@ -472,29 +477,22 @@ class Packageplans extends MY_Controller
 	}
 	
 	public function process_delete(){
-		$this->load->model('model_accessories');
+		$this->load->model('model_packageplans');
 		
-		if( $this->input->post('accessory_id') ){
-			$accessory_id = $this->input->post('accessory_id');
+		if( $this->input->post('id') ){
+			$package_id = $this->input->post('id');
 		}else{
-			$accessory_id = 0;
+			$package_id = 0;
 		}
 		
 		//delete accessory
-		$accessory_details = $this->model_accessories->deleteAccessory($accessory_id);
-		
-		//delete accessory image
-		if( isset($accessory_details['image']) ){
-			if( file_exists( $this->config->item('base_accessory_path') . $accessory_details['image'] ) ){
-				@unlink($this->config->item('base_accessory_path') . $accessory_details['image']);
-			}
-		}
+		$package_details = $this->model_packageplans->deletePackagePlan($package_id);
 		
 		// log changes
-		$accessory = trim($accessory_details['title']);
-		$log = "Deleted accessory " . $accessory;
+		$package_plan = trim($package_details['title']);
+		$log = "Deleted package plan " . $package_plan;
 		$timestamp = date("Y-m-d H:i:s");
-		$this->model_main->addLog($log, "Delete accessory ", $timestamp);
+		$this->model_main->addLog($log, "Delete package plan ", $timestamp);
 		
 		$user_type = $this->session->userdata('user_type');	
 		
@@ -503,24 +501,19 @@ class Packageplans extends MY_Controller
 			$filter_arr['letter'] = $this->input->post('letter');
 		}
 	
-		// retrieve accessories
+		// retrieve package plans
 		$pagination_limit = 5;
 		$current_page = 1;
 		$property_id = null;
 		$limit = ($current_page * $pagination_limit) - $pagination_limit;
-		$accessories_arr = $this->model_accessories->getAccessories(	$property_id, 
-																		$user_type, 
-																		"estate_accessories.title", 
-																		"asc", 
-																		$limit,
-																		$pagination_limit,
-																		$filter_arr);
-		$accessory_total_count = $accessories_arr['total_count'];
-		unset($accessories_arr['total_count']);
+
+		$package_plans_arr = $this->model_packageplans->getPackagePlans();
+		$package_plans_total_count = $package_plans_arr['total_count'];
+		unset($package_plans_arr['total_count']);
 		
 		// get list of items count
 		$item_count = array();
-		$item_count['accessories'] == $accessory_total_count;
+		$item_count['package_plans'] == $package_plans_total_count;
 		
 		// populate response
 		$_filter = array(		'sess_user' => $this->session->userdata,
@@ -528,21 +521,22 @@ class Packageplans extends MY_Controller
 								'filter' => $this->input->post('filter'),
 								'labels' => $this->getAlphabet(),
 								'filter_arr' => $filter_arr);
-		$_pagination = array(	'page' => 'accessories',
+		$_pagination = array(	'page' => 'packageplans',
 								'filter_arr' => $filter_arr,
-								'item_count' => $accessory_total_count,
+								'item_count' => $package_plans_total_count,
 								'pagination_limit' => $pagination_limit,
 								'current_page' => $current_page);
 		
 		// load response
 		$_data['sess_user'] = $this->session->userdata;
-		$_data['page'] = "accessories";
+		$_data['page'] = "packageplans";
 		$_data['item_count'] = $item_count;
-		$_data['accessories'] = $accessories_arr;
-		$_data['legend'] = $this->load->view('admin/view_accessories_legend', NULL, TRUE);
-		$_data['filter'] = $this->load->view('admin/view_accessories_filter', $_filter, TRUE);
+		$_data['packge_plans'] = $package_plans_arr;
+		$_data['legend'] = $this->load->view('admin/view_packageplans_legend', NULL, TRUE);
+		$_data['filter'] = $this->load->view('admin/view_packageplans_filter', $_filter, TRUE);
 		$_data['pagination'] = $this->load->view('admin/view_pagination', $_pagination, TRUE);
-		$this->load->view('admin/view_accessories', $_data);
+		$_data['content'] = $this->load->view('admin/view_packageplans', $_data, TRUE);
+		$this->load->view('admin/view_main_back', $_data);
 		return;
 	}
 }
