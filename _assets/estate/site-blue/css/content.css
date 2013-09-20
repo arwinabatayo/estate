@@ -1,0 +1,72 @@
+ /*content*/
+ .content-text{ margin-bottom: 20px }
+ .content-title { font-family: 'fs_elliot_cyrilliclight'; font-size: 49px; font-weight: normal; line-height: 55px; color: #000 }
+ .content-desc{ font-size: 18px; color: #545456; line-height: 23px; margin-top:25px; margin-bottom: 25px;}
+ .content-video { text-align: center; padding-bottom: 50px; }
+ .content-video .vid { padding:0 3px;}
+ .content-img { text-align: center }
+ 
+ .bluebg-lava{ background:#015eb0 url(../images/bluebg-lava.jpg) no-repeat bottom center; color: #fff; padding-bottom: 30px }
+ .bluebg-lava .content-title { color:#fff; font-size:50px }
+ .bluebg-lava .content-desc{ color:#fff; font-size: 15px }
+ 
+ .greebg{
+    background: #abbb17; /* Old browsers */
+    background: -moz-linear-gradient(top,  #abbb17 0%, #45a53a 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#abbb17), color-stop(100%,#45a53a)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #abbb17 0%,#45a53a 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #abbb17 0%,#45a53a 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #abbb17 0%,#45a53a 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #abbb17 0%,#45a53a 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#abbb17', endColorstr='#45a53a',GradientType=0 ); /* IE6-9 */     
+    -webkit-box-shadow: inset 0 20px 20px -20px rgba(0,0,0,0.8);
+    -moz-box-shadow: inset 0 20px 20px -20px rgba(0,0,0,0.8);
+    box-shadow: inset 0 20px 20px -20px rgba(0,0,0,0.8);    
+ }
+ .greebg .rocketbg{ background: url(../images/green-rocket.png) no-repeat right bottom; padding:0 160px 0 0; float:right; height: 440px }
+ .greebg .content-title{ font-size: 45px; color:#fff; margin-top:80px }
+ .greebg .content-desc { font-size: 14px; color:#fff; width: 314px; margin:10px 0 15px 0}
+ .pinkbg{
+    background: #f7b267; /* Old browsers */
+    background: -moz-linear-gradient(top,  #f7b267 0%, #fe5e80 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f7b267), color-stop(100%,#fe5e80)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #f7b267 0%,#fe5e80 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #f7b267 0%,#fe5e80 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #f7b267 0%,#fe5e80 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #f7b267 0%,#fe5e80 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7b267', endColorstr='#fe5e80',GradientType=0 ); /* IE6-9 */     
+    -webkit-box-shadow: inset 0 20px 20px -20px rgba(0,0,0,0.8);
+    -moz-box-shadow: inset 0 20px 20px -20px rgba(0,0,0,0.8);
+    box-shadow: inset 0 20px 20px -20px rgba(0,0,0,0.8);     
+ }
+ .pinkbg .offset1{ padding:80px 0; height:280px }
+ .content50{ width:50%; }
+ .ss-bgslim { background:url(../images/samsungs4slim.png) no-repeat center bottom; height:237px }
+ .ss-bgslim .content-title{ font-size:40px }
+ 
+ .carousel { margin-bottom: 0 }
+ .carousel-inner .item img{ position: relative; z-index: -1; margin:auto }
+ .carousel-control{ border:none; text-indent: -999px; overflow: hidden; width:45px; height:45px; top:60%;
+    -webkit-border-radius: 0;
+     -moz-border-radius: 0;
+     border-radius: 0;
+    opacity: 1;
+    filter: alpha(opacity=100);   
+ }
+ .carousel-control.left { left:200px; background:url(../images/carousel-left.png) no-repeat center center}
+ .carousel-control.right { right: 212px; background:url(../images/carousel-right.png) no-repeat center center }
+ 
+  /*alternative responsive*/
+ @media (max-width: 767px) {
+  .content{ padding-top:20px }
+  .bluebg-lava {background:none; background-color: #015eb0}
+  .content50{ width:100% }
+  .greebg .rocketbg{ padding:20px 0; background:none; height:auto }
+  .greebg .content-title {margin-top:0}
+  .greebg .content-desc{ width:auto }
+  .pinkbg .offset1{ text-align: center; padding:20px 0; height:auto }
+  .ss-bgslim { height: auto; background: none }
+  .span6.content-img{ margin-bottom: 0 }
+ }
+
+
