@@ -49,6 +49,7 @@ class Plan extends MY_Controller
 		$this->_data->gadget_data = $this->cart_model->get_gadget_oncart();
 		$this->_data->package_plan_options = $this->products_model->get_package_plan();
 		$this->_data->package_plan_bundle = $this->products_model->get_package_plan_bundle();
+		$this->_data->cart_contents = $this->cart->contents();
 		
 		if($this->input->get("get_new_line")){
 			$this->_data->new_line_flag = true;

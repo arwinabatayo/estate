@@ -8,7 +8,7 @@ class Packageplan_model extends CI_Model
 		$this->session->set_userdata(array("gadget_id" => 1, "lockup_id" => 1));
 	}
 
-	function get_package_plan_combos($plan_id)
+	function get_package_plan_combos($plan_id, $from_cart = false)
 	{
 
 
@@ -38,8 +38,12 @@ class Packageplan_model extends CI_Model
 
 
         if(count($result) == 0) return FALSE;
-        echo json_encode($result);
-        
+
+        if(!$from_cart){
+        	echo json_encode($result);
+        }else{
+        	return $result;
+        }
 	}
 
 	function get_package_plan_gadget_cashout($plan_id)
