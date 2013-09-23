@@ -239,7 +239,7 @@
 						data: 'product_type=package_plan&product_id='+itemid+'&plan='+itemid+'&device=1',
 						type:'post',
 						success: function(response) {
-							//alert(response);
+							// alert(response);
 							var resp = jQuery.parseJSON(response);
 
 							var package_plan_combos = "";

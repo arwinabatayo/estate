@@ -282,15 +282,15 @@ class Cart extends CI_Controller {
 				 // get user credit limit
 				 $this->load->model('estate/accounts_model');
 				 $account_info = $this->accounts_model->get_account_info_by_id('09173858958');
+				 $package_plan_combos = $this->get_package_plan_combos($d->plan);
+
 				 if ($plan_pv > $account_info['credit_limit']) {
 				 	// show popup info that plan exceeds limit
-				 	$out['status'] = 'exceeds_limit';
-				 	echo json_encode($out); exit;
+				 	$credit_exceeded = true;
 				 } else {
 					 // remove existing plan
 					 $this->cart_model->remove_gadget_or_plan("package_plan");
 					 $out['package_plan_pv'] = $cart_input['package_plan_pv'] = $plan_pv;
-					 $package_plan_combos = $this->get_package_plan_combos($d->plan);
 
 					 $this_pv_value = $plan_pv;
 				}
@@ -326,9 +326,11 @@ class Cart extends CI_Controller {
 			);
 
 			// if kit type is prepaid, only retain gadget
-
-
 			$out['status'] = 'success';
+			// send a different flag when credit limit is exceeded
+			if ($credit_exceeded) {
+				$out['status'] = 'exceeds_limit';
+			}
 
 			/* cart */
 			if($in_coexist['coexist'] == TRUE) {
@@ -337,8 +339,6 @@ class Cart extends CI_Controller {
 				$out['total']  = $this->cart_model->total(true);
 
 		       	$out = array_merge($cart_input,$out);
-
-
 
 		       	/* db */
 		       	if($rowid){
