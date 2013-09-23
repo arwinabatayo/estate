@@ -175,4 +175,45 @@
 		<strong>Date:</strong>
 		<strong>Order Number:</strong>
 	</div>
+	<div>
+		<strong>Billing Information</strong>
+	</div>
+	<div>
+		<table>
+			<tr>
+				<td></td>
+				<td></td>
+			</tr>
+		</table>
+	</div>
+	<div>
+		<table>
+			<tr>
+				<td>Product</td>
+				<td>Item Description</td>
+				<td>Unit Price</td>
+				<td>% Discount</td>
+				<td>Total</td>
+			</tr>
+			<tr>
+				<td>Product</td>
+				<td>Item Description</td>
+				<td>Unit Price</td>
+				<td>% Discount</td>
+				<td>Total</td>				
+			</tr>
+			<tr>
+				<td rowspan="3"><strong>Subtotal</strong></td>
+				<td rowspan="2"></td>
+			</tr>
+			<tr>
+				<td rowspan="3"><strong>Shipping and Handling Cost</strong></td>
+				<td rowspan="2"></td>
+			</tr>
+		</table>
+	</div>
+
+	<div>
+
+	</div>
 </div>
