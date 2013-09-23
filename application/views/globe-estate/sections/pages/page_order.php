@@ -170,5 +170,9 @@
 </div>
 
 
-<div class="globe-dialog" id="receipt">
+<div class="globe-dialog" id="receipt" title="Receipt">
+	<div>
+		<strong>Date:</strong>
+		<strong>Order Number:</strong>
+	</div>
 </div>
