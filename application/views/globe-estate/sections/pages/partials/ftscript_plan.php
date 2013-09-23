@@ -1,5 +1,6 @@
 	//ORDER TYPE
 			$("#packageplantype-options").hide();
+			$("#plantype-options").hide();
 			//$("#package-plan-combos").hide();
 
 		    $('#acc-order-type  button').click(function() { 
@@ -35,9 +36,11 @@
 
 			    }
 
+
 			    if( btnIndex==0){
-			     $( "#plan-order-page" ).accordion( "option", "active", 1 );
-			     $( "#siderbar-panel" ).accordion( "option", "active", 2 );
+
+					$( "#plan-order-page" ).accordion( "option", "active", 1 );
+					$( "#siderbar-panel" ).accordion( "option", "active", 2 );
 			    }
 
 		    });
