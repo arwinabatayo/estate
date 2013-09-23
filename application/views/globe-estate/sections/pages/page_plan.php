@@ -78,11 +78,8 @@
 	                    <div>
 	                        <h3><a href="#">Choose Your Plan</a></h3>
 	                        <div>
-<<<<<<< HEAD
 
-=======
 								<?php $total_active_plan = count($plans); ?>
->>>>>>> 21e0c8f06fc9739201b9ab7d9ba2f8564c7d1e47
 								<!-- START OF PLAN-TYPE TABLE -->
 								<!-- ======================= -->
 								<div id="plantype-table" class="pricing-tables textcenter totalcol<?php echo $total_active_plan ?>">
@@ -190,12 +187,10 @@
 											}
 									}
 
-
-
-
-
-
 									?>
+									
+									<br class="clear" />
+									
 									<div>
 									<p class="textright">
 										<button  class="btn-large ui-button-success" id="goCombos">CONTINUE</button>

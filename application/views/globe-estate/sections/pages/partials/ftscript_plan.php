@@ -1,5 +1,6 @@
 	//ORDER TYPE
 			$("#packageplantype-options").hide();
+			$("#plantype-options").hide();
 			//$("#package-plan-combos").hide();
 
 		    $('#acc-order-type  button').click(function() {
@@ -14,9 +15,6 @@
 
 				        $("#order-type-section").show('slow');
 
-
-
-
 				        $("a.btnAddPlan").parent().parent().hide();
 
 				        $("#goCombos").parent().hide();
@@ -26,15 +24,9 @@
 
 				        $("#cashoutBox").show();
 
-<<<<<<< HEAD
-
 				        $("#goPackagePlanCombos").click(function(){
 				        	window.location.href = base_url+"addons"
 				        })
-=======
-
-
->>>>>>> 21e0c8f06fc9739201b9ab7d9ba2f8564c7d1e47
 				    }
 
 		        });
@@ -46,12 +38,12 @@
 				     $("#plan-type-1").hide();
 
 			    }
-			    if( btnIndex==0 ){
-			     $("#plantype-options").show();
-			    }
-			    if( btnIndex==1 || btnIndex==0){
-			     $( "#plan-order-page" ).accordion( "option", "active", 1 );
-			     $( "#siderbar-panel" ).accordion( "option", "active", 2 );
+
+
+			    if( btnIndex==0){
+
+					$( "#plan-order-page" ).accordion( "option", "active", 1 );
+					$( "#siderbar-panel" ).accordion( "option", "active", 2 );
 			    }
 
 		    });
@@ -262,17 +254,11 @@
 							'</b></span><span class="productName block"><b>Monthly Payment: </b>'+itemname.split(" ")[1]+
 							'</span>' + package_plan_combos + '</div><span class="icoDelete"> <a class="btnDelete" href="javascript:void(0)" id="'+resp.rowid+'">'+
 							'<i class="icon-remove"></i></a> </span><br class="clear" /></div>\n';
-<<<<<<< HEAD
 
-							if(resp.status == 'success' && resp.rowid) {
-								$("#PlanCartWidget .itemPlan").remove();
-								$("#PlanCartWidget").prepend(cartItem);
-=======
 
 							if(resp.status == 'success' && resp.rowid){
 								$("#PackagePlanCartWidget .itemPlan").remove();
 								$("#PackagePlanCartWidget").prepend(cartItem);
->>>>>>> 21e0c8f06fc9739201b9ab7d9ba2f8564c7d1e47
 								$('#prod-item-'+resp.rowid).show('slow');
 
 
