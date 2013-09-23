@@ -219,7 +219,7 @@ class Order extends MY_Controller
 			break;
 		}
 
-		echo json_encode($d); exit;
+		echo json_encode($d);
 	}
 
 	private function getdeliveryinfo($tracking_id)
