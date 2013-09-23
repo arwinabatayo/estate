@@ -27,12 +27,16 @@ class Plan extends MY_Controller
 		
 		$this->load->model('estate/products_model');
 		
+		$this->load->model('estate/cart_model');
+
 		//TODO: move to model
 		$this->db->where('status >',0);
 		$query = $this->db->get('estate_main_plan');
 		$plans = $query->result();
 		
 		$this->_data->plans = $plans;
+
+
 		
 		$query = $this->db->query('SELECT * FROM estate_plans WHERE is_active="1"');
 		$this->_data->plans_options = $query->result();
@@ -42,6 +46,14 @@ class Plan extends MY_Controller
         
 		$this->_data->combos_datas = $this->products_model->get_bundles(2);
 		$this->_data->boosters_datas = $this->products_model->get_bundles(1);
+		$this->_data->gadget_data = $this->cart_model->get_gadget_oncart();
+		$this->_data->package_plan_options = $this->products_model->get_package_plan();
+		$this->_data->package_plan_bundle = $this->products_model->get_package_plan_bundle();
+		$this->_data->cart_contents = $this->cart->contents();
+		
+		if($this->input->get("get_new_line")){
+			$this->_data->new_line_flag = true;
+		}
 		
 		//echo "<pre>"; var_dump($this->_data); exit;
 		$this->load->view($this->_data->tpl_view, $this->_data);
@@ -58,7 +70,7 @@ class Plan extends MY_Controller
 
 		$this->_data->package_plans_combos = $this->packageplan_model->get_package_plan_combos($plan_id);
 		//$this->_data->package_plan_gadget_cashout = $this->packageplan_model->get_package_plan_gadget_cashout($plan_id);
-
+		//echo "<pre>";var_dump($this->_data->package_plans_combos); exit;
 		
 		return $this->_data->package_plans_combos;
 	}
@@ -113,6 +125,7 @@ class Plan extends MY_Controller
 		$secret_key = 'gL0b3-E$sT4te'.date('m-d-y');
 		return md5($key.$secret_key);
 	}
+
 
 
 }
