@@ -18,26 +18,106 @@
 		
 		<div class="g_pagelabel">
 			<div class="g_pagelabel_icon"><img src="<?php echo base_url(); ?>_assets/images/tools/edit.png" /></div>
-			<div class="g_pagelabel_text">My Order Details</div>
+			<div class="g_pagelabel_text">My Gadget</div>
 		</div>
 		
 		<table class="g_table zebra">
 			<tr><td class="g_widget">
+		
+			<form id="form_filter" class="g_form">
 				
-				My Order Details
+				<!-- gadget details -->
+				<div class="item">
+					<div class="label">Gadget</div>
+					<div class="input">
+						<select class="g_select" name="order_type" data-required="1">
+							<option value="0">Select gadget</option>
+							<?php foreach( $gadgets as $gadget ){ ?>
+								<?php if( $gadget['gadget_id'] == $this->input->post('order_type') ){ ?>
+									<option value="<?php echo $gadget['gadget_id']; ?>" selected="selected"><?php echo $gadget['name']; ?></option>
+								<?php }else{ ?>
+									<option value="<?php echo $gadget['gadget_id']; ?>"><?php echo $gadget['name']; ?></option>
+								<?php } ?>
+							<?php } ?>
+						</select>
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
+			</form>
 				
 			</td></tr>
 		</table>
 		
 		<div class="g_pagelabel">
 			<div class="g_pagelabel_icon"><img src="<?php echo base_url(); ?>_assets/images/tools/edit.png" /></div>
-			<div class="g_pagelabel_text">My Gadget</div>
+			<div class="g_pagelabel_text">My Order Details</div>
 		</div>
 		
 		<table class="g_table zebra">
 			<tr><td class="g_widget">
-					
-				My Gadget
+				
+				<!-- order reference number -->
+				<div class="item">
+					<div class="label">Order reference number</div>
+					<div class="input">
+						<input 	class="g_inputtext" 
+								type="text" 
+								name="order_reference_number" 
+								value="<?php echo $order_details['order_number']; ?>" 
+								maxlength="200" />
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
+				<!-- account number -->
+				<div class="item">
+					<div class="label">Account number</div>
+					<div class="input">
+						<input 	class="g_inputtext" 
+								type="text" 
+								name="account_number" 
+								value="<?php echo $account_details['account_id']; ?>" 
+								maxlength="200" />
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
+				<!-- application type -->
+				<div class="item">
+					<div class="label">Application type</div>
+					<div class="input">
+						<select class="g_select" name="order_type" data-required="1">
+							<option value="0">Select application type</option>
+							<?php foreach( $order_types as $order_type ){ ?>
+								<?php if( $order_type['id'] == $this->input->post('order_type') ){ ?>
+									<option value="<?php echo $order_type['id']; ?>" selected="selected"><?php echo $order_type['title']; ?></option>
+								<?php }else{ ?>
+									<option value="<?php echo $order_type['id']; ?>"><?php echo $order_type['title']; ?></option>
+								<?php } ?>
+							<?php } ?>
+						</select>
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
+				<!-- plan types -->
+				<div class="item">
+					<div class="label">Plan type</div>
+					<div class="input">
+						<select class="g_select" name="order_type" data-required="1">
+							<option value="0">Select plan type</option>
+							<?php foreach( $plan_types as $plan_type ){ ?>
+								<?php if( $plan_type['main_plan_id'] == $this->input->post('plan_type') ){ ?>
+									<option value="<?php echo $plan_type['main_plan_id']; ?>" selected="selected"><?php echo $plan_type['title']; ?></option>
+								<?php }else{ ?>
+									<option value="<?php echo $plan_type['main_plan_id']; ?>"><?php echo $plan_type['title']; ?></option>
+								<?php } ?>
+							<?php } ?>
+						</select>
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
 				
 			</td></tr>
 		</table>
@@ -50,7 +130,25 @@
 		<table class="g_table zebra">
 			<tr><td class="g_widget">
 				
-				My Delivery
+				<!-- delivery type -->
+				<div class="item">
+					<div class="label">Delivery type</div>
+					<div class="input">
+						<input 	class="" 
+								type="radio" 
+								<?php if( $this->input->post('delivery_type') && $this->input->post('delivery_type') == 'pickup' ){ echo 'checked="checked"'; } ?> 
+								name="delivery_type" 
+								maxlength="200"
+								value="pickup" /> Pickup
+						<input 	class="" 
+								type="radio" 
+								<?php if( $this->input->post('delivery_type') && $this->input->post('delivery_type') == 'delivery' ){ echo 'checked="checked"'; } ?> 
+								name="delivery_type" 
+								maxlength="200"
+								value="delivery" /> Delivery
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
 				
 			</td></tr>
 		</table>
