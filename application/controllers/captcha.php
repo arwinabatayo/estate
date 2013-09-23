@@ -31,7 +31,7 @@ class Captcha extends CI_Controller {
 		
         $result=array();
 		$result['status'] = 'error';
-		$result['msg']    = 'Characters did not matched!';
+		$result['msg']    = 'Characters did not match!';
 		
 		if($d->input_code == $captcha_code){
 			$result['status'] = 'success';
