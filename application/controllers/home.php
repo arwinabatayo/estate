@@ -32,12 +32,14 @@ class Home extends MY_Controller
 		$this->_data->page = 'landing';
 		$this->_data->show_reserve_button = false;
 		
+		
 		if(isset($_GET['reserve'])){
 			$this->cart_model->set_order_config(array('order_type'=>'reserve'));
 			$this->_data->show_reserve_button = true;
 		}else{
 			$this->cart_model->set_order_config(array('order_type'=>''));
 		}
+		
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
 	

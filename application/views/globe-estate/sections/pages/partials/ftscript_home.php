@@ -139,7 +139,7 @@
 
 				$.ajax({
 					url: base_url+'cart/addtocart',
-					data: 'product_type=prepaid_kit&product_id=1',
+					data: 'product_type=gadget&product_id=1',
 					type:'post',
 					success: function(response) {
 						//alert(response);
