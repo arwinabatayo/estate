@@ -208,7 +208,10 @@ class Order extends MY_Controller
 				$d['file_url'] = $filename;
 			break;
 			case 'receipt' : 
-				echo $var->refnum;
+				$d['order_details'] = $this->order_model->get_order_by_refnum($var->refnum);
+
+				$d['order_item_details'] = $this->orderitem_model->get_orderitems_by_orderid($order_details['id']);
+				
 				//$order_details = get_order_by_refnum();
 			// TODO : integrate the receipt to be done by sir mark
 			break;

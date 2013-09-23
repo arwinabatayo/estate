@@ -39,7 +39,7 @@
 				case ROLE_PLATINUM_QUEUE : 						echo "Platinum Queue privileges"; break;
 				case ROLE_ACCOUNT_MANAGER : 					echo "Account Manager privileges"; break;
 				case ROLE_RELATIONSHIP_MANAGER : 				echo "Relationship Manager privileges"; break;
-				case ROLE_AGENT_ACCESS : 						echo "Agen Access privileges"; break;
+				case ROLE_AGENT_ACCESS : 						echo "Agent Access privileges"; break;
 				case ROLE_SUPER_ADMIN : 						echo "Super Administrator privileges"; break;
 				case ROLE_AGENCY_ADMIN : 						echo "Agency Administrator privileges"; break;
 				case ROLE_COMPANY_ADMIN : 						echo "Administrator privileges"; break;

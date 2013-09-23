@@ -102,13 +102,17 @@
 	            type: 'post',
 	            success: function(response){
 	                var resp = jQuery.parseJSON( response );
-	
-	                if (resp.file_url) {
-						pwin = window.open(resp.file_url,"_blank");
-						// added focus for new window
-						pwin.focus();
-						pwin.print();
-	                }     
+					
+					if(_type != "receipt"){
+		                if (resp.file_url) {
+							pwin = window.open(resp.file_url,"_blank");
+							// added focus for new window
+							pwin.focus();
+							pwin.print();
+		                }
+	            	}else{
+	            		$("#receipt").dialog("open");
+	            	}     
 	            }, 
 	            error: function(){
 	                alert('Some error occured or the system is busy. Please try again later');  

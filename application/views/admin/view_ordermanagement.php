@@ -15,7 +15,7 @@
 	<table class="g_table">
 		<tr><td class="g_widget">
 		
-			<form id="form_add_accessory" class="g_form">
+			<form id="form_filter" class="g_form">
 				
 				<!-- order reference number -->
 				<div class="item">
@@ -24,7 +24,26 @@
 						<input 	class="g_inputtext" 
 								type="text" 
 								name="order_reference_number" 
+								value="<?php echo $this->input->post('order_reference_number'); ?>" 
 								maxlength="200" />
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
+				<!-- application type -->
+				<div class="item">
+					<div class="label">Application type</div>
+					<div class="input">
+						<select class="g_select" name="order_type" data-required="1">
+							<option value="0">Select application type</option>
+							<?php foreach( $order_types as $order_type ){ ?>
+								<?php if( $order_type['id'] == $this->input->post('order_type') ){ ?>
+									<option value="<?php echo $order_type['id']; ?>" selected="selected"><?php echo $order_type['title']; ?></option>
+								<?php }else{ ?>
+									<option value="<?php echo $order_type['id']; ?>"><?php echo $order_type['title']; ?></option>
+								<?php } ?>
+							<?php } ?>
+						</select>
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
@@ -36,6 +55,7 @@
 						<input 	class="g_inputtext dpicker h_backgroundlight" 
 								type="text" 
 								name="date_ordered" 
+								value="<?php echo $this->input->post('date_ordered'); ?>" 
 								data-datepicker="1"
 								data-format="yy-mm-dd"
 								maxlength="255" />
@@ -50,6 +70,7 @@
 						<input 	class="g_inputtext dpicker h_backgroundlight" 
 								type="text" 
 								name="date_shipped" 
+								value="<?php echo $this->input->post('date_shipped'); ?>" 
 								data-datepicker="1"
 								data-format="yy-mm-dd"
 								maxlength="255" />
@@ -62,9 +83,9 @@
 					<div class="label">Order status *</div>
 					<div class="input">
 						<select class="g_select" name="order_status" data-required="1">
-							<option value="0" selected="selected">Select order status</option>
+							<option value="0">Select order status</option>
 							<?php foreach( $order_statuses as $status ){ ?>
-								<option value="<?php echo $status['order_status_id']; ?>"><?php echo $status['status_name'] . ' (' . $status['status_code'] . ')'; ?></option>
+								<option <?php if( $this->input->post('order_status') && $this->input->post('order_status') == $status['order_status_id'] ){ echo 'selected="selected"'; } ?> value="<?php echo $status['order_status_id']; ?>"><?php echo $status['status_name'] . ' (' . $status['status_code'] . ')'; ?></option>
 							<?php } ?>
 						</select>
 					</div>
@@ -77,18 +98,22 @@
 					<div class="input">
 						<input 	class="" 
 								type="radio" 
-								checked="checked"
+								<?php if( $this->input->post('delivery_type') && $this->input->post('delivery_type') == 'pickup' ){ echo 'checked="checked"'; } ?> 
 								name="delivery_type" 
 								maxlength="200"
 								value="pickup" /> Pickup
 						<input 	class="" 
 								type="radio" 
+								<?php if( $this->input->post('delivery_type') && $this->input->post('delivery_type') == 'delivery' ){ echo 'checked="checked"'; } ?> 
 								name="delivery_type" 
 								maxlength="200"
 								value="delivery" /> Delivery
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
+				
+				<input type="hidden" name="filter" value="1" />
+				<input type="hidden" name="current_page" value="1" />
 			</form>
 			
 		</td></tr>
@@ -97,6 +122,7 @@
 	<div class="g_pagelabel">
 		<div class="g_pagelabel_icon"><img src="<?php echo base_url(); ?>_assets/images/tools/generic.png" /></div>
 		<div class="g_pagelabel_text">Result</div>
+		<?php echo $pagination; ?>
 	</div>
 	
 	<?php if ($accounts) { ?>
@@ -118,8 +144,8 @@
 					<td><a href="<?php echo base_url() . 'admin/ordermanagement/vieworder/' . $a['account_id'] . '/' . $a['order_number']; ?>"><?php echo $a['order_number']; ?></a></td>
 					<td><?php echo $a['account_id']; ?></td>
 					<td><?php echo $a['order_type_title']; ?></td>
-					<td><?php echo date('M-d-Y', strtotime($a['ordered_on'])); ?></td>
-					<td><?php echo date('M-d-Y', strtotime($a['shipped_on'])); ?></td>
+					<td><?php if( $a['ordered_on'] == null || $a['ordered_on'] == '0000-00-00 00:00:00' ){ echo '--'; }else{ echo date('M-d-Y', strtotime($a['ordered_on'])); } ?></td>
+					<td><?php if( $a['shipped_on'] == null ){ echo '--'; }else{ echo date('M-d-Y', strtotime($a['shipped_on'])); } ?></td>
 					<td><?php echo $a['delivery_type']; ?></td>
 					<td><?php echo $a['order_status_name']; ?></td>
 				</tr>
@@ -135,6 +161,8 @@
 			
 	<?php } ?>
 	
+	<div class="g_pagination_wrapper"><?php echo $pagination; ?></div>
+	
 </div>
 
 <script type="text/javascript" language="javascript">
@@ -143,29 +171,20 @@ $(function(){
 	implementDatePicker();
 });
 
-$(".input_uf_eur").change(function(){
-	var function_id = $(this).attr('data-uf');
-	var user_type_id = $(this).attr('data-eur');
-	var is_checked = 0;
-	
-	if(	$(this).is(":checked")	){
-		is_checked = 1;
-	}else{
-		is_checked = 0;
-	}
-	
-	displayNotification("message", "Working...")
+$("#btn_filter").click(function(){
+	displayNotification("message", "Working...");
 	$.ajax({
-		url: "<?php echo base_url(); ?>admin/userfunctions/update_userfunction_vs_ecommerceuserrole",
+		url: "<?php echo base_url(); ?>admin/ordermanagement/process_filter",
 		type: "POST",
-		data: "function_id="+function_id+"&user_type_id="+user_type_id+"&is_checked="+is_checked,
+		data: $("#form_filter").serialize(),
 		success: function(response, textStatus, jqXHR){
 			setTimeout(function () {
-				displayNotification("success", "User functions successfully updated.");
+				$("#middle_wrapper").html(response);
+				displayNotification('success', 'Displaying filtered results');
 			}, 500);
 		},
 		error: function(jqXHR, textStatus, errorThrown){
-			$('#middle_wrapper').html(jqXHR.responseText);
+			$("#middle_wrapper").html(jqXHR.responseText);
 			displayNotification("error", "Oops, something went wrong. Your action may or may not have been completed.");
 		}
 	});

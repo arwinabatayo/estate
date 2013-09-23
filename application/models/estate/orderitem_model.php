@@ -39,6 +39,7 @@ class Orderitem_model extends CI_Model
                           ->get();
 
         $result = $query->result();
+        
         if(count($result) == 0) return FALSE;
         return $result;
     }
