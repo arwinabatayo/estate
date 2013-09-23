@@ -131,7 +131,7 @@ class Cart extends CI_Controller {
 		//print_r($o);
 		//$v = $this->cart->has_options('dfd10bb28b3de6ed50c48294da85c8b2');
 		$v = $this->cart_model->remove_gadget();
-		echo var_dump($v);
+		//echo var_dump($v);
 		
 	}
 	
@@ -152,6 +152,7 @@ class Cart extends CI_Controller {
 		$comboqty = 0;
 		$pv = 0;
 		$qty = 1;
+		$package_plan_combos = '';
 			 
 		$in_coexist['coexist'] = TRUE;
 
@@ -165,6 +166,7 @@ class Cart extends CI_Controller {
 
 
 			 $_fields = $this->products_model->get_product_fields($d->product_type,$d->product_id);
+
 
 			 $title  = $_fields['title'];
 			 $amount = $_fields['amount'];
@@ -280,7 +282,8 @@ class Cart extends CI_Controller {
 				 // remove existing plan
 				 $this->cart_model->remove_gadget_or_plan("package_plan");
 				 $out['package_plan_pv'] = $cart_input['package_plan_pv'] = $plan_pv;
-				 
+				 $package_plan_combos = $this->get_package_plan_combos($d->plan);
+
 
 				 $this_pv_value = $plan_pv;
 			 }
@@ -288,9 +291,9 @@ class Cart extends CI_Controller {
 			 if( $d->product_type == 'prepaid_kit' ) {
 				 
 				 $plan_pv = $this->products_model->get_package_plan_pv($d->plan);
-				 $amount = number_format($this->get_package_plan_gadget_amount($d->plan, $d->device),2);
+				 //$amount = number_format($this->get_package_plan_gadget_amount($d->plan, $d->device),2);
 				 
-				 //var_dump($d->device); exit;
+				 //echo $amount; exit;
 				 // remove existing plan
 				 $this->cart_model->remove_gadget_or_plan("package_plan");
 				 $out['package_plan_pv'] = $cart_input['package_plan_pv'] = $plan_pv;
@@ -311,6 +314,7 @@ class Cart extends CI_Controller {
 				'discount'        => $d->product_discount,
 				'product_type'    => $d->product_type,
 				'options'         => $options,
+				'package_plan_combos'	=> $package_plan_combos,
 			);
 			
 			// if kit type is prepaid, only retain gadget
@@ -648,6 +652,15 @@ class Cart extends CI_Controller {
 		$amount = $this->products_model->get_gadget_cash_out_package_plan(intval($package_plan_id), intval($gadget_id));
 
 		return $amount;
+	}
+
+	public	function get_package_plan_combos($plan_id)
+	{
+		$this->load->model('estate/packageplan_model');
+
+		$package_plans_combos = $this->packageplan_model->get_package_plan_combos($plan_id, true);
+		
+		return $package_plans_combos;
 	}
 
 }

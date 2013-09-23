@@ -63,6 +63,21 @@ class Accounts_model extends CI_Model
 		}
 		
 	}
+
+	function get_account_by_account_id($account_id, $what = "*")
+	{
+		$query = $this->db->select($what)
+						  ->from("estate_accounts")
+						  ->where("account_id", $account_id)
+						  ->get();
+
+		$result = $query->row_array();
+
+		if(count($result) == 0) return FALSE;
+
+		return $result;
+
+	}
 	
 	
 

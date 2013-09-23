@@ -1,5 +1,5 @@
 	//ORDER TYPE
-			//$("#plan-combos").show();
+			$("#packageplantype-options").hide();
 			//$("#package-plan-combos").hide();
 
 		    $('#acc-order-type  button').click(function() { 
@@ -22,7 +22,7 @@
 				        $("#goCombos").parent().hide();
 				        $("#goPackagePlanCombos").parent().show();
 
-				        $("a.btnAddPackagePlan:eq(0)").parent().parent().hide();
+				        //$("a.btnAddPackagePlan:eq(0)").parent().parent().hide();
 
 				        $("#cashoutBox").show();
 
@@ -118,7 +118,7 @@
 				        //$("#plantype-options").show();
 
 
-				        $("a.btnAddPlan").parent().parent().hide();
+				        //$("a.btnAddPlan").parent().parent().hide();
 
 				        $("#goCombos").parent().hide();
 				        $("#goPackagePlanCombos").parent().show();
@@ -126,6 +126,8 @@
 				        //$("a.btnAddPackagePlan:eq(0)").parent().parent().hide();
 
 				        $("#cashoutBox").show();
+
+				        $("#packageplantype-options").show();
 
 				        $( "#siderbar-panel" ).accordion( "option", "active", 2 );
 
@@ -162,6 +164,12 @@
 			});
 			// jez
 			$("a.btnAddPackagePlan").parent().parent().each(function(){
+				var package_plan_combos = {
+					"text" : "",
+					"call" : "",
+					"surf" : "",
+					"idd" : ""
+				};
 				$(this).click(function(i){
 					var that = $(this);
 					$.ajax({
@@ -190,33 +198,16 @@
 							$("#PackagePlanCartWidget").html("<br /><p><b>Plan:</b> " + plan_payment + "</p><p><b>Monthly Payment:</b> " + plan_payment + "</p><p><b>Text:</b> " + $("#combo-type-text-desc").text() + "</p><p><b>Call:</b> " + $("#combo-type-call-desc").text() + "</p><p><b>Surf:</b> " + $("#combo-type-surf-desc").text() + "</p><p><b>IDD:</b> " + $("#combo-type-idd-desc").text() + "</p>");
 							$("#PackagePlanCartWidget").slideDown();
 
+							package_plan_combos['text'] = $("#combo-type-text-desc").text();
+							package_plan_combos['call'] = $("#combo-type-call-desc").text();
+							package_plan_combos['surf'] = $("#combo-type-surf-desc").text();
+							package_plan_combos['idd'] = $("#combo-type-idd-desc").text();
 							
 						}, 
 						error: function(){
 							alert('Some error occured or the system is busy. Please try again later');	
 						}
 					});
-
-					/*$.ajax({
-						url: base_url+'plan/getpackageplangadgetcashout',
-						data: {'plan_id' : parseInt($(this).children("div.my-plan-id").text()) },
-						type:'post',
-						success: function(response){
-
-							var resp = jQuery.parseJSON( response );
-							
-							//$(".cashoutLabel").text(resp[0]['cashout_val'])
-
-							
-
-							
-						}, 
-						error: function(){
-							alert('Some error occured or the system is busy. Please try again later');	
-						}
-					});*/
-
-
 
 
 					//add to cart functionality for additional and new line
@@ -225,6 +216,8 @@
 					var itemname    = $(this).find("a").attr('data-name');
 					var plan_pv    = $(this).find("a").attr('data-pv');
 					
+
+
 					//alert(itemid + " " + itemname + " " + plan_pv);
 					
 					$.ajax({
