@@ -46,7 +46,7 @@ class Plan extends MY_Controller
         
 		$this->_data->combos_datas = $this->products_model->get_bundles(2);
 		$this->_data->boosters_datas = $this->products_model->get_bundles(1);
-		$this->_data->gadget_data = $this->cart_model->get_gadget_oncart();
+		//$this->_data->gadget_data = $this->cart_model->get_gadget_oncart();
 		$this->_data->package_plan_options = $this->products_model->get_package_plan();
 		$this->_data->package_plan_bundle = $this->products_model->get_package_plan_bundle();
 		$this->_data->cart_contents = $this->cart->contents();
