@@ -119,7 +119,7 @@
 
 								<div id="packageplantype-options" class="textcenter" style="display:none">
 									
-									<p><button class="btn-large ui-button-success btn-show-plantype">SHOW PLAN TYPE OPTIONS</button></p>
+									<p><button class="btn-large ui-button-success btn-show-packageplantype">SHOW PLAN TYPE OPTIONS</button></p>
 									
 									<br />
 									
@@ -148,6 +148,9 @@
 											}
 										}
 									?>
+									<p class="textright">
+										<button  class="btn-large ui-button-success" id="goPackagePlanCombos">CONTINUE</button>
+									</p>
 								</div>
 
 								<div id="plantype-options" class="textcenter" style="display:none">
@@ -195,9 +198,7 @@
 										<button  class="btn-large ui-button-success" id="goCombos">CONTINUE</button>
 									</p>
 
-									<p class="textright" style="display:none;">
-										<button  class="btn-large ui-button-success" id="goPackagePlanCombos">CONTINUE</button>
-									</p>
+									
 									</div>
 									<!-- class="row-fluid product-row"-->
 

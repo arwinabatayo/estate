@@ -46,6 +46,8 @@
 			}
 		}
 
+
+
 	?>		
 			
 		
@@ -205,7 +207,7 @@
 									?>
 									</div>
 
-									<hr>
+									<!--<hr>
 									<em>Package Plan</em>
 									<br/>
 									<div id="PackagePlanCartWidget" class="cartWidget">
@@ -215,20 +217,21 @@
 										<?php foreach($package_plan_combos as $key => $value){ ?>
 											<p><strong><?php echo $package_plan_combos[$key]['category']; ?>:</strong> <?php echo $package_plan_combos[$key]['description']; ?></p>
 										<?php } ?>
-	                        		</div>
+	                        		</div>-->
+
+	                        		<hr>
+	                        		<em>Package Plan</em>
+									<br/>
+									<div id="PackagePlanCartWidget" class="cartWidget">
+
+									</div>
+
 
 								</p>
 		                        </div>
 
 
 		                        <!-- Package Plan -->
-
-		                        <div id="package-plan-items" style="display:none;">
-		                        	<em>Package Plan</em>
-		                        	<div id="PackagePlanCartWidget" class="cartWidget" style="display:none;">
-
-	                        		</div>
-	                        	</div>
 
 	                        </div>
 
