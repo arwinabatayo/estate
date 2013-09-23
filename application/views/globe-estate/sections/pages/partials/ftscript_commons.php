@@ -288,28 +288,11 @@
 				});
 		});
 
+		$('a#printable-forms').click(function(){
+			$("#dialog_print_forms").dialog("open");
+		});
 
-		// function for downloading print forms on status page -- gellie
-		function downloadForm(_type)
-	    {
-	        // call ajax for downloading
-	        $.ajax({
-	            url: base_url+'order/download_form',
-	            data: 'form_type='+_type,
-	            type: 'post',
-	            success: function(response){
-	                var resp = jQuery.parseJSON( response );
-
-	                if (resp.file_url) {
-						pwin = window.open(resp.file_url,"_blank");
-						// added focus for new window
-						pwin.focus();
-						pwin.print();
-	                }
-	            },
-	            error: function(){
-	                alert('Some error occured or the system is busy. Please try again later');
-	            }
-	        });
-	    }
+		$('a#delivery-tracker').click(function(){
+			$("#dialog_delivery_tracker").dialog("open");
+		});
 
