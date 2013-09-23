@@ -78,10 +78,10 @@
 	                    <div>
 	                        <h3><a href="#">Choose Your Plan</a></h3>
 	                        <div>
-								
+								<?php $total_active_plan = count($plans); ?>
 								<!-- START OF PLAN-TYPE TABLE -->
 								<!-- ======================= -->
-								<div id="plantype-table" class="pricing-tables textcenter">
+								<div id="plantype-table" class="pricing-tables textcenter totalcol<?php echo $total_active_plan ?>">
 
 									<?php  if($plans){ 
 
@@ -91,7 +91,7 @@
 												if(intval($row->status) == 1){
 										?>
 									<!-- PRICING TABLE -->
-									<div class="noLeftMargin">
+									<div class="noLeftMargin" id="plan-type-<?php echo $row->main_plan_id ?>">
 
 										<div class="plan over <?php echo ($i==2) ? 'best-value':''?>">
 											<div class="header">
