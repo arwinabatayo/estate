@@ -30,11 +30,6 @@ class Accountmanagement extends MY_Controller
 		$user_type = $this->session->userdata('user_type');	
 		
 		$filter_arr = array();
-		if ($this->input->post('filter')) {
-			if( $this->input->post('account_number') ){
-				$filter_arr['account_id'] = $this->input->post('account_number');
-			}
-		}
 		
 		$pagination_limit = 5;
 		$current_page = 1;
@@ -78,12 +73,11 @@ class Accountmanagement extends MY_Controller
 		if ($account_id==null) { redirect(site_url('admin/accountmanagment')); } // account_id?
 		if ($order_number==null) { redirect(site_url('admin/accountmanagment')); } // account_id?
 		
-		$user_type = $this->session->userdata('user_type');	
-		
 		$this->load->model('model_plans');
 		$this->load->model('model_accountmanagement');
 		
-		// load response
+		$user_type = $this->session->userdata('user_type');
+		
 		$_data['sess_user'] = $this->session->userdata;
 		$_data['page'] = "accountmanagement";
 		$_data['account_id'] = $account_id;
@@ -94,7 +88,19 @@ class Accountmanagement extends MY_Controller
 		$_data['order_statuses'] = $this->model_accountmanagement->getOrderStatuses();
 		$_data['order_types'] = $this->model_accountmanagement->getOrderTypes();
 		$_data['account_categories'] = $this->model_accountmanagement->getAccountCategoriesByUserType($user_type);
-		$_data['account_details'] = $this->model_accountmanagement->getAccountDetails($account_id, $order_number);
+		$account_details = $this->model_accountmanagement->getAccountDetails($account_id, $order_number);
+		$_data['account_details'] = $account_details;
+		
+		//generate account category string
+		$fin_account_category = '';
+		$category_id = $account_details['category_id'];
+		$fin_account_category = $account_details['category_id'];
+		$category_subtype_id = $account_details['category_subtype_id'];
+		if( trim($category_subtype_id) != '' && $category_subtype_id != 0 ){
+			$fin_account_category .= '_' . $category_subtype_id;
+		}
+		
+		$_data['fin_account_category'] = $fin_account_category;
 		$_data['content'] = $this->load->view('admin/view_accountmanagement_viewaccount', $_data, TRUE);
 		$this->load->view('admin/view_main_back', $_data);
 		return;
@@ -126,39 +132,26 @@ class Accountmanagement extends MY_Controller
 		$this->load->model('model_plans');
 		$this->load->model('model_accountmanagement');
 		
-		$this->model_accountmanagement->updateAccountRelationshipManager($account_id, $relationship_manager_id);
-		
 		$user_type = $this->session->userdata('user_type');	
 		
 		$filter_arr = array();
-		if ($this->input->post('filter')) {
-			if( $this->input->post('account_number') ){
-				$filter_arr['account_id'] = $this->input->post('account_number');
-			}
-		}
 		
 		$pagination_limit = 5;
 		$current_page = 1;
 		$limit = ($current_page * $pagination_limit) - $pagination_limit;
-		$accounts = $this->model_accountmanagement->getAccounts($user_type,
+		$accounts_arr = $this->model_accountmanagement->getAccounts($user_type,
 																'estate_accounts.name', 
 																'ASC', 
 																$limit, 
 																$pagination_limit, 
 																$filter_arr);
 		$account_total_count = $accounts_arr['total_count'];
-		unset($accounts['total_count']);
+		unset($accounts_arr['total_count']);
 		
 		// get list of items count
 		$item_count = array();
 		$item_count['accounts'] == $account_total_count;
 		
-		// populate response
-		$_filter = array(		'sess_user' => $this->session->userdata,
-								'current_page' => $current_page,
-								'filter' => $this->input->post('filter'),
-								'labels' => $this->getAlphabet(),
-								'filter_arr' => $filter_arr);
 		$_pagination = array(	'page' => 'accountmanagement',
 								'filter_arr' => $filter_arr,
 								'item_count' => $account_total_count,
@@ -167,13 +160,15 @@ class Accountmanagement extends MY_Controller
 		
 		$_data['sess_user'] = $this->session->userdata;
 		$_data['page'] = "accountmanagement";
+		$_data['item_count'] = $item_count;
 		$_data['plans'] = $this->model_plans->getAllPlans();
 		$_data['lock_in_periods'] = $this->model_plans->getAllLockInPeriods();
 		$_data['order_statuses'] = $this->model_accountmanagement->getOrderStatuses();
 		$_data['order_types'] = $this->model_accountmanagement->getOrderTypes();
 		$_data['account_categories'] = $this->model_accountmanagement->getAccountCategoriesByUserType($user_type);
-		$_data['accounts'] = $accounts;
-		$this->load->view('admin/view_accountmanagement', $_data);
+		$_data['accounts'] = $accounts_arr;
+		$_data['pagination'] = $this->load->view('admin/view_pagination', $_pagination, TRUE);
+		$this->load->view('admin/view_accountmanagement', $_data, TRUE);
 		return;
 	}
 	
@@ -191,16 +186,11 @@ class Accountmanagement extends MY_Controller
 		$user_type = $this->session->userdata('user_type');	
 		
 		$filter_arr = array();
-		if ($this->input->post('filter')) {
-			if( $this->input->post('account_number') ){
-				$filter_arr['account_id'] = $this->input->post('account_number');
-			}
-		}
 		
 		$pagination_limit = 5;
 		$current_page = 1;
 		$limit = ($current_page * $pagination_limit) - $pagination_limit;
-		$accounts = $this->model_accountmanagement->getAccounts($user_type,
+		$accounts_arr = $this->model_accountmanagement->getAccounts($user_type,
 																'estate_accounts.name', 
 																'ASC', 
 																$limit, 
@@ -213,12 +203,6 @@ class Accountmanagement extends MY_Controller
 		$item_count = array();
 		$item_count['accounts'] == $account_total_count;
 		
-		// populate response
-		$_filter = array(		'sess_user' => $this->session->userdata,
-								'current_page' => $current_page,
-								'filter' => $this->input->post('filter'),
-								'labels' => $this->getAlphabet(),
-								'filter_arr' => $filter_arr);
 		$_pagination = array(	'page' => 'accountmanagement',
 								'filter_arr' => $filter_arr,
 								'item_count' => $account_total_count,
@@ -227,12 +211,14 @@ class Accountmanagement extends MY_Controller
 		
 		$_data['sess_user'] = $this->session->userdata;
 		$_data['page'] = "accountmanagement";
+		$_data['item_count'] = $item_count;
 		$_data['plans'] = $this->model_plans->getAllPlans();
 		$_data['lock_in_periods'] = $this->model_plans->getAllLockInPeriods();
 		$_data['order_statuses'] = $this->model_accountmanagement->getOrderStatuses();
 		$_data['order_types'] = $this->model_accountmanagement->getOrderTypes();
 		$_data['account_categories'] = $this->model_accountmanagement->getAccountCategoriesByUserType($user_type);
-		$_data['accounts'] = $accounts;
+		$_data['accounts'] = $accounts_arr;
+		$_data['pagination'] = $this->load->view('admin/view_pagination', $_pagination, TRUE);
 		$this->load->view('admin/view_accountmanagement', $_data);
 		return;
 	}
