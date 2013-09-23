@@ -63,7 +63,6 @@
 				</div>
 				
 				<!-- plan -->
-				<!--
 				<div class="item">
 					<div class="label">Plan</div>
 					<div class="input">
@@ -78,7 +77,6 @@
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
-				-->
 				
 				<!-- lastname -->
 				<div class="item">
