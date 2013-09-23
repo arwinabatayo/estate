@@ -79,23 +79,39 @@
 					<div class="h_clearboth"></div>
 				</div>
 				
+				<!-- plan -->
+				<div class="item">
+					<div class="label">Current plan</div>
+					<div class="input">
+						<select class="g_select" name="current_plan">
+							<option value="0" selected="selected">Select plan</option>
+							<?php if( $plans && count($plans) > 0 ){ ?>
+								<?php foreach( $plans as $plan ){ ?>
+									<option value="<?php echo $plan['id']; ?>"><?php echo $plan['title']; ?></option>
+								<?php } ?>
+							<?php } ?>
+						</select>
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
 				<!-- account category -->
 				<div class="item">
-					<div class="label">Account category</div>
+					<div class="label">Account category <?php echo 'x' . $fin_account_category; ?></div>
 					<div class="input">
 						<select class="g_select" name="account_category">
 							<option value="0">Select account category</option>
 							<?php if( $account_categories && count($account_categories) > 0 ){ ?>
 								<?php foreach( $account_categories as $account_category ){ ?>
 									<?php if( $account_category['type'] == 'main' ){ ?>
-										<?php if( $account_category['id'] == $this->input->post('account_category') ){ ?>
+										<?php if( $account_category['id'] == $fin_account_category ){ ?>
 											<option value="<?php echo $account_category['id']; ?>" selected="selected"><?php echo $account_category['name']; ?></option>
 										<?php }else{ ?>
 											<option value="<?php echo $account_category['id']; ?>"><?php echo $account_category['name']; ?></option>
 										<?php } ?>
 									<?php }else{ ?>
-										<?php if( $account_category['id'] . '_' . $account_category['subid'] == $this->input->post('account_category') ){ ?>
-											<option value="<?php echo $account_category['id'] . '_' . $account_category['subid']; ?>"><?php echo $account_category['name']; ?></option>
+										<?php if( $account_category['id'] . '_' . $account_category['subid'] == $fin_account_category ){ ?>
+											<option value="<?php echo $account_category['id'] . '_' . $account_category['subid']; ?>" selected="selected"><?php echo $account_category['name']; ?></option>
 										<?php }else{ ?>
 											<option value="<?php echo $account_category['id'] . '_' . $account_category['subid']; ?>"><?php echo $account_category['name']; ?></option>
 										<?php } ?>
