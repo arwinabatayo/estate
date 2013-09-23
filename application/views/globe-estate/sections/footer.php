@@ -90,26 +90,36 @@
 	});
 
 	// function for downloading print forms on status page -- gellie
+	// TO MOVE in ftscripts_commons
 	function downloadForm(_type)
-    {
-        // call ajax for downloading
-        $.ajax({
-            url: base_url+'order/download_form',
-            data: 'form_type='+_type,
-            type: 'post',
-            success: function(response){
-                var resp = jQuery.parseJSON( response );
+	    {	
+	    	var refnum = getURLParameter("refnum");
+	    	
+	        // call ajax for downloading
+	        $.ajax({
+	            url: base_url+'order/download_form',
+	            data: { 'form_type' : _type, 'refnum' : refnum },
+	            type: 'post',
+	            success: function(response){
+	                var resp = jQuery.parseJSON( response );
+	
+	                if (resp.file_url) {
+						pwin = window.open(resp.file_url,"_blank");
+						// added focus for new window
+						pwin.focus();
+						pwin.print();
+	                }     
+	            }, 
+	            error: function(){
+	                alert('Some error occured or the system is busy. Please try again later');  
+	            }
+	        });
+	    }
 
-                if (resp.file_url) {
-					pwin = window.open(resp.file_url,"_blank");
-					// added focus for new window
-					pwin.focus();
-					pwin.print();
-                }
-            },
-            error: function(){
-                alert('Some error occured or the system is busy. Please try again later');
-            }
-        });
-    }
+
+	    function getURLParameter(name) {
+		    return decodeURI(
+		        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+		    );
+		}
 		</script>

@@ -287,6 +287,8 @@
 		// function for downloading print forms on status page -- gellie
 		function downloadForm(_type)
 	    {	
+	    	var refnum = getURLParameter("refnum");
+	    	console.log(refnum);
 	        // call ajax for downloading
 	        $.ajax({
 	            url: base_url+'order/download_form',
@@ -307,4 +309,11 @@
 	            }
 	        });
 	    }
+
+
+	    function getURLParameter(name) {
+		    return decodeURI(
+		        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+		    );
+		}
 

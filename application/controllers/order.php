@@ -55,6 +55,7 @@ class Order extends MY_Controller
 
 		$this->_data->delivery_info = $this->getdeliveryinfo($order['tracking_id']);
 
+
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
 
@@ -206,7 +207,10 @@ class Order extends MY_Controller
         		$filename = $this->phpqrcode->getQrcodePng($status_url, 'status-url-qrcode' . md5($status_url) . '.png');
 				$d['file_url'] = $filename;
 			break;
-			case 'receipt' : echo 'receipt'; // TODO : integrate the receipt to be done by sir mark
+			case 'receipt' : 
+				echo $var->refnum;
+				//$order_details = get_order_by_refnum();
+			// TODO : integrate the receipt to be done by sir mark
 			break;
 		}
 

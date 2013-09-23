@@ -1,5 +1,5 @@
 	//ORDER TYPE
-			//$("#plan-combos").show();
+			$("#packageplantype-options").hide();
 			//$("#package-plan-combos").hide();
 
 		    $('#acc-order-type  button').click(function() { 
@@ -22,7 +22,7 @@
 				        $("#goCombos").parent().hide();
 				        $("#goPackagePlanCombos").parent().show();
 
-				        $("a.btnAddPackagePlan:eq(0)").parent().parent().hide();
+				        //$("a.btnAddPackagePlan:eq(0)").parent().parent().hide();
 
 				        $("#cashoutBox").show();
 
@@ -118,7 +118,7 @@
 				        //$("#plantype-options").show();
 
 
-				        $("a.btnAddPlan").parent().parent().hide();
+				        //$("a.btnAddPlan").parent().parent().hide();
 
 				        $("#goCombos").parent().hide();
 				        $("#goPackagePlanCombos").parent().show();
@@ -126,6 +126,8 @@
 				        //$("a.btnAddPackagePlan:eq(0)").parent().parent().hide();
 
 				        $("#cashoutBox").show();
+
+				        $("#packageplantype-options").show();
 
 				        $( "#siderbar-panel" ).accordion( "option", "active", 2 );
 
