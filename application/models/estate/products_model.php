@@ -143,7 +143,7 @@ class Products_model extends CI_Model
 		
 		
 		//var_dump($plan_id_where); exit;
-		$this->db->where('plan', $plan_id);
+		$this->db->where('plan_id', $plan_id);
 		$this->db->where('gadget_id', $gadget_id);
 		
 		$query = $this->db->get('estate_gadget_cash_out');
