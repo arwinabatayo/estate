@@ -13,20 +13,20 @@ class Packageplan_model extends CI_Model
 
 
 		$query = $this->db->query(" SELECT 
-										estate_plan_bundle.name, 
-										estate_plan_bundle.description, 
-										estate_plan_bundle.peso_value,
-										estate_plan_bundle.category 
+										estate_package_plan_bundle.name, 
+										estate_package_plan_bundle.description, 
+										estate_package_plan_bundle.peso_value,
+										estate_package_plan_bundle.category 
 									 FROM 
 										 estate_package_plan_combos
 									 LEFT JOIN
-										 estate_plan_bundle
+										 estate_package_plan_bundle
 									 ON
-										 estate_plan_bundle.id = estate_package_plan_combos.combo_id
+										 estate_package_plan_bundle.id = estate_package_plan_combos.combo_id
 									 WHERE
-										 estate_plan_bundle.is_active = '1'
+										 estate_package_plan_bundle.is_active = '1'
 									 AND
-									 	 estate_plan_bundle.bundle_type_id = 2
+									 	 estate_package_plan_bundle.bundle_type_id = 2
 									 AND
 										 estate_package_plan_combos.plan_id = " . $plan_id
 								 );

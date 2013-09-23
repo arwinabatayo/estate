@@ -20,7 +20,7 @@
 				<div class="item">
 					<div class="label">TEXT *</div>
 					<div class="input">
-						<table>
+						<table class="">
 							<?php foreach($text_arr as $key_text => $value_text){ ?>
 								<tr>
 									<td>
@@ -131,6 +131,19 @@
 						</table>
 					</div>
 					<div class="h_clearboth"></div>
+
+					<!-- status -->
+					<div class="item">
+						<div class="label">Status *</div>
+						<div class="input">
+							<select class="g_select" name="status" data-required="1">
+								<option value="0">Select status</option>
+								<option value="disabled" <?php if( isset($active_flag[0]['is_active']) && $active_flag[0]['is_active'] == "0" ){ echo 'selected="selected"'; } ?>>Disabled</option>
+								<option value="enabled" <?php if( isset($active_flag[0]['is_active']) && $active_flag[0]['is_active'] == "1" ){ echo 'selected="selected"'; } ?>>Enabled</option>
+							</select>
+						</div>
+						<div class="h_clearboth"></div>
+					</div>
 				</div>
 
 		
@@ -168,5 +181,7 @@ $("#btn_edit_packageplan").click(function(e){
 		});
 	}
 });
+
+
 
 </script>

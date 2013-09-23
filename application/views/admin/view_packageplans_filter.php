@@ -44,7 +44,7 @@
 $(".filter_button").click(function(){ 
 	displayNotification("message", "Working...");
 	$.ajax({
-		url: "<?php echo base_url(); ?>admin/accessories/process_items",
+		url: "<?php echo base_url(); ?>admin/packageplans/process_items",
 		type: "POST",
 		data: $("#form_filter_accessories").serialize(),
 		success: function(response, textStatus, jqXHR){
