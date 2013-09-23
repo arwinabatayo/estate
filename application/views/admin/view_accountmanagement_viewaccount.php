@@ -46,7 +46,7 @@
 				
 				<!-- account number -->
 				<div class="item">
-					<div class="label">Order Number *</div>
+					<div class="label">Account Number *</div>
 					<div class="input">
 						<input 	class="g_inputtext" 
 								type="text" 
@@ -57,6 +57,52 @@
 								data-field="name"
 								data-table="estate_accounts"
 								data-required="1" />
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
+				<!-- application type -->
+				<div class="item">
+					<div class="label">Application type</div>
+					<div class="input">
+						<select class="g_select" name="order_type" data-required="1">
+							<option value="0">Select application type</option>
+							<?php foreach( $order_types as $order_type ){ ?>
+								<?php if( $order_type['id'] == $account_details['order_type_id'] ){ ?>
+									<option value="<?php echo $order_type['id']; ?>" selected="selected"><?php echo $order_type['title']; ?></option>
+								<?php }else{ ?>
+									<option value="<?php echo $order_type['id']; ?>"><?php echo $order_type['title']; ?></option>
+								<?php } ?>
+							<?php } ?>
+						</select>
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
+				<!-- account category -->
+				<div class="item">
+					<div class="label">Account category</div>
+					<div class="input">
+						<select class="g_select" name="account_category">
+							<option value="0">Select account category</option>
+							<?php if( $account_categories && count($account_categories) > 0 ){ ?>
+								<?php foreach( $account_categories as $account_category ){ ?>
+									<?php if( $account_category['type'] == 'main' ){ ?>
+										<?php if( $account_category['id'] == $this->input->post('account_category') ){ ?>
+											<option value="<?php echo $account_category['id']; ?>" selected="selected"><?php echo $account_category['name']; ?></option>
+										<?php }else{ ?>
+											<option value="<?php echo $account_category['id']; ?>"><?php echo $account_category['name']; ?></option>
+										<?php } ?>
+									<?php }else{ ?>
+										<?php if( $account_category['id'] . '_' . $account_category['subid'] == $this->input->post('account_category') ){ ?>
+											<option value="<?php echo $account_category['id'] . '_' . $account_category['subid']; ?>"><?php echo $account_category['name']; ?></option>
+										<?php }else{ ?>
+											<option value="<?php echo $account_category['id'] . '_' . $account_category['subid']; ?>"><?php echo $account_category['name']; ?></option>
+										<?php } ?>
+									<?php } ?>
+								<?php } ?>
+							<?php } ?>
+						</select>
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
