@@ -138,7 +138,7 @@
 
 <div class="globe-dialog" id="dialog_delivery_tracker" title="Tracking Number : <?php echo $order['tracking_id']; ?>">
     <h4><?php echo $delivery_info['short_summary']; ?></h4>
-    <div style="width: 500px;" class="textcenter">    
+    <div style="width: 500px;" class="textcenter">
         <div id="desktop-breadcrumbs" class="row textcenter">
             <div class="steps">
                 <a class="current" id="bc_step1">Initiated</a>
@@ -147,9 +147,9 @@
 
                 <a class="current" id="bc_step3">In-transit</a>
 
-                <a class="" id="bc_step4">Delivered</a>         
+                <a class="" id="bc_step4">Delivered</a>
             </div>
-            <br>        
+            <br>
             <br>
             <h5>On globe vehicle for delivery </h5>
             <h3><?php echo $delivery_info['delivery_dest']; ?></h3>
@@ -169,6 +169,9 @@
     </div>
 </div>
 
-
-<div class="globe-dialog" id="receipt">
+<div class="globe-dialog" id="receipt" title="Receipt">
+	<div>
+		<strong>Date:</strong>
+		<strong>Order Number:</strong>
+	</div>
 </div>

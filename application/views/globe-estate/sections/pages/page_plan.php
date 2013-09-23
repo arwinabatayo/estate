@@ -78,10 +78,14 @@
 	                    <div>
 	                        <h3><a href="#">Choose Your Plan</a></h3>
 	                        <div>
+<<<<<<< HEAD
 
+=======
+								<?php $total_active_plan = count($plans); ?>
+>>>>>>> 21e0c8f06fc9739201b9ab7d9ba2f8564c7d1e47
 								<!-- START OF PLAN-TYPE TABLE -->
 								<!-- ======================= -->
-								<div id="plantype-table" class="pricing-tables textcenter">
+								<div id="plantype-table" class="pricing-tables textcenter totalcol<?php echo $total_active_plan ?>">
 
 									<?php  if($plans){
 
@@ -91,7 +95,7 @@
 												if(intval($row->status) == 1){
 										?>
 									<!-- PRICING TABLE -->
-									<div class="noLeftMargin">
+									<div class="noLeftMargin" id="plan-type-<?php echo $row->main_plan_id ?>">
 
 										<div class="plan over <?php echo ($i==2) ? 'best-value':''?>">
 											<div class="header">
@@ -118,8 +122,7 @@
 								<!--END OF PLAN-TYPE TABLE -->
 
 								<div id="packageplantype-options" class="textcenter" style="display:none">
-
-									<p><button class="btn-large ui-button-success btn-show-plantype">SHOW PLAN TYPE OPTIONS</button></p>
+									<p><button class="btn-large ui-button-success btn-show-packageplantype">SHOW PLAN TYPE OPTIONS</button></p>
 
 									<br />
 
@@ -148,6 +151,9 @@
 											}
 										}
 									?>
+									<p class="textright">
+										<button  class="btn-large ui-button-success" id="goPackagePlanCombos">CONTINUE</button>
+									</p>
 								</div>
 
 								<div id="plantype-options" class="textcenter" style="display:none">
@@ -195,9 +201,7 @@
 										<button  class="btn-large ui-button-success" id="goCombos">CONTINUE</button>
 									</p>
 
-									<p class="textright" style="display:none;">
-										<button  class="btn-large ui-button-success" id="goPackagePlanCombos">CONTINUE</button>
-									</p>
+
 									</div>
 									<!-- class="row-fluid product-row"-->
 

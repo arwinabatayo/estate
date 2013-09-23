@@ -14,7 +14,7 @@
 
 				        $("#order-type-section").show('slow');
 
-				        //$("#plantype-options").show();
+
 
 
 				        $("a.btnAddPlan").parent().parent().hide();
@@ -26,22 +26,33 @@
 
 				        $("#cashoutBox").show();
 
+<<<<<<< HEAD
 
 				        $("#goPackagePlanCombos").click(function(){
 				        	window.location.href = base_url+"addons"
 				        })
+=======
+
+
+>>>>>>> 21e0c8f06fc9739201b9ab7d9ba2f8564c7d1e47
 				    }
 
 		        });
 
 		        //RENEW CONTRACT is selected
-		        if( btnIndex==0 ){
-					$("#plantype-table").removeClass('[class^="totalcol"]').addClass('totalcol2');
-					$("#plan-type-1").hide();
+		        //console.log(btnIndex);
+		         if( btnIndex==1 ){
+				     $("#plantype-table").removeClass('[class^="totalcol"]').addClass('totalcol2');
+				     $("#plan-type-1").hide();
 
-					$( "#plan-order-page" ).accordion( "option", "active", 1 );
-					$( "#siderbar-panel" ).accordion( "option", "active", 2 );
-				}
+			    }
+			    if( btnIndex==0 ){
+			     $("#plantype-options").show();
+			    }
+			    if( btnIndex==1 || btnIndex==0){
+			     $( "#plan-order-page" ).accordion( "option", "active", 1 );
+			     $( "#siderbar-panel" ).accordion( "option", "active", 2 );
+			    }
 
 		    });
 
@@ -81,6 +92,8 @@
 			$( "#plantype-combos" ).hide(); // Robert
 
 		    $('#plantype-table  button').click(function() {
+
+
 				var title = $(this).attr('rel');
 
 				var id = $(this).attr('id'); // Robert
@@ -96,9 +109,16 @@
 					$( "#plantype-table" ).slideUp();
 
 					if(btnIndex > 0){
-						$( "#plantype-options h4" ).html(title);
-						$( ".ui-accordion h3:eq(2) a" ).html(title);
-						$( "#plantype-options" ).slideDown();
+						// Create You Own Plan
+						if(btnIndex == 2){
+							$( "#plantype-options h4" ).html(title);
+							$( ".ui-accordion h3:eq(2) a" ).html(title);
+							$( "#plantype-options" ).slideDown();
+						}else if(btnIndex == 1){
+							$( "#packageplantype-options h4" ).html(title);
+							$( ".ui-accordion h3:eq(2) a" ).html(title);
+							$( "#packageplantype-options" ).slideDown();
+						}
 					}else{
 						$( "#retain-plan" ).slideDown();
 						$( ".ui-accordion h3:eq(2) a" ).html('Retain Current Plan - 3799');
@@ -109,7 +129,13 @@
 				$("#combo-type").hide();
 
 
-				$(this).parent().parent().parent().children("div.header").children("div.price-wrapper").children("h4").each(function(){
+			});
+
+			$("#goPackagePlanCombos").click(function(){
+	        	window.location.href = base_url+"addons"
+	        })
+
+		    $(this).parent().parent().parent().children("div.header").children("div.price-wrapper").children("h4").each(function(){
 		        	if($(this).text() == "Package Plan"){
 				        //$("#acc-order-type .option-wrapper").slideUp();
 
@@ -129,6 +155,8 @@
 
 				        $("#packageplantype-options").show();
 
+				        $('#plantype-table').hide()
+
 				        $( "#siderbar-panel" ).accordion( "option", "active", 2 );
 
 				        // showing only package plan in sidebar panel
@@ -144,9 +172,15 @@
 		        });
 
 
-			});
+
 			//toggle button
 			$('.btn-show-plantype').click(function() {
+				$( "#plantype-table" ).slideDown();
+				$("#PackagePlanCartWidget").slideUp();
+				$( this ).closest('div').slideUp();
+
+			});
+			$('.btn-show-packageplantype').click(function() {
 				$( "#plantype-table" ).slideDown();
 				$("#PackagePlanCartWidget").slideUp();
 				$( this ).closest('div').slideUp();
@@ -164,12 +198,7 @@
 			});
 			// jez
 			$("a.btnAddPackagePlan").parent().parent().each(function(){
-				var package_plan_combos = {
-					"text" : "",
-					"call" : "",
-					"surf" : "",
-					"idd" : ""
-				};
+
 				$(this).click(function(i){
 					var that = $(this);
 					$.ajax({
@@ -193,15 +222,8 @@
 
 							var plan_payment = that.find("a").text().split("Plan ")[1];
 
-
-
-							$("#PackagePlanCartWidget").html("<br /><p><b>Plan:</b> " + plan_payment + "</p><p><b>Monthly Payment:</b> " + plan_payment + "</p><p><b>Text:</b> " + $("#combo-type-text-desc").text() + "</p><p><b>Call:</b> " + $("#combo-type-call-desc").text() + "</p><p><b>Surf:</b> " + $("#combo-type-surf-desc").text() + "</p><p><b>IDD:</b> " + $("#combo-type-idd-desc").text() + "</p>");
-							$("#PackagePlanCartWidget").slideDown();
-
-							package_plan_combos['text'] = $("#combo-type-text-desc").text();
-							package_plan_combos['call'] = $("#combo-type-call-desc").text();
-							package_plan_combos['surf'] = $("#combo-type-surf-desc").text();
-							package_plan_combos['idd'] = $("#combo-type-idd-desc").text();
+							//$("#PackagePlanCartWidget").html("<br /><p><b>Plan:</b> " + plan_payment + "</p><p><b>Monthly Payment:</b> " + plan_payment + "</p><p><b>Text:</b> " + $("#combo-type-text-desc").text() + "</p><p><b>Call:</b> " + $("#combo-type-call-desc").text() + "</p><p><b>Surf:</b> " + $("#combo-type-surf-desc").text() + "</p><p><b>IDD:</b> " + $("#combo-type-idd-desc").text() + "</p>");
+							//$("#PackagePlanCartWidget").slideDown();
 
 						},
 						error: function(){
@@ -228,15 +250,29 @@
 							//alert(response);
 							var resp = jQuery.parseJSON(response);
 
+							var package_plan_combos = "";
+							for(var a = 0; a < resp.package_plan_combos.length; a++){
+								package_plan_combos += "<span class=\"productName block\"><b>"+resp.package_plan_combos[a].category+
+							": </b> " + resp.package_plan_combos[a].description  + "</span>"
+							}
+
 
 							var cartItem = '<div id="prod-item-'+resp.rowid+'" class="itemPlan" style="display:none">'+
 							'<div class="fleft"><span class="productName block"><b>'+itemname+
-							'</b></span></div><span class="icoDelete"> <a class="btnDelete" href="javascript:void(0)" id="'+resp.rowid+'">'+
+							'</b></span><span class="productName block"><b>Monthly Payment: </b>'+itemname.split(" ")[1]+
+							'</span>' + package_plan_combos + '</div><span class="icoDelete"> <a class="btnDelete" href="javascript:void(0)" id="'+resp.rowid+'">'+
 							'<i class="icon-remove"></i></a> </span><br class="clear" /></div>\n';
+<<<<<<< HEAD
 
 							if(resp.status == 'success' && resp.rowid) {
 								$("#PlanCartWidget .itemPlan").remove();
 								$("#PlanCartWidget").prepend(cartItem);
+=======
+
+							if(resp.status == 'success' && resp.rowid){
+								$("#PackagePlanCartWidget .itemPlan").remove();
+								$("#PackagePlanCartWidget").prepend(cartItem);
+>>>>>>> 21e0c8f06fc9739201b9ab7d9ba2f8564c7d1e47
 								$('#prod-item-'+resp.rowid).show('slow');
 
 

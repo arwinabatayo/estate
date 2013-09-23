@@ -207,11 +207,10 @@ class Order extends MY_Controller
         		$filename = $this->phpqrcode->getQrcodePng($status_url, 'status-url-qrcode' . md5($status_url) . '.png');
 				$d['file_url'] = $filename;
 			break;
-			case 'receipt' : 
+			case 'receipt' :
 				$d['order_details'] = $this->order_model->get_order_by_refnum($var->refnum);
-
 				$d['order_item_details'] = $this->orderitem_model->get_orderitems_by_orderid($order_details['id']);
-				
+				$d['account_details'] = $this->accounts_model->get_account_by_account_id($order_details['account_id']);
 				//$order_details = get_order_by_refnum();
 			// TODO : integrate the receipt to be done by sir mark
 			break;
