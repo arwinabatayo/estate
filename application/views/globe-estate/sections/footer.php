@@ -360,11 +360,7 @@
 
 				        $("#order-type-section").show('slow');
 
-				        $("#plantype-options").show();
-
-				        $("a.btnAddPlan").parent().parent().each(function(){
-				        	$(this).hide();
-				        });
+				        $("a.btnAddPlan").parent().parent().hide();
 
 				        $("#goCombos").parent().hide();
 				        $("#goPackagePlanCombos").parent().show();
@@ -373,7 +369,7 @@
 
 				        $("#cashoutBox").show();
 
-
+				        
 				        $("#goPackagePlanCombos").click(function(){
 				        	window.location.href = base_url+"addons"
 				        })
@@ -381,11 +377,17 @@
 
 		        });
 		        
+		        
 		        //RENEW CONTRACT is selected
-		        if( btnIndex==0 ){
+		        if( btnIndex==1 ){
 					$("#plantype-table").removeClass('[class^="totalcol"]').addClass('totalcol2');
 					$("#plan-type-1").hide();
 
+				}
+		        if( btnIndex==0 ){
+					$("#plantype-options").show();
+				}
+				if( btnIndex==1 || btnIndex==0){
 					$( "#plan-order-page" ).accordion( "option", "active", 1 );
 					$( "#siderbar-panel" ).accordion( "option", "active", 2 );
 				}
