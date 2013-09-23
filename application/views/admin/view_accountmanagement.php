@@ -65,7 +65,7 @@
 				<!-- plan -->
 				<!--
 				<div class="item">
-					<div class="label">Plan</div>
+					<div class="label">Current plan</div>
 					<div class="input">
 						<select class="g_select" name="current_plan">
 							<option value="0" selected="selected">Select plan</option>
