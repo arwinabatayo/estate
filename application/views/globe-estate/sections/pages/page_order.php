@@ -168,3 +168,7 @@
         </div>
     </div>
 </div>
+
+
+<div class="globe-dialog" id="receipt">
+</div>
