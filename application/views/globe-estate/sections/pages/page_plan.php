@@ -129,25 +129,29 @@
 									
 									</div>
 									<br />
-									<?php
-										if($package_plan_options){
-											foreach($package_plan_options as $package_plan){
-												?>
-													<div class="fleft" style="margin-right:12px; height:110px;width:200px; 
-													background:url('<?php echo $assets_path ?>images/plans/plan_temp.jpg') no-repeat 50% 50%">
-														<p style="padding:10px 20px 0px 20px;color:#FFF;font-size:22px">
-															<a style="color:#FFF" class="btnAddPackagePlan" data-pv="<?php echo $package_plan->total_pv ?>" data-id="<?php echo $package_plan->id ?>" data-name="<?php echo $package_plan->title ?>" href="javascript:void(0)">
-																<?php echo $package_plan->title ?>
-															</a>
-														</p>
-														<p style="color:#FFF;font-size:10px; padding:0 20px; min-height: 26px;"><b><?php echo $package_plan->description ?></b></p>
-														<p style="color:#FFF;font-size:12px; padding:0 20px;"><b>get <?php echo $package_plan->total_pv ?>PV/mo.</b></p>
-														<div class="my-plan-id" style="display:none"><?php echo $package_plan->id; ?></div>
-													</div>
-												<?php
+										<div>
+										<?php
+											if($package_plan_options){
+												foreach($package_plan_options as $package_plan){
+													?>
+														<div class="fleft" style="margin-right:12px; height:110px;width:200px; 
+														background:url('<?php echo $assets_path ?>images/plans/plan_temp.jpg') no-repeat 50% 50%">
+															<p style="padding:10px 20px 0px 20px;color:#FFF;font-size:22px">
+																<a style="color:#FFF" class="btnAddPackagePlan" data-pv="<?php echo $package_plan->total_pv ?>" data-id="<?php echo $package_plan->id ?>" data-name="<?php echo $package_plan->title ?>" href="javascript:void(0)">
+																	<?php echo $package_plan->title ?>
+																</a>
+															</p>
+															<p style="color:#FFF;font-size:10px; padding:0 20px; min-height: 26px;"><b><?php echo $package_plan->description ?></b></p>
+															<p style="color:#FFF;font-size:12px; padding:0 20px;"><b>get <?php echo $package_plan->total_pv ?>PV/mo.</b></p>
+															<div class="my-plan-id" style="display:none"><?php echo $package_plan->id; ?></div>
+														</div>
+													<?php
+												}
 											}
-										}
-									?>
+										?>
+										<br class="clear"/>
+										</div>
+										
 									<p class="textright">
 										<button  class="btn-large ui-button-success" id="goPackagePlanCombos">CONTINUE</button>
 									</p>
@@ -165,39 +169,39 @@
 									
 									</div>
 									<br />
-									<?php if($plans_options){ 
-										
-											 foreach($plans_options as $plan) {
-										?>
-											<div class="fleft" style="margin-right:12px; height:110px;width:200px; 
-											background:url('<?php echo $assets_path ?>images/plans/plan_temp.jpg') no-repeat 50% 50%">
-												<p style="padding:10px 20px 0px 20px;color:#FFF;font-size:22px">
-													<a style="color:#FFF" class="btnAddPlan" data-pv="<?php echo $plan->total_pv ?>" data-id="<?php echo $plan->id ?>" data-name="<?php echo $plan->title ?>" href="javascript:void(0)">
-														<?php echo $plan->title ?>
-													</a>
-												</p>
-												<p style="color:#FFF;font-size:10px; padding:0 20px; min-height: 26px;"><b><?php echo $plan->description ?></b></p>
-												<p style="color:#FFF;font-size:12px; padding:0 20px;"><b>get <?php echo $plan->total_pv ?>PV/mo.</b></p>
-												<div class="my-plan-id" style="display:none"><?php echo $plan->id; ?></div>
-											</div>
-
-											
-											
-									<?php 
-											}
-									} 
-
-									?>
-									
-									<br class="clear" />
-									
 									<div>
+										<?php if($plans_options){ 
+											
+												 foreach($plans_options as $plan) {
+											?>
+												<div class="fleft" style="margin-right:12px; height:110px;width:200px; 
+												background:url('<?php echo $assets_path ?>images/plans/plan_temp.jpg') no-repeat 50% 50%">
+													<p style="padding:10px 20px 0px 20px;color:#FFF;font-size:22px">
+														<a style="color:#FFF" class="btnAddPlan" data-pv="<?php echo $plan->total_pv ?>" data-id="<?php echo $plan->id ?>" data-name="<?php echo $plan->title ?>" href="javascript:void(0)">
+															<?php echo $plan->title ?>
+														</a>
+													</p>
+													<p style="color:#FFF;font-size:10px; padding:0 20px; min-height: 26px;"><b><?php echo $plan->description ?></b></p>
+													<p style="color:#FFF;font-size:12px; padding:0 20px;"><b>get <?php echo $plan->total_pv ?>PV/mo.</b></p>
+													<div class="my-plan-id" style="display:none"><?php echo $plan->id; ?></div>
+												</div>
+												
+										<?php 
+												}
+										} 
+	
+										?>
+										
+										<br class="clear"/>
+									</div>
+									
+								
 									<p class="textright">
 										<button  class="btn-large ui-button-success" id="goCombos">CONTINUE</button>
 									</p>
-
+								
 									
-									</div>
+									
 									<!-- class="row-fluid product-row"-->
 
 									<div id="combo-type" style="display:none; clear:both;">
