@@ -187,12 +187,10 @@
 											}
 									} 
 
-
-									
-
-
-
 									?>
+									
+									<br class="clear" />
+									
 									<div>
 									<p class="textright">
 										<button  class="btn-large ui-button-success" id="goCombos">CONTINUE</button>
