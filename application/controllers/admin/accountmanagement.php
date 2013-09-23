@@ -78,6 +78,9 @@ class Accountmanagement extends MY_Controller
 		if ($account_id==null) { redirect(site_url('admin/accountmanagment')); } // account_id?
 		if ($order_number==null) { redirect(site_url('admin/accountmanagment')); } // account_id?
 		
+		$user_type = $this->session->userdata('user_type');	
+		
+		$this->load->model('model_plans');
 		$this->load->model('model_accountmanagement');
 		
 		// load response
@@ -86,6 +89,11 @@ class Accountmanagement extends MY_Controller
 		$_data['account_id'] = $account_id;
 		$_data['order_number'] = $order_number;
 		$_data['relationship_managers'] = $this->model_accountmanagement->getRelationshipManagers(1);
+		$_data['plans'] = $this->model_plans->getAllPlans();
+		$_data['lock_in_periods'] = $this->model_plans->getAllLockInPeriods();
+		$_data['order_statuses'] = $this->model_accountmanagement->getOrderStatuses();
+		$_data['order_types'] = $this->model_accountmanagement->getOrderTypes();
+		$_data['account_categories'] = $this->model_accountmanagement->getAccountCategoriesByUserType($user_type);
 		$_data['account_details'] = $this->model_accountmanagement->getAccountDetails($account_id, $order_number);
 		$_data['content'] = $this->load->view('admin/view_accountmanagement_viewaccount', $_data, TRUE);
 		$this->load->view('admin/view_main_back', $_data);
