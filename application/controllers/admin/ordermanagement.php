@@ -86,6 +86,8 @@ class Ordermanagement extends MY_Controller
 		$_data['order_number'] = $order_number;
 		$_data['gadgets'] = $this->model_gadgets->getAllGadgetsByStatus(1);
 		$_data['plan_types'] = $this->model_mainplans->getAllMainPlans();
+		$_data['account_billing_address'] = $this->model_accountmanagement->getAccountAddressByType('billing', $account_id);
+		$_data['order_billing_address'] = $this->model_ordermanagement->getOrderAddressByType('billing', $order_number);
 		$_data['order_types'] = $this->model_accountmanagement->getOrderTypes();
 		$_data['account_details'] = $this->model_accountmanagement->getAccountDetails($account_id, $order_number);
 		$_data['order_details'] = $this->model_ordermanagement->getOrderDetails($account_id, $order_number);
