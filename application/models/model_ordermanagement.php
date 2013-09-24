@@ -471,5 +471,32 @@ class Model_ordermanagement extends CI_Model
 		$this->db->where('order_number', $order_number);
 		$this->db->update('estate_orders', $data);
 	}
+	
+	function getOrderAddressByType($address_type, $order_number)
+	{
+		$this->db->where('order_number', $order_number);
+		$query = $this->db->get('estate_orders');
+		
+		if( $query->num_rows() > 0 ){
+			$order_details = $query->row_array();
+			
+			if( $address_type == 'billing' ){
+				$address_id = $order_details['billing_address_id'];
+			}else{
+				$address_id = $order_details['shipping_address_id'];
+			}
+			
+			$this->db->where('id', $address_id);
+			$query = $this->db->get('estate_account_addresses');
+			
+			if( $query->num_rows() > 0 ){
+				return $query->row_array();
+			}else{
+				return array();
+			}
+		}else{
+			return array();
+		}
+	}
 }
 ?>
