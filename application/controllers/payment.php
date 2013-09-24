@@ -72,7 +72,11 @@ class Payment extends MY_Controller
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
 	
+	public function payorder()
+	{
+		
 	
+	}
 	
 
 }

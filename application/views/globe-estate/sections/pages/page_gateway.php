@@ -10,7 +10,7 @@
 							   </div>
 							   <div class="textleft contentbox">
 									<br />
-									<form class="form-inline" onsubmit="return false">
+									<form class="form-inline" action="/estate/payment/payorder">
 
 <label>*Credit Card Number</label>
 <p>The 16-digits on the front of you credit card. <br />
@@ -49,8 +49,8 @@
 <p>The last 3 digits displayed on the back of your credit card<br />
 <input type="text" value="" />
 </p>
-									<p class="textcenter"><button class="btn-large ui-button-success" onclick="window.location.replace('<?php echo base_url() ?>payment/thankyou')">PAY NOW</button></p>
-									
+									<?php /*<p class="textcenter"><button class="btn-large ui-button-success" onclick="window.location.replace('<?php echo base_url() ?>payment/thankyou')">PAY NOW</button></p> */ ?>
+									<p class="textcenter"><button class="btn-large ui-button-success" onclick="#">PAY NOW</button></p>
 									</form>
 							   </div>
 							   
