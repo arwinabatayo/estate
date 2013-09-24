@@ -185,7 +185,76 @@
 					</div>
 	            </div>	
 	            
-			
+	            <?php // settle overdue balance popup ?>
+				<div class="globe-dialog" id="dialog_settle_overdue" title="Settle Your Overdue">
+					<span class="span4 textleft noLeftMargin">
+						To proceed with the order, please settle the overdue balance immediately.
+					</span>
+					<span class="span4 textcenter">
+						<h3 style="color: red;">Php 14, 500.00</h3>
+						<span style="display: block; height: 30px; font-size: 11px;">Overdue Balance</span>
 
+						<div>
+							<button  class="ui-button-primary open-dialog" id="settle-overdue-cc">Settle Due with Credit Card</button><br/><br/>
+							<button  class="ui-button-primary open-dialog" id="settle-overdue-gcash">Settle Due with G-Cash</button><br/><br/>
+							<a href="javascript: void(0);" id="account-settled">I already settled my account</a>
+						</div>
+						<br/>
+						<?php 
+						// check if prepaid kit is enabled
+						$prepaid_kit_enabled = $this->config->item('prepaid_kit_enabled');
+						if ($prepaid_kit_enabled) { ?>
+							<a href="javascript: void(0);" id="get-prepaid-kit">Get a Prepaid Phone Kit</a>
+						<?php } ?>
+						<a href="javascript: void(0);" id="ways-to-settle-due">Learn more ways to settle due</a>
+					</span>
+				</div>
 
+				<?php // payment channels dialog ?>
+				<div class="globe-dialog" id="dialog_payment_channels" title="Payment Channel">
+					<div>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+						<br />
+						<div class="row-fluid">
+							<div class="span3">
+			                    <input type="radio" name="payment_channel" checked="checked" value="Globe Telecom Business Center" /> Globe Telecom Business Center
+			                </div>
+			                <div class="span2">
+			                    <input type="radio" name="payment_channel" value="Bank" /> Bank
+			                </div>
+							<div class="span2">
+			                    <input type="radio" name="payment_channel" value="GCash" /> GCash
+			                </div>
+			                <div class="span2">
+			                    <input type="radio" name="payment_channel" value="Online Banking" /> Online Banking
+			                </div>
+			                <div class="span3">
+			                    <input type="radio" name="payment_channel" value="Bayad/Payment Center" /> Bayad/Payment Center
+			                </div>
+		              	</div>
+		              	<br/>
+		              	<h4>Globe Telecom Business Center</h4>
+			            <form name="form-settle-overdue" id="form-settle-overdue" onsubmit="return false;"> 	
+			              	<div class="row-fluid">
+								<fieldset>
+									<div class="control-group ">
+										<div class="span4">
+						                    <label class="control-label">Reference Number </label><input type="text" name="ref_num" id="ref_num" />
+						                </div>
+						                <div class="span3">
+						                     <label class="control-label">OR Number </label><input type="text" name="or_num" id="or_num" />
+						                </div>
+						                <button class="btn btn-primary">Submit</button>
+					            	</div>
+				                <fieldset>
+			              	</div>
+			            </form>
+	              	</div>
+				</div>
 
+				<?php // settle overdue balance ty popup ?>
+				<div class="globe-dialog" id="dialog_settle_overdue_ty" title="Thank You.">
+					<span class="span4 textcenter">
+						We will get back to you in <strong id="hours">5</strong> hours or <strong id="days">6</strong> days once we confirmed your payment.
+					</span>
+				</div>
