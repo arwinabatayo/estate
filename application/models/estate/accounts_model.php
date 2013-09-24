@@ -14,12 +14,28 @@ class Accounts_model extends CI_Model
 	function get_account_info_by_id($mobile_number, $return_array = TRUE, $what = '*')
 	{
 		$this->db->trans_start();
-		$query = $this->db->select($what)
-						 ->from('estate_accounts')
+		
+		$query = $this->db->select('a.*, c.name as account_type_name')
+						 ->from('estate_accounts as a')
+						 ->join('estate_account_category as c','a.category_id = c.category_id')
 						 ->where('mobile_number', $mobile_number)
 						 ->get();
-                $result = ($return_array === TRUE) ? $query->row_array() : $query->row();
+						 
+        $result = ($return_array === TRUE) ? $query->row_array() : $query->row();
 		//$query->free_result();
+		if(count($result) == 0) return FALSE;
+		return $result;
+	}
+	
+	//@int subtype_id
+	function get_account_category($subtype_id)
+	{
+
+		$query = $this->db->select('*')
+						 ->from('estate_account_category_subtype')
+						 ->where('subtype_id', $subtype_id)
+						 ->get();			 
+        $result = $query->row();
 		if(count($result) == 0) return FALSE;
 		return $result;
 	}
@@ -78,6 +94,19 @@ class Accounts_model extends CI_Model
 
 		return $result;
 
+	}
+	
+	//check mobile number if exist
+	function is_msisdn_exist($msisdn)
+	{
+		$query = $this->db->get_where('estate_accounts',array('mobile_number'=>$mobile_number));
+		return $this->db->count_all_results() ? TRUE : FALSE;
+	}
+	
+	//Get subscriber info from session
+	function get_account_info()
+	{
+		return $this->session->userdata('subscriber_info');
 	}
 	
 	

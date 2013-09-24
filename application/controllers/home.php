@@ -58,7 +58,14 @@ class Home extends MY_Controller
 		$this->_data->show_breadcrumbs    =  false;
 		$this->_data->page = 'test';
 		
-		$this->load->view($this->_data->tpl_view, $this->_data);
+		$acc_info = $this->accounts_model->is_msisdn_exist('9151178863');	
+
+		
+		//print_r($user_info);
+						  
+		echo var_dump( $acc_info );  
+		//print_r( $this->accounts_model->get_account_info() );
+		//$this->load->view($this->_data->tpl_view, $this->_data);
 	}
 	
 	public function sms_verification()
@@ -87,9 +94,9 @@ class Home extends MY_Controller
 			if(!is_numeric($mobile_number)) {
 			
 					if( $this->_check_if_globe_number($mobile_number) == TRUE && strlen($mobile_number) == 11) {
-					//if( true ) {
-						$data['success_msg'] = "SMS successfully sent to you mobile number";
-						$this->session->set_userdata('msisdn',$mobile_number);
+							
+							$data['success_msg'] = "SMS successfully sent to you mobile number";
+							$this->session->set_userdata('msisdn',$mobile_number);
 						
 					} else {
 						$data['status'] = "error";
@@ -140,10 +147,10 @@ class Home extends MY_Controller
 		  "is_globe_subscriber"  => "false", // if false dialogbox(Reserve Form) will show
 		);
 
-                $data['mobile_number'] = $this->session->userdata('current_subscriber_mobileno');
-                $this->load->model('estate/networks_model');                
-                $mobile =  $this->session->userdata('current_subscriber_mobileno');
-                $verification_info  = $this->networks_model->get_sms_verification($mobile);
+		$data['mobile_number'] = $this->session->userdata('current_subscriber_mobileno');
+		$this->load->model('estate/networks_model');                
+		$mobile =  $this->session->userdata('current_subscriber_mobileno');
+		$verification_info  = $this->networks_model->get_sms_verification($mobile);
 		
 		$hasError = false;
 		
@@ -155,10 +162,23 @@ class Home extends MY_Controller
 		
 		if($verification_code) {
 			if($verification_code == $verification_info['code']) {
-			//if($verification_code == 'Globe0917') {
-				$data['msg'] = "Successfully Verified. Page is redirecting please wait...";
-				$token =  md5('Globe0917'.'$4Lt*G'); //generate token/session here to access nextpage
-                                $this->networks_model->delete_sms_verification($mobile);
+				
+				//init/save subscriber info here
+                $is_user_exist = $this->_initSubscriberInfo($mobile);
+				
+				if($is_user_exist){
+				
+					$data['msg'] = "Successfully Verified. Page is redirecting please wait...";
+					$token =  md5('Globe0917'.'$4Lt*G'); //generate token/session here to access nextpage
+	                $this->networks_model->delete_sms_verification($mobile);
+	                
+				}else{
+					
+					$data['status'] = "error";
+					$data['msg'] = "Subscriber info not found.";	
+					
+				}
+                
 			} else {
 				$data['status'] = "error";
 				$data['msg'] = "You must enter a valid verification code";
@@ -413,7 +433,31 @@ class Home extends MY_Controller
 
     }
     
-
+	private function _initSubscriberInfo($msisdn)
+    {
+		
+		$mobile_number = ltrim($msisdn,0);
+		
+		$acc_info = (array) $this->accounts_model->get_account_info_by_id($mobile_number,false);	
+		
+		$acc_type = array();
+		
+		if($acc_info->category_id){
+			
+			$acc_type = (array) $this->accounts_model->get_account_category($acc_info->category_id);
+		
+		}
+		if($acc_info){
+			
+			$user_info = array_merge($acc_info,$acc_type);
+			
+			$this->session->set_userdata('subscriber_info',$user_info);
+			
+			return TRUE;
+		}
+		
+		return FALSE;
+	}
 
 }
 
