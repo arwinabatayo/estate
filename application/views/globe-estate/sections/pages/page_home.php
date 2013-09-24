@@ -253,7 +253,7 @@
 				</div>
 
 				<?php // settle overdue balance ty popup ?>
-				<div class="globe-dialog" id="dialog_settle_overdue_ty" title="Settle Your Overdue">
+				<div class="globe-dialog" id="dialog_settle_overdue_ty" title="Thank You.">
 					<span class="span4 textcenter">
 						We will get back to you in <strong id="hours">5</strong> hours or <strong id="days">6</strong> days once we confirmed your payment.
 					</span>

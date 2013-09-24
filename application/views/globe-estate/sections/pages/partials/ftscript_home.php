@@ -249,7 +249,7 @@
 					var resp = jQuery.parseJSON( response );
 
 					if (resp.status == 'success') {
-						$('#dialog_settle_overdue').dialog("close");
+						$('#dialog_payment_channels').dialog("close");
 						$('#dialog_settle_overdue_ty').dialog("open");
 					} else {
 						alert(resp.msg);
