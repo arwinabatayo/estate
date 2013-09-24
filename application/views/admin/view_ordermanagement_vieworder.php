@@ -18,26 +18,106 @@
 		
 		<div class="g_pagelabel">
 			<div class="g_pagelabel_icon"><img src="<?php echo base_url(); ?>_assets/images/tools/edit.png" /></div>
-			<div class="g_pagelabel_text">My Order Details</div>
+			<div class="g_pagelabel_text">My Gadget</div>
 		</div>
 		
 		<table class="g_table zebra">
 			<tr><td class="g_widget">
+		
+			<form id="form_filter" class="g_form">
 				
-				My Order Details
+				<!-- gadget details -->
+				<div class="item">
+					<div class="label">Gadget</div>
+					<div class="input">
+						<select class="g_select" name="order_type" data-required="1">
+							<option value="0">Select gadget</option>
+							<?php foreach( $gadgets as $gadget ){ ?>
+								<?php if( $gadget['gadget_id'] == $this->input->post('order_type') ){ ?>
+									<option value="<?php echo $gadget['gadget_id']; ?>" selected="selected"><?php echo $gadget['name']; ?></option>
+								<?php }else{ ?>
+									<option value="<?php echo $gadget['gadget_id']; ?>"><?php echo $gadget['name']; ?></option>
+								<?php } ?>
+							<?php } ?>
+						</select>
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
+			</form>
 				
 			</td></tr>
 		</table>
 		
 		<div class="g_pagelabel">
 			<div class="g_pagelabel_icon"><img src="<?php echo base_url(); ?>_assets/images/tools/edit.png" /></div>
-			<div class="g_pagelabel_text">My Gadget</div>
+			<div class="g_pagelabel_text">My Order Details</div>
 		</div>
 		
 		<table class="g_table zebra">
 			<tr><td class="g_widget">
-					
-				My Gadget
+				
+				<!-- order reference number -->
+				<div class="item">
+					<div class="label">Order reference number</div>
+					<div class="input">
+						<input 	class="g_inputtext" 
+								type="text" 
+								name="order_reference_number" 
+								value="<?php echo $order_details['order_number']; ?>" 
+								maxlength="200" />
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
+				<!-- account number -->
+				<div class="item">
+					<div class="label">Account number</div>
+					<div class="input">
+						<input 	class="g_inputtext" 
+								type="text" 
+								name="account_number" 
+								value="<?php echo $account_details['account_id']; ?>" 
+								maxlength="200" />
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
+				<!-- application type -->
+				<div class="item">
+					<div class="label">Application type</div>
+					<div class="input">
+						<select class="g_select" name="order_type" data-required="1">
+							<option value="0">Select application type</option>
+							<?php foreach( $order_types as $order_type ){ ?>
+								<?php if( $order_type['id'] == $this->input->post('order_type') ){ ?>
+									<option value="<?php echo $order_type['id']; ?>" selected="selected"><?php echo $order_type['title']; ?></option>
+								<?php }else{ ?>
+									<option value="<?php echo $order_type['id']; ?>"><?php echo $order_type['title']; ?></option>
+								<?php } ?>
+							<?php } ?>
+						</select>
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
+				<!-- plan types -->
+				<div class="item">
+					<div class="label">Plan type</div>
+					<div class="input">
+						<select class="g_select" name="order_type" data-required="1">
+							<option value="0">Select plan type</option>
+							<?php foreach( $plan_types as $plan_type ){ ?>
+								<?php if( $plan_type['main_plan_id'] == $this->input->post('plan_type') ){ ?>
+									<option value="<?php echo $plan_type['main_plan_id']; ?>" selected="selected"><?php echo $plan_type['title']; ?></option>
+								<?php }else{ ?>
+									<option value="<?php echo $plan_type['main_plan_id']; ?>"><?php echo $plan_type['title']; ?></option>
+								<?php } ?>
+							<?php } ?>
+						</select>
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
 				
 			</td></tr>
 		</table>
@@ -50,8 +130,75 @@
 		<table class="g_table zebra">
 			<tr><td class="g_widget">
 				
-				My Delivery
-				
+				<!-- delivery type -->
+				<div class="item">
+					<div class="label">Delivery type</div>
+					<div class="input">
+						<input 	class="delivery_type_toggle" 
+								data-delivery-type="delivery" 
+								type="radio" 
+								<?php if( $order_details['delivery_type'] && $order_details['delivery_type'] == 'delivery' ){ echo 'checked="checked"'; } ?> 
+								name="delivery_type" 
+								maxlength="200"
+								value="delivery" /> Delivery
+						<input 	class="delivery_type_toggle" 
+								data-delivery-type="pickup" 
+								type="radio" 
+								<?php if( $order_details['delivery_type'] && $order_details['delivery_type'] == 'pickup' ){ echo 'checked="checked"'; } ?> 
+								name="delivery_type" 
+								maxlength="200"
+								value="pickup" /> Pickup
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				<hr />
+				<div class="item deliverytype deliverytypedelivery"  style="display: <?php if( $order_details['delivery_type'] == 'delivery' ){ echo 'block;'; }else{ echo 'none;'; } ?>">
+					<div class="input">
+						<input 	class="shipto" 
+								type="radio" 
+								checked="checked" 
+								name="shipto" 
+								value="shiptomybillingaddress" /> Ship to my Billing Address
+					</div>
+					<div class="h_clearboth"></div>
+					<div class="input">
+						<input 	class="shipto" 
+								type="radio" 
+								name="shipto" 
+								value="shiptodifferentaddress" /> Ship to Different Address
+					</div>
+					<div class="h_clearboth"></div>
+					<div class="item" id="add-different-address" style="display: none;">
+						different address <br />
+						different address <br />
+						different address <br />
+					</div>
+					<script type="text/javascript">
+						$('input[name="shipto"]').change(function(){
+							var shipto = $(this).val();
+							
+							if( shipto == 'shiptodifferentaddress'){
+								$('#add-different-address').css('display', 'block');
+							}else{
+								$('#add-different-address').css('display', 'none');
+							}
+						});
+					</script>
+				</div>
+				<div class="item deliverytype deliverytypepickup" style="display: <?php if( $order_details['delivery_type'] == 'pickup' ){ echo 'block;'; }else{ echo 'none;'; } ?>">
+					<div class="input">
+						pickup
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				<script type="text/javascript">
+					$('input[name="delivery_type"]').change(function(){
+						var deliverytype = $(this).val();
+						
+						$('.item.deliverytype').css('display', 'none');
+						$('.item.deliverytype.deliverytype' + deliverytype).css('display', 'block');
+					});
+				</script>
 			</td></tr>
 		</table>
 		

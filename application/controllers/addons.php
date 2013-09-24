@@ -34,6 +34,8 @@ class Addons extends MY_Controller
 		$this->_data->gadget_care = $this->products->get_add_ons_by_category(1);
 		$this->_data->freebies = $this->products->get_add_ons_by_category(2);
 		$this->_data->offers = $this->products->get_add_ons_by_category(3);
+		$this->_data->cart_contents = $this->cart->contents();
+
 
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}

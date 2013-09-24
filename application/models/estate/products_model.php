@@ -106,12 +106,14 @@ class Products_model extends CI_Model
 
 				$query = $this->db->get("estate_gadgets");
 
-				$row = $query->result();
+				$row = $query->row();
 
-				print_r($row);
-				
+				//print_r($row);
+				$out['title'] = $row->name;
+				$out['amount'] = $row->amount;
 			}
 			// combo and booster adding to cart
+			
 			return $out;
 			
 	}
@@ -141,7 +143,7 @@ class Products_model extends CI_Model
 		
 		
 		//var_dump($plan_id_where); exit;
-		$this->db->where('plan', $plan_id);
+		$this->db->where('plan_id', $plan_id);
 		$this->db->where('gadget_id', $gadget_id);
 		
 		$query = $this->db->get('estate_gadget_cash_out');
@@ -289,6 +291,7 @@ class Products_model extends CI_Model
 		
 		return $row->total_pv;
 	}
+
 
 	function get_gadget_cash_out_package_plan($package_plan_id, $gadget_id) {
 		

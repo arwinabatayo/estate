@@ -80,6 +80,13 @@ class Ajax extends MY_Controller
 								'last_name'  => $user_details['last_name'],
 								'browser'  => $browser,
 								'logged_in' => TRUE);
+			
+			/*// detect if user type is ecommerce
+			if( $user_details['user_type'] > ROLE_SUPER_ADMIN ){
+				$user_functions = $this->model_users->getUserFunctionsByUserType($user_details['user_type']);
+				$newdata['allowed_user_functions'] = $user_functions;
+			}*/
+			
 			$this->session->set_userdata($newdata);
 					
 			// log changes

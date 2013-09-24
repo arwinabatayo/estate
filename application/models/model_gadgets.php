@@ -36,6 +36,17 @@ class Model_gadgets extends CI_Model
 		return $data;
 	}
 	
+	function getAllGadgetsByStatus($status=null){
+		if( in_array($status, array(0=>0, 1=>1)) ){
+			$this->db->where('is_active', $status);
+			$query = $this->db->get('estate_gadgets');
+			return $query->result_array();
+		}else{
+			$query = $this->db->get('estate_gadgets');
+			return $query->result_array();
+		}
+	}
+	
 	function getGadgetDetails($bundle_id, $gadget_id = 0) {
 		
 		$this->db->where('id', $bundle_id);

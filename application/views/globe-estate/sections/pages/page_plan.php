@@ -78,10 +78,10 @@
 	                    <div>
 	                        <h3><a href="#">Choose Your Plan</a></h3>
 	                        <div>
-								
+								<?php $total_active_plan = count($plans); ?>
 								<!-- START OF PLAN-TYPE TABLE -->
 								<!-- ======================= -->
-								<div id="plantype-table" class="pricing-tables textcenter">
+								<div id="plantype-table" class="pricing-tables textcenter totalcol<?php echo $total_active_plan ?>">
 
 									<?php  if($plans){ 
 
@@ -91,7 +91,7 @@
 												if(intval($row->status) == 1){
 										?>
 									<!-- PRICING TABLE -->
-									<div class="noLeftMargin">
+									<div class="noLeftMargin" id="plan-type-<?php echo $row->main_plan_id ?>">
 
 										<div class="plan over <?php echo ($i==2) ? 'best-value':''?>">
 											<div class="header">
@@ -116,6 +116,42 @@
 
 								</div>
 								<!--END OF PLAN-TYPE TABLE -->
+
+								<div id="packageplantype-options" class="textcenter" style="display:none">
+									
+									<p><button class="btn-large ui-button-success btn-show-packageplantype">SHOW PLAN TYPE OPTIONS</button></p>
+									
+									<br />
+									
+									<div class="textright">
+										<h4 style="font-size:24px;font-weight:normal"></h4>
+										<p style="font-size:110%">Nullam suscipit ultrices enim. Ut nec sem. Quisque laoreet vulputate dui. Aenean rutrum diam vitae magna rhoncus lobortis. Nunc bibendum, dui in posuere blandit, ante nibh varius felis, a commodo purus leo non risus.</p>
+									
+									</div>
+									<br />
+									<?php
+										if($package_plan_options){
+											foreach($package_plan_options as $package_plan){
+												?>
+													<div class="fleft" style="margin-right:12px; height:110px;width:200px; 
+													background:url('<?php echo $assets_path ?>images/plans/plan_temp.jpg') no-repeat 50% 50%">
+														<p style="padding:10px 20px 0px 20px;color:#FFF;font-size:22px">
+															<a style="color:#FFF" class="btnAddPackagePlan" data-pv="<?php echo $package_plan->total_pv ?>" data-id="<?php echo $package_plan->id ?>" data-name="<?php echo $package_plan->title ?>" href="javascript:void(0)">
+																<?php echo $package_plan->title ?>
+															</a>
+														</p>
+														<p style="color:#FFF;font-size:10px; padding:0 20px; min-height: 26px;"><b><?php echo $package_plan->description ?></b></p>
+														<p style="color:#FFF;font-size:12px; padding:0 20px;"><b>get <?php echo $package_plan->total_pv ?>PV/mo.</b></p>
+														<div class="my-plan-id" style="display:none"><?php echo $package_plan->id; ?></div>
+													</div>
+												<?php
+											}
+										}
+									?>
+									<p class="textright">
+										<button  class="btn-large ui-button-success" id="goPackagePlanCombos">CONTINUE</button>
+									</p>
+								</div>
 
 								<div id="plantype-options" class="textcenter" style="display:none">
 									
@@ -150,37 +186,17 @@
 									<?php 
 											}
 									} 
-									echo '<br class="clear" />';
-
-									if($package_plan_options){
-										foreach($package_plan_options as $package_plan){
-											?>
-												<div class="fleft" style="margin-right:12px; height:110px;width:200px; 
-												background:url('<?php echo $assets_path ?>images/plans/plan_temp.jpg') no-repeat 50% 50%">
-													<p style="padding:10px 20px 0px 20px;color:#FFF;font-size:22px">
-														<a style="color:#FFF" class="btnAddPackagePlan" data-pv="<?php echo $package_plan->total_pv ?>" data-id="<?php echo $package_plan->id ?>" data-name="<?php echo $package_plan->title ?>" href="javascript:void(0)">
-															<?php echo $package_plan->title ?>
-														</a>
-													</p>
-													<p style="color:#FFF;font-size:10px; padding:0 20px; min-height: 26px;"><b><?php echo $package_plan->description ?></b></p>
-													<p style="color:#FFF;font-size:12px; padding:0 20px;"><b>get <?php echo $package_plan->total_pv ?>PV/mo.</b></p>
-													<div class="my-plan-id" style="display:none"><?php echo $package_plan->id; ?></div>
-												</div>
-											<?php
-										}
-									}
-
-
 
 									?>
+									
+									<br class="clear" />
+									
 									<div>
 									<p class="textright">
 										<button  class="btn-large ui-button-success" id="goCombos">CONTINUE</button>
 									</p>
 
-									<p class="textright" style="display:none;">
-										<button  class="btn-large ui-button-success" id="goPackagePlanCombos">CONTINUE</button>
-									</p>
+									
 									</div>
 									<!-- class="row-fluid product-row"-->
 

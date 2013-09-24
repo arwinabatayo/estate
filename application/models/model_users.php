@@ -199,5 +199,27 @@ class Model_users extends CI_Model
 		return;	
 	}	
 	
+	function getUserFunctionsByUserType($user_type=null)
+	{
+		if( $user_type != null ){
+			$this->db->where('user_type_id', $user_type);
+			$query = $this->db->get('user_type');
+			
+			if( $query->num_rows() > 0 ){
+				$user_type_details = $query->row_array();
+				
+				if( isset($user_type_details['allowed_functions']) ){
+					return explode(',', $user_type_details['allowed_functions']);
+				}else{
+					return array();
+				}
+			}else{
+				return array();
+			}
+		}else{
+			return array();
+		}
+	}
+	
 }
 ?>

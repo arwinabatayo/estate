@@ -3,9 +3,17 @@
 	//hassle to paxencia na, need to separate prod type into basket (accordion)
 		
 		//TODO - add to table
-		$cartProdFiltered = array('accessories'=>array(),'addon'=>array(),'plan'=>array(), 'combos'=>array(), 'boosters'=>array(), 'packageplan'=>array()); //store it on each key(prod type)
-	
-		$cartItems = $this->cart->contents();
+		$cartProdFiltered = array('accessories'=>array(),'addon'=>array(),'plan'=>array(), 'combos'=>array(), 'boosters'=>array(), 'package_plan'=>array()); //store it on each key(prod type)
+		
+		//Changed implementation of getting cart contents - burgos
+		//$cartItems = $this->cart->contents(); 
+		if($cart_contents){
+			$cartItems = $cart_contents;
+		}else{
+			$cartItems = array();
+		}
+
+		
 
 		if($cartItems){
 			foreach($cartItems as $item){
@@ -23,6 +31,23 @@
 				$gadget_cash_out =  $item['gadget_cash_out'];
 			}
 		}
+
+		$cart_package_plan = '';
+		$cart_package_plan = @$cartProdFiltered['package_plan'];
+		$package_plan_combos = '';
+		
+
+		if($cart_package_plan) {
+			foreach($cart_package_plan as $item) {
+				$plan_name =  $item['name'];
+				$plan_pv =  $item['peso_value'];
+				$gadget_cash_out =  $item['price'];
+				$package_plan_combos = $item['package_plan_combos'];
+			}
+		}
+
+
+
 	?>		
 			
 		
@@ -38,7 +63,7 @@
 						    //print_r($user);
 						?>
 	                    <div>
-	                        <h3><a href="#">My Account - 0915-2211334</a></h3>
+	                        <h3><a href="#">My Account - 0915-1178863</a></h3>
 	                        <div>
 							<?php if($user){ ?>
 								<?php if($user->mobile_number){ ?>
@@ -182,25 +207,31 @@
 									?>
 									</div>
 
+									<!--<hr>
+									<em>Package Plan</em>
+									<br/>
+									<div id="PackagePlanCartWidget" class="cartWidget">
+										<?php $explode_plan = explode(" ", $plan_name);?>
+										<em class="normal" style="font-family:Arial,sans-serif"><?php echo "<strong>" . $explode_plan[0] . ": </strong>" . $explode_plan[1]; ?></em></p>
+										<p><strong>Monthly Payment:</strong> <?php echo $explode_plan[1]; ?></p>
+										<?php foreach($package_plan_combos as $key => $value){ ?>
+											<p><strong><?php echo $package_plan_combos[$key]['category']; ?>:</strong> <?php echo $package_plan_combos[$key]['description']; ?></p>
+										<?php } ?>
+	                        		</div>-->
+
+	                        		<hr>
+	                        		<em>Package Plan</em>
+									<br/>
+									<div id="PackagePlanCartWidget" class="cartWidget">
+
+									</div>
+
+
 								</p>
-									<!-- <p><strong>Packaged Plan</strong> <br /> 
-									<em class="normal" style="font-family:Arial,sans-serif">Plan <?php echo number_format($cart_plan['price'],2) ?></em></p>
-									<p><strong>Monthly Payment:</strong> <?php echo number_format($cart_plan['price_formatted'],2) ?></p>
-									<p><strong>Text:</strong> Unlitext for 30 days</p>
-									<p><strong>Call:</strong> 20mins Free Call/month</p>
-									<p><strong>Surf:</strong> 10 hourse Free Internet Surfing</p>
-									<p><strong>IDD:</strong> Free 2 hours call/month</p> -->
 		                        </div>
 
 
 		                        <!-- Package Plan -->
-
-		                        <div id="package-plan-items">
-		                        	<em>Package Plan</em>
-		                        	<div id="PackagePlanCartWidget" class="cartWidget" style="display:none;">
-
-	                        		</div>
-	                        	</div>	
 
 	                        </div>
 

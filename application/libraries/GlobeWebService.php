@@ -114,6 +114,41 @@ class GlobeWebService
 		return $result_array['soapenv:Envelope']['soapenv:Body']['ema:sendEmailResponse']['SendEmailResult'];	 
 	 }
     }
+
+    /*
+     * Get Subscriber By Msisdn
+     * @string $MSISDN required
+     * @return array response
+     */
+    public function GetSubscriberByMsisdn($MSISDN = NULL)
+    {
+        if(empty($MSISDN)) return "Invalid Parameters: Please check your parameters";
+	
+        $MSISDN= ltrim ($MSISDN,'0');
+        
+        $xml = '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:bil="http://www.globe.com/warcraft/wsdl/billing/">';
+        $xml .= '<soap:Header/>';
+        $xml .= '<soap:Body>';
+        $xml .= '<bil:GetSubscriberByMsisdn>';
+        $xml .= '<MSISDN>'.$MSISDN.'</MSISDN>';
+        $xml .= '</bil:GetSubscriberByMsisdn>';
+        $xml .= '</soap:Body>';
+        $xml .= '</soap:Envelope>';
+        
+        $xml_post_string = $xml;
+        $headers = $this->_soap_headers($xml_post_string);
+         
+        $xml_response = $this->_connect($this->_billing, $xml_post_string, $headers);
+        $result =  str_replace(array('<soap:Header>', '</soap:Header>', '<soap:Body>', '</soap:Body>'),"", $xml_response);
+        $result_array = $this->_xml2array($result);
+
+	 if(isset($result_array['soap:Envelope']['soap:Body']['soap:Fault'])) {
+		return "Error: Please check your parameters";
+	 } else {
+		return $result_array['soap:Envelope']['ns2:GetSubscriberByMsisdnResponse']['GetSubscriberByMsisdnResult'];	 
+	 }
+    }
+
     
     private function _connect($endpoint = NULL, $xml_post_string = NULL, $headers = NULL)
     {

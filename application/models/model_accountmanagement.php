@@ -878,5 +878,18 @@ class Model_accountmanagement extends CI_Model
 		$this->db->where('order_number', $order_number);
 		$this->db->update('estate_orders', $data);
 	}
+	
+	function getAccountAddressByType($address_type, $account_id)
+	{
+		$this->db->where('account_id', $account_id);
+		$this->db->where('address_type', $address_type);
+		$query = $this->db->get('estate_account_addresses');
+		
+		if( $query->num_rows() > 0 ){
+			return $query->row_array();
+		}else{
+			return array();
+		}
+	}
 }
 ?>
