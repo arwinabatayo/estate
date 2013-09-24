@@ -129,7 +129,7 @@
 			$("#dialog_new_line").dialog("open");
 
 			$("#new-line-plan").click(function(){
-				window.location = "/estate/plan?get_new_line=true"
+				window.location = base_url+"estate/plan?get_new_line=true"
 			});
 
 			$("#new-line-prepaid-kit").click(function(){
@@ -249,7 +249,7 @@
 					var resp = jQuery.parseJSON( response );
 
 					if (resp.status == 'success') {
-						$('#dialog_settle_overdue').dialog("close");
+						$('#dialog_payment_channels').dialog("close");
 						$('#dialog_settle_overdue_ty').dialog("open");
 					} else {
 						alert(resp.msg);
