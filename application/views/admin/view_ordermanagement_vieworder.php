@@ -134,22 +134,71 @@
 				<div class="item">
 					<div class="label">Delivery type</div>
 					<div class="input">
-						<input 	class="" 
+						<input 	class="delivery_type_toggle" 
+								data-delivery-type="delivery" 
 								type="radio" 
-								<?php if( $this->input->post('delivery_type') && $this->input->post('delivery_type') == 'pickup' ){ echo 'checked="checked"'; } ?> 
-								name="delivery_type" 
-								maxlength="200"
-								value="pickup" /> Pickup
-						<input 	class="" 
-								type="radio" 
-								<?php if( $this->input->post('delivery_type') && $this->input->post('delivery_type') == 'delivery' ){ echo 'checked="checked"'; } ?> 
+								<?php if( $order_details['delivery_type'] && $order_details['delivery_type'] == 'delivery' ){ echo 'checked="checked"'; } ?> 
 								name="delivery_type" 
 								maxlength="200"
 								value="delivery" /> Delivery
+						<input 	class="delivery_type_toggle" 
+								data-delivery-type="pickup" 
+								type="radio" 
+								<?php if( $order_details['delivery_type'] && $order_details['delivery_type'] == 'pickup' ){ echo 'checked="checked"'; } ?> 
+								name="delivery_type" 
+								maxlength="200"
+								value="pickup" /> Pickup
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
-				
+				<hr />
+				<div class="item deliverytype deliverytypedelivery"  style="display: <?php if( $order_details['delivery_type'] == 'delivery' ){ echo 'block;'; }else{ echo 'none;'; } ?>">
+					<div class="input">
+						<input 	class="shipto" 
+								type="radio" 
+								checked="checked" 
+								name="shipto" 
+								value="shiptomybillingaddress" /> Ship to my Billing Address
+					</div>
+					<div class="h_clearboth"></div>
+					<div class="input">
+						<input 	class="shipto" 
+								type="radio" 
+								name="shipto" 
+								value="shiptodifferentaddress" /> Ship to Different Address
+					</div>
+					<div class="h_clearboth"></div>
+					<div class="item" id="add-different-address" style="display: none;">
+						different address <br />
+						different address <br />
+						different address <br />
+					</div>
+					<script type="text/javascript">
+						$('input[name="shipto"]').change(function(){
+							var shipto = $(this).val();
+							
+							if( shipto == 'shiptodifferentaddress'){
+								$('#add-different-address').css('display', 'block');
+							}else{
+								$('#add-different-address').css('display', 'none');
+							}
+						});
+					</script>
+				</div>
+				<div class="item deliverytype deliverytypepickup" style="display: <?php if( $order_details['delivery_type'] == 'pickup' ){ echo 'block;'; }else{ echo 'none;'; } ?>">
+					<div class="input">
+						pickup
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				<script type="text/javascript">
+					$('input[name="delivery_type"]').change(function(){
+						var deliverytype = $(this).val();
+						
+						$('.item.deliverytype').css('display', 'none');
+						$('.item.deliverytype.deliverytype' + deliverytype).css('display', 'block');
+					});
+				</script>
 			</td></tr>
 		</table>
 		
