@@ -192,3 +192,66 @@
 				}
 			}]
 		});
+
+		$('button#settle-overdue-cc').click(function(){
+			// credit card page
+			// alert('Credit card');
+			window.location.href= base_url + 'payment/gateway';
+		});
+
+		$('button#settle-overdue-gcash').click(function(){
+			// show gcash flow
+			// alert('G-Cash');
+			window.location.href= base_url+'payment/gcash';
+		});
+
+		$('a#account-settled').click(function(){
+			// opens payment channel window
+			$('#dialog_settle_overdue').dialog("close");
+			$('#dialog_payment_channels').dialog("open");
+			$('input:radio[name=payment_channel]').click(function(){
+				$('#dialog_payment_channels h4').html($('input:radio[name=payment_channel]:checked').val());
+			});
+		});
+
+		$('a#get-prepaid-kit').click(function(){
+			// redirects to prepaid kit flow
+			$.ajax({
+				url: base_url+'cart/addprepaidtocart',
+				success: function(response){
+
+					var resp = jQuery.parseJSON( response );
+
+					if (resp.status == 'success') {
+				       window.location = resp.cart_url;
+					} else {
+						alert(resp.msg);
+					}
+
+				},
+				error: function(){
+					alert('Some error occured or the system is busy. Please try again later');
+				}
+			});
+		});
+
+		$('form#form-settle-overdue').click(function(){
+			// redirects to prepaid kit flow
+			$.ajax({
+				url: base_url+'home/sendpaymentchannel',
+				success: function(response){
+
+					var resp = jQuery.parseJSON( response );
+
+					if (resp.status == 'success') {
+						
+					} else {
+						alert(resp.msg);
+					}
+
+				},
+				error: function(){
+					alert('Some error occured or the system is busy. Please try again later');
+				}
+			});
+		});
