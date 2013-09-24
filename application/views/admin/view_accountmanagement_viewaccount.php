@@ -97,7 +97,7 @@
 				
 				<!-- account category -->
 				<div class="item">
-					<div class="label">Account category <?php echo 'x' . $fin_account_category; ?></div>
+					<div class="label">Account category</div>
 					<div class="input">
 						<select class="g_select" name="account_category">
 							<option value="0">Select account category</option>
