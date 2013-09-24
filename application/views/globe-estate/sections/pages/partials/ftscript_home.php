@@ -235,16 +235,22 @@
 			});
 		});
 
-		$('form#form-settle-overdue').click(function(){
-			// redirects to prepaid kit flow
+		$('form#form-settle-overdue button').click(function(){
+			payment_channel = $('input:radio[name=payment_channel]:checked').val();
+			ref_num = $('#ref_num').val();
+			or_num = $('#or_num').val();
+
 			$.ajax({
 				url: base_url+'home/sendpaymentchannel',
+				data: 'payment_channel='+payment_channel+'&ref_num='+ref_num+'&or_num='+or_num,
+				type: 'post',
 				success: function(response){
 
 					var resp = jQuery.parseJSON( response );
 
 					if (resp.status == 'success') {
-						
+						$('#dialog_settle_overdue').dialog("close");
+						$('#dialog_settle_overdue_ty').dialog("open");
 					} else {
 						alert(resp.msg);
 					}

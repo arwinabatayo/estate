@@ -413,7 +413,26 @@ class Home extends MY_Controller
 
     }
     
+    function sendpaymentchannel()
+    {
+    	$d = (object) $this->input->post();
 
+    	// store or send to email the settlement made
+    	$pch = $d->payment_channel;
+    	$refnum = $d->ref_num;
+    	$ornum = $d->ref_num;
+    	$is_sent = true;
+
+    	if ($is_sent) {
+    		// show ty popup
+    		$data['status'] = 'success';
+    	} else {
+    		$data['status'] = 'error';
+    		$data['msg'] = 'An error occurred. Please try again later.';
+    	}
+
+    	echo json_encode($data); exit;
+    }
 
 }
 
