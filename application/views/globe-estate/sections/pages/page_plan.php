@@ -348,3 +348,12 @@
 					<a href="javascript: void(0);" id="add-prepaid-to-cart">Add to Cart</a>
 			    </div>
 			</div>
+
+			<div class="globe-dialog" id="dialog-exceed-limit" title="Exceed Limit">
+			    <div style="width: 400px; text-align: center;">
+			    	You have exceeded your credit limit. <br/>
+			    	Lorem ipsum dolor sit amet, usu at utinam interpretaris. Ne sed legendos volutpat. Ius facer delenit ex. Te quo oratio elaboraret, usu omnesque similique et, eos et mutat erant dicam. Utroque consulatu his id, pericula conceptam mei no.<br/><br/>
+					<a href="javascript: void(0);" id="retain-current-plan">Retain your Current Plan</a> or
+					<a href="javascript: void(0);" id="other-plan">Choose other Plan</a>
+			    </div>
+			</div>
