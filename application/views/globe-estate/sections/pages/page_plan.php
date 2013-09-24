@@ -150,7 +150,7 @@
 									<?php 
 											}
 									} 
-
+									echo '<br class="clear" />';
 
 									if($package_plan_options){
 										foreach($package_plan_options as $package_plan){

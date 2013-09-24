@@ -2,6 +2,7 @@
 			
 			$('button#btn-add-device-continue').on('click', function(){
 					var formData  = $('form#addGadget').serialize();	
+					showPreloader();
 					$.ajax({
 						url: base_url+'cart/addtocart',
 						data: formData,
@@ -15,6 +16,8 @@
 							}else{
 								alert(resp.msg);
 							}
+							
+							closePreloader();
 							
 						}, 
 						error: function(){
