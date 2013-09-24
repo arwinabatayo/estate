@@ -73,6 +73,7 @@ class Accounts_model extends CI_Model
 
 		$result = $query->row_array();
 
+
 		if(count($result) == 0) return FALSE;
 
 		return $result;

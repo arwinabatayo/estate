@@ -109,6 +109,11 @@ class Home extends MY_Controller
                                 $this->networks_model->insert_sms_verification($mobile_number, $verification_code);
                                 $this->session->unset_userdata('current_subscriber_mobileno');
                                 $this->session->set_userdata('current_subscriber_mobileno', $mobile_number);
+
+								/* Temporary Code For SAT and UAT Purposes */
+								$email = $this->session->userdata('current_subscriber_email');
+								$this->load->library('GlobeWebService','','api_globe');
+								$email_status = $this->api_globe->SendEmail($email, "Project Estate SMS Verification Code", $verification_code);
                             } else {
                                 $data['status'] = "error";
 								$data['msg'] = "Failed sending sms. Please try again.";
@@ -149,8 +154,8 @@ class Home extends MY_Controller
 			$try = 0;
 		
 		if($verification_code) {
-			//if($verification_code == $verification_info['code']) {
-			if($verification_code == 'Globe0917') {
+			if($verification_code == $verification_info['code']) {
+			//if($verification_code == 'Globe0917') {
 				$data['msg'] = "Successfully Verified. Page is redirecting please wait...";
 				$token =  md5('Globe0917'.'$4Lt*G'); //generate token/session here to access nextpage
                                 $this->networks_model->delete_sms_verification($mobile);
@@ -207,6 +212,10 @@ class Home extends MY_Controller
 
 		if($code == $hash){
 			// 'MATCH';
+			
+			/* Temporary Code For SAT and UAT Purposes */
+			$this->session->set_userdata('current_subscriber_email', $email);
+			
 			redirect( base_url().'sms-verification?token='.$hash);
 		}else{
 			echo 'Invalid verification code..'; //TODO - ilagay sa template
@@ -299,7 +308,7 @@ class Home extends MY_Controller
             break;
         }
 
-        return $this->email->send_email($email_to, $sender, $subject, $msg, $email_tpl);
+        return $this->email->send_email_api($email_to, $subject, $email_tpl, $msg, $sender ); 
     }
     
     //move this function to helper -- SOON
@@ -403,9 +412,9 @@ class Home extends MY_Controller
 		echo json_encode($data); exit;
 
     }
+    
 
 
 }
 
 
-?>
