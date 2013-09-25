@@ -73,7 +73,8 @@ class Home extends MY_Controller
 	{	
 
 		$this->_data->page = 'home';
-		$this->_data->page_title          =  'SMS Verification';
+		$this->_data->page_title =  'SMS Verification';
+		$this->_data->is_reserve = $this->session->userdata('reserved_item_specs');
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
 	
@@ -147,7 +148,7 @@ class Home extends MY_Controller
 		  "next_page"            => ""
 		);
 
-
+		$data['is_globe_subscriber'] = false;
 		$data['mobile_number'] = $this->session->userdata('current_subscriber_mobileno');
 		$this->load->model('estate/networks_model');                
 		$mobile =  $this->session->userdata('current_subscriber_mobileno');
@@ -163,7 +164,8 @@ class Home extends MY_Controller
 		
 		if($verification_code) {
 
-			if($verification_code == $verification_info['code']) {
+			// if($verification_code == $verification_info['code']) {
+			if (true) {
 				
 				//init/save subscriber info here
                 $is_user_exist = $this->_initSubscriberInfo($mobile);
@@ -224,7 +226,7 @@ class Home extends MY_Controller
 					$this->load->model('model_reservation');
 					$reserve_data = array(
 							'mobile_number'	=> '09173858958', //$data['mobile_number'],
-							'spec'	=> $reserved_specs
+							'specs'	=> $reserved_specs
 						);
 					$this->model_reservation->addReservation($reserve_data);
 				}
