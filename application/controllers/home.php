@@ -164,8 +164,8 @@ class Home extends MY_Controller
 		
 		if($verification_code) {
 
-			// if($verification_code == $verification_info['code']) {
-			if (true) {
+			if($verification_code == $verification_info['code']) {
+			//if (true) {
 				
 				//init/save subscriber info here
                 $is_user_exist = $this->_initSubscriberInfo($mobile);

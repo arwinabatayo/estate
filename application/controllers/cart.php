@@ -618,6 +618,11 @@ class Cart extends CI_Controller {
 		return $new_config;
 	}
 
+	function dump_order_config(){
+		echo '<pre>';
+		print_r( $this->session->userdata('order_config') );
+		echo '</pre>';
+	}
 	function get_order_config(){
 		return $this->session->userdata('order_config');
 	}

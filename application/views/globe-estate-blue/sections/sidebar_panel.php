@@ -65,8 +65,8 @@
 											<li><span>Plan:</span> 3799</li>
 											<?php } ?>
 											
-											<?php if($user->account_id ){ //TODO get from DB ?>
-											<li><span>Category:</span> Consumer</li>
+											<?php if($user->account_type_name ){ ?>
+											<li><span>Category:</span> <?php echo $user->account_type_name?></li>
 											<?php } ?>
 											
 											<?php if($user->name && $user->surname){ ?>
