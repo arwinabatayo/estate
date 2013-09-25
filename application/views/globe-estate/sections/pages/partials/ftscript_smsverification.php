@@ -43,9 +43,19 @@
 								   // return;
 								    
 									if(resp.status == 'success'){
-										if( resp.is_globe_subscriber == 'false' && resp.order_type == 'reserve'){
-											$('#dialog_reserve_form').dialog( "open" );
-											return;
+										if (resp.order_type == 'reserve') {
+											// close current dialog box
+											$('#dialog_verify_mobile').dialog( "close" );
+
+											if(!resp.is_globe_subscriber){
+												// open reserve form for non globe subscriber
+												$('#dialog_reserve_form').dialog( "open" );
+												return;
+											} else {
+												// open ty page, close after x secs and redirect to homepage
+												$('#dialog_thankyou_reserve').dialog( "open" );
+												setTimeout('$("#dialog_thankyou_reserve").dialog("close")', 5000);
+											}
 										}
 									}else{
 										if(resp.tries < 3){
@@ -62,8 +72,7 @@
 							});
 								
 					});
-					 
-					
+
 					$('button#btn_resend_vcode').click( function(e){
 
 						var code =	$(this).siblings('input[name="code_id"]').val();

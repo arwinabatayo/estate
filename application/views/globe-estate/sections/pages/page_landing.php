@@ -66,10 +66,3 @@
 				</div>
 
 			</div>
-
-
-			<?php if( isset($_GET['showtymsg']) ){ ?>
-	            <div class="globe-dialog" id="dialog_thankyou_reserve" title="Thank You!">
-					<p>We will send you an email update once the device become available.</p>
-	            </div>
-			<?php } ?>

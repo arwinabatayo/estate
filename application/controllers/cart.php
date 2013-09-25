@@ -671,4 +671,86 @@ class Cart extends CI_Controller {
 		return $package_plans_combos;
 	}
 
+	function reserveitem()
+	{
+		$d = (object) $this->input->post();
+		$this->load->model('model_reservation');
+		/*
+		// var_dump($d); exit;
+		$data['status'] = 'success';
+		$account_id = 1; // TODO : set to correct source of user
+		// get account info if globe subscriber
+		$this->load->model('estate/accounts_model');
+		$this->load->model('model_reservation');
+		$account_info = $this->accounts_model->get_account_info_by_id('09173858958');
+		// store serialize data on new db reserve table
+*/
+		if (!isset($d->from_reserve_form)) {
+			// temporarily save on session
+			// item data
+			$item_data = array(
+				'item_type'			=> $d->product_type,
+				'product_capacity'	=> $d->gadget_capacity,
+				'product_id'		=> $d->product_id,
+				'product_name'		=> $d->product_name,
+				'product_price'		=> $d->product_price		
+			);
+
+			$this->session->set_userdata('reserved_item_specs', json_encode($item_data));
+			$data['status'] = 'success';
+		} else {
+			// get spec from session
+			$item_data = $this->session->userdata('reserved_item_specs');
+			// get user data from reserve form
+			$reserve_data = array (
+				'account_id'	=> '',
+				'first_name'	=> $d->first_name,
+				'last_name'		=> $d->last_name,
+				'middle_name'	=> $d->middle_name,
+				'email'			=> $d->email,
+				'phone'			=> $d->phone,
+				'network_carrier'		=> $d->network_carrier,
+				'social_network_user_id'=>	$d->sn_uid, // TODO : define proper resource
+				'reserved_item_specs' 	=> json_encode($item_data),
+				'reserved_datetime'		=> date("Y-m-d H:i:s")
+			);
+			$insert_id = $this->model_reservation->addReservation($reserve_data);
+
+			if ($insert_id) {
+				$data['status'] = 'success';
+			} else {
+				$data['status'] = 'error';
+				$data['msg'] = 'An error occurred. Please try again later.';
+			}
+		}
+
+		
+	/*
+		$reserve_data = array (
+			'account_id'	=> $account_id,
+			'first_name'	=> $account_info['name'],
+			'last_name'		=> $account_info['surname'],
+			'middle_name'	=> $account_info['middle'],
+			'email'			=> $account_info['email'],
+			'phone'			=> $account_info['mobile_number'],
+			'network_carrier'		=> 'Globe',
+			'social_network_user_id'=>	'', // TODO : define proper resource
+			'reserved_item_specs' 	=> json_encode($item_data),
+			'reserved_datetime'		=> date("Y-m-d H:i:s")
+		);
+		// var_dump($data); exit;
+		$insert_id = $this->model_reservation->addReservation($reserve_data);
+
+		if (!$insert_id) {
+			$data['status'] = 'error';
+			$data['msg'] = 'An error occurred. Please try again later.';
+		} else {
+			// set to session and unset later when delete_flag of reservation is updated to 'n'
+			$this->session->set_userdata('reserve_id', $insert_id);
+		}*/
+
+		echo json_encode($data); exit;
+		// TODO : get account details from reserve from for non globe and store on estate accounts
+	}
+
 }

@@ -135,43 +135,47 @@
 						 
 						 <br />
 						<h4 class="normal">Your Name</h4>
-						 
+						<form name="reserve-form" id="reserve-form">
 						  <div class="row-fluid">
 								<div class="span4">
 				                    <label>First Name</label>
-				                    <span><input class="inputbox" style="" type="text"></span>
+				                    <span><input class="inputbox" style="" type="text" name="first_name" id="first_name" /></span>
 				                </div>
 				                
 								<div class="span4">
 				                    <label>Last Name</label>
-				                    <span><input class="inputbox" style=";" type="text"></span>
+				                    <span><input class="inputbox" style="" type="text" name="last_name" id="last_name" /></span>
 				                </div>
 				                
 								<div class="span4">
 				                    <label>Middle Name</label>
-				                    <span><input class="inputbox" style="" type="text"></span>
+				                    <span><input class="inputbox" style="" type="text" name="middle_name" id="middle_name" /></span>
 				                </div>
 			              </div> 
 			              <br />
 						  <div class="row-fluid">
 								<div class="span3">
 				                    <label>Email</label>
-				                    <span>avargosino@yahoo.com</span>
+				                    <span><input type="hidden" name="email" id="email" value="avargosino@yahoo.com" />avargosino@yahoo.com</span>
 				                </div>
 				                
 								<div class="span3">
 				                    <label>Phone</label>
-				                    <span>0915-2211334</span>
+				                    <span><input type="hidden" name="phone" id="phone" value="09152211334" />0915-2211334</span> <?php // why is this hardcoded on the requirement? ?>
 				                </div>
 				                
 								<div class="span3">
-				                    <label>Middle Name</label>
-				                    <span><input class="inputbox" style="" type="text"></span>
+				                    <label>Network Carrier</label>
+				                    <span><select id="network_carrier" name="network_carrier">
+				                    	<option value="smart">Smart</option>
+				                    	<option value="suncel">Sun Cellular</option>
+				                    	<option value="others">Others</option>
+				                    </select></span>
 				                </div>
 				                
 								<div class="span3">
 					                <label>Social Network User ID</label>
-					                <span><input type="text" /></span>
+					                <span><input type="text" name="sn_uid" id="sn_uid" /></span>
 					                <br>
 					                <span>
 					                     <input name="sns_id" value="facebook" type="radio" checked="checked"> Facebook
@@ -180,11 +184,18 @@
 					                </span>
 				                </div>
 				                
-			              </div> 
+			              </div>
+			              		<input type="hidden" name="from_reserve_form" id="from_reserve_form" value="1" />
+			              </form> 
 			                
 					</div>
 	            </div>	
 	            
+	            <div class="globe-dialog" id="dialog_thankyou_reserve" title="Thank You!">
+					<p>We will send you an email update once the device become available.</p>
+	            </div>
+
+
 	            <?php // settle overdue balance popup ?>
 				<div class="globe-dialog" id="dialog_settle_overdue" title="Settle Your Overdue">
 					<span class="span4 textleft noLeftMargin">

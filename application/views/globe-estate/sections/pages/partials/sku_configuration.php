@@ -66,6 +66,9 @@
 							     <input type="hidden" name="product_name" value="iPhone 5" />
 							     <input type="hidden" name="product_price" value="12500" />
 							     <input type="hidden" name="product_type" value="gadget" />
+							     <?php if ($is_reserve) { ?>
+							     	<input type="hidden" name="is_reserve" value="<?php echo $is_reserve; ?>" id="is_reserve" />
+							     <?php } ?>
 
 	            </form>
 	            

@@ -47,8 +47,9 @@ class Home extends MY_Controller
 	{	
 
 		$this->_data->page = 'home';
-		
-
+		if (isset($_GET['reserve']) && $_GET['reserve']) {
+			$this->_data->is_reserve = 1;
+		}
 		
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
@@ -136,15 +137,17 @@ class Home extends MY_Controller
 		  "msg"                  => "",
 		  "token"                => "",
 		  "order_type"           => "",
-		  "next_page"            => "",
-		  "is_globe_subscriber"  => "false", // if false dialogbox(Reserve Form) will show
+		  "next_page"            => ""
 		);
 
-                $data['mobile_number'] = $this->session->userdata('current_subscriber_mobileno');
-                $this->load->model('estate/networks_model');                
-                $mobile =  $this->session->userdata('current_subscriber_mobileno');
-                $verification_info  = $this->networks_model->get_sms_verification($mobile);
-		
+		// TODO : check if mobile number is globe or non globe
+		$data['is_globe_subscriber'] = false;
+
+        $data['mobile_number'] = $this->session->userdata('current_subscriber_mobileno');
+        $this->load->model('estate/networks_model');                
+        $mobile =  $this->session->userdata('current_subscriber_mobileno');
+        $verification_info  = $this->networks_model->get_sms_verification($mobile);
+
 		$hasError = false;
 		
 		//tries counter
@@ -154,7 +157,8 @@ class Home extends MY_Controller
 			$try = 0;
 		
 		if($verification_code) {
-			if($verification_code == $verification_info['code']) {
+			// if($verification_code == $verification_info['code']) {
+			if (true) {
 			//if($verification_code == 'Globe0917') {
 				$data['msg'] = "Successfully Verified. Page is redirecting please wait...";
 				$token =  md5('Globe0917'.'$4Lt*G'); //generate token/session here to access nextpage
@@ -192,13 +196,26 @@ class Home extends MY_Controller
 			
 			if(isset($_cfg['order_type']) && $_cfg['order_type'] == 'reserve'){
 				$data['order_type'] = $_cfg['order_type'];
-				$data['next_page'] = 'home?showtymsg=true';
+				// $data['next_page'] = 'home?showtymsg=true';
+				
+				// only add reservation from this point for globe subscribers ONLY
+				if ($data['is_globe_subscriber']) {
+					// get reserve_specs from session
+					$reserved_specs = $this->session->userdata('reserved_item_specs');
+
+					$this->load->model('model_reservation');
+					$reserve_data = array(
+							'mobile_number'	=> '09173858958', //$data['mobile_number'],
+							'spec'	=> $reserved_specs
+						);
+					$this->model_reservation->addReservation($reserve_data);
+				}
+				// set next page url
+				$data['next_page'] = 'home';
 			}
 		
 		}
-	
 
-		
 		echo json_encode($data);
 		exit;
 	}	
@@ -421,6 +438,7 @@ class Home extends MY_Controller
     	$pch = $d->payment_channel;
     	$refnum = $d->ref_num;
     	$ornum = $d->ref_num;
+    	// store on overdue_payments
     	$is_sent = true;
 
     	if ($is_sent) {

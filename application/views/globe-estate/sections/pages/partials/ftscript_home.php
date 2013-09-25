@@ -98,10 +98,15 @@
 		});			
 		
 		$('button#open_enter_email').on('click', function(){
-				var formData  = $('form#addGadget').serialize();
-						
+				var formData = $('form#addGadget').serialize();
+				var _action = 'cart/addtocart';
+
+				if ($('#is_reserve').val()) {
+					_action = 'cart/reserveitem';
+				}
+
 				$.ajax({
-					url: base_url+'cart/addtocart',
+					url: base_url + _action,
 					data: formData,
 					type:'post',
 					success: function(response){
@@ -109,7 +114,7 @@
 						var resp = jQuery.parseJSON( response );
 								//alert ( JSON.stringify(response) );
 								//return;	
-						if(resp.status == 'success' && resp.rowid){
+						if(resp.status == 'success'){
 							$( '#dialog_enter_email' ).dialog( "open" );
 						}else{
 							alert(resp.msg);
