@@ -703,17 +703,18 @@ class Cart extends CI_Controller {
 			$item_data = $this->session->userdata('reserved_item_specs');
 			// get user data from reserve form
 			$reserve_data = array (
-				'account_id'	=> '',
-				'first_name'	=> $d->first_name,
-				'last_name'		=> $d->last_name,
-				'middle_name'	=> $d->middle_name,
-				'email'			=> $d->email,
-				'phone'			=> $d->phone,
+				'account_id'			=> '',
+				'first_name'			=> $d->first_name,
+				'last_name'				=> $d->last_name,
+				'middle_name'			=> $d->middle_name,
+				'email'					=> $d->email,
+				'msisdn'				=> $d->phone,
 				'network_carrier'		=> $d->network_carrier,
-				'social_network_user_id'=>	$d->sn_uid, // TODO : define proper resource
-				'reserved_item_specs' 	=> json_encode($item_data),
+				'social_network_user_id'=> $d->sn_uid, // TODO : define proper resource
+				'reserved_item_specs' 	=> $item_data,
 				'reserved_datetime'		=> date("Y-m-d H:i:s")
 			);
+			
 			$insert_id = $this->model_reservation->addReservation($reserve_data);
 
 			if ($insert_id) {

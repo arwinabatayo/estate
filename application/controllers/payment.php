@@ -74,8 +74,17 @@ class Payment extends MY_Controller
 	
 	public function payorder()
 	{
+		$cc = $this->input->post('cc');
+		$year = $this->input->post('year');
+		$month = $this->input->post('month');
+		$cvc = $this->input->post('cvc');
 		
-	
+		$this->_data->page  = 'process_payment';
+		$this->_data->page_title          = 'Processing...';
+		$this->_data->show_breadcrumbs    =  false;
+		
+		$this->load->view("globe-estate/sections/pages/page_process_payment", $this->_data);
+		
 	}
 	
 

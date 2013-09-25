@@ -181,19 +181,45 @@
 						alert('Some error occured or the system is busy. Please try again later');	
 					}
 				});
-			})
-
+			});
 			
 		});
 		
+		$('a#non-globe-reserve').click(function(){
+			$('#dialog_enter_mobile').dialog("close");
+			$('#dialog_reserve_form').dialog("open");
+		});
+
 		//for none globe
 		$('#dialog_reserve_form').dialog({
 			autoOpen: false,
 			buttons: [{
 				text: "OK",
 				click: function() {
-					   $( this ).dialog( "close" );
-					   window.location.href = base_url+'home?showtymsg=true';
+					   var formData = $('form#reserve-form').serialize();
+					   // call reserve item action
+					   $.ajax({
+					   		url  : 'cart/reserveitem',
+					   		data : formData,
+					   		type : 'post',
+					   		success : function(response){
+					   			resp = jQuery.parseJSON(response);
+					   			if (resp.status == 'success') {
+					   				// show popup
+					   				$('#dialog_reserve_form').dialog("close");
+					   				$('#dialog_thankyou_reserve').dialog("open");
+					   				setTimeout('$("#dialog_thankyou_reserve").dialog("close")', 5000);
+					   			} else {
+
+					   			}
+
+					   		},
+					   		error : function(response){
+
+					   		} 
+					   });
+
+					   // window.location.href = base_url+'home?showtymsg=true';
 				}
 			}]
 		});
