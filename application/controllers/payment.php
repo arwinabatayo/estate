@@ -45,6 +45,14 @@ class Payment extends MY_Controller
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
 	
+	public function plan_summary()
+	{	
+		$this->_data->page  = 'plan_summary';
+		$this->_data->show_breadcrumbs    =  false;
+		
+		$this->load->view($this->_data->tpl_view, $this->_data);
+	}
+	
 	public function thankyou()
 	{	
 		$this->_data->page  = 'thankyou';

@@ -8,7 +8,7 @@
 				?>
                 
                 <div class="span9">
-                    <div class="accordion2 account-content" id="accordion3">
+                    <div class="accordion2 account-content active" id="accordion3">
                         <div class="accordion-group account-content-grp">
                           <div class="accordion-heading">
                             <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse4">
@@ -17,36 +17,54 @@
                           </div>
                           <div id="collapse4" class="accordion-body collapse" style="height: 0; ">
                             <div class="accordion-inner">
+								
+								<?php 
+								
+								if( isset($_GET['val']) && $_GET['val'] == 'newline' ){
+								
+									//GET NEWLINE
+									//IMPLEMENTED: MANAGE - PLATINUM ACCOUNT
+									//TODO: BUSINESS - 
+									include('page_plan_newline.php'); 
+								
+								}else if( isset($_GET['val']) && $_GET['val'] == 'reset' ){
+								
+									include('page_plan_reset.php'); 
+								
+								}else{	
+								
+								?>
+								
 								<div class="row-fluid">
                                 	<div class="ac-box-plan">
                                         <div class="span4 ac-boxes g-content">
-                                            <img src="<?php echo $ass?>images/renew-contract.png" />
+                                            <img src="<?php echo $assets_url ?>site-blue/images/retain-current-plan.png" />
                                             <span>Renew Contract</span>
                                             <blockquote>Lorem ipsum dolor sit amet, consectuer adispising  elit. Cras justo nulla, commodo nec mauris ut, interdum adipiscing  nisi</blockquote>
                                             <button class="blue-btn" onclick="window.location.href='<?php echo base_url() ?>plan?setOrderConfig=true&key=ordertype&val=renew'">Click here!</button>
                                         </div>
                                         <div class="span4 ac-boxes o-content">
-                                            <img src="images/get-a-new-line.png" />
+                                            <img src="<?php echo $assets_url ?>site-blue/images/get-a-new-line.png" />
                                             <span>Get A New Line</span>
                                             <blockquote>Lorem ipsum dolor sit amet, consectuer adispising  elit. Cras justo nulla, commodo nec mauris ut, interdum adipiscing  nisi</blockquote>  
                                             <button class="blue-btn" onclick="window.location.href='<?php echo base_url() ?>plan?setOrderConfig=true&key=ordertype&val=newline'">Click here!</button>
                                         </div>
                                         <div class="span4 ac-boxes r-content">
-                                            <img src="images/reset.png" />
+                                            <img src="<?php echo $assets_url ?>site-blue/images/reset.png" />
                                             <span>Reset</span>
                                             <blockquote>Lorem ipsum dolor sit amet, consectuer adispising  elit. Cras justo nulla, commodo nec mauris ut, interdum adipiscing  nisi</blockquote>                                    
                                             <button class="blue-btn" onclick="window.location.href='<?php echo base_url() ?>plan?setOrderConfig=true&key=ordertype&val=reset'">Click here!</button>
                                         </div>
                                     </div>
                                 </div>
+                                
+                                <?php } ?>
                             </div>
                           </div>
                         </div>
                         <div class="accordion-group account-content-grp">
                           <div class="accordion-heading">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapse5">
-                              SELECT PLAN <i class="tcoll collapse-toggle"></i>
-                            </a>
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapse5">SELECT PLAN <i class="tcoll collapse-toggle"></i></a>
                           </div>
                           <div id="collapse5" class="accordion-body in collapse" style="height: auto; ">
                             <div class="accordion-inner last-border">
@@ -99,7 +117,7 @@
                     <div class="row-fluid link-bottom">
                         <a class="pull-left">Get A Prepaid Kit</a>
                         <div class="pull-right">
-                        	<button class="blue-btn pull-right">Continue</button>
+                        	<button class="blue-btn pull-right" onclick="window.location.href='<?php echo base_url() ?>addons'">Continue</button>
                         </div>
 
                     </div>                             

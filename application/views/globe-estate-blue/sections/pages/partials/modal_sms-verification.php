@@ -16,12 +16,32 @@
 		<div style="display:none" class="status alert textcenter"></div>
       </div>
     </div>
-
+    
+	<!-- Enter Mobile Number -->
+    <div id="enterMobile" class="modal hide fade pop-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<button type="button" class="close pop-close" data-dismiss="modal" aria-hidden="true">×</button>        
+      <div class="modal-body pop-content">
+      	<img src="<?php echo $assets_path ?>site-blue/images/pop-entermodile.png" />
+        <br/><br/>
+        <span class="pop-txtblue-large">Enter your Phone Number</span>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
+        <div class="pop-inputmobile">
+			<span>Mobile Number</span><br/>
+			<input id="msisdn" name="msisdn" type="text" class="span3 active" data-provide="typeahead" placeholder="">
+        </div>
+		<button class="blue-btn" id="btnEnterMobileNum">Submit</button>
+		<div style="display:none" class="status alert textcenter"></div>
+        <br/><br/>
+        <a class="pop-txtblue-link clearfix">For Non -Globe postpaid subscribers, click here</a>
+        <br/><br/>
+      </div>
+    </div> 
+    
     <!-- verifyNumber -->
     <div id="verifyNumber" class="modal hide fade pop-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<button type="button" class="close pop-close" data-dismiss="modal" aria-hidden="true">×</button>        
       <div class="modal-body pop-content">
-      	<img src="images/pop-entermodile.png" />
+      	<img src="<?php echo $assets_path ?>site-blue/images/pop-entermodile.png" />
         <br/><br/>
         <span class="pop-txtblue-large">Verify Phone Number</span>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
@@ -32,9 +52,14 @@
             	<i class="arrow"></i>
             	Please retype your SMS verification code.
             </span>
-            <a class="pull-right">Resend Code</a>
+            <a class="pull-right" data-toggle="modal" data-target="#enterMobile" data-dismiss="modal">Resend Code</a>
         </div>
 		<button class="blue-btn" id="resendVcode">Verify</button>
 		<div style="display:none" class="status alert textcenter"></div>
       </div>
     </div> 
+    
+    
+    
+    
+    

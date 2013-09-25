@@ -111,7 +111,8 @@ class Home extends MY_Controller
                             $this->load->library('GlobeWebService','','api_globe');
                             $verification_code = random_string('alnum', 6);
                             $message = "Please use this code ".$verification_code." to verify your account.";
-                            $sms_status = $this->api_globe->api_send_sms($mobile_number, $message, "Project Esate");
+                            //$sms_status = $this->api_globe->api_send_sms($mobile_number, $message, "Project Esate");
+                            $sms_status = TRUE;
                             
                             if($sms_status == TRUE) {
                                 $this->load->model('estate/networks_model');

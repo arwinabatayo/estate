@@ -15,7 +15,12 @@
 	} else if($page == 'home'){ 
 		
 		include('pages/partials/modal_sku_config.php');
+
+	} else if($page == 'plan'){ 
+		
+		include('pages/partials/modal_plan.php');
 	}
+	
 	
 	if($current_method == 'sms_verification'){
 		include('pages/partials/modal_sms-verification.php');
@@ -70,7 +75,7 @@
 			 } 
 		} 
 		
-		/*
+
 		if($current_controller == 'plan' ){ 
 			//---PLAN PAGE
 			include('pages/partials/ftscript_plan.php'); 
@@ -102,9 +107,7 @@
 		
 		//---COMMON SCRIPT
 		include('pages/partials/ftscript_commons.php'); 
-		* */
-		
-		include('pages/partials/ftscript_commons.php'); 
+
 		
 		?>
 		

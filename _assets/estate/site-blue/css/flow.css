@@ -288,6 +288,52 @@ input.pop-email-input{border:2px solid #bdc3c7; width:90%; margin:10px 0 0 0; pa
 .tab-cont .thumbnails li .thumbnail{border:none; padding:1px}
 .tab-cont .thumbnails li .thumbnail span{display:none}
 
+/*ORDER TYPE > NEWLINE*/
+ .order-type{padding:20px;}
+ .order-type h2 {color:#0060b1; font-weight:bold; padding: 5px 0;}
+ .order-type h2 img {margin-right:15px;}
+ 
+ .ot-toplinks {color:#015e8d; font-weight:bold; margin:25px 20px 0 0;}
+ .ot-toplinks a {text-decoration:underline !important; margin-right:10px;}
+ 
+ .ot-description {font-weight:bold; color:#363636; margin-left:10px;}
+ 
+ .ot-description {font-weight:bold; color:#363636; margin-left:10px;}
+ .yellow-box {border:5px solid #ffe100; border-radius:8px; padding:20px;}
+ .yellow-box .bootstrap-select:not([class*="span"]) {width:92px !important;}
+ .dropdown-toggle {background:none !important; border:2px solid #bdc3c7 !important;}
+ .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .btn-primary.disabled, .btn-primary[disabled] {background-color:#0044cc !important;}
+ .btn-primary {background-color: #006dcc !important; border-color: #0044cc #0044cc #002a80 !important; border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);}
+ .yellow-box p {font-family: 'fs_elliot_cyrillicregular'; }
+
+
+/*ORDER TYPE > RESET */
+ .violet-box {border:5px solid #ffe100; border-radius:8px; border:5px solid #5b0180;}
+ .violet-box ul {list-style:none; margin:0; padding:0 2px;}
+ .violet-box ul li {background: url('../images/border_line.jpg') repeat-x bottom; padding:20px 0;}
+ .violet-box ul li:first-child {padding:26px 0 10px;}
+ .violet-box ul li span {display:block; float:left;}
+ .violet-box ul li span:first-child {margin-left:30px; width:470px;}
+ .violet-box ul li:nth-child(3) span {font-size:1.2em;}
+ 
+ .radio-btn ul {text-align:center; margin:20px 0 0;}
+ .radio-btn ul li {position:relative; display:inline-block;}
+ .radio-btn ul li:first-child{margin-right:5%;}
+ .radio-btn ul li label{margin-left:32px;}
+ 
+ .contact-number ul {text-align:center; margin:0;}
+ .contact-number ul li {position:relative; display:inline-block;}
+ .contact-number ul li:first-child{margin-right:5%;}
+ .contact-number ul li label{margin-left:32px;}
+ 
+ .gender-btn ul {margin:0;}
+ .gender-btn ul li {position:relative; display:inline-block;}
+ .gender-btn ul li:first-child{margin-right:5%;}
+ .gender-btn ul li label{margin-left:32px;}
+ 
+ .get-new-line label.fl {margin: 0 15px 0 53px; padding-top:5px;}
+
+
  
  /*alternative responsive*/
  @media (max-width: 767px) {
