@@ -42,6 +42,13 @@ $config['time_reference'] = 'local';
 $config['rewrite_short_tags'] = FALSE;
 $config['proxy_ips'] = '';
 
+
+$config['base_path'] = $_SERVER['DOCUMENT_ROOT'] . '/staging-estate';
+$config['uploads_path'] = $config['base_path']."/_assets/uploads";
+
+$config['gadget_img_upload_path'] = $config['uploads_path']."/_gadgets/";
+$config['base_accessory_path'] = $config['uploads_path']."/_accessories/";
+
 $config['base_path'] = $_SERVER['DOCUMENT_ROOT'] . '/staging-estate/demo/';
 $config['base_user_path'] = $_SERVER['DOCUMENT_ROOT']."/staging-estate/demo/_users/";
 $config['base_property_path'] = $_SERVER['DOCUMENT_ROOT']."/staging-estate/demo/_properties/";

@@ -128,6 +128,21 @@
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
+				
+				<!-- image -->
+				<div class="item">
+					<div class="label">Image *</div>
+					<div class="input">
+						<div class="accessory_image" id="v_image_wrapper_wrapper">
+							<div id="accessory_image_wrapper">
+								<input type="hidden" value="" data-image-required="1" data-image-wrapper="accessory_image_wrapper_wrapper" name="accessory-image-name" id="accessory-image-name" />
+							</div>
+							<a id="change_accessory_image">Upload image</a><div id="upload_result"></div>						
+						</div>
+						<div class="clearboth"></div>
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
 			</form>
 			
 		</td></tr>
@@ -140,12 +155,12 @@ $(function(){
 	placeHolder();
 	checkSidebarStatus();
 	
-	var btnUpload=$('#change_plan_image');
+	var btnUpload=$('#change_accessory_image');
 	var mestatus=$('#upload_result');
-	var files=$('#plan_image_wrapper');
+	var files=$('#accessory_image_wrapper');
 	new AjaxUpload( btnUpload, {
-		action: '<?php echo base_url(); ?>admin/plans/upload_plan_image',
-		name: 'plan_image',
+		action: '<?php echo base_url(); ?>admin/accessories/upload_accessory_image',
+		name: 'accessory_image',
 		onSubmit: function(file, ext){
 			 if (! (ext && /^(jpg|png|jpeg|gif)$/.test(ext))){ 
 				mestatus.text('Only JPG, PNG or GIF files are allowed');
@@ -157,10 +172,10 @@ $(function(){
 			var data = jQuery.parseJSON(response);
 			files.html('');
 			if(data.status==="success"){
-				var plan_image_string = '<input type="hidden" value="' + data.filename + '" data-image-required="1" data-image-wrapper="plan_image_wrapper_wrapper" name="plan-image-name" id="plan-image-name">';
-				plan_image_string += '<img src="<?php echo base_url() . $this->config->item('base_plan_url') . '_temp/'; ?>'+data.filename+'" title="' + data.filename + '" alt="' + data.filename + '" class="img_plan_image" />';
+				var accessory_image_string = '<input type="hidden" value="' + data.filename + '" data-image-required="1" data-image-wrapper="accessory_image_wrapper_wrapper" name="accessory-image-name" id="accessory-image-name">';
+				accessory_image_string += '<img src="<?php echo base_url() . $this->config->item('base_accessory_url') . '_temp/'; ?>'+data.filename+'" title="' + data.filename + '" alt="' + data.filename + '" class="img_accessory_image" />';
 				
-				$('#plan_image_wrapper').append(plan_image_string);
+				$('#accessory_image_wrapper').append(accessory_image_string);
 				displayNotification("success", data.msg);
 			} else{
 				displayNotification("error", data.msg);
