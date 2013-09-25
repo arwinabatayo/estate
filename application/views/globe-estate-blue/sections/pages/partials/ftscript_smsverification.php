@@ -1,9 +1,11 @@
 
-					
-					createCaptcha();
-					$('#verifyNumber').modal('show');
-					
-				    //$('#resetVerification').modal('show');
+
+					<?php if($this->session->userdata('showcaptcha')){ ?>
+							$('#resetVerification').modal('show');
+							createCaptcha();
+					<?php } else { ?>
+							$('#verifyNumber').modal('show');
+					<?php } ?>
 										
 					$('button#open_verify_mobile').click( function(e){
 						e.preventDefault();
@@ -63,7 +65,11 @@
 					$('button#btn_resend_vcode').click( function(e){
 
 						var code =	$(this).siblings('input[name="code_id"]').val();
-
+						var s =	$('#resetVerification div.status');
+						
+						s.show();
+						s.html('Validating...Please wait...');
+				    
 						e.preventDefault();
 							$.ajax({
 							    type: 'post',
@@ -71,16 +77,13 @@
 								url: base_url+'captcha/validate',
 							    success: function(response){
 									var resp = jQuery.parseJSON( response );
-									//alert ( JSON.stringify(response) )
-									//alert ( resp.status );
 									
 									if(resp.status == 'success'){
-										//alert(resp.msg);
-										//window.location.reload();
+										s.hide();
 										$('#resetVerification').modal('close');
 										$('#verifyNumber').modal('show');
 									}else{
-										alert(resp.msg);
+										s.html(resp.msg);
 										createCaptcha();
 										$('input#code_id').val('');
 									}

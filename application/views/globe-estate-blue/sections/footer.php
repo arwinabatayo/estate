@@ -66,10 +66,7 @@
 			if($current_method == 'sms_verification'){ 
 				
 				include('pages/partials/ftscript_smsverification.php');
-			
-				if( $this->session->userdata('showcaptcha') ){
-					echo '$(window).load( function(){ createCaptcha() });'."\n";
-				}	
+				
 			 } 
 		} 
 		

@@ -13,6 +13,7 @@
             <br/><br/>
         </div>
 		<button class="blue-btn" id="btn_resend_vcode">OK</button>
+		<div style="display:none" class="status alert textcenter"></div>
       </div>
     </div>
 

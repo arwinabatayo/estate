@@ -18,16 +18,20 @@
 		// function that sets captcha img src 
         function createCaptcha( seletorID ){
 			var seletorID = seletorID ? seletorID : 'captcha';
+			$("#"+seletorID).after('<span id="captchaPreloder" class="block" style="font-size:12px">Loading Captcha...Please wait...</span>');
 			$.ajax({
 			    dataType: 'json',
 				url: base_url+'captcha/get_captcha_img',
 			    success: function(response){
+					$("span#captchaPreloder").remove();
 					$("#"+seletorID).attr('src',response.src);	
+					
 				},
 				error: function(xhr, status, error){
 						alert(xhr.responseText);
 				}	
 			});
+			
 		 }
 
 		$('a#refresh_code').click( function(e){

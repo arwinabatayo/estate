@@ -271,8 +271,8 @@ class Home extends MY_Controller
 	
 		if($email){
 			if (valid_email($email)) {
-				$is_sent = $this->_sendMail($email, 'verify_account');
-				//$is_sent = true;
+				//$is_sent = $this->_sendMail($email, 'verify_account');
+				$is_sent = true;
 				if($is_sent === false) {
 					$data['status'] = "error";
 					$data['msg'] = "Your email was not successfully sent";

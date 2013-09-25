@@ -20,13 +20,14 @@
 			<img src="<?php echo $assets_url ?>images/pop-email-thankyou.png" /><br/><br/>
 	        <span class="pop-txtblue-large">Thank You</span>
             <p class="pop-txtgrey-large">We have sent an email to <strong id="e_lbl">avargosino@yahoo.com</strong>.<br/>click on the link  found in your email to get verified.</p>
-			<p class="pop-txt-resend">Didn’t receive the verification email? <a id="#emailConfirm" data-dismiss="modal">Resend link</a></p>
+			<p class="pop-txt-resend">Didn’t receive the verification email? <a data-toggle="modal" data-target="#emailConfirm" data-dismiss="modal">Resend link</a></p>
             <p class="pop-txtblu-small">Note: Kindly make sure to verify your email address. <br/>Validity of this link is within 24 hours</p>
             <div class="modal-footer">
 			  <button class="blue-btn" data-dismiss="modal">OK</button>
             </div>
         </div>
     </div>
+
 
 
 	<div id="dialog_reserve_form"  tabindex="-1" class="modal hide fade pop-modal" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
