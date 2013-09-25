@@ -36,47 +36,63 @@ class Model_gadgets extends CI_Model
 		return $data;
 	}
 	
-	function getAllGadgetsByStatus($status=null){
-		if( in_array($status, array(0=>0, 1=>1)) ){
-			$this->db->where('is_active', $status);
-			$query = $this->db->get('estate_gadgets');
-			return $query->result_array();
-		}else{
-			$query = $this->db->get('estate_gadgets');
-			return $query->result_array();
-		}
-	}
-	
-	function getGadgetDetails($bundle_id, $gadget_id = 0) {
+	function getGadgetDetails($gadget_id) {
 		
-		$this->db->where('id', $bundle_id);
-// 		$this->db->where('gadget_id', $gadget_id);
-		
+		$this->db->where('id', $gadget_id);
 		$query = $this->db->get('estate_gadgets');
 	
-		if( $query->num_rows() > 0 ){
-			$tmp_combos_details = $query->row_array();
-			$combos_details = array();
+		if( $query->num_rows() > 0){
+			$tmp = $query->row_array();
+			$dtls = array();
 			
-			$combos_details['_id'] 			= $tmp_combos_details['id'];
-			$combos_details['_cid'] 		= $tmp_combos_details['cid'];
-			$combos_details['_name'] 		= $tmp_combos_details['name'];
-			$combos_details['_description'] = $tmp_combos_details['description'];
-			$combos_details['_long_desc'] 	= $tmp_combos_details['long_description'];
-			$combos_details['_amount'] 		= $tmp_combos_details['amount'];
-			$combos_details['_max_peso_value'] 	= $tmp_combos_details['max_peso_value'];
-			$combos_details['_peso_value'] 	= $tmp_combos_details['peso_value'];
-			$combos_details['_status'] 		= $tmp_combos_details['is_active'];
+			$dtls['id']		= $tmp['id'];
+			$dtls['name'] 	= $tmp['name'];
+			$dtls['status'] = $tmp['is_active'];
 			
-			return $combos_details;
+			$this->db->where('gadget_id', $gadget_id);
+			$queryAttrs = $this->db->get('estate_gadget_attributes');
+			
+			$data = $queryAttrs->result_array();
+		
+			foreach($data as $k => $array) {
+				foreach($array as $key => $string) {
+					if($key == "colorid") {
+						$aColor = $this->getColors($string);
+						$data[$k]['colorattr'] = $aColor[0]['name'];
+					}
+					if($key == "net_connectivity_id") {
+						$aNetWo = $this->getNetConnectivity($string);
+						$data[$k]['netwoattr'] = $aNetWo[0]['name'];
+					}
+					if($key == "data_capacity_id") {
+						$aNetWo = $this->getDataCapacity($string);
+						$data[$k]['datacapattr'] = $aNetWo[0]['name'];
+					}
+				}
+			}
+			
+			$dtls['attrs'] = $data;
+			return $dtls;
 		}else{
 			return array();
 		}
 	}
 	
-	function addBundle($data) {
-
-		$this->db->insert('estate_gadgets', $data);
+	function addGadget($data) {
+		$this->db->insert("estate_gadgets", $data['estate_gadgets']);
+		
+		$lastInsetedId = $this->db->insert_id();
+		
+		unset($data['estate_gadgets']);
+		
+		foreach ($data as $dataTable => $rows) {
+			foreach($rows as $dataFields) {
+				$dataFields['date_created'] = date('Y-m-d H:i:s');
+				$dataFields['gadget_id'] = $lastInsetedId;
+				$this->db->insert($dataTable, $dataFields);
+			}
+		}
+		
 		return;
 	}
 	
@@ -96,6 +112,60 @@ class Model_gadgets extends CI_Model
 		$this->db->where('id', $id);
 		$this->db->delete('estate_gadgets');
 		return $combos_details;
+	}
+	
+	/*** COLORS ***/
+	function getColors($id) {
+		$additional = '';
+		if(!empty($id)) {
+			$additional = " WHERE id={$id}";
+		}
+		$query = $this->db->query("SELECT SQL_CALC_FOUND_ROWS * FROM estate_gadget_attr_colors{$additional}");
+		$data = $query->result_array();
+		$query = $this->db->query("	SELECT FOUND_ROWS() AS 'count'");
+		$data["total_count"] = $query->row()->count;
+		return $data;
+	}
+	
+	function addColors($data) {
+		$this->db->insert('estate_gadget_attr_colors', $data);
+		return;
+	}
+	
+	/*** DATA CAPACITY ***/
+	function getDataCapacity($id) {
+		$additional = '';
+		if(!empty($id)) {
+			$additional = " WHERE id={$id}";
+		}
+		$query = $this->db->query("	SELECT SQL_CALC_FOUND_ROWS * FROM estate_gadget_attr_data_capacity{$additional}");
+		$data = $query->result_array();
+		$query = $this->db->query("	SELECT FOUND_ROWS() AS 'count'");
+		$data["total_count"] = $query->row()->count;
+		return $data;
+	}
+	
+	function addDataCapacity($data) {
+		$this->db->insert('estate_gadget_attr_data_capacity', $data);
+		return;
+	}
+	
+	/*** NETWORK CONNECTIVITY ***/
+	function getNetConnectivity($id) {
+		$additional = '';
+		if(!empty($id)) {
+			$additional = " WHERE id={$id}";
+		}
+		$query = $this->db->query("	SELECT SQL_CALC_FOUND_ROWS * FROM estate_gadget_attr_net_connectivity{$additional}");
+		$data = $query->result_array();
+		$query = $this->db->query("	SELECT FOUND_ROWS() AS 'count'");
+		$data["total_count"] = $query->row()->count;
+		return $data;
+	}
+	
+	function addNetConnectivity($data) {
+		$this->db->insert('estate_gadget_attr_net_connectivity', $data);
+		return;
 	}
 }
 ?>

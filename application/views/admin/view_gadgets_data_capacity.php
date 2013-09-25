@@ -1,7 +1,6 @@
 <?php
 /**
  * 9.23.2013 [update]
- * 9.18.2013
  * Ultima Logic
  * robert hughes
  */
@@ -9,10 +8,7 @@
 <div id="g_content">
 	
 	<div id="g_tools">
-		<a href="<?php echo base_url(); ?>admin/gadgets/colors"><img src="<?php echo base_url(); ?>_assets/images/tools/view.png" />Colors</a>
-		<a href="<?php echo base_url(); ?>admin/gadgets/data_capacity"><img src="<?php echo base_url(); ?>_assets/images/tools/view.png" />Data Capacity</a>
-		<a href="<?php echo base_url(); ?>admin/gadgets/net_connectivity"><img src="<?php echo base_url(); ?>_assets/images/tools/view.png" />Network Connectivity</a>
-		<a href="<?php echo base_url(); ?>admin/gadgets/add"><img src="<?php echo base_url(); ?>_assets/images/tools/add.png" />Add Gadget</a>
+		<a href="<?php echo base_url(); ?>admin/gadgets"><img src="<?php echo base_url(); ?>_assets/images/tools/revert.png" />Back</a>
 		<div class="h_clearboth"></div>
 	</div>
 	<div class="h_clearboth"></div>
@@ -20,51 +16,53 @@
 	
 	<?php echo $filter; ?>
 	
-	<div class="g_pagelabel h_width80px h_floatleft">
+	<div class="g_pagelabel h_width150px h_floatleft">
 		<div class="g_pagelabel_icon"><img src="<?php echo base_url(); ?>_assets/images/tools/generic.png" /></div>
-		<div class="g_pagelabel_text">Legend</div>
+		<div class="g_pagelabel_text">Add Data Capacity</div>
 	</div>
 	
 	<div id="g_legend">
-	<div class="item"><img src="<?php echo base_url();  ?>_assets/images/global_icon_view.png" /> View gadgets</div>
-		<div class="item"><img src="<?php echo base_url();  ?>_assets/images/global_icon_edit.png" /> Edit gadgets</div>
-		<div class="item"><img src="<?php echo base_url();  ?>_assets/images/global_icon_delete.png" /> Delete gadgets</div>
+		<form method="post" id="formAttr">
+			<div class="item">* <input type="text" name="name" placeholder="Name" data-required="1"></div>
+			<div class="item">* 
+				<select name="is_active">
+					<option value="1">Enabled</option>
+					<option value="0">Disabled</option>
+				</select>
+			</div>
+			<div class="item"><input type="button" value="SUBMIT" id="addAttr"></div>
+		</form>
 	</div>
 	
 	<div class="h_clearboth"></div>
 	
 	<div class="g_pagelabel">
 		<div class="g_pagelabel_icon"><img src="<?php echo base_url(); ?>_assets/images/tools/properties.png" /></div>
-		<div class="g_pagelabel_text">Gadgets</div>
+		<div class="g_pagelabel_text">Data Capacity</div>
 		<?php echo $pagination; ?>
 	</div>
 	
-	<?php if ($gadgets) { ?>
+	<?php if ($data_capacity) { ?>
 	
-		<table class="g_table zebra">
+		<table class="g_table zebra h_width150px ">
 		
 			<tr>
-				<th>Title</th>
+				<th>Name</th>
 				<th>Status</th>
 				<th>Actions</th>
 			</tr>
 			
-			<?php foreach ($gadgets as $gadgets => $a) {
-				$addstyle = "";
-				if($a['is_active'] == 1) {
-					$addstyle = ' style="background-color: #F2C9F2 !important"';
-				}
-			?>
-			
+			<?php foreach ($data_capacity as $dta_capc => $a) { ?>
 			<tr>
-				<td<?php echo $addstyle; ?>><?php echo $a['name']; ?></td>
-				<td<?php echo $addstyle; ?> width="50" align="center">
+				
+				<td><?php echo $a['name']; ?></td>
+				<td width="50" align="center">
 					<?php if( $a['is_active'] == 1 ){ echo 'Enabled'; }else{ echo 'Disabled'; } ?>
 				</td>
 				
 				<!-- actions -->
 				<td<?php echo $addstyle; ?> width="60" align="right">
-					<a 	href="<?php echo base_url(); ?>admin/gadgets/view/<?php echo $a['id']; ?>"
+					<a 	href="javascript:void(0);"
 						class="g_tableicon view_gadget_details"
 						title="View gadget">
 						<img src="<?php echo base_url(); ?>_assets/images/global_icon_view.png" />
@@ -104,24 +102,30 @@
 $(function(){
 	zebraTable();
 
-// 	$(".view_gadget_details").click(function(e) {
-// 		e.preventDefault();
-
-// 		$.ajax({
-			url: "<?php echo base_url(); ?>admin/gadgets/view",
-// 			type: "POST",
-// 			data: $("#form_add_gadgets").serialize(),
-// 			success: function(response, textStatus, jqXHR){
-// 				alert(response);
-// 				$("#middle_wrapper").html(response);
-// 			},
-// 			error: function(jqXHR, textStatus, errorThrown){
-// 					$("#middle_wrapper").html(jqXHR.responseText);
-// 				displayNotification("error", "Oops, something went wrong. Your action may or may not have been completed.");
-// 			}
-// 		});
-// 	});
-	
+	$("#addAttr").click(function(e) {
+		e.preventDefault();
+		
+		displayNotification("message", "Working...");
+		
+		if (validate_form("formAttr")) {
+			$.ajax({
+				url: "<?php echo base_url(); ?>admin/gadgets/process_add_data_capacity",
+				type: "POST",
+				data: $("#formAttr").serialize(),
+				success: function(response, textStatus, jqXHR){
+					setTimeout(function () {
+						$("#middle_wrapper").html(response);
+						if (typeof history.pushState != 'undefined') { window.history.pushState("object or string", "Title", "<?php echo base_url(); ?>admin/gadgets/view_gadget_data_capacity"); }
+						displayNotification("success", "New Data Capacity successfully added.");
+					}, 500);
+				},
+				error: function(jqXHR, textStatus, errorThrown){
+						$("#middle_wrapper").html(jqXHR.responseText);
+					displayNotification("error", "Oops, something went wrong. Your action may or may not have been completed.");
+				}
+			});
+		}
+	});
 });
 
 </script>

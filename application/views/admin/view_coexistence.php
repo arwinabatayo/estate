@@ -46,7 +46,7 @@
 							break;
 						}
 				?>
-				<td style="padding: 2px !important;font-weight:bold !important;<?php echo $addbg; ?>" class="editable" id="<?php echo $coexValue['coexid']; ?>">
+				<td title="click to edit" style="cursor:pointer;padding: 2px !important;font-weight:bold !important;<?php echo $addbg; ?>" class="editable" id="<?php echo $coexValue['coexid']; ?>">
 					<?php echo $sRet; ?>
 				</td>
 				<?php }?>

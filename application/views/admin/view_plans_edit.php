@@ -30,7 +30,7 @@
 								data-alphanum="1"				
 								data-unique="1"
 								data-field="title"
-								data-table="estate_plans"
+								data-table="estate_plan_bundle"
 								data-required="1" />
 					</div>
 					<div class="h_clearboth"></div>
@@ -141,16 +141,16 @@
 				<div class="item">
 					<div class="label">Image *</div>
 					<div class="input">
-						<div class="accessory_image" id="accessory_image_wrapper_wrapper">
-							<div id="accessory_image_wrapper">
-								<?php if( isset($accessory_details['accessories_image']) && trim($accessory_details['accessories_image']) != '' ){ ?>
-									<input type="hidden" value="<?php echo $accessory_details['accessories_image']; ?>" data-image-required="1" data-image-wrapper="accessory_image_wrapper_wrapper" name="accessory-image-name" id="accessory-image-name" />
-									<img src="<?php echo base_url() . $this->config->item('base_accessory_url') . trim($accessory_details['accessories_image']); ?>" title="<?php echo trim($accessory_details['accessories_image']); ?>" alt="<?php echo trim($accessory_details['accessories_image']); ?>" class="img_accessory_image" />
+						<div class="combo_image" id="combo_image_wrapper_wrapper">
+							<div id="combo_image_wrapper">
+								<?php if( isset($combo_details['accessories_image']) && trim($combo_details['accessories_image']) != '' ){ ?>
+									<input type="hidden" value="<?php echo $combo_details['accessories_image']; ?>" data-image-required="1" data-image-wrapper="combo_image_wrapper_wrapper" name="accessory-image-name" id="accessory-image-name" />
+									<img src="<?php echo base_url() . $this->config->item('base_combo_url') . trim($combo_details['accessories_image']); ?>" title="<?php echo trim($combo_details['accessories_image']); ?>" alt="<?php echo trim($combo_details['accessories_image']); ?>" class="img_combo_image" />
 								<?php }else{ ?>
-									<input type="hidden" value="" data-image-required="1" data-image-wrapper="accessory_image_wrapper_wrapper" name="accessory-image-name" id="accessory-image-name" />
+									<input type="hidden" value="" data-image-required="1" data-image-wrapper="combo_image_wrapper_wrapper" name="accessory-image-name" id="accessory-image-name" />
 								<?php } ?>
 							</div>
-							<a id="change_accessory_image">Upload image</a><div id="upload_result"></div>						
+							<a id="change_combo_image">Upload image</a><div id="upload_result"></div>						
 						</div>
 						<div class="clearboth"></div>
 					</div>
