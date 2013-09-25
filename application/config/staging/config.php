@@ -66,5 +66,6 @@ $config['base_addon_url'] = "_addons/";
 //GLOBE ESTATE CONFIG
 $config['globe_estate_template_path'] = "globe-estate/index"; //default template view
 $config['globe_estate_assets'] = "_assets/estate/";
+$config['prepaid_kit_enabled'] = true; 
 
 
