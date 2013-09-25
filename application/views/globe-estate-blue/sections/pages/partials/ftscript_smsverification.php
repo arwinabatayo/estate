@@ -1,21 +1,9 @@
-					$('#dialog_enter_mobile').dialog({
-						autoOpen: true,modal:true,dialogClass: "no-close",
-						buttons: [{
-							text: "OK",
-							click: function() {
-								   $( this ).dialog( "close" );
-								   $( '#dialog_verify_mobile' ).dialog( "open" );
-							}
-						}]
-					});
-							
-					$('#dialog_verify_mobile').dialog({
-						autoOpen: false,width:'auto',modal:true
-					});
+
 					
-					$('#dialog_enter_captcha').dialog({
-						autoOpen: true,width:'35%',modal:true
-					});
+					createCaptcha();
+					$('#verifyNumber').modal('show');
+					
+				    //$('#resetVerification').modal('show');
 										
 					$('button#open_verify_mobile').click( function(e){
 						e.preventDefault();
@@ -23,12 +11,19 @@
 						$('#dialog_verify_mobile').dialog( "open" );
 					});	
 					
-					$('form#sms-verification button').click( function(e){
-						var s =	$('form#sms-verification div.status');
+					$('#verifyNumber button').click( function(e){
+						var s =	$('#verifyNumber div.status');
+						
 						var code =	$('input#verification_code').val();
 							e.preventDefault();
 							s.removeClass('alert-error');
-							
+
+							if( code.length == 0) {
+								$('#verification_code').css('border', '2px solid #e2422d');
+								$('.vcode-alert').fadeIn('fast');
+								return;
+							}
+
 							$.ajax({
 								url: base_url+'home/check_verification_code',
 								data: 'sms_verification_code='+code,
@@ -38,9 +33,6 @@
 									var resp = jQuery.parseJSON( response );
 									s.addClass('alert-'+resp.status);
 									s.html(resp.msg);
-	
-									//alert ( JSON.stringify(response) );
-								   // return;
 								    
 									if(resp.status == 'success'){
 										if( resp.is_globe_subscriber == 'false' && resp.order_type == 'reserve'){
@@ -63,6 +55,10 @@
 								
 					});
 					 
+					$('#verification_code').focus(function(){
+							$('#verification_code').css('border', '2px solid #bdc3c7');
+							$('.vcode-alert').fadeOut('fast');
+					});
 					
 					$('button#btn_resend_vcode').click( function(e){
 
@@ -81,8 +77,8 @@
 									if(resp.status == 'success'){
 										//alert(resp.msg);
 										//window.location.reload();
-										$('#dialog_enter_captcha').dialog( "close" );
-										$('#dialog_verify_mobile').dialog( "open" );
+										$('#resetVerification').modal('close');
+										$('#verifyNumber').modal('show');
 									}else{
 										alert(resp.msg);
 										createCaptcha();

@@ -10,17 +10,17 @@
 							   </div>
 							   <div class="textleft contentbox">
 									<br />
-									<form class="form-inline" action="/estate/payment/payorder">
+									<form class="form-inline" method="post" action="/estate/payment/payorder">
 
 <label>*Credit Card Number</label>
 <p>The 16-digits on the front of you credit card. <br />
-<input type="text" value="" class="-xxlarge" /></p>
+<input type="text" value="" name="cc" class="-xxlarge" /></p>
 
 <br />
 
 <label>*Expiration Date</label>
 <p>The date your credit card expires. Find this on the front of your credit card. <br />
-<select class="-medium">
+<select class="-medium" name="month">
 	<option>01</option>
 	<option>02</option>
 	<option>03</option>
@@ -35,7 +35,7 @@
 	<option>12</option>
 </select>
 &nbsp;/&nbsp;
-<select class="-medium">
+<select class="-medium" name="year">
 	<option>2013</option>
 	<option>2014</option>
 	<option>2015</option>
@@ -47,7 +47,7 @@
 
 <label>*Security Code <span style="color:gray">(or "CVC" or "CVV")</span></label>
 <p>The last 3 digits displayed on the back of your credit card<br />
-<input type="text" value="" />
+<input type="text" value="" name="cvc" />
 </p>
 									<?php /*<p class="textcenter"><button class="btn-large ui-button-success" onclick="window.location.replace('<?php echo base_url() ?>payment/thankyou')">PAY NOW</button></p> */ ?>
 									<p class="textcenter"><button class="btn-large ui-button-success" onclick="#">PAY NOW</button></p>
