@@ -24,8 +24,150 @@
 			}
 		}
 	?>		
-			
-		
+                <div class="span3 left">
+                	<div class="chooseline">
+                        <div class="line">
+                            <span>CHOOSE A LINE</span>
+                            <label>
+                                <select>
+                                    <option>LINE 1</option>
+                                    <option>LINE 2</option>                                
+                                </select>
+                            </label>
+                        </div>
+                        <div class="accordion" id="accordion2">
+                            <div class="accordion-group account-group account">
+								<?php
+									//TODO - move this object to session after authentication - mark
+								    $user = $this->accounts_model->get_account_info_by_id('9151178863',false);	
+								    //print_r($user);
+								?>
+								
+                              <div class="row-fluid accordion-heading">
+                                <a class="accordion-toggle account-name" data-toggle="collapse" data-target="#collapseOne">
+                                  MY ACCOUNT <i class="expand icon-pn"></i>
+                                </a>
+                              </div>
+                              <div id="collapseOne" class="accordion-body in collapse" style="height: auto; ">
+                                <div class="accordion-inner">
+                                    <ul>
+										<?php if($user){ ?>
+											<?php if($user->mobile_number){ ?>
+											<li><span>Mobile Number:</span> <?php echo $user->mobile_number ?></li>
+											<?php } ?>
+											
+											<?php if($user->account_id ){ ?>
+											<li><span>Account #:</span> <?php echo $user->account_id ?></li>
+											<?php } ?>
+											
+											<?php if($user->account_id ){ //TODO: get from account_plan ?>
+											<li><span>Plan:</span> 3799</li>
+											<?php } ?>
+											
+											<?php if($user->account_id ){ //TODO get from DB ?>
+											<li><span>Category:</span> Consumer</li>
+											<?php } ?>
+											
+											<?php if($user->name && $user->surname){ ?>
+											<li><span>Name:</span> <?php echo $user->name.' '.$user->surname ?></li>
+											<?php } ?>
+											
+											<?php if($user->lockin_duration ){ ?>
+											<li><span>Lock-in Duration:</span> <?php echo date('M d, Y',strtotime($user->lockin_duration) ) ?></li>
+											<?php } ?>
+											
+											<?php if($user->outstanding_balance ){ ?>
+											<li><span>Outstanding Balance:</span> Php <?php echo number_format($user->outstanding_balance,2) ?></li>
+											<?php } ?>
+											
+											<?php if($user->due_date  ){ ?>
+											<li><span>Due Date:</span> <?php echo date('M d, Y',strtotime($user->due_date) ) ?></li>
+											<?php } ?>
+											
+											<?php if($user->credit_limit ){ ?>
+											<li><span>Credit Limit:</span> Php <?php echo number_format($user->credit_limit,2) ?></li>
+											<?php } ?>
+											
+											<?php if($user->account_id ){ //TODO not in DB ?>
+											<li><span>Overdue:</span> Php <?php echo number_format($user->credit_limit,2) ?></li>
+											<?php } ?>
+											
+										<?php } ?>	
+
+                                    </ul>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="accordion-group account-group addevice">
+                              <div class="row-fluid accordion-heading">
+                                <a class="accordion-toggle account-name collapsed" data-toggle="collapse" data-target="#collapseTwo">
+                                  ADD A DEVICE<i class="expand icon-pn"></i>
+                                </a>
+                              </div>
+                              <div id="collapseTwo" class="accordion-body collapse" style="height: 0px; ">
+                                <div class="accordion-inner">
+                                    <ul>
+                                        <li>
+                                            <span>Color</span>
+                                            <input id="black" type="radio" name="color" value="black" checked="checked"><label for="black">Black</label>
+                                            <input id="white" type="radio" name="color" value="white"><label for="white">White</label>
+                                        </li>
+                                        <li>
+                                            <span>Data Capacity</span>
+                                            <input id="16gb" type="radio" name="capacity" value="16gb" checked="checked"><label for="16gb">16GB</label>
+                                            <input id="32gb" type="radio" name="capacity" value="32gb"><label for="32gb">32GB</label>
+                                            <input id="64gb" type="radio" name="capacity" value="64gb"><label for="64gb">64GB</label>
+                                        </li>
+                                    </ul>				
+                                </div>
+                              </div>
+                            </div>
+                            <div class="accordion-group account-group chooseyourplan">
+                              <div class="row-fluid accordion-heading">
+                                <a class="accordion-toggle account-name collapsed" data-toggle="collapse" data-target="#collapseThree">
+                                    CHOOSE YOUR PLAN <i class="expand icon-pn"></i>
+                                </a>
+                              </div>
+                              <div id="collapseThree" class="accordion-body collapse" style="height: 0px; ">
+                                <div class="accordion-inner">
+                                    choose you plan content                              
+                                </div>
+                              </div>
+                            </div>
+                            <div class="accordion-group account-group addons">
+                              <div class="row-fluid accordion-heading">
+                                <a class="accordion-toggle account-name collapsed" data-toggle="collapse" data-target="#collapseFour">
+                                    ADD-ONS <i class="expand icon-pn"></i>
+                                </a>
+                              </div>
+                              <div id="collapseFour" class="accordion-body collapse" style="height: 0px; ">
+                                <div class="accordion-inner">
+                                    add-ons                            
+                                </div>
+                              </div>
+                            </div>
+                            <div class="accordion-group account-group accessories">
+                              <div class="row-fluid accordion-heading">
+                                <a class="accordion-toggle account-name collapsed" data-toggle="collapse" data-target="#collapseFive">
+                                    ACCESSORIES <i class="expand icon-pn"></i>
+                                </a>
+                              </div>
+                              <div id="collapseFive" class="accordion-body collapse" style="height: 0px; ">
+                                <div class="accordion-inner">
+                                    accessories                            
+                                </div>
+                              </div>
+                            </div>                                                
+                        </div>                          
+                    </div>
+                    <div class="cash-out">
+                    	<span class="blue">YOUR CASHOUT</span>
+                        <span class="black">P 12,000.00</span>
+                    </div>                   
+                </div>
+                
+                	
+		<?php /*
 			<div id="left-siderbar" class="span3">
 
 				<div class="line-tab">LINE 1</div>	
@@ -40,48 +182,7 @@
 	                    <div>
 	                        <h3><a href="#">My Account - 0915-2211334</a></h3>
 	                        <div>
-							<?php if($user){ ?>
-								<?php if($user->mobile_number){ ?>
-								<p><strong>Mobile Number:</strong> <?php echo $user->mobile_number ?></p>
-								<?php } ?>
-								
-								<?php if($user->account_id ){ ?>
-								<p><strong>Account #:</strong> <?php echo $user->account_id ?></p>
-								<?php } ?>
-								
-								<?php if($user->account_id ){ //TODO: get from account_plan ?>
-								<p><strong>Plan:</strong> 3799</p>
-								<?php } ?>
-								
-								<?php if($user->account_id ){ //TODO get from DB ?>
-								<p><strong>Category:</strong> Consumer</p>
-								<?php } ?>
-								
-								<?php if($user->name && $user->surname){ ?>
-								<p><strong>Name:</strong> <?php echo $user->name.' '.$user->surname ?></p>
-								<?php } ?>
-								
-								<?php if($user->lockin_duration ){ ?>
-								<p><strong>Lock-in Duration:</strong> <?php echo date('M d, Y',strtotime($user->lockin_duration) ) ?></p>
-								<?php } ?>
-								
-								<?php if($user->outstanding_balance ){ ?>
-								<p><strong>Outstanding Balance:</strong> Php <?php echo number_format($user->outstanding_balance,2) ?></p>
-								<?php } ?>
-								
-								<?php if($user->due_date  ){ ?>
-								<p><strong>Due Date:</strong> <?php echo date('M d, Y',strtotime($user->due_date) ) ?></p>
-								<?php } ?>
-								
-								<?php if($user->credit_limit ){ ?>
-								<p><strong>Credit Limit:</strong> Php <?php echo number_format($user->credit_limit,2) ?></p>
-								<?php } ?>
-								
-								<?php if($user->account_id ){ //TODO not in DB ?>
-								<p><strong>Overdue:</strong> Php <?php echo number_format($user->credit_limit,2) ?></p>
-								<?php } ?>
-								
-							<?php } ?>	
+
 	                    </div>
 	                    
 	                    <div>
@@ -278,15 +379,17 @@
 					 */
 // 					$showprice = count($cartProdFiltered['addon']) + count($cartProdFiltered['accessories']);
 // 					if($showprice > 0) {
-						echo $this->cart_model->total(true);
+						//echo $this->cart_model->total(true);
 // 					} else {
 // 						echo number_format($gadget_cash_out,2);
 // 					}
-					?></span>
+					?>
+					<?php /*
+					</span>
 	            </div>
 	            
 	            
 			</div>
 			
 			
-		
+		*/ ?>

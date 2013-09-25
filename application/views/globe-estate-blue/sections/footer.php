@@ -17,6 +17,11 @@
 		include('pages/partials/modal_sku_config.php');
 	}
 	
+	if($current_method == 'sms_verification'){
+		include('pages/partials/modal_sms-verification.php');
+	}
+	
+	
 	include('pages/partials/modal_commons.php');
 
 ?>   
@@ -101,10 +106,13 @@
 		//---COMMON SCRIPT
 		include('pages/partials/ftscript_commons.php'); 
 		* */
+		
+		include('pages/partials/ftscript_commons.php'); 
+		
 		?>
 		
 
-
+		
 
 		var showPreloader = function(){
 			$("#status").fadeIn(); $("#preLoader").delay(350).fadeIn("fast");

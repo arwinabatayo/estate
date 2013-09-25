@@ -6,9 +6,14 @@
 		
 		@include('pages/page_landing.php'); 
 	
-	}else{ ?>
+	}else{ 
+		
+		
+		
+	
+	?>
     
-    <div class="row-fluid content flow">
+   <div class="row-fluid content flow" >
         <div class="container">
 		<?php
 		
@@ -25,9 +30,6 @@
 			
 			include('breadcrumbs_desktop.php'); 
 				
-		    if($current_controller != 'home' && ($current_step < 5) ){
-				//include('sections/sidebar_panel.php');
-			}
 						
 			if(file_exists( dirname(__FILE__) . '/pages/page_'.$page.'.php')){
 				include('pages/page_'.$page.'.php'); 
@@ -36,6 +38,8 @@
 			}
 					
 			?>
+			
+			
 			
             <div class="row-fluid link-bottom">
                 <a class="pull-left">Go to Homepage</a>

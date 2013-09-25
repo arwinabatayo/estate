@@ -1,12 +1,4 @@
-				$('#dialog_thankyou_reserve').dialog({
-					autoOpen: true,
-					buttons: [{
-						text: "OK",
-						click: function() {
-							   $( this ).dialog( "close" );
-						}
-					}]
-				});
+
 								
 				$('form#addGadget button').click(function(){
 						var itemid    = $(this).find('input[name=product-id]').val();

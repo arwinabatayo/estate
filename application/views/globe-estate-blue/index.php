@@ -1,7 +1,7 @@
 <?php 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-
+define('ESTATE_THEME_BASEPATH', dirname(__FILE__));
 ?>
 
 <?php include('sections/meta_header.php'); ?>

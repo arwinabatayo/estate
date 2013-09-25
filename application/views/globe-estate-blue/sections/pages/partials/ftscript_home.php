@@ -1,5 +1,8 @@
-			//SKU Configuration
 			
+			
+			//$('#dialog_reserve_form').modal('show');
+			
+			//SKU Configuration
 			$('button#btn-add-device-continue').on('click', function(){
 					var formData  = $('form#addGadget').serialize();	
 					showPreloader();
