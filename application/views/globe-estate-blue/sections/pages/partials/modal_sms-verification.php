@@ -32,7 +32,25 @@
 		<button class="blue-btn" id="btnEnterMobileNum">Submit</button>
 		<div style="display:none" class="status alert textcenter"></div>
         <br/><br/>
-        <a class="pop-txtblue-link clearfix">For Non -Globe postpaid subscribers, click here</a>
+        <a class="pop-txtblue-link clearfix" id="link_non_globe">For Non -Globe postpaid subscribers, click here</a>
+        <br/><br/>
+      </div>
+    </div> 
+	
+	<!-- Prepaid kit - non-globe -->
+	<div id="selectBuyType" class="modal hide fade pop-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<button type="button" class="close pop-close" data-dismiss="modal" aria-hidden="true">×</button>        
+      <div class="modal-body pop-content">
+      	<img src="<?php echo $assets_path ?>site-blue/images/pop-entermodile.png" />
+        <br/><br/>
+        <span class="pop-txtblue-large">How would you like to get this phone</span>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
+
+		<button class="blue-btn" id="new_line_plan">Get this with a Plan</button>
+		<button class="blue-btn" id="new_line_prepaid_kit">Get Prepaid Kit</button>
+		<div style="display:none" class="status alert textcenter"></div>
+        <br/><br/>
+        
         <br/><br/>
       </div>
     </div> 

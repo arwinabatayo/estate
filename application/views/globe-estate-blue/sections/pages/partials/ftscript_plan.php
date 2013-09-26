@@ -5,6 +5,11 @@
 					$('#order-thankyou').modal('show');
 			});
 			
+			$('button#btnGetNewlineSubs').click(function() {
+					//TODO - call ajax here to send email to OM
+					$('#order-thankyou').modal('show');
+			});
+			
 			//ORDER TYPE
 		    $('#acc-order-type  button').click(function() { 
 	            //showPreloader();
@@ -275,23 +280,18 @@
 			});
 
 			//jez
-			if($("#order-type-new-line-section").length != 0){
 				$("input[name=new-line-non-globe-option]").each(function(){
 					$(this).click(function(){
-						
-						showPreloader();
 
-						
-							if(parseInt($(this).val()) == 1){
-								$("#order-type-new-line-section-footer").slideDown();
-								$( "#plan-order-page" ).accordion( "option", "active", 0 );
-							}else if(parseInt($(this).val()) == 2){
-								$("#order-type-new-line-section-footer").slideUp();
-								$( "#plan-order-page" ).accordion( "option", "active", 1 );
-							}
-						
 
-						closePreloader();
+						if(parseInt($(this).val()) == 1){
+							$("#order-type-new-line-section-footer").slideDown();
+							//$( "#plan-order-page" ).accordion( "option", "active", 0 );
+						}else if(parseInt($(this).val()) == 2){
+							$("#order-type-new-line-section-footer").slideUp();
+							//$( "#plan-order-page" ).accordion( "option", "active", 1 );
+						}
+
 					});
 				});
 
@@ -322,7 +322,6 @@
 			        $("a.btnAddPackagePlan").parent().parent().show();
 			    }); 
 
-			}
 
 			$('a#get-prepaid-kit').click(function(){
 				// show bubble info where add to cart link is present
