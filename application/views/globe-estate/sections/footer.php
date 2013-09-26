@@ -102,7 +102,7 @@
 	            type: 'post',
 	            success: function(response){
 	                var resp = jQuery.parseJSON( response );
-					
+					console.log(resp);
 					if(_type != "receipt"){
 		                if (resp.file_url) {
 							pwin = window.open(resp.file_url,"_blank");
@@ -112,12 +112,10 @@
 		                }
 	            	}else{
 	            		var order_item_str = "";
-	            		for(var a=0; a < resp.order_item_details.length; a++){
-	            			order_item_str += "<tr><td>" + resp.order_item_details[a].product + "</td><td>" + resp.order_item_details[a].description + "</td><td>" + resp.order_item_details[a].unit_price + "</td><td>" + resp.order_item_details[a].discount + "</td><td>" + resp.order_item_details[a].total + "</td></tr>";
+	            		for(var a=0; a < resp.new_order_item_details.length; a++){
+							var discount = (resp.new_order_item_details[a].product_info.discount != null) ? resp.new_order_item_details[a].product_info.discount : 0;
+	            			order_item_str += "<tr><td>" + resp.new_order_item_details[a].product_info.name + "</td><td>" + resp.new_order_item_details[a].product_info.product_type + "</td><td>" + resp.new_order_item_details[a].product_info.price_formatted + "</td><td>" + discount + "</td><td>" + resp.new_order_item_details[a].product_info.subtotal + "</td></tr>";
 	            		}
-
-	            		
-
 
 	            		
 
