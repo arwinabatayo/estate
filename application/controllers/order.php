@@ -212,8 +212,21 @@ class Order extends MY_Controller
 				$d['order_item_details'] = $this->orderitem_model->get_orderitems_by_orderid($d['order_details']['id']);
 				$d['account_details'] = $this->accounts_model->get_account_by_account_id($d['order_details']['account_id']);
 				$d['billing_details'] = $this->accounts_model->get_account_address($d['order_details']['account_id']);
+				$order_item_details_arr = array();
 				
-
+				//$d['order_item_details'] = json_decode($d['order_item_details']);
+				
+				for($ctr = 0; $ctr < count($d['order_item_details']); $ctr++){
+					$order_item_details = (array)$d['order_item_details'][$ctr];
+					
+					//var_dump($d['order_item_details'][$ctr]);
+					if($order_item_details['product_info']){
+						$order_item_details['product_info'] = unserialize($order_item_details['product_info']);
+					}
+					
+					array_push($order_item_details_arr, $order_item_details);
+				}
+				$d['new_order_item_details'] = $order_item_details_arr;
 				//$order_details = get_order_by_refnum();
 			// TODO : integrate the receipt to be done by sir mark
 			break;
