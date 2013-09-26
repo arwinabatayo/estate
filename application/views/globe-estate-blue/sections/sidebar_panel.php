@@ -38,10 +38,13 @@
                         <div class="accordion" id="accordion2">
                             <div class="accordion-group account-group account">
 								<?php
-									//TODO - move this object to session after authentication - mark
-								    $user = $this->accounts_model->get_account_info_by_id('9151178863',false);	
-								    //print_r($user);
-								   // die();
+									
+									$user = isset($account_info) ? $account_info : (object) $this->session->userdata('subscriber_info');
+									
+									//Temp Only
+									if(!$user){
+										$user = $this->accounts_model->get_account_info_by_id('9151178863',false);	
+									}
 								?>
 								
                               <div class="row-fluid accordion-heading">

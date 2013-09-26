@@ -14,12 +14,23 @@ class Cart extends CI_Controller {
 		$this->_data->show_breadcrumbs    =  true;
 		$this->_data->current_step        =  3;
 		$this->_data->page_title          =  'Add-ons';
-
+		
+		//global object of subcriber info, init from sms verification -mark
+		$this->_data->account_info  = $account_info = (object) $this->session->userdata('subscriber_info');
+		
+		$this->_data->account_id = 2147483647; // to make it safe =)
+		//TODO - add restriction or redirect if account info object is empty -mark
+		if($account_info->account_id){
+			$this->_data->account_id      = $account_info->account_id;
+		}
+		
     }
 
     public function index()
     {
       //  $this->load->view('cart/index');
+      
+      print_r($this->_data->account_info);
     }
 
     public function get_cart()
@@ -35,7 +46,7 @@ class Cart extends CI_Controller {
 
     public function update_cart($key, $qty)
     {
-        $account_id = "1";
+        $account_id = $this->_data->account_id;
         //$key = "96e59dd45c5cff38ba94e169202ccd41";
 
         /* cart */
@@ -64,7 +75,7 @@ class Cart extends CI_Controller {
 
     public function delete_cart()
     {
-        $account_id = "1212";
+        $account_id = $this->_data->account_id;
         $key = "5eacd98e0995bcb12ed069a936f16eec";
 
         /* cart */
@@ -143,7 +154,7 @@ class Cart extends CI_Controller {
 
 
 
-		$account_id = 1; //TODO get subs id
+		$account_id = $this->_data->account_id; 
 		$options = array();
 		$title  = '';
 		$amount = '0.00';
@@ -369,7 +380,7 @@ class Cart extends CI_Controller {
 		$this->load->model('estate/products_model');
 
 		$d = (object) $this->input->post();
-		$account_id = 1; //TODO get subs id
+		$account_id = $this->_data->account_id; 
 		$options = array();
 		$title  = '';
 		$amount = 0.00;
@@ -535,7 +546,7 @@ class Cart extends CI_Controller {
     public function delete($returnType='json')
     {
 		$d = (object) $this->input->post();
-		$account_id = 1; //TODO get subs id
+		$account_id = $this->_data->account_id;  
 
 		$key = $d->keyid;
 

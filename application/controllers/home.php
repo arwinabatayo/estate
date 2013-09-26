@@ -59,12 +59,12 @@ class Home extends MY_Controller
 		$this->_data->show_breadcrumbs    =  false;
 		$this->_data->page = 'test';
 		
-		$acc_info = $this->accounts_model->is_msisdn_exist('9151178863');	
+		$acc_info = $this->accounts_model->get_account_info_by_id('9173858958');	
 
 		
-		//print_r($user_info);
+		print_r($acc_info);
 						  
-		echo var_dump( $acc_info );  
+		//echo var_dump( $acc_info );  
 		//print_r( $this->accounts_model->get_account_info() );
 		//$this->load->view($this->_data->tpl_view, $this->_data);
 	}
@@ -112,7 +112,7 @@ class Home extends MY_Controller
                             $verification_code = random_string('alnum', 6);
                             $message = "Please use this code ".$verification_code." to verify your account.";
                             $sms_status = $this->api_globe->api_send_sms($mobile_number, $message, "Project Esate");
-                            //$sms_status = TRUE;
+                           //$sms_status = TRUE;
                             
                             if($sms_status == TRUE) {
                                 $this->load->model('estate/networks_model');
@@ -475,7 +475,7 @@ class Home extends MY_Controller
 			$user_info = array_merge($acc_info,$acc_type);
 			
 			$this->session->set_userdata('subscriber_info',$user_info);
-			
+				
 			return TRUE;
 		}
 		

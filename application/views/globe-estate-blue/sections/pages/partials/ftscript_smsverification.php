@@ -106,12 +106,13 @@
 					
 					$('button#btn_resend_vcode').click( function(e){
 
-						var code =	$(this).siblings('input[name="code_id"]').val();
+						//var code =	$(this).closest('input[name="code_id"]').val();
+						var code =	$('input#code_id').val();
 						var s =	$('#resetVerification div.status');
 						
 						s.show();
 						s.html('Validating...Please wait...');
-				    
+
 						e.preventDefault();
 							$.ajax({
 							    type: 'post',
