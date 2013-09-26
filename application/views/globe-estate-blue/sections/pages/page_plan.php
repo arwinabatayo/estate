@@ -117,7 +117,14 @@
                     <div class="row-fluid link-bottom">
                         <a class="pull-left">Get A Prepaid Kit</a>
                         <div class="pull-right">
-                        	<button class="blue-btn pull-right" onclick="window.location.href='<?php echo base_url() ?>addons'">Continue</button>
+                        	<button class="blue-btn" onclick="window.location.href='<?php echo base_url() ?>addons'">Continue</button>
+                        	<br class="clear" />
+                        	<br />
+                            <ul class="">
+                                <li><a>Contact Us</a></li>
+                                <li>|</li>
+                                <li><a>Live Chat</a></li>
+                            </ul> 
                         </div>
 
                     </div>                             

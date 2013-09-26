@@ -10,6 +10,7 @@
 				var basket    = $('#AddonCartWidget');
 				var basketAccessory    = $('#AccessoryCartWidget');
 
+
 				$.ajax({
 					url: base_url+'cart/addtocart',
 					data: formData,
@@ -69,7 +70,7 @@
 
 						if(resp.status == 'success'){
 							$('#prod-item-'+rowid).slideUp('slow', function(){ $(this).remove() });
-							$('.cashoutLabel').html(resp.total);
+							$('#cashoutLabel').html(resp.total);
 						}else{
 							alert(resp.msg);
 						}

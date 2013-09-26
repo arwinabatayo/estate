@@ -80,10 +80,25 @@
 						  </div>
                         </div>
 					</div>  
-                    <div class="row-fluid link-bottom">
-                        <a class="pull-left">Skip and Continue</a>
 
-                    </div>                             
+                    <!-- start bottom links -->
+                    <div class="row-fluid link-bottom">
+                        <a class="pull-left grey" href="<?php echo base_url() ?>subscriber-info">Skip &amp; Go to Subscribers Info</a>
+                        <div class="pull-right">
+                            <ul>
+                                <li><button class="blue-btn" onclick="window.location.href='<?php echo base_url() ?>subscriber-info'">Continue</button></li>
+                                <li><button class="blue-btn">Load More</button></li>
+                            </ul>                        
+                        	<br>
+                            <ul class="pull-right">
+                                <li><a>Contact Us</a></li>
+                                <li>|</li>
+                                <li><a>Live Chat</a></li>
+                            </ul>                        
+                        </div>
+                    </div>
+                    <!-- end bottom links --> 
+                                                
                 </div>
             
             </div>

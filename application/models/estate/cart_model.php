@@ -2,7 +2,8 @@
 class Cart_model extends CI_Model
 {
     var $tbl_name = 'estate_cart';
-    var $shipping_fee = 250; //TODO: load it from model
+    
+    var $shipping_fee = 0; //TODO: load it from model
     
     function __construct()
     {

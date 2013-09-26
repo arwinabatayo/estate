@@ -217,9 +217,11 @@
                             </div>                                                
                         </div>                          
                     </div>
-                    <div class="cash-out">
+                    <div id="cashoutBox" class="cash-out">
                     	<span class="blue">YOUR CASHOUT</span>
-                        <span class="black">P 12,000.00</span>
+                        <span class="black" id="cashoutLabel">
+							P <?php echo number_format($this->cart_model->total(false),2); ?>
+						</span>
                     </div>                   
                 </div>
                 

@@ -47,7 +47,7 @@ class Addons extends MY_Controller
 	public function accessories()
 	{
 		
-		redirect('addons');
+	//	redirect('addons');
 		
 		$this->_data->accordionIndex      =  4;
 		$this->_data->page_title          =  'Accessories';
