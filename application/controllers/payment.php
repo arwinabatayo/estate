@@ -52,6 +52,28 @@ class Payment extends MY_Controller
 		
 		
 		$this->_data->cartItems = $this->cart->contents();
+                
+                $this->load->model('model_pickup');
+                $params = array(
+                    'postal_code' => '4023',
+                    'province'  => 'Laguna',
+                    'city'  => 'San Pedro',
+                    'municipality'  => 'San Pedro',
+                );
+                $this->load->model('model_pickup');
+                $stores = $this->model_pickup->list_stores_nearby($params);
+                $stores_all = $this->model_pickup->get_stores(NULL, NULL, NULL, NULL, 'all', NULL, 1 );
+                unset($stores_all['total_count']);
+                $this->_data->stores_all = $stores_all;
+                $this->_data->stores =  $stores;
+
+                $store_properties = array();
+                foreach($stores as $k=>$v) {
+                    $properties = $this->model_pickup->get_store_properties($v['id'],'date_of_operation', 'DESC', NULL, 'all', '1', TRUE);
+                    unset($properties['total_count']);
+                    $store_properties[$v['id']] = $properties;  
+                }
+                $this->_data->store_properties = $store_properties;
         
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
@@ -105,6 +127,49 @@ class Payment extends MY_Controller
 		$this->load->view("globe-estate/sections/pages/page_process_payment", $this->_data);
 		
 	}
+        
+        public function search_store()
+        {
+            $store_name = $this->input->post('store_name');
+            $this->load->model('model_pickup');
+            $stores = $this->model_pickup->search_store($store_name);
+            $_data['stores'] = $stores;
+            
+            $store_properties = array();
+            foreach($stores as $k=>$v) {
+                $properties = $this->model_pickup->get_store_properties($v['id'],'date_of_operation', 'DESC', NULL, 'all', '1', TRUE);
+                unset($properties['total_count']);
+                $store_properties[$v['id']] = $properties;  
+            }
+            $_data['store_properties'] = $store_properties;
+            $data['temp'] = $this->load->view('globe-estate/sections/pages/partials/ajax_payment_delivery_pickup', $_data, TRUE);
+            echo json_encode($data);
+        }
+        
+        public function search_nearest_stores()
+        {
+            $keyword = $this->input->post('keyword');
+            $default_search_values = array('postal_code', 'province', 'city', 'municipality', 'barangay');
+            $this->load->model('model_pickup');
+            
+            $stores = array();
+            foreach($default_search_values as $v) {
+                if(empty($stores)) {
+                    $stores = $this->model_pickup->search_store($keyword, $v, TRUE);
+                }
+            }
+            $_data['stores'] = $stores;
+            
+            $store_properties = array();
+            foreach($stores as $k=>$v) {
+                $properties = $this->model_pickup->get_store_properties($v['id'],'date_of_operation', 'DESC', NULL, 'all', '1', TRUE);
+                unset($properties['total_count']);
+                $store_properties[$v['id']] = $properties;  
+            }
+            $_data['store_properties'] = $store_properties;
+            $data['temp'] = $this->load->view('globe-estate/sections/pages/partials/ajax_payment_delivery_pickup', $_data, TRUE);
+            echo json_encode($data);
+        }
 	
 
 }
