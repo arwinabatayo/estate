@@ -102,7 +102,7 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="accordion-group account-group addevice">
+                            <div class="accordion-group account-group addevice " style="height: auto; ">
                               <div class="row-fluid accordion-heading">
                                 <a class="accordion-toggle account-name collapsed" data-toggle="collapse" data-target="#collapseTwo">
                                   ADD A DEVICE<i class="expand icon-pn"></i>
