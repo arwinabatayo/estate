@@ -3,6 +3,7 @@
 		//print_r($cartItems);
 		
     ?>
+    
     <div id="cartSummaryTable">
 		<?php if($cartItems){ ?>
 	    <table class="table table-striped table-bordered table-hover table-condensed">
@@ -65,4 +66,15 @@
 		
 		<?php } ?>
 	</div>
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
+	
 	

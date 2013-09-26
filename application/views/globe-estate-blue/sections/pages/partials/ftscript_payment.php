@@ -1,3 +1,33 @@
+				    
+					//delete cart item - mark
+					$(document).on('click', '#cartSummaryTable a.btnDelete', function(){
+							var rowid = $(this).attr('id');
+							var prodName = $(this).attr('rel');
+			
+							if( !confirm('Are you sure you want to delete "'+prodName+'"?')) return;
+			
+							$.ajax({
+								url: base_url+'cart/delete',
+								data: 'keyid='+rowid+'&type',
+								type:'post',
+								success: function(response){
+			
+									var resp = jQuery.parseJSON( response );
+			
+									if(resp.status == 'success'){
+										$('#prod-item-'+rowid).slideUp('slow', function(){ $(this).remove() });
+										$('#cashoutLabel').html(resp.total);
+									}else{
+										alert(resp.msg);
+									}
+								},
+								error: function(){
+									alert('Some error occured or the system is busy. Please try again later');
+								}
+							});
+			
+					});
+		
 				    $('#personal-info-page  button.goNext').click(function() {
 						var btnIndex = $('#personal-info-page  button.goNext').index(this);
 						$( "#personal-info-page" ).accordion({active: btnIndex+1});

@@ -4,65 +4,67 @@
 		
     ?>
     <div id="cartSummaryTable">
-		<?php if($cartItems){ ?>
-	    <table class="table table-striped table-bordered table-hover table-condensed">
-	            <thead>
-	              <tr>
-	                <th>Product</th>
-	                <th>Item Description</th>
-	                <th class="textcenter">QTY</th>
-	                <th>Unit Price</th>
-	                <th>% Discount</th>
-	                <th>Total</th>
-	              </tr>
-	            </thead>
-	            
+        <?php if($cartItems){ ?>
+            	<table width="100%" cellpadding="0" cellspacing="0">
+                	<tr class="plan-sum-title">
+                    	<td name="product" align="center" width="">Product</td>
+                    	<td align="left" width="">Item Description</td>
+                    	<td name="unit-price" align="left" width="">Unit Price</td>
+                    	<td name="discount" align="left" width="">% Discount</td>
+                    	<td align="left">Total</td>                                                                                                
+                        <td>&nbsp;</td>
+                    </tr>
 	            <?php 
 						foreach($cartItems as $item){
 					?>
 			            <tr id="prod-item-<?php echo $item['rowid'] ?>">
-			              <td> 
-			              
-			               </td>
-			              <td>
-							  <span class="fleft"><?php echo $item['name'] ?></span>
-							  <span class="icoDelete fright"> <a href="javascript:void(0)" class="btnDelete" id="<?php echo $item['rowid'] ?>" rel="<?php echo $item['name'] ?>"><i class="icon-remove"></i></a>&nbsp;</span>
-						  </td>
-			              <td align="center" class="textcenter">
-							  <!--<input name="qty" type="text" value="1" style="width:25px">-->
-							  <?php echo $item['qty'] ?>
-			              </td>
-			              
-			              <td><?php echo $item['price_formatted'] ?></td>
-			              <td> <?php echo isset($item['discount']) ? $item['discount'] : '' ?> </td>
-			              <td><?php echo 'Php '.number_format($item['subtotal']) ?></td>
+			            
+		                    <tr>
+		                    	<td name="product" align="center">
+									<!-- #IMAGE HERE-->
+									<img src="images/prod-img1.png" />
+								</td>
+		                    	<td>
+		                        	<span><?php echo $item['name'] ?></span>
+		                            <span><!--#options --></span>
+		                            <span class="violet"><?php echo strtoupper($item['product_type']) ?></span>
+		                        </td>
+		                    	<td name="unit-price"><?php echo $item['price_formatted'] ?></td>
+		                    	<td name="discount"><?php echo isset($item['discount']) ? '<span class="discount">Less '.$item['discount'].'%</span>': '' ?></td>
+		                    	<td><?php echo 'Php '.number_format($item['subtotal']) ?></td>                                                                                                
+		                        <td><a data-alt="Delete" class="btnDelete del" id="<?php echo $item['rowid'] ?>" rel="<?php echo $item['name'] ?>"><img src="<?php echo $assets_url ?>site-blue/images/icons/icon-delete.png" alt="Delete"></a></td>                    	
+
 			            </tr>
 	            
 	            <?php 
 						}
 					
 				?>
-					
-	            <tr>
-	              <td colspan="4"></td>
-	              <td><strong>Sub total</strong></td>
-	              <td><span><?php echo $this->cart_model->get_items_subtotal(true)  ?></span> </td>
-	            </tr>
-	            <tr>
-	              <td colspan="4"></td>
-	              <td><strong>Shipping &amp; Handling</strong></td>
-	              <td><?php echo $this->cart_model->get_shipping_fee(true)  ?></td>
-	            </tr>
-	            <tr>
-	              <td colspan="4"></td>
-	              <td><strong>Total</strong></td>
-	              <td><span class="cashoutLabel"><?php echo $this->cart_model->total(true) ?></span></td>
-	            </tr>
-		</table>
+                  
+                </table> 
+                <table width="100%" cellpadding="0" cellspacing="0" class="total-sum">
+                	<tr>
+                    	<td width="668" align="right">Subtotal</td>
+                    	<td class="price"><?php echo $this->cart_model->get_items_subtotal(true)  ?></td>                        
+                    </tr>
+                	<tr>
+                    	<td width="668" align="right">Reset Cost</td>
+                    	<td class="price">-</td>                        
+                    </tr>
+                	<tr class="gtotal">
+                    	<td width="668" align="right">Total</td>
+                    	<td class="gprice"><?php echo $this->cart_model->total(true) ?></td>                        
+                    </tr>                         
+                </table>
+                <br />
+                <div class="plan-sum-btn">
+                	<button class="blue-btn pull-right">Continue</button>
+                </div>
+
 		<?php } else { ?>
 		
 		<p>Your shopping cart is empty.</p>
 		
 		<?php } ?>
+
 	</div>
-	

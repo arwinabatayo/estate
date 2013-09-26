@@ -40,6 +40,7 @@
     box-shadow:         2px 2px 1px rgba(50, 50, 50, 0.23); 
 }
 .ldarkgreybg{background-color: #ebebeb}
+.flow h3 { color: #1769b3; }
 .flow-title{ font-size: 23px; font-family: 'fs_elliot_cyrilliclight' }
 .flow-title2{ font-size:24px; }
 .flow-instruction{ float:none; font-size: 18px; line-height: 25px; clear:both;}
@@ -395,6 +396,60 @@ input.pop-email-input{border:2px solid #bdc3c7; width:90%; margin:10px 0 0 0; pa
 .account-content-grp:last-child .accordion-heading a{ border-bottom:none}
 .account-content-grp .accordion-inner{padding:0 0 5px 0}
 
+/*PLAN SUMMARY*/
+.plan-summary{
+	background-color:#e7e7e7; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; clear:both; overflow: hidden; margin-bottom:50px;
+    -webkit-box-shadow: 1px 1px 1px rgba(41, 67, 72, 0.44);
+    -moz-box-shadow:    1px 1px 1px rgba(41, 67, 72, 0.44);
+    box-shadow:         1px 1px 1px rgba(41, 67, 72, 0.44);	
+}
+.plan-summary td{font-size:16px; font-weight:bold; padding:10px; border-bottom:1px solid #cccccc; border-top:1px solid #fff;}
+.plan-summary td span{display:block; text-align:left; margin:2px 0}
+.plan-summary .plan-sum-title td{
+	color:#fff; font-size:18px; border-bottom:3px solid #1769b3; padding:20px 10px;text-shadow: 1px 1px #333; font-family:'fs_elliot_cyrillicregular';
+	background: #1763af; /* Old browsers */
+	background: -moz-linear-gradient(top,  #1763af 0%, #1855a5 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#1763af), color-stop(100%,#1855a5)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #1763af 0%,#1855a5 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #1763af 0%,#1855a5 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #1763af 0%,#1855a5 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #1763af 0%,#1855a5 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1763af', endColorstr='#1855a5',GradientType=0 ); /* IE6-9 */	
+}
+.plan-summary tr.light td{background-color:#f3f3f3}
+.plan-summary .violet{background-color:#574696; color:#fff; font-size:12px; font-weight:bold;-webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; float:left; padding:3px 5px 2px 5px; text-transform:uppercase}
+.plan-summary .discount{background-color:#f39431; font-size:18px; color:#fff; padding:8px 13px;-webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; float:left}
+.plan-summary .del{color:#F00; text-decoration:underline}
+.total-sum{border-top:3px solid #f39431}
+.total-sum tr td{padding:20px 10px; font-size:18px; color:#514e4e}
+.total-sum tr td.price{font-size:24px; color:#333; border-left:1px solid #ccc}
+.total-sum tr.gtotal td{
+	color:#fff; border-bottom:3px solid #7ebe36; font-size:30px; border-right:1px solid #8e8e8e;
+	background: #898989; /* Old browsers */
+	background: -moz-linear-gradient(top,  #898989 0%, #58595b 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#898989), color-stop(100%,#58595b)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #898989 0%,#58595b 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #898989 0%,#58595b 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #898989 0%,#58595b 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #898989 0%,#58595b 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#898989', endColorstr='#58595b',GradientType=0 ); /* IE6-9 */	
+}
+.total-sum tr.gtotal td.gprice{font-size:36px; border-left:1px solid #6e6e6e}
+.plan-sum-btn{padding:20px 0; float:left; width:100%}
+.plan-sum-btn .blue-btn{line-height:45px; min-width:200px; margin-right:40px}
+
+.recommendation{
+	background-color:#fff; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; clear:both; overflow: hidden; margin-bottom:50px;
+    -webkit-box-shadow: 1px 1px 1px rgba(41, 67, 72, 0.44);
+    -moz-box-shadow:    1px 1px 1px rgba(41, 67, 72, 0.44);
+    box-shadow:         1px 1px 1px rgba(41, 67, 72, 0.44);		
+}
+.recommendation ul{list-style:none; margin:0; padding:0;}
+.recommendation ul li{float:left; border-width:0 1px; border:1px solid #ebebeb; margin-left:-1px; width:19.89%; text-align:center; padding:30px 0}
+.recommendation ul li .recmd-content{font-size:15px; font-family:'fs_elliot_cyrillicregular'}
+.recommendation ul li .recmd-content .boxes{background-color:#cccccc; width:50%; height:90px; margin:auto;  -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; margin-bottom:10px}
+.recommendation ul li .recmd-content .text{color:#1853a3}
+.recommendation ul li .recmd-content .price{font-size:18px}
  
  /*alternative responsive*/
  @media (max-width: 767px) {

@@ -146,9 +146,9 @@ class Home extends MY_Controller
 		$this->_data->show_breadcrumbs    =  false;
 		$this->_data->page = 'test';
 		
-		$acc_info = $this->accounts_model->get_account_info_by_id('9173858958');	
+		$acc_info = $this->accounts_model->get_account_info_by_id('9151178863');	
 		
-		$this->_initSubscriberInfo('9151178863');
+		//$this->_initSubscriberInfo('9151178863');
 		
 		print_r($acc_info);
 						  

@@ -83,6 +83,9 @@ class Payment extends MY_Controller
 		$this->_data->page  = 'plan_summary';
 		$this->_data->show_breadcrumbs    =  false;
 		
+		$this->_data->cartItems = $this->cart->contents();
+		//~ print_r($this->_data->cartItems);
+		//~ die();
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
 	
