@@ -30,7 +30,7 @@
 		                            <span class="violet"><?php echo strtoupper($item['product_type']) ?></span>
 		                        </td>
 		                    	<td name="unit-price"><?php echo $item['price_formatted'] ?></td>
-		                    	<td name="discount"><?php echo isset($item['discount']) ? '<span class="discount">Less '.$item['discount'].'%</span>': '' ?></td>
+		                    	<td name="discount"><?php echo $item['discount'] ? '<span class="discount">Less '.$item['discount'].'%</span>': '' ?></td>
 		                    	<td><?php echo 'Php '.number_format($item['subtotal']) ?></td>                                                                                                
 		                        <td><a data-alt="Delete" class="btnDelete del" id="<?php echo $item['rowid'] ?>" rel="<?php echo $item['name'] ?>"><img src="<?php echo $assets_url ?>site-blue/images/icons/icon-delete.png" alt="Delete"></a></td>                    	
 
