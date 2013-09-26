@@ -2,6 +2,16 @@
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 define('ESTATE_THEME_BASEPATH', dirname(__FILE__));
+
+
+if(isset($_GET['setOrderConfig'])){
+	//ordertype
+	$key = $this->input->get('key', TRUE);
+	$val = $this->input->get('val', TRUE);
+	
+	$this->cart_model->set_order_config(array($key=>$val));
+}
+
 ?>
 
 <?php include('sections/meta_header.php'); ?>

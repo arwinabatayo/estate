@@ -38,9 +38,13 @@
                         <div class="accordion" id="accordion2">
                             <div class="accordion-group account-group account">
 								<?php
-									//TODO - move this object to session after authentication - mark
-								    $user = $this->accounts_model->get_account_info_by_id('9151178863',false);	
-								    //print_r($user);
+									
+									$user = isset($account_info) ? $account_info : (object) $this->session->userdata('subscriber_info');
+									
+									//Temp Only
+									if(!$user){
+										$user = $this->accounts_model->get_account_info_by_id('9151178863',false);	
+									}
 								?>
 								
                               <div class="row-fluid accordion-heading">
@@ -64,8 +68,8 @@
 											<li><span>Plan:</span> 3799</li>
 											<?php } ?>
 											
-											<?php if($user->account_id ){ //TODO get from DB ?>
-											<li><span>Category:</span> Consumer</li>
+											<?php if($user->account_type_name ){ ?>
+											<li><span>Category:</span> <?php echo $user->account_type_name?></li>
 											<?php } ?>
 											
 											<?php if($user->name && $user->surname){ ?>

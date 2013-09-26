@@ -1,6 +1,16 @@
-			<div id="main-page" class="span9">
-	            <section class="jq-accordion" id="personal-info-page">
-	                    <div>
+			
+         
+              <div class="accordion row-fluid chooseplan clearfix" id="accordion2">  
+             
+				<?php
+				    if($current_controller != 'home' && ($current_step < 5) ){
+						include(ESTATE_THEME_BASEPATH.'/sections/sidebar_panel.php');
+					}
+				?>
+                
+                <div class="span9">
+                    <div class="accordion2 account-content active" id="accordion3">
+                        
 	                        <h3><a href="#">Personal Information</a></h3>
 	                        <div>
 							   <div class="well textleft">
@@ -63,58 +73,20 @@
 									<br class="clear">
 									
 								<br />	
-							   <p class="textright"><button class="btn-large ui-button-success">CONTINUE</button></p>
+							   <p class="textright"><button class="blue-btn">CONTINUE</button></p>
 	                       
 	                       
 	                    </div>
 
-	                    <div>
-	                        <h3><a href="#">Upload Document</a></h3>
-	                        <div>
-							   <div class="well textleft">
-									<h4 style="font-size:24px;font-weight:normal">Morbi pulvinar nibh</h4>
-									<p style="font-size:110%">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras justo nulla, commodo nec mauris ut, interdum adipiscing nisi. Duis ut mattis ligula.</p>
-							   </div>
-							   <br />
-							   <br />
-							   <br />
-							   
-									<label>Proof of Financial Capacity</label>
-									<div>
-									<input type="file" />
-									<button class="btn-large ui-button-success">UPLOAD</button>
-									</div>
-									<br />
-									<p style="color:#888;font-style:italic;font-family:Arial,san-serif">(Two-months credit card statement, ITR with BIR or Bank received stamp-Form 1700,
-									W-2 or Form 2316, Certificate of Employment and Compensation, One month
-									computerized payslip, Two months bank statement of account or passbook, three months
-									certificate of allotment plus employment contract)</p>
-									<br />
-									<br />
-
-							   <p class="textright"><button class="btn-large ui-button-success" onclick="window.location.href='<?php echo base_url() ?>payment'">CONTINUE</button></p>
-	                        </div>
-	                    </div>
-	            </section> 
-	
-			</div>
-		
-		
-		
-		   <div class="globe-dialog" id="confim_onbehalf" title="Confirm Posting on Behalf">
-					<div class="textleft noLeftMargin">
-                    	<div class="" style="width:600px;height:260px">
-							<iframe src="//www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2Fglobeph&amp;width=600&amp;height=260&amp;colorscheme=light&amp;show_faces=true&amp;header=false&amp;stream=false&amp;show_border=true&amp;appId=342233572518032" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:600px; height:260px;" allowTransparency="true"></iframe>
-                    	</div>		
-                    	<br />
-                    	<p class="bold">You provided us with your Facebook account, would you allow us to to publish <br />this info on your behalf?</p>		
-			
+                        
+                    
                     </div>
-		   </div>
-		
-		
-		
-		
+                          
+                </div>
+            
+            </div>
+			
+
 		
 		
 		

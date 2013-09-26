@@ -1,4 +1,12 @@
 			
+			//SKU Configuration
+			$('input.opt_color').click( function(){
+				var color = $(this).val();
+				$('#product_preview img').each( function(){
+					$(this).hide();
+				});
+				$('#product_preview img.c_'+color).fadeIn();
+			});
 			
 			//$('#dialog_reserve_form').modal('show');
 			

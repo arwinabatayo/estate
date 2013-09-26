@@ -23,7 +23,8 @@ class Home extends MY_Controller
 		$this->_data->site_config         = $this->getPropertyDataXML(1);
 
 		//print_r($this->_data->site_config);
-
+		//flag for testing
+		define('IS_GLOBE_API_ENV',TRUE);
 	}
 	
 	public function index()
@@ -59,12 +60,12 @@ class Home extends MY_Controller
 		$this->_data->show_breadcrumbs    =  false;
 		$this->_data->page = 'test';
 		
-		$acc_info = $this->accounts_model->is_msisdn_exist('9151178863');	
+		$acc_info = $this->accounts_model->get_account_info_by_id('9173858958');	
 
 		
-		//print_r($user_info);
+		print_r($acc_info);
 						  
-		echo var_dump( $acc_info );  
+		//echo var_dump( $acc_info );  
 		//print_r( $this->accounts_model->get_account_info() );
 		//$this->load->view($this->_data->tpl_view, $this->_data);
 	}
@@ -73,7 +74,8 @@ class Home extends MY_Controller
 	{	
 
 		$this->_data->page = 'home';
-		$this->_data->page_title          =  'SMS Verification';
+		$this->_data->page_title =  'SMS Verification';
+		$this->_data->is_reserve = $this->session->userdata('reserved_item_specs');
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
 	
@@ -110,7 +112,13 @@ class Home extends MY_Controller
                             $this->load->library('GlobeWebService','','api_globe');
                             $verification_code = random_string('alnum', 6);
                             $message = "Please use this code ".$verification_code." to verify your account.";
-                            $sms_status = $this->api_globe->api_send_sms($mobile_number, $message, "Project Esate");
+                            
+                            if(IS_GLOBE_API_ENV){
+								$sms_status = $this->api_globe->api_send_sms($mobile_number, $message, "Project Esate");
+							}else{
+								$sms_status = TRUE;
+							}
+                           
                             
                             if($sms_status == TRUE) {
                                 $this->load->model('estate/networks_model');
@@ -147,7 +155,7 @@ class Home extends MY_Controller
 		  "next_page"            => ""
 		);
 
-
+		$data['is_globe_subscriber'] = false;
 		$data['mobile_number'] = $this->session->userdata('current_subscriber_mobileno');
 		$this->load->model('estate/networks_model');                
 		$mobile =  $this->session->userdata('current_subscriber_mobileno');
@@ -164,6 +172,7 @@ class Home extends MY_Controller
 		if($verification_code) {
 
 			if($verification_code == $verification_info['code']) {
+			//if (true) {
 				
 				//init/save subscriber info here
                 $is_user_exist = $this->_initSubscriberInfo($mobile);
@@ -224,7 +233,7 @@ class Home extends MY_Controller
 					$this->load->model('model_reservation');
 					$reserve_data = array(
 							'mobile_number'	=> '09173858958', //$data['mobile_number'],
-							'spec'	=> $reserved_specs
+							'specs'	=> $reserved_specs
 						);
 					$this->model_reservation->addReservation($reserve_data);
 				}
@@ -242,6 +251,7 @@ class Home extends MY_Controller
 	{
 
 		$email = $this->input->get('e',true);
+		$mobile = $this->input->get('m',true);
 		
 		$hash = $this->_create_hash($email);
 
@@ -252,6 +262,7 @@ class Home extends MY_Controller
 			$this->session->set_userdata('current_subscriber_email', $email);
 			
 			redirect( base_url().'sms-verification?token='.$hash);
+			
 		}else{
 			echo 'Invalid verification code..'; //TODO - ilagay sa template
 			exit;
@@ -312,12 +323,15 @@ class Home extends MY_Controller
                 $email_tpl = 'view_activation';
             
                 $verification_code = $this->_create_hash($email_to);
-        
+				//$mobile =  ltrim($this->session->userdata('current_subscriber_mobileno'),0);
+				
                 $msg = array(
                     'name'              => $email_to,
                     'verification_code' => $verification_code,
+                    //'verification_url'  => base_url().'home/verify/'.$verification_code.'?e='.$email_to.'&m='.$mobile,
                     'verification_url'  => base_url().'home/verify/'.$verification_code.'?e='.$email_to,
                 );
+
             break;
             case 'saved_transaction' :
                 $uncomp_trans_lnk = "http://test.com"; // TODO : link to correct transaction page
@@ -344,6 +358,7 @@ class Home extends MY_Controller
         }
 
         return $this->email->send_email_api($email_to, $subject, $email_tpl, $msg, $sender ); 
+        
     }
     
     //move this function to helper -- SOON
@@ -467,7 +482,7 @@ class Home extends MY_Controller
 			$user_info = array_merge($acc_info,$acc_type);
 			
 			$this->session->set_userdata('subscriber_info',$user_info);
-			
+				
 			return TRUE;
 		}
 		

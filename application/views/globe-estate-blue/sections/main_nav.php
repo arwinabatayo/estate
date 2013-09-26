@@ -7,7 +7,7 @@
             <div class="span9">
                 <div class="navbar">
                   <div class="navbar-inner">
-                    <a class="brand glogo" href="#">Globe</a>
+                    <a class="brand glogo" href="<?php echo base_url() ?>">Globe</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
                             <li class="navbar-divider">

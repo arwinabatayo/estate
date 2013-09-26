@@ -14,12 +14,23 @@ class Cart extends CI_Controller {
 		$this->_data->show_breadcrumbs    =  true;
 		$this->_data->current_step        =  3;
 		$this->_data->page_title          =  'Add-ons';
-
+		
+		//global object of subcriber info, init from sms verification -mark
+		$this->_data->account_info  = $account_info = (object) $this->session->userdata('subscriber_info');
+		
+		$this->_data->account_id = 2147483647; // to make it safe =)
+		//TODO - add restriction or redirect if account info object is empty -mark
+		if($account_info->account_id){
+			$this->_data->account_id      = $account_info->account_id;
+		}
+		
     }
 
     public function index()
     {
       //  $this->load->view('cart/index');
+      
+      print_r($this->_data->account_info);
     }
 
     public function get_cart()
@@ -35,7 +46,7 @@ class Cart extends CI_Controller {
 
     public function update_cart($key, $qty)
     {
-        $account_id = "1";
+        $account_id = $this->_data->account_id;
         //$key = "96e59dd45c5cff38ba94e169202ccd41";
 
         /* cart */
@@ -64,7 +75,7 @@ class Cart extends CI_Controller {
 
     public function delete_cart()
     {
-        $account_id = "1212";
+        $account_id = $this->_data->account_id;
         $key = "5eacd98e0995bcb12ed069a936f16eec";
 
         /* cart */
@@ -143,7 +154,7 @@ class Cart extends CI_Controller {
 
 
 
-		$account_id = 1; //TODO get subs id
+		$account_id = $this->_data->account_id; 
 		$options = array();
 		$title  = '';
 		$amount = '0.00';
@@ -369,7 +380,7 @@ class Cart extends CI_Controller {
 		$this->load->model('estate/products_model');
 
 		$d = (object) $this->input->post();
-		$account_id = 1; //TODO get subs id
+		$account_id = $this->_data->account_id; 
 		$options = array();
 		$title  = '';
 		$amount = 0.00;
@@ -535,7 +546,7 @@ class Cart extends CI_Controller {
     public function delete($returnType='json')
     {
 		$d = (object) $this->input->post();
-		$account_id = 1; //TODO get subs id
+		$account_id = $this->_data->account_id;  
 
 		$key = $d->keyid;
 
@@ -618,6 +629,11 @@ class Cart extends CI_Controller {
 		return $new_config;
 	}
 
+	function dump_order_config(){
+		echo '<pre>';
+		print_r( $this->session->userdata('order_config') );
+		echo '</pre>';
+	}
 	function get_order_config(){
 		return $this->session->userdata('order_config');
 	}
@@ -703,17 +719,18 @@ class Cart extends CI_Controller {
 			$item_data = $this->session->userdata('reserved_item_specs');
 			// get user data from reserve form
 			$reserve_data = array (
-				'account_id'	=> '',
-				'first_name'	=> $d->first_name,
-				'last_name'		=> $d->last_name,
-				'middle_name'	=> $d->middle_name,
-				'email'			=> $d->email,
-				'phone'			=> $d->phone,
+				'account_id'			=> '',
+				'first_name'			=> $d->first_name,
+				'last_name'				=> $d->last_name,
+				'middle_name'			=> $d->middle_name,
+				'email'					=> $d->email,
+				'msisdn'				=> $d->phone,
 				'network_carrier'		=> $d->network_carrier,
-				'social_network_user_id'=>	$d->sn_uid, // TODO : define proper resource
-				'reserved_item_specs' 	=> json_encode($item_data),
+				'social_network_user_id'=> $d->sn_uid, // TODO : define proper resource
+				'reserved_item_specs' 	=> $item_data,
 				'reserved_datetime'		=> date("Y-m-d H:i:s")
 			);
+			
 			$insert_id = $this->model_reservation->addReservation($reserve_data);
 
 			if ($insert_id) {

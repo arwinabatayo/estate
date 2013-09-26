@@ -1,9 +1,11 @@
 
-					
-					createCaptcha();
-					$('#verifyNumber').modal('show');
-					
-				    //$('#resetVerification').modal('show');
+
+					<?php if($this->session->userdata('showcaptcha')){ ?>
+							$('#resetVerification').modal('show');
+							createCaptcha();
+					<?php } else { ?>
+							$('#enterMobile').modal('show');
+					<?php } ?>
 										
 					$('button#open_verify_mobile').click( function(e){
 						e.preventDefault();
@@ -60,9 +62,56 @@
 							$('.vcode-alert').fadeOut('fast');
 					});
 					
+					
+					$('button#btnEnterMobileNum').click( function(){
+							var s =	$('#enterMobile div.status');
+							var msisdn = $('input#msisdn').val();
+		                    
+		                    if( msisdn.length != 11){
+								s.show();
+								s.html('You must enter a valid Mobile Number');
+								return;
+							}
+		                    
+							//e.preventDefault();
+							
+							s.show();
+						    s.html('Sending...Please wait...');
+		
+							$.ajax({
+								url: base_url+'home/send_sms_verification',
+								data: 'msisdn='+msisdn,
+								type:'post',
+								success: function(response){
+									var resp = jQuery.parseJSON( response );
+					
+									if(resp.status == 'success'){
+										s.hide();
+										$( '#enterMobile' ).modal( "hide" );
+										$( '#verifyNumber' ).modal( "show" );
+										
+										
+									}else{
+										s.addClass('alert-'+resp.status);
+										s.html(resp.msg);
+									}
+									
+								}, 
+								error: function(){
+									alert('Some error occured or the system is busy. Please try again later');	
+								}
+							});
+					
+					});	
+					
 					$('button#btn_resend_vcode').click( function(e){
 
-						var code =	$(this).siblings('input[name="code_id"]').val();
+						//var code =	$(this).closest('input[name="code_id"]').val();
+						var code =	$('input#code_id').val();
+						var s =	$('#resetVerification div.status');
+						
+						s.show();
+						s.html('Validating...Please wait...');
 
 						e.preventDefault();
 							$.ajax({
@@ -71,16 +120,13 @@
 								url: base_url+'captcha/validate',
 							    success: function(response){
 									var resp = jQuery.parseJSON( response );
-									//alert ( JSON.stringify(response) )
-									//alert ( resp.status );
 									
 									if(resp.status == 'success'){
-										//alert(resp.msg);
-										//window.location.reload();
+										s.hide();
 										$('#resetVerification').modal('close');
 										$('#verifyNumber').modal('show');
 									}else{
-										alert(resp.msg);
+										s.html(resp.msg);
 										createCaptcha();
 										$('input#code_id').val('');
 									}

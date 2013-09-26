@@ -1,4 +1,11 @@
-//ORDER TYPE
+			
+			
+			$('button#btnGetNewline').click(function() {
+					//TODO - call ajax here to send email to OM
+					$('#order-thankyou').modal('show');
+			});
+			
+			//ORDER TYPE
 		    $('#acc-order-type  button').click(function() { 
 	            //showPreloader();
 		        //create ajax call here - add to cart order type

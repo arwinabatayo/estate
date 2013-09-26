@@ -18,7 +18,9 @@ class Accounts_model extends CI_Model
 		$query = $this->db->select('a.*, c.name as account_type_name')
 						 ->from('estate_accounts as a')
 						 ->join('estate_account_category as c','a.category_id = c.category_id')
-						 ->where('mobile_number', $mobile_number)
+						 ->where('a.mobile_number', $mobile_number)
+						 //lets try if leading with zero, TODO - create standard format of msisdn on table, with/without leading ZERO? -mark
+						 ->or_where('a.mobile_number', '0'.$mobile_number) 
 						 ->get();
 						 
         $result = ($return_array === TRUE) ? $query->row_array() : $query->row();

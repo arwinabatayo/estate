@@ -24,7 +24,13 @@
 		                <div class="globe-dialog" id="dialog_enter_mobile" title="Enter Your Mobile Number">
 							<div class="span5 textleft noLeftMargin">
 								<p><i class="icon-mobile-phone icon-4x fleft"></i>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-								<p class="label label-info">&nbsp;For Non-Globe postpaid subscribers,&nbsp;&nbsp;<a href="#" style="color:#FFF" id="non-globe-new-line">Click Here</a>&nbsp;</p>
+								<?php
+									$non_globe_id = "non-globe-new-line"; 
+									if ($is_reserve) {
+										$non_globe_id = "non-globe-reserve";
+									}
+								?>
+								<p class="label label-info">&nbsp;For Non-Globe postpaid subscribers,&nbsp;&nbsp;<a href="#" style="color:#FFF" id="<?php echo $non_globe_id; ?>">Click Here</a>&nbsp;</p>
 								
 		                    </div>
 		                    
@@ -135,59 +141,57 @@
 						 
 						 <br />
 						<h4 class="normal">Your Name</h4>
-						<form name="reserve-form" id="reserve-form">
-						  <div class="row-fluid">
-								<div class="span4">
-				                    <label>First Name</label>
-				                    <span><input class="inputbox" style="" type="text" name="first_name" id="first_name" /></span>
-				                </div>
-				                
-								<div class="span4">
-				                    <label>Last Name</label>
-				                    <span><input class="inputbox" style="" type="text" name="last_name" id="last_name" /></span>
-				                </div>
-				                
-								<div class="span4">
-				                    <label>Middle Name</label>
-				                    <span><input class="inputbox" style="" type="text" name="middle_name" id="middle_name" /></span>
-				                </div>
-			              </div> 
-			              <br />
-						  <div class="row-fluid">
-								<div class="span3">
-				                    <label>Email</label>
-				                    <span><input type="hidden" name="email" id="email" value="avargosino@yahoo.com" />avargosino@yahoo.com</span>
-				                </div>
-				                
-								<div class="span3">
-				                    <label>Phone</label>
-				                    <span><input type="hidden" name="phone" id="phone" value="09152211334" />0915-2211334</span> <?php // why is this hardcoded on the requirement? ?>
-				                </div>
-				                
-								<div class="span3">
-				                    <label>Network Carrier</label>
-				                    <span><select id="network_carrier" name="network_carrier">
-				                    	<option value="smart">Smart</option>
-				                    	<option value="suncel">Sun Cellular</option>
-				                    	<option value="others">Others</option>
-				                    </select></span>
-				                </div>
-				                
-								<div class="span3">
-					                <label>Social Network User ID</label>
-					                <span><input type="text" name="sn_uid" id="sn_uid" /></span>
-					                <br>
-					                <span>
-					                     <input name="sns_id" value="facebook" type="radio" checked="checked"> Facebook
-					                     <input name="sns_id" value="twitter" type="radio"> Twitter
-					                     <input name="sns_id" value="linkedin" type="radio"> LinkedIn
-					                </span>
-				                </div>
-				                
-			              </div>
-			              		<input type="hidden" name="from_reserve_form" id="from_reserve_form" value="1" />
-			              </form> 
-			                
+							<form name="reserve-form" id="reserve-form">
+							 	<div class="row-fluid">
+									<div class="span4">
+					                    <label>First Name</label>
+					                    <span><input class="inputbox" style="" type="text" name="first_name" id="first_name" /></span>
+					                </div>
+					                
+									<div class="span4">
+					                    <label>Last Name</label>
+					                    <span><input class="inputbox" style="" type="text" name="last_name" id="last_name" /></span>
+					                </div>
+					                
+									<div class="span4">
+					                    <label>Middle Name</label>
+					                    <span><input class="inputbox" style="" type="text" name="middle_name" id="middle_name" /></span>
+					                </div>
+				              	</div> 
+				              	<br />
+							  	<div class="row-fluid">
+									<div class="span3">
+					                    <label>Email</label>
+					                    <span><input type="hidden" name="email" id="email" value="avargosino@yahoo.com" />avargosino@yahoo.com</span>
+					                </div>
+					                
+									<div class="span3">
+					                    <label>Phone</label>
+					                    <span><input type="hidden" name="phone" id="phone" value="09152211334" />0915-2211334</span> <?php // why is this hardcoded on the requirement? ?>
+					                </div>
+					                
+									<div class="span3">
+					                    <label>Network Carrier</label>
+					                    <span><select id="network_carrier" name="network_carrier">
+					                    	<option value="Smart">Smart</option>
+					                    	<option value="Sun Cellular">Sun Cellular</option>
+					                    	<option value="Others">Others</option>
+					                    </select></span>
+					                </div>
+					                
+									<div class="span3">
+						                <label>Social Network User ID</label>
+						                <span><input type="text" name="sn_uid" id="sn_uid" /></span>
+						                <br>
+						                <span>
+						                     <input name="sns_id" value="facebook" type="radio" checked="checked"> Facebook
+						                     <input name="sns_id" value="twitter" type="radio"> Twitter
+						                     <input name="sns_id" value="linkedin" type="radio"> LinkedIn
+						                </span>
+					                </div>				                
+				              	</div>
+				              	<input type="hidden" name="from_reserve_form" id="from_reserve_form" value="1" />
+			             	</form> 
 					</div>
 	            </div>	
 	            
