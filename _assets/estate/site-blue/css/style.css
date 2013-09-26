@@ -45,6 +45,8 @@ a{cursor: pointer}
 .textright   {text-align:right}
 .textcenter {text-align:center}
 
+form {margin:0;padding:0}
+
 /* * * PRELOADER */
 #preLoader {position:fixed; top:0; left:0; right:0; bottom:0; z-index:990; background: url(../images/transparent.png)}
 #preLoader #status  {width:200px;  height:120px; position:absolute; left:50%;top:50%; 

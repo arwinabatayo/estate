@@ -34,6 +34,9 @@ class Addons extends MY_Controller
 		$this->_data->gadget_care = $this->products->get_add_ons_by_category(1);
 		$this->_data->freebies = $this->products->get_add_ons_by_category(2);
 		$this->_data->offers = $this->products->get_add_ons_by_category(3);
+		
+		$this->_data->accessories = $items = $this->products->get_accessories();
+		
 		$this->_data->cart_contents = $this->cart->contents();
 
 
@@ -43,6 +46,9 @@ class Addons extends MY_Controller
 	
 	public function accessories()
 	{
+		
+	//	redirect('addons');
+		
 		$this->_data->accordionIndex      =  4;
 		$this->_data->page_title          =  'Accessories';
 		$this->_data->page = 'addons_accessories';

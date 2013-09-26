@@ -42,12 +42,7 @@
 			
 			
             <div class="row-fluid link-bottom">
-                <a class="pull-left">Go to Homepage</a>
-                <ul class="pull-right">
-                    <li><a>Contact Us</a></li>
-                    <li>|</li>
-                    <li><a>Live Chat</a></li>
-                </ul>
+                <a class="pull-left" href="<?php echo base_url() ?>">Go to Homepage</a>
             </div>  
 		</div>
 	</div>

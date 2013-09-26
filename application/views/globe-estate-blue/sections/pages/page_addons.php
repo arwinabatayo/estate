@@ -8,17 +8,97 @@
 				?>
                 
                 <div class="span9">
-                    <div class="accordion2 account-content active" id="accordion3">
-                        
-                        <!--#ADDONS AND ACCESSORIES HERE -->
-                        
-                        
-                    
-                    </div>
-                    <div class="row-fluid link-bottom">
-                        <a class="pull-left">Skip and Continue</a>
+                    <div id="addonsAccessories" class="account-content">						
+                        <ul class="nav nav-tabs addons-acc">
+                            <li class="active"><a data-toggle="tab" href="#addons" class="tab-addons"><span>Add Ons</span></a></li>
+                            <li><a data-toggle="tab" href="#accessories" class="tab-accessories"><span>Accessories</span></a></li>
+                        </ul>                    
+                        <div class="tab-content addons-acc-cont">
+                          <div id="addons" class="tab-pane fade active in">
+							<div class="row-fluid orange" data-toggle="buttons-radio">
+							   <?php 
+							       if($gadget_care){ 
+									   $items = $gadget_care;
+									   include('partials/tpl_cart_item.php');
+									} 
+								?>
+								<?php /*
+                                <div class="btn span4" type="button">
+                                    <div class="box-content">                                    
+                                        <div class="boxes"></div>
+                                        <div class="txts">
+                                            <span>Accidental Damage</span>
+                                            <strong>P 1,800.00</strong>
+                                        </div>
+                                    </div>
+                                </div>	
+                                */ ?> 			
+                            </div>                           
+							<div class="row-fluid green" data-toggle="buttons-radio">
+                            	<div class="addons-acc-txt">Freebies</div>
+                            	
+							   <?php 
+							       if($freebies){ 
+									   $items = $freebies;
+									   include('partials/tpl_cart_item.php');
+									} 
+								?>			
+                            </div>
+							<div class="row-fluid green" data-toggle="buttons-radio">
+                            	<div class="addons-acc-txt">Special Offers</div>
+							   <?php 
+							       if($offers){ 
+									   $items = $offers;
+									   include('partials/tpl_cart_item.php');
+									} 
+								?>					
+                            </div>                                                                                   
+                          </div>
+                          <div id="accessories" class="tab-pane fade"  data-toggle="buttons-radio">
+							<div class="row-fluid orange">
+								
+							   <?php 
+							       if($accessories){ 
+									   $items = $accessories;
+									   //print_r($items);
+									   include('partials/tpl_cart_item_accessories.php');
+									} 
+								?>
+								<!--	
+                                <div class="btn span4" type="button">
+                                    <div class="box-content">                                    
+                                        <div class="boxes"></div>
+                                        <div class="txts">
+                                            <span>Headset</span>
+                                            <strong>P 1,800.00</strong>
+                                        </div>
+                                    </div>
+                                </div>
+								-->
+                            </div>
+							
+						  </div>
+                        </div>
+					</div>  
 
-                    </div>                             
+                    <!-- start bottom links -->
+                    <div class="row-fluid link-bottom">
+                        <a class="pull-left grey" href="<?php echo base_url() ?>subscriber-info">Skip &amp; Go to Subscribers Info</a>
+                        <div class="pull-right">
+                            <ul>
+                                <li><button class="blue-btn" onclick="window.location.href='<?php echo base_url() ?>subscriber-info'">Continue</button></li>
+                                <li><button class="blue-btn">Load More</button></li>
+                            </ul>                        
+                        	<br>
+                            <ul class="pull-right">
+                                <li><a>Contact Us</a></li>
+                                <li>|</li>
+                                <li><a>Live Chat</a></li>
+                            </ul>                        
+                        </div>
+                    </div>
+                    <!-- end bottom links --> 
+                                                
                 </div>
             
             </div>
