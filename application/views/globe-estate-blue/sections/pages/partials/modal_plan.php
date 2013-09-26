@@ -10,7 +10,10 @@
 
 			<p>Kindly check your email for the link back to this site.  Use the reference  number we sent to check the status of your application.</p><br /><br />
 			
-			<p class="textcenter"><button class="blue-btn" onclick="window.location.href='<?php echo base_url() ?>'">Continue</button></p>
-		
+			<?php if(!isset($_GET['subscriber_flag'])){ ?>
+				<p class="textcenter"><button class="blue-btn" onclick="window.location.href='<?php echo base_url() ?>'">Continue</button></p>
+			<?php }else{ ?>
+				<p class="textcenter"><button class="blue-btn" onclick="closeModal(this);">Continue</button></p>
+			<?php } ?>
 		</div>
 	</div> 

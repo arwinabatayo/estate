@@ -30,6 +30,9 @@
 		});
 
 		<?php
+		//---COMMON SCRIPT
+		include('pages/partials/ftscript_commons.php');
+		
 		if($page == 'landing' ){
 
 			//---LANDING PAGE
@@ -81,8 +84,7 @@
 
 		}
 
-		//---COMMON SCRIPT
-		include('pages/partials/ftscript_commons.php');
+
 
 
 		?>
