@@ -177,7 +177,7 @@ class Cart extends CI_Controller {
 
 
 			 $_fields = $this->products_model->get_product_fields($d->product_type,$d->product_id);
-
+			 $out['msg'] = 'product ok';
 
 			 $title  = $_fields['title'];
 			 $amount = $_fields['amount'];
@@ -269,6 +269,7 @@ class Cart extends CI_Controller {
 			 		$amount = "0.00";
 			 	}
 			 }
+			 
 			 if( $d->product_type == 'boosters' ) {
 			 	$qty = $this->checkProductIfExist($d->product_type, "qty", $d->product_id, "add");
 
@@ -292,10 +293,10 @@ class Cart extends CI_Controller {
 				 // check if package plan amount is still within credit limit
 				 // get user credit limit
 				 $this->load->model('estate/accounts_model');
-				 $account_info = $this->accounts_model->get_account_info_by_id('09173858958');
+
 				 $package_plan_combos = $this->get_package_plan_combos($d->plan);
 
-				 if ($plan_pv > $account_info['credit_limit']) {
+				 if ($plan_pv > $this->_data->account_info->credit_limit) {
 				 	// show popup info that plan exceeds limit
 				 	$credit_exceeded = true;
 				 } else {
@@ -320,7 +321,8 @@ class Cart extends CI_Controller {
 
 				 $this_pv_value = $plan_pv;
 			 }
-
+						
+			
 			$cart_input = array(
 				'id'              => $d->product_type.'_'.$d->product_id,
 				'qty'             => $qty,
@@ -341,6 +343,7 @@ class Cart extends CI_Controller {
 			// send a different flag when credit limit is exceeded
 			if ($credit_exceeded) {
 				$out['status'] = 'exceeds_limit';
+				$out['msg'] = 'credit_exceeded ';
 			}
 
 			/* cart */
@@ -370,6 +373,12 @@ class Cart extends CI_Controller {
 				$out['coex_product_type'] = $in_coexist['coex_product_type'];
 
 			}
+			
+			
+			
+			
+		}else{
+			$out['msg'] = 'Product not found.';
 		}
 
 		echo json_encode($out);
@@ -768,6 +777,23 @@ class Cart extends CI_Controller {
 
 		echo json_encode($data); exit;
 		// TODO : get account details from reserve from for non globe and store on estate accounts
+	}
+	
+	function check_credit_limit(){
+		
+		$amount = $this->cart_model->total(false);
+		
+		$data['status'] = 'false';
+		
+		$this->unset_userdata('credit_limit');
+		
+		if($this->_data->account_info->credit_limit > $amount){
+			$this->set_userdata('credit_limit',true);
+			$data['status'] = 'true';
+		}
+		
+		echo json_encode($data); exit;
+		
 	}
 
 }
