@@ -1,158 +1,69 @@
-							   <div id="delivery_pickup" style="display:none">
+<div id="delivery_pickup" style="display:block">
 								   <div class="textleft">
 										<h4 style="font-size:24px;font-weight:normal">Pickup at Globe Stores</h4>
-										<p style="font-size:110%">Here's a list of Globe Stores we found near you area.</p>
+                                                                                <?php if(!empty($stores)) { ?>
+										<p style="font-size:110%">Here's a list of Globe Stores we found near your area.</p>
+                                                                                <?php } else { ?>
+                                                                                <p style="font-size:110%">No Result Found for Globe Stores near your area.</p>
+                                                                                <?php } ?>
 								   </div>
 								   
-									   <div class="container-fluid">
+									   <div class="container-fluid" id="store_placeholder">
 									     <div class="accordion" id="accordion2">
-									            <div class="accordion-group">
-									              <div class="accordion-heading">
-									                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-									                 Globe Store - Nuvali Sta. Rosa
-									                </a>
-									              </div>
-									              <div id="collapseOne" class="accordion-body collapse" style="height: 0px; ">
-									                <div class="accordion-inner">
-														<div class="contentbox">
-															<span class="fleft">October 15, 2013<br />
-															1:00 p.m to 3:00 p.m
-															</span>
-															<span class="fright">
-																<input type="radio" name="globe_store_nuvali" value="1" />
-															</span>
-															<br class="clear" />
-														</div>	
-														<div class="contentbox">
-															<span class="fleft">
-																October 16, 2013<br />
-																10:00 a.m to 1:00 p.m
-															</span>
-															<span class="fright">
-																<input type="radio" name="globe_store_nuvali" value="2" />
-															</span>
-															<br class="clear" />
-														</div>
-														<div class="contentbox">
-															<span class="fleft">	
-																October 17. 2013<br />
-																2:00 p.m to 5:00 p.m
-															</span>
-															<span class="fright">
-																<input type="radio" name="globe_store_nuvali" value="3" />
-															</span>
-															<br class="clear" />
-														</div>
-									                </div>
-									              </div>
-									            </div>
-									            <div class="accordion-group">
-									              <div class="accordion-heading">
-									                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
-									                 Globe Store - Paseo de Sta. Rosa
-									                </a>
-									              </div>
-									              <div id="collapseTwo" class="accordion-body collapse">
-									                <div class="accordion-inner">
-														
-														<div class="contentbox">
-															<span class="fleft">October 15, 2013<br />
-															1:00 p.m to 3:00 p.m
-															</span>
-															<span class="fright">
-																<input type="radio" name="globe_store_starosa" value="1" />
-															</span>
-															<br class="clear" />
-														</div>	
-														<div class="contentbox">
-															<span class="fleft">
-																October 16, 2013<br />
-																10:00 a.m to 1:00 p.m
-															</span>
-															<span class="fright">
-																<input type="radio" name="globe_store_starosa" value="2" />
-															</span>
-															<br class="clear" />
-														</div>
-														<div class="contentbox">
-															<span class="fleft">	
-																October 17. 2013<br />
-																2:00 p.m to 5:00 p.m
-															</span>
-															<span class="fright">
-																<input type="radio" name="globe_store_starosa" value="3" />
-															</span>
-															<br class="clear" />
-														</div>
-														
-									                </div>
-									              </div>
-									            </div>
-									            <div class="accordion-group">
-									              <div class="accordion-heading">
-									                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
-									                  Globe Store - Balibago Sta. Rosa
-									                </a>
-									              </div>
-									              <div id="collapseThree" class="accordion-body collapse">
-									                <div class="accordion-inner">
-									                  
-														<div class="contentbox">
-															<span class="fleft">October 15, 2013<br />
-															1:00 p.m to 3:00 p.m
-															</span>
-															<span class="fright">
-																<input type="radio" name="globe_store_balibago" value="1" />
-															</span>
-															<br class="clear" />
-														</div>	
-														<div class="contentbox">
-															<span class="fleft">
-																October 16, 2013<br />
-																10:00 a.m to 1:00 p.m
-															</span>
-															<span class="fright">
-																<input type="radio" name="globe_store_balibago" value="2" />
-															</span>
-															<br class="clear" />
-														</div>
-														<div class="contentbox">
-															<span class="fleft">	
-																October 17. 2013<br />
-																2:00 p.m to 5:00 p.m
-															</span>
-															<span class="fright">
-																<input type="radio" name="globe_store_balibago" value="3" />
-															</span>
-															<br class="clear" />
-														</div>
-														
-														
-									                </div>
-									              </div>
-									            </div>	
+                                                                                    <?php unset($stores['total_count']);
+                                                                                    foreach( $stores as $val ) { ?>
+                                                                                        <div class="accordion-group">
+                                                                                                    <div class="accordion-heading">
+                                                                                                      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#<?php echo $val['id']; ?>">
+                                                                                                       <?php echo $val['name']; ?>
+                                                                                                      </a>
+                                                                                                    </div>
+                                                                                                    <?php 
+                                                                                                        $properties = $store_properties[$val['id']];
+                                                                                                            if(!empty($properties)) { ?>
+                                                                                                                    <div id="<?php echo $val['id']; ?>" class="accordion-body collapse" style="height: 0px; ">
+                                                                                                                            <?php foreach($properties as $prop) { ?>
+                                                                                                                            <div class="accordion-inner">
+                                                                                                                                <div class="contentbox">
+                                                                                                                                        <span class="fleft"><?php echo date("F d, Y", strtotime($prop['date_of_operation'])); ?><br />
+                                                                                                                                        <?php echo date("h:i:s A", strtotime($prop['time_of_operation_from'])); ?> to <?php echo date("h:i:s A", strtotime($prop['time_of_operation_to'])); ?>
+                                                                                                                                        </span>
+                                                                                                                                        <span class="fright">
+                                                                                                                                                <input type="radio" name="<?php echo $prop['store_id']; ?>" value="1" />
+                                                                                                                                        </span>
+                                                                                                                                        <br class="clear" />
+                                                                                                                                </div>	
+
+                                                                                                                            </div>
+                                                                                                                         <?php  } ?>
+                                                                                                                    </div>
+                                                                                                         <?php } ?>
+                                                                                                </div>
+                                                                                    <?php } ?>
+									            
+									            	
 									          </div>
 									    </div>
 								   
 							            <div class="headerbox" style="font-size:12px">
 											<div class="fleft">
 												<label>Choose your prefered location</label>
-												<select>
-													<option value="1">Globe Store Trinoma</option>
+												<select id="prefered_loc_val">
+                                                                                                    <?php foreach( $stores_all as $val ) { ?>
+													<option value="<?php echo $val['id']; ?>"><?php echo $val['name']; ?></option>
+                                                                                                    <?php } ?>
 												</select>
 												&nbsp;
-												<i class="icon-search icon-2x"></i>
+												<i class="icon-search icon-2x prefered_loc_store" id="prefered_loc_search" style="cursor:pointer; cursor:hand;"></i>
 											</div>
 											
 											<div class="fright">
 												<label>Search for nearest store</label>
-												<input type="text" value="" />&nbsp;<i class="icon-search icon-2x"></i>
+												<input type="text" id="store_keyword"/>&nbsp;<i class="icon-search icon-2x" id="store_search" style="cursor:pointer; cursor:hand;"></i>
 											</div>
 											<br class="clear" />
 							            </div>
 								   
 								   
 								   
-							   </div>				
-							   
-							   
+							   </div>
