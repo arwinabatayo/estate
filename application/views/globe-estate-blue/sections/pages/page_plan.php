@@ -15,7 +15,7 @@
                               ORDER TYPE <i class="tcoll collapse-toggle"></i>
                             </a>
                           </div>
-                          <div id="collapse4" class="accordion-body collapse" style="height: 0; ">
+                          <div id="collapse4" class="accordion-body collapse" style="height: <?php echo $_GET['val'] == 'renew' ? '0' : 'auto' ?>;">
                             <div class="accordion-inner">
 								
 								<?php 
@@ -66,7 +66,7 @@
                           <div class="accordion-heading">
                             <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapse5">SELECT PLAN <i class="tcoll collapse-toggle"></i></a>
                           </div>
-                          <div id="collapse5" class="accordion-body in collapse" style="height: auto; ">
+                          <div id="collapse5" class="accordion-body in collapse" style="height: <?php echo $_GET['val'] == 'renew' ? 'auto' : '0' ?>; ">
                             <div class="accordion-inner last-border">
 								<div class="row-fluid tabbed">
                                     <div class="tabbable package-plan">

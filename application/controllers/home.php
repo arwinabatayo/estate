@@ -111,8 +111,8 @@ class Home extends MY_Controller
                             $this->load->library('GlobeWebService','','api_globe');
                             $verification_code = random_string('alnum', 6);
                             $message = "Please use this code ".$verification_code." to verify your account.";
-                            //$sms_status = $this->api_globe->api_send_sms($mobile_number, $message, "Project Esate");
-                            $sms_status = TRUE;
+                            $sms_status = $this->api_globe->api_send_sms($mobile_number, $message, "Project Esate");
+                            //$sms_status = TRUE;
                             
                             if($sms_status == TRUE) {
                                 $this->load->model('estate/networks_model');
@@ -245,6 +245,7 @@ class Home extends MY_Controller
 	{
 
 		$email = $this->input->get('e',true);
+		$mobile = $this->input->get('m',true);
 		
 		$hash = $this->_create_hash($email);
 
@@ -255,6 +256,7 @@ class Home extends MY_Controller
 			$this->session->set_userdata('current_subscriber_email', $email);
 			
 			redirect( base_url().'sms-verification?token='.$hash);
+			
 		}else{
 			echo 'Invalid verification code..'; //TODO - ilagay sa template
 			exit;
@@ -274,8 +276,8 @@ class Home extends MY_Controller
 	
 		if($email){
 			if (valid_email($email)) {
-				//$is_sent = $this->_sendMail($email, 'verify_account');
-				$is_sent = true;
+				$is_sent = $this->_sendMail($email, 'verify_account');
+				//$is_sent = true;
 				if($is_sent === false) {
 					$data['status'] = "error";
 					$data['msg'] = "Your email was not successfully sent";
@@ -315,12 +317,14 @@ class Home extends MY_Controller
                 $email_tpl = 'view_activation';
             
                 $verification_code = $this->_create_hash($email_to);
-        
+				$mobile =  ltrim($this->session->userdata('current_subscriber_mobileno'),0);
+				
                 $msg = array(
                     'name'              => $email_to,
                     'verification_code' => $verification_code,
-                    'verification_url'  => base_url().'home/verify/'.$verification_code.'?e='.$email_to,
+                    'verification_url'  => base_url().'home/verify/'.$verification_code.'?e='.$email_to.'&m='.$mobile,
                 );
+
             break;
             case 'saved_transaction' :
                 $uncomp_trans_lnk = "http://test.com"; // TODO : link to correct transaction page
