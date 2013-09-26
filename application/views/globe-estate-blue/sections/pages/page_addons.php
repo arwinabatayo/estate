@@ -86,7 +86,7 @@
                         <a class="pull-left grey" href="<?php echo base_url() ?>subscriber-info">Skip &amp; Go to Subscribers Info</a>
                         <div class="pull-right">
                             <ul>
-                                <li><button class="blue-btn" onclick="window.location.href='<?php echo base_url() ?>subscriber-info'">Continue</button></li>
+                                <li><button class="blue-btn" id="btnAddonNextPage" >Continue</button></li>
                                 <li><button class="blue-btn">Load More</button></li>
                             </ul>                        
                         	<br>

@@ -785,10 +785,12 @@ class Cart extends CI_Controller {
 		
 		$data['status'] = 'false';
 		
-		$this->unset_userdata('credit_limit');
+		$this->_data->account_info->credit_limit = 500;
 		
-		if($this->_data->account_info->credit_limit > $amount){
-			$this->set_userdata('credit_limit',true);
+		$this->session->unset_userdata('credit_limit');
+		
+		if($amount > $this->_data->account_info->credit_limit){
+			$this->session->set_userdata('credit_limit',true);
 			$data['status'] = 'true';
 		}
 		

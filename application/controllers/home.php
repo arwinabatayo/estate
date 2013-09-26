@@ -21,10 +21,11 @@ class Home extends MY_Controller
 		$this->_data->current_step        =  1;
 		$this->_data->page_title          =  'Add Device';
 		$this->_data->site_config         = $this->getPropertyDataXML(1);
-
+		
+		
 		//print_r($this->_data->site_config);
 		//flag for testing
-		define('IS_GLOBE_API_ENV',false);
+		define('IS_GLOBE_API_ENV',TRUE);
 	}
 	
 	public function index()
@@ -44,6 +45,14 @@ class Home extends MY_Controller
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
 	
+	//temp force login
+	public function login() {
+		if($this->_initSubscriberInfo('09151178863')){
+			redirect('plan');
+		}
+		
+	}
+		
 	public function sku_configuration() {	
 		$arrDeviceAttr = array();
 		
@@ -138,7 +147,8 @@ class Home extends MY_Controller
 		$this->_data->page = 'test';
 		
 		$acc_info = $this->accounts_model->get_account_info_by_id('9173858958');	
-
+		
+		$this->_initSubscriberInfo('9151178863');
 		
 		print_r($acc_info);
 						  

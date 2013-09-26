@@ -81,3 +81,29 @@
 				});
 
 		});
+		
+		$('#btnAddonNextPage').click(function(){
+				$.ajax({
+					url: base_url+'cart/check_credit_limit',
+					type:'post',
+					success: function(response){
+
+						var resp = jQuery.parseJSON( response );
+
+						if( resp.status == 'true' ){
+							alert('Credit limit exceed!');
+						}else{
+							window.location.href= base_url+'subscriber-info'
+						}
+					},
+					error: function(){
+						alert('Some error occured or the system is busy. Please try again later');
+					}
+				});
+			
+		});
+			
+		//
+		
+		
+		
