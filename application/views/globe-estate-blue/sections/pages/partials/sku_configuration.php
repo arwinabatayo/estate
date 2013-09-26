@@ -11,8 +11,8 @@
                         <div class="spec-options offset1">
                             <span class="flow-title2">Choose Color</span>
                             <ul>
-                                <li><img src="<?php echo $assets_url ?>images/iphone5/iphone-color-black.png"/><span><input id="black" type="radio" name="gadget_color" value="black" checked="checked"><label for="black">Black</label></span></li>
-                                <li><img src="<?php echo $assets_url ?>images/iphone5/iphone-color-white.png"/><span><input id="white" type="radio" name="gadget_color" value="white"><label for="white">White</label></span></li>
+                                <li><img src="<?php echo $assets_url ?>images/iphone5/iphone-color-black.png"/><span><input id="black" class="opt_color" type="radio" name="gadget_color" value="black" checked="checked"><label for="black">Black</label></span></li>
+                                <li><img src="<?php echo $assets_url ?>images/iphone5/iphone-color-white.png"/><span><input id="white" class="opt_color" type="radio" name="gadget_color" value="white"><label for="white">White</label></span></li>
                             </ul>
                         </div>
                     </div>
@@ -24,14 +24,17 @@
                                 <li><img src="<?php echo $assets_url ?>images/iphone5/iphone32gb.png"/><span><input id="32gb" type="radio" name="gadget_capacity" value="32gb"><label for="32gb">32GB</label></span></li>
                                 <li><img src="<?php echo $assets_url ?>images/iphone5/iphone64gb.png"/><span><input id="64gb" type="radio" name="gadget_capacity" value="64gb"><label for="64gb">64GB</label></span></li>
                             </ul>                            
-                        </div>
+                        </div>  
                     </div>
                     <div class="row-fluid text-center">
                         <button class="blue-btn" id="btn-add-device-continue">Continue</button>
                     </div>
                 </div>
-                <div class="span6 p-model text-center">
-                    <img src="<?php echo $assets_url ?>images/iphone5/iphone-white-model.png">
+                <div id="product_preview" class="span6 p-model text-center" style="padding-top:0">
+                    
+                    <img class="p_img c_black" alt="iPhone 5  Black" src="<?php echo $assets_url ?>images/iphone5/iphone5-black.jpg" style="height:580px" />
+                    <img class="p_img c_white" alt="iPhone 5  White" src="<?php echo $assets_url ?>images/iphone5/iphone5-white.jpg" style="height:580px;display:none" />
+
                 </div>                
             </div>
             

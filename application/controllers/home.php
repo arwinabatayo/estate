@@ -317,12 +317,13 @@ class Home extends MY_Controller
                 $email_tpl = 'view_activation';
             
                 $verification_code = $this->_create_hash($email_to);
-				$mobile =  ltrim($this->session->userdata('current_subscriber_mobileno'),0);
+				//$mobile =  ltrim($this->session->userdata('current_subscriber_mobileno'),0);
 				
                 $msg = array(
                     'name'              => $email_to,
                     'verification_code' => $verification_code,
-                    'verification_url'  => base_url().'home/verify/'.$verification_code.'?e='.$email_to.'&m='.$mobile,
+                    //'verification_url'  => base_url().'home/verify/'.$verification_code.'?e='.$email_to.'&m='.$mobile,
+                    'verification_url'  => base_url().'home/verify/'.$verification_code.'?e='.$email_to,
                 );
 
             break;
