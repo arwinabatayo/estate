@@ -7,6 +7,7 @@
 </div>
 
 <?php 
+	
 	//MODALS INCLUDE FILE
 	if($page == 'landing' ){
 		
@@ -55,7 +56,8 @@
 		//$('#emailConfirm').modal('show');	
 		//$('#emailConfirm').modal( {show:true} );
 		<?php 
-		
+		//---COMMON SCRIPT
+		include('pages/partials/ftscript_commons.php'); 
 		if($page == 'landing' ){
 				
 			//---LANDING PAGE
@@ -105,8 +107,7 @@
 		
 		} 
 		
-		//---COMMON SCRIPT
-		include('pages/partials/ftscript_commons.php'); 
+		
 
 		
 		?>

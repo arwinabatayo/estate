@@ -1,4 +1,10 @@
-	
+		function closeModal(obj){
+			var id = obj.parent().parent().attr("id");
+			
+			$("#" + id).modal('hide')
+		}
+		
+		
 		function setOrderConfig(k,v){
 			var out;
 					$.ajax({

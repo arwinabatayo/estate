@@ -44,9 +44,63 @@ class Home extends MY_Controller
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
 	
-	public function sku_configuration()
-	{	
-
+	public function sku_configuration() {	
+		$arrDeviceAttr = array();
+		
+		$this->load->model('estate/home_model');
+		
+		if(isset($_GET['device']) && !empty($_GET['device'])) {
+			
+			$devices = $this->home_model->getDevices($_GET['device']);
+			
+			if(isset($_GET['type'])) {
+				$arrKey = explode("_",$_GET['type']);
+				$selectedKey = $arrKey[1];
+			} else {
+				reset($devices);
+				$first_key = $devices[0]['id']; // set the first item default
+				$selectedKey = $first_key;
+			}
+			
+			$availableColor = $this->home_model->getAvailableColors($selectedKey);
+			
+			$colorCount = $availableColor['count'];
+			unset($availableColor['count']);
+			foreach($availableColor as $availColor) {
+				$colors['clid'] = $availColor['clid'];
+				$colors['clname'] = $availColor['clname'];
+				$colors['climg'] = $availColor['climg'];
+				$colors['gadgetimg'] = $availColor['gadgetimg'];
+					
+				$colorsAttr[$availColor['clid']] = $colors;
+			}
+			
+			reset($colorsAttr);
+			$first_keyColor = key($colorsAttr); // set the first item default
+			
+			
+			$availableCapacity = $this->home_model->getCapacity($selectedKey, $first_keyColor);
+			
+			$capacityCount = $availableCapacity['count'];
+			unset($availableCapacity['count']);
+			foreach($availableCapacity as $capacities) {
+				$capacity['dcid'] = $capacities['dcid'];
+				$capacity['dcname'] = $capacities['dcname'];
+				$capacity['dcimg'] = $capacities['dcimg'];
+				$capacityAttr[$capacities['dcid']] = $capacity;
+			}
+			
+			reset($capacityAttr);
+			$first_keyCapacity = key($capacityAttr); // set the first item default
+		}
+		
+		$this->_data->deviceAttrs = $arrDeviceAttr;
+		$this->_data->devices = $devices;
+		$this->_data->colors = $colorsAttr;
+		$this->_data->initialColorId = $first_keyColor;
+		$this->_data->capacity = $capacityAttr;
+		$this->_data->initialCapacityId = $first_keyCapacity;
+		
 		$this->_data->page = 'home';
 		if (isset($_GET['reserve']) && $_GET['reserve']) {
 			$this->_data->is_reserve = 1;
@@ -54,7 +108,30 @@ class Home extends MY_Controller
 		
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
-	
+	public function changeAttrCapacity() {
+		$sRet = "";
+		$this->load->model('estate/home_model');
+		
+		$d = (object) $this->input->post();
+		
+		$availableCapacity = $this->home_model->getCapacity($d->device, $d->color);
+			
+		$capacityCount = $availableCapacity['count'];
+		unset($availableCapacity['count']);
+		$x = 1;
+		foreach($availableCapacity as $capacities) {
+			$selected = "";
+			if($x == 1) { $selected = ' checked="checked"'; }
+			$sRet .= '<li><img src="'.base_url().'_assets/uploads/'.$capacities['dcimg'].'" />
+				<span>
+					<input id="'.strtolower(str_replace(" ", "",$capacities['dcname'])).'" type="radio" name="gadget_capacity" 
+							value="'.strtolower(str_replace(" ", "",$capacities['dcname'])).'"'.$selected.'>
+					<label for="'.strtolower(str_replace(" ", "",$capacities['dcname'])).'">'.$capacities['dcname'].'</label>
+				</span></li>';
+			$x++;
+		}
+		echo $sRet;
+	}
 	public function test()
 	{	
 		$this->_data->show_breadcrumbs    =  false;
