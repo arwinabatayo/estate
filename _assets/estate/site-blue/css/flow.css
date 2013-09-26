@@ -121,6 +121,12 @@
 .collapsed .icon-pn{ background-position: bottom left; }
 /*JQuery UI*/
 
+/*Cart widget */
+.cartWidget .item {border-bottom:1px dotted #ddd;padding:10px 0 8px;}
+.cartWidget .item:last-child {border-bottom:none}
+.cartWidget .productName {}
+.cartWidget .price {color:#888}
+.cartWidget .icoDelete {display:block; float:right;font-weight:bold;font-style:normal;font-family:Arial,sans-serif;}
 
 .account-group{margin:0; border:none}
 .account-group .account-name{background-color:#58595b; color:#fff; font-family:'fs_elliot_cyrillicregular'; padding:15px; cursor:pointer;}

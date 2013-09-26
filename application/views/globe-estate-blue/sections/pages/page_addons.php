@@ -56,6 +56,15 @@
                           </div>
                           <div id="accessories" class="tab-pane fade"  data-toggle="buttons-radio">
 							<div class="row-fluid orange">
+								
+							   <?php 
+							       if($accessories){ 
+									   $items = $accessories;
+									   //print_r($items);
+									   include('partials/tpl_cart_item_accessories.php');
+									} 
+								?>
+								<!--	
                                 <div class="btn span4" type="button">
                                     <div class="box-content">                                    
                                         <div class="boxes"></div>
@@ -65,84 +74,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="btn span4 active" type="button">  
-                                    <div type="button" class="box-content">
-                                        <div class="boxes"></div>
-                                        <div class="txts">
-                                            <span>iPhone stylus pen</span>
-                                            <strong>P 3, 500.00</strong>
-                                        </div>
-                                    </div>                                            
-                                </div>
-                                <div class="btn span4" type="button">  
-                                    <div class="box-content">
-                                        <div class="boxes"></div>
-                                        <div class="txts">
-                                            <span>Earphone</span>
-                                            <strong>P 1, 800.00</strong>
-                                        </div>
-                                    </div>
-                                </div>	
+								-->
                             </div>
-							<div class="row-fluid orange">
-                                <div class="btn span4" type="button">
-                                    <div class="box-content">                                    
-                                        <div class="boxes"></div>
-                                        <div class="txts">
-                                            <span>Headphones</span>
-                                            <strong>P 1,800.00</strong>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="btn span4" type="button">  
-                                    <div type="button" class="box-content">
-                                        <div class="boxes"></div>
-                                        <div class="txts">
-                                            <span>Mini Keyboard</span>
-                                            <strong>P 1, 800.00</strong>
-                                        </div>
-                                    </div>                                            
-                                </div>
-                                <div class="btn span4" type="button">  
-                                    <div class="box-content">
-                                        <div class="boxes"></div>
-                                        <div class="txts">
-                                            <span>Freebies C</span>
-                                            <strong>P 1, 800.00</strong>
-                                        </div>
-                                    </div>
-                                </div>	
-                            </div>
-							<div class="row-fluid orange">
-                                <div class="btn span4" type="button">
-                                    <div class="box-content">                                    
-                                        <div class="boxes"></div>
-                                        <div class="txts">
-                                            <span>Special Offers A</span>
-                                            <strong>P 1,800.00</strong>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="btn span4" type="button">  
-                                    <div type="button" class="box-content">
-                                        <div class="boxes"></div>
-                                        <div class="txts">
-                                            <span>Special Offers B</span>
-                                            <strong>P 1,800.00</strong>
-                                        </div>
-                                    </div>                                            
-                                </div>
-                                <div class="btn span4" type="button">  
-                                    <div class="box-content">
-                                        <div class="boxes"></div>
-                                        <div class="txts">
-                                            <span>Special Offers C</span>
-                                            <strong>P 1,800.00</strong>
-                                        </div>
-                                    </div>
-                                </div>	
-                            </div>                                                                           
-                          </div>
+							
+						  </div>
                         </div>
 					</div>  
                     <div class="row-fluid link-bottom">

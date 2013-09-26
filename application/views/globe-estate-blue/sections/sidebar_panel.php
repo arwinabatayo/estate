@@ -1,7 +1,6 @@
 			
 	<?php
-	//hassle to paxencia na, need to separate prod type into basket (accordion)
-		
+		//Need to separate prod type into basket (accordion)
 		//TODO - add to table
 		$cartProdFiltered = array('accessories'=>array(),'addon'=>array(),'plan'=>array(), 'combos'=>array(), 'boosters'=>array(), 'packageplan'=>array()); //store it on each key(prod type)
 	
@@ -102,13 +101,13 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="accordion-group account-group addevice " style="height: auto; ">
+                            <div class="accordion-group account-group addevice">
                               <div class="row-fluid accordion-heading">
-                                <a class="accordion-toggle account-name collapsed" data-toggle="collapse" data-target="#collapseTwo">
+                                <a class="accordion-toggle account-name in collapse" data-toggle="collapse" data-target="#collapseTwo">
                                   ADD A DEVICE<i class="expand icon-pn"></i>
                                 </a>
                               </div>
-                              <div id="collapseTwo" class="accordion-body collapse" style="height: 0px; ">
+                              <div id="collapseTwo" class="accordion-body collapse" style="height: auto; ">
                                 <div class="accordion-inner">
                                     <ul>
                                         <li>
@@ -138,19 +137,52 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="accordion-group account-group addons">
+                            
+							<?php
+								$cartItems='';
+								$cartItems = $cartProdFiltered['addon'];
+								//print_r($cartItems);
+							?>
+                            <div id="accAddonTab" class="accordion-group account-group addons">
                               <div class="row-fluid accordion-heading">
                                 <a class="accordion-toggle account-name collapsed" data-toggle="collapse" data-target="#collapseFour">
                                     ADD-ONS <i class="expand icon-pn"></i>
                                 </a>
                               </div>
-                              <div id="collapseFour" class="accordion-body collapse" style="height: 0px; ">
+                              <div id="collapseFour" class="accordion-body collapse" style="height: <?php echo count($cartItems) > 0  ? 'auto': '0px' ?>; ">
                                 <div class="accordion-inner">
-                                    add-ons                            
+								<div id="AddonCartWidget" class="cartWidget">	
+									<?php
+
+										if($cartItems){
+											foreach($cartItems as $item) {
+									?>
+									
+												<div id="prod-item-<?php echo $item['rowid'] ?>" class="item">
+													<div class="fleft">
+														<span class="productName block"><?php echo $item['name'] ?></span>
+														<span class="price block arial italic"><?php echo $item['price_formatted'] ?></span>
+													</div>
+													<span class="icoDelete"> <a href="javascript:void(0)" class="btnDelete" id="<?php echo $item['rowid'] ?>" rel="<?php echo $item['name'] ?>"><i class="icon-remove">&nbsp;X&nbsp;</i></a> </span>
+													<br class="clear" />
+												</div>	
+									
+									<?php 
+											}
+										}	 
+									?>
+								</div>                      
                                 </div>
                               </div>
                             </div>
-                            <div class="accordion-group account-group accessories">
+                            
+                            
+							<?php
+								$cartItems='';
+								$cartItems = $cartProdFiltered['accessories'];
+								//print_r($cartItems);
+							?>
+                            <div id="accAccesoriesTab" class="accordion-group account-group accessories">
                               <div class="row-fluid accordion-heading">
                                 <a class="accordion-toggle account-name collapsed" data-toggle="collapse" data-target="#collapseFive">
                                     ACCESSORIES <i class="expand icon-pn"></i>
@@ -158,7 +190,28 @@
                               </div>
                               <div id="collapseFive" class="accordion-body collapse" style="height: 0px; ">
                                 <div class="accordion-inner">
-                                    accessories                            
+                                    <div id="AccessoryCartWidget" class="cartWidget">                       
+										<?php
+	
+											if($cartItems){
+												foreach($cartItems as $item) {
+										?>
+										
+													<div id="prod-item-<?php echo $item['rowid'] ?>" class="item">
+														<div class="fleft">
+															<span class="productName block"><?php echo $item['name'] ?></span>
+															<span class="price block arial italic"><?php echo $item['price_formatted'] ?></span>
+														</div>
+														<span class="icoDelete"> <a href="javascript:void(0)" class="btnDelete" id="<?php echo $item['rowid'] ?>" rel="<?php echo $item['name'] ?>"><i class="icon-remove">&nbsp;X&nbsp;</i></a> </span>
+														<br class="clear" />
+													</div>	
+										
+										<?php 
+												}
+											}	 
+										?>
+									
+									</div>
                                 </div>
                               </div>
                             </div>                                                
