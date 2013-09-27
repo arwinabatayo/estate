@@ -55,24 +55,32 @@ class Payment extends MY_Controller
                 
                 $this->load->model('model_pickup');
                 $params = array(
-                    'postal_code' => '4023',
-                    'province'  => 'Laguna',
-                    'city'  => 'San Pedro',
-                    'municipality'  => 'San Pedro',
+                    'postal_code' => $this->_data->billing_address->postal_code,
+                    'city'  => $this->_data->billing_address->city
                 );
                 $this->load->model('model_pickup');
+                $params['on_top']='0';
                 $stores = $this->model_pickup->list_stores_nearby($params);
-                $stores_all = $this->model_pickup->get_stores(NULL, NULL, NULL, NULL, 'all', NULL, 1 );
+                $this->_data->stores =  $stores;
+                
+                $params['on_top']='1';
+                $this->_data->stores_on_top = $this->model_pickup->list_stores_nearby($params);
+
+                $stores_all = $this->model_pickup->list_stores_nearby(array('on_top'=>'0'));
                 unset($stores_all['total_count']);
                 $this->_data->stores_all = $stores_all;
-                $this->_data->stores =  $stores;
+                
+                
 
+                unset($params['on_top']);
+                $stores = $this->model_pickup->list_stores_nearby($params);
                 $store_properties = array();
                 foreach($stores as $k=>$v) {
                     $properties = $this->model_pickup->get_store_properties($v['id'],'date_of_operation', 'DESC', NULL, 'all', '1', TRUE);
                     unset($properties['total_count']);
                     $store_properties[$v['id']] = $properties;  
                 }
+
                 $this->_data->store_properties = $store_properties;
         
 		$this->load->view($this->_data->tpl_view, $this->_data);

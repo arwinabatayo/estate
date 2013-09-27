@@ -92,17 +92,17 @@
 							});
 						
 					});
-					
-					$('#prefered_loc_search').click(function() {
-						var location = $("#prefered_loc_val option:selected").text();
-						$.post(base_url+'payment/search_store', {store_name: location}, function(data){
-							$('#store_placeholder').html(data.temp);
-						 }, "json");
-					 });
-					 
-					 $('#store_search').click(function() {
-						var keyword = $("#store_keyword").val();
-						$.post(base_url+'payment/search_nearest_stores', {keyword: keyword}, function(data){
-							$('#store_placeholder').html(data.temp);
-						 }, "json");
-					 });
+                                        
+                                        $('#prefered_loc_search').click(function() {
+                                            var location = $("#prefered_loc_val option:selected").text();
+                                            $.post(base_url+'payment/search_store', {store_name: location}, function(data){
+                                                $('.store_placeholder').html(data.temp);
+                                             }, "json");
+                                         });
+                                         
+                                         $('#store_search').click(function() {
+                                            var keyword = $("#store_keyword").val();
+                                            $.post(base_url+'payment/search_nearest_stores', {keyword: keyword}, function(data){
+                                                $('.store_placeholder').html(data.temp);
+                                             }, "json");
+                                         });
