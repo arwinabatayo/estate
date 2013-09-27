@@ -1,4 +1,26 @@
-			
+			$(function () {
+				Grid.init();
+				
+				$(".jq-accordion").accordion({
+					header: "h3",
+					navigation: true, 
+					heightStyle: "content",
+					//event: false,
+					icons: { header: "ui-icon-circle-plus", activeHeader: "ui-icon-circle-minus"}, 
+				});
+				$("#og-grid li div.plan-tile-option3").click(function() {
+					$(this).addClass('selected-plan-tile current');
+					$('.plan-tile-option3').not(this).removeClass('selected-plan-tile');
+					$('.icon-peso-selected').addClass('icon-peso').removeClass('icon-peso-selected');
+					$('.icon-coins-selected').addClass('icon-coins').removeClass('icon-coins-selected');
+					$('.icon-peso', this).removeClass('icon-peso').addClass('icon-peso-selected');
+					$('.icon-coins', this).removeClass('icon-coins').addClass('icon-coins-selected');
+					//$('.arrow-point-up').not(this).hide();
+					//$('.arrow-point-up', this).show();
+					
+				});
+
+			});
 			
 			$('button#btnGetNewline').click(function() {
 					//TODO - call ajax here to send email to OM
