@@ -1,6 +1,4 @@
 		
-		//$('#exceed-limit').modal('show');
-		
 		//accessories & addons addtocart - mark
 		$('form.addtoCart .box-content').click(function(){
 
@@ -85,6 +83,7 @@
 		});
 		
 		$('#btnAddonNextPage').click(function(){
+			
 				$.ajax({
 					url: base_url+'cart/check_credit_limit',
 					type:'post',
@@ -93,7 +92,8 @@
 						var resp = jQuery.parseJSON( response );
 
 						if( resp.status == 'true' ){
-							alert('Credit limit exceed!');
+							//TODO - proceed to next steps
+							$('#exceed-limit').modal('show');
 						}else{
 							window.location.href= base_url+'subscriber-info'
 						}

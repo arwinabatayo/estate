@@ -8,8 +8,8 @@
 			
 			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
 			
-			<a href="#" class="blue-btn pull-left">Retain your Current Plan</a>
-			<a href="#" class="blue-btn pull-right">Choose other Plan</a>
+			<a href="<?php echo base_url() ?>plan?setOrderConfig=true&key=ordertype&val=renew" class="blue-btn pull-left" >Retain your Current Plan</a>
+			<a href="<?php echo base_url() ?>plan?setOrderConfig=true&key=ordertype&val=renew" class="blue-btn pull-right" >Choose other Plan</a>
 			
 			<div class="clr"></div>
 		</div>
