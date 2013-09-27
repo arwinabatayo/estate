@@ -129,6 +129,16 @@
                                                     <option value="0"  <?php if($store_details['status'] == 0) { ?>selected="selected"<?php } ?>>Inactive</option>					
                                                 </select>
                                         </div>
+                                        <div class="h_clearboth"></div>
+                                </div>
+                                <div class="item">
+					<div class="label">Display on Top</div>
+                                        <div class="input">
+                                                <select class="g_select h_width100px" name="on_top">
+                                                    <option value="1" <?php if($store_details['on_top'] == 1) { ?>selected="selected"<?php } ?>selected="selected">Yes</option>
+                                                    <option value="0" <?php if($store_details['on_top'] == 0) { ?>selected="selected"<?php } ?>>No</option>					
+                                                </select>
+                                        </div>
                                 </div>
 			</form>
 			

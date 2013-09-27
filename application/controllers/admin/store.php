@@ -110,6 +110,7 @@ class Store extends MY_Controller
                 $data['street'] 			= $this->cleanStringForDB($this->input->post('street'));
                 $data['subdivision'] 			= $this->cleanStringForDB($this->input->post('subdivision'));
                 $data['status'] 			= $this->cleanStringForDB($this->input->post('status'));
+                $data['on_top'] 			= $this->cleanStringForDB($this->input->post('on_top'));
 
 		$this->model_pickup->add_store($data);
 		
@@ -281,6 +282,7 @@ class Store extends MY_Controller
                 $data['street'] 			= $this->cleanStringForDB($this->input->post('street'));
                 $data['subdivision'] 			= $this->cleanStringForDB($this->input->post('subdivision'));
                 $data['status'] 			= $this->cleanStringForDB($this->input->post('status'));
+                $data['on_top'] 			= $this->cleanStringForDB($this->input->post('on_top'));
 
 		$this->model_pickup->update_store($store_id, $data);
 		

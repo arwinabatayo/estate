@@ -42,6 +42,7 @@
                                 <th>Street</th>
                                 <th>Subdivision</th>
                                 <th>Status</th>
+                                <th>Display on Top</th>
 				<th>Actions</th>
 			</tr>
 			<?php foreach ($pickup as $pickup => $a) { ?>
@@ -55,6 +56,7 @@
                                 <td><?php echo $a['street']; ?></td>
                                 <td><?php echo $a['subdivision']; ?></td>
                                 <td><?php if($a['status'] == 1) { echo "Active"; } else { echo "Inactive"; }; ?></td>
+                                <td><?php if($a['on_top'] == 1) { echo "Yes"; } else { echo "No"; }; ?></td>
 				
 				<!-- actions -->
 				<td width="80" align="center">
