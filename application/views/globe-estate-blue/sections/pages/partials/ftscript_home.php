@@ -1,12 +1,39 @@
-			
-			//SKU Configuration
-			$('input.opt_color').click( function(){
-				var color = $(this).val();
-				$('#product_preview img').each( function(){
-					$(this).hide();
-				});
-				$('#product_preview img.c_'+color).fadeIn();
+			<?php 
+				/**
+				 * 
+				 * Robert Hughes
+				 * 9.26.2013
+				 */
+				
+			?>
+			var selectedDevice = $("#multidevice").val();
+			$('#multidevice').change(function() {
+				var selectedDevice = $("#multidevice").val();
+				window.location = "<?php echo base_url(); ?>sku-configuration?device=<?php echo $_GET['device']; ?>&type="+selectedDevice;
 			});
+			
+			$("input[name=gadget_color]").click(function() {
+				var imgattr = $(this).attr('data-img');
+				var thisID = $(this).val();
+				
+				var selectedDevice = $("#multidevice").children(":selected").attr("data-id");
+				$("#previewimg").attr('src',imgattr);
+				
+				$.ajax({
+						url: base_url+'home/changeAttrCapacity',
+						data: {device:selectedDevice,color:thisID},
+						type:'post',
+						success: function(response){
+							$("#capacity ul").html();
+							$("#capacity ul").html(response);
+						}, 
+						error: function(){
+							alert('Some error occured or the system is busy. Please try again later');	
+						}
+					});
+				
+			})
+			
 			
 			//$('#dialog_reserve_form').modal('show');
 			
@@ -70,7 +97,7 @@
 						}
 					});
 			});
-			
+				
 			// for new line - non globe subscriber jez
 		$("#link_non_globe").click(function(){
 			$('#enterMobile').modal('hide')
