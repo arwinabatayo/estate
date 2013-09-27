@@ -5,6 +5,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Home extends MY_Controller 
 {
 	var $_data = null;
+	var $reserve_enabled = 0;
 	
 	function __construct()
 	{
@@ -21,7 +22,7 @@ class Home extends MY_Controller
 		$this->_data->current_step        =  1;
 		$this->_data->page_title          =  'Add Device';
 		$this->_data->site_config         = $this->getPropertyDataXML(1);
-		
+		$this->reserve_enabled 			  = $this->model_bpmanagement->getProcessStatusByCode('RESERVE');
 		
 		//print_r($this->_data->site_config);
 		//flag for testing
@@ -34,8 +35,7 @@ class Home extends MY_Controller
 		$this->_data->page = 'landing';
 		$this->_data->show_reserve_button = false;
 		
-		
-		if(isset($_GET['reserve'])){
+		if ($this->reserve_enabled) {
 			$this->cart_model->set_order_config(array('order_type'=>'reserve'));
 			$this->_data->show_reserve_button = true;
 		}else{
@@ -111,9 +111,8 @@ class Home extends MY_Controller
 		$this->_data->initialCapacityId = $first_keyCapacity;
 		
 		$this->_data->page = 'home';
-		if (isset($_GET['reserve']) && $_GET['reserve']) {
-			$this->_data->is_reserve = 1;
-		}
+		$this->_data->is_reserve = $this->reserve_enabled;
+		
 		
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
@@ -161,8 +160,8 @@ class Home extends MY_Controller
 	{	
 
 		$this->_data->page = 'home';
-		$this->_data->page_title =  'SMS Verification';
-		$this->_data->is_reserve = $this->session->userdata('reserved_item_specs');
+		$this->_data->page_title = 'SMS Verification';
+		$this->_data->is_reserve = $this->reserve_enabled;
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
 	
@@ -180,48 +179,62 @@ class Home extends MY_Controller
 		  "msg"  => ""
 		);
 		
+		// TODO : add correct checking if mobile number is globe or non globe
 		if($mobile_number) {
 			if(!is_numeric($mobile_number)) {
+			// if (true) {
 			
 					if( $this->_check_if_globe_number($mobile_number) == TRUE && strlen($mobile_number) == 11) {
+					// if (1 != 1) {
 							
 							$data['success_msg'] = "SMS successfully sent to you mobile number";
 							$this->session->set_userdata('msisdn',$mobile_number);
+							// TODO : remove
+							$this->session->unset_userdata('current_subscriber_mobileno');
+							$this->session->set_userdata('current_subscriber_mobileno', $mobile_number);
 						
 					} else {
 						$data['status'] = "error";
 						$data['error'] = "You must enter a valid Globe Mobile Number";
+						// for reservation, redirect to reservation form if non globe
+						if ($this->session->userdata('order_config')['order_type'] == 'reserve') {
+							$data['status'] = "success";
+							$data['non_globe_reserve'] = 1;
+							// save mobile number on session
+							$this->session->unset_userdata('current_subscriber_mobileno');
+							$this->session->set_userdata('current_subscriber_mobileno', $mobile_number);
+						}
 					}
 				
 				$data['status'] = "error";
 				$data['msg'] = "Mobile number should all be numeric";
 			} else {
-                            $this->load->library('GlobeWebService','','api_globe');
-                            $verification_code = random_string('alnum', 6);
-                            $message = "Please use this code ".$verification_code." to verify your account.";
-                            
-                            if(IS_GLOBE_API_ENV){
-								$sms_status = $this->api_globe->api_send_sms($mobile_number, $message, "Project Esate");
-							}else{
-								$sms_status = TRUE;
-							}
-                           
-                            
-                            if($sms_status == TRUE) {
-                                $this->load->model('estate/networks_model');
-                                $this->networks_model->insert_sms_verification($mobile_number, $verification_code);
-                                $this->session->unset_userdata('current_subscriber_mobileno');
-                                $this->session->set_userdata('current_subscriber_mobileno', $mobile_number);
+                $this->load->library('GlobeWebService','','api_globe');
+                // TODO : add checking if globe number
+                $verification_code = random_string('alnum', 6);
+                $message = "Please use this code ".$verification_code." to verify your account.";
+                
+                if(IS_GLOBE_API_ENV){
+					$sms_status = $this->api_globe->api_send_sms($mobile_number, $message, "Project Esate");
+				}else{
+					$sms_status = TRUE;
+				}
+               
+                if($sms_status == TRUE) {
+                    $this->load->model('estate/networks_model');
+                    $this->networks_model->insert_sms_verification($mobile_number, $verification_code);
+                    $this->session->unset_userdata('current_subscriber_mobileno');
+                    $this->session->set_userdata('current_subscriber_mobileno', $mobile_number);
 
-								/* Temporary Code For SAT and UAT Purposes */
-								$email = $this->session->userdata('current_subscriber_email');
-								$this->load->library('GlobeWebService','','api_globe');
-								$email_status = $this->api_globe->SendEmail($email, "Project Estate SMS Verification Code", $verification_code);
-                            } else {
-                                $data['status'] = "error";
-								$data['msg'] = "Failed sending sms. Please try again.";
-                            }
-                        }			
+					/* Temporary Code For SAT and UAT Purposes */
+					$email = $this->session->userdata('current_subscriber_email');
+					$this->load->library('GlobeWebService','','api_globe');
+					$email_status = $this->api_globe->SendEmail($email, "Project Estate SMS Verification Code", $verification_code);
+                } else {
+                    $data['status'] = "error";
+					$data['msg'] = "Failed sending sms. Please try again.";
+                }
+            }			
 		} else {
 			$data['status'] = "error";
 			$data['msg'] = "Mobile number is required.";
@@ -242,7 +255,6 @@ class Home extends MY_Controller
 		  "next_page"            => ""
 		);
 
-		$data['is_globe_subscriber'] = false;
 		$data['mobile_number'] = $this->session->userdata('current_subscriber_mobileno');
 		$this->load->model('estate/networks_model');                
 		$mobile =  $this->session->userdata('current_subscriber_mobileno');
@@ -259,7 +271,7 @@ class Home extends MY_Controller
 		if($verification_code) {
 
 			if($verification_code == $verification_info['code']) {
-			//if (true) {
+			// if (true) {
 				
 				//init/save subscriber info here
                 $is_user_exist = $this->_initSubscriberInfo($mobile);
@@ -313,17 +325,19 @@ class Home extends MY_Controller
 				// $data['next_page'] = 'home?showtymsg=true';
 				
 				// only add reservation from this point for globe subscribers ONLY
-				if ($data['is_globe_subscriber']) {
-					// get reserve_specs from session
-					$reserved_specs = $this->session->userdata('reserved_item_specs');
+				// if all user verification passed
+				// get reserve_specs from session
+				$reserved_specs = $this->session->userdata('reserved_item_specs');
 
-					$this->load->model('model_reservation');
-					$reserve_data = array(
-							'mobile_number'	=> '09173858958', //$data['mobile_number'],
-							'specs'	=> $reserved_specs
-						);
-					$this->model_reservation->addReservation($reserve_data);
-				}
+				$this->load->model('model_reservation');
+				$reserve_data = array(
+						// TODO : change to $data['mobile_number'] if API already works
+						'mobile_number'	=> '09173858958',
+						'specs'	=> $reserved_specs
+					);
+				// add reservation
+				$this->model_reservation->addReservation($reserve_data);
+
 				// set next page url
 				$data['next_page'] = 'home';
 			}
@@ -343,9 +357,11 @@ class Home extends MY_Controller
 		$hash = $this->_create_hash($email);
 
 		if($code == $hash){
+		// if(true){
 			// 'MATCH';
 			
 			/* Temporary Code For SAT and UAT Purposes */
+			$this->session->unset_userdata('current_subscriber_email');
 			$this->session->set_userdata('current_subscriber_email', $email);
 			
 			redirect( base_url().'sms-verification?token='.$hash);
@@ -370,7 +386,7 @@ class Home extends MY_Controller
 		if($email){
 			if (valid_email($email)) {
 				$is_sent = $this->_sendMail($email, 'verify_account');
-				//$is_sent = true;
+				// $is_sent = true;
 				if($is_sent === false) {
 					$data['status'] = "error";
 					$data['msg'] = "Your email was not successfully sent";

@@ -41,9 +41,15 @@
 			
 							if(resp.status == 'success'){
 								s.hide();
-								$( '#dialog_enter_mobile' ).dialog( "close" );
-								$( '#dialog_verify_mobile' ).dialog( "open" );
-								
+
+								if (resp.non_globe_reserve) {
+									// open reserve form for non globe
+									$( '#dialog_enter_mobile' ).dialog( "close" );
+									$('#dialog_reserve_form').dialog("open");
+								} else {
+									$( '#dialog_enter_mobile' ).dialog( "close" );
+									$( '#dialog_verify_mobile' ).dialog( "open" );
+								}
 								
 							}else{
 								s.addClass('alert-'+resp.status);
@@ -112,14 +118,12 @@
 					success: function(response){
 						
 						var resp = jQuery.parseJSON( response );
-								//alert ( JSON.stringify(response) );
-								//return;	
-						if(resp.status == 'success'){
+
+						if (resp.status == 'success') {
 							$( '#dialog_enter_email' ).dialog( "open" );
-						}else{
+						} else {
 							alert(resp.msg);
-						}
-						
+						}						
 					}, 
 					error: function(){
 						alert('Some error occured or the system is busy. Please try again later');	
@@ -190,34 +194,41 @@
 			$('#dialog_reserve_form').dialog("open");
 		});
 
-		//for none globe
+		// reserve form for none globe
 		$('#dialog_reserve_form').dialog({
 			autoOpen: false,
 			buttons: [{
 				text: "OK",
 				click: function() {
-					   var formData = $('form#reserve-form').serialize();
-					   // call reserve item action
-					   $.ajax({
+						var s =	$('form#reserve-form div.status');
+					   	var formData = $('form#reserve-form').serialize();
+					   	
+					   	s.show();
+					    s.html('Sending...Please wait...');
+
+					   	// call reserve item action
+					   	$.ajax({
 					   		url  : 'cart/reserveitem',
 					   		data : formData,
 					   		type : 'post',
 					   		success : function(response){
 					   			resp = jQuery.parseJSON(response);
 					   			if (resp.status == 'success') {
+					   				s.hide();
 					   				// show popup
 					   				$('#dialog_reserve_form').dialog("close");
 					   				$('#dialog_thankyou_reserve').dialog("open");
 					   				setTimeout('$("#dialog_thankyou_reserve").dialog("close")', 5000);
+					   				window.location.href = base_url+resp.nxt_page;
 					   			} else {
-
+					   				s.addClass('alert-'+resp.status);
+									s.html(resp.msg);
 					   			}
-
 					   		},
 					   		error : function(response){
-
+					   			alert('Some error occured or the system is busy. Please try again later');
 					   		} 
-					   });
+					   	});
 
 					   // window.location.href = base_url+'home?showtymsg=true';
 				}

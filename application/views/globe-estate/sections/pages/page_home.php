@@ -159,15 +159,16 @@
 					                </div>
 				              	</div> 
 				              	<br />
+				              	<?php // use session values for email and number ?>
 							  	<div class="row-fluid">
 									<div class="span3">
 					                    <label>Email</label>
-					                    <span><input type="hidden" name="email" id="email" value="avargosino@yahoo.com" />avargosino@yahoo.com</span>
+					                    <span><input type="hidden" name="email" id="email" value="<?php echo $this->session->userdata('current_subscriber_email'); ?>" /><?php echo $this->session->userdata('current_subscriber_email'); ?></span>
 					                </div>
 					                
 									<div class="span3">
 					                    <label>Phone</label>
-					                    <span><input type="hidden" name="phone" id="phone" value="09152211334" />0915-2211334</span> <?php // why is this hardcoded on the requirement? ?>
+					                    <span><input type="hidden" name="phone" id="phone" value="<?php echo $this->session->userdata('current_subscriber_mobileno'); ?>" /><?php echo $this->session->userdata('current_subscriber_mobileno'); ?></span> <?php // why is this hardcoded on the requirement? ?>
 					                </div>
 					                
 									<div class="span3">
@@ -191,6 +192,7 @@
 					                </div>				                
 				              	</div>
 				              	<input type="hidden" name="from_reserve_form" id="from_reserve_form" value="1" />
+				              	<div style="display:none" class="status alert textcenter"></div>
 			             	</form> 
 					</div>
 	            </div>	

@@ -49,9 +49,9 @@
 
 											if(!resp.is_globe_subscriber){
 												// open reserve form for non globe subscriber
-												// $('#dialog_reserve_form').dialog( "open" );
+												$('#dialog_reserve_form').dialog( "open" );
 												// return;
-												alert('You should be a globe subscriber to proceed.');
+												// alert('You should be a globe subscriber to proceed.');
 											} else {
 												// open ty page, close after x secs and redirect to homepage
 												$('#dialog_thankyou_reserve').dialog( "open" );
