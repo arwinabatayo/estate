@@ -41,12 +41,13 @@
 											$('#dialog_reserve_form').dialog( "open" );
 											return;
 										}
-									}else{
+									}
+									/*else{
 										if(resp.tries < 3){
 											return; // donot redirect yet
 										}
 									
-									}
+									}*/
 
 									window.location.href = base_url+resp.next_page;
 								}, 

@@ -282,7 +282,7 @@ class Home extends MY_Controller
                 $is_user_exist = $this->_initSubscriberInfo($mobile);
 				
 				if($is_user_exist){
-				
+					$data['status'] = "success";
 					$data['msg'] = "Successfully Verified. Page is redirecting please wait...";
 					$token =  md5('Globe0917'.'$4Lt*G'); //generate token/session here to access nextpage
 	                $this->networks_model->delete_sms_verification($mobile);
@@ -310,6 +310,7 @@ class Home extends MY_Controller
 			$this->session->set_userdata('vcode_tries',$try);
 		}
 		$data['tries'] = $try;
+
 		
 		if($try > 2){
 			$this->networks_model->delete_sms_verification($mobile);
