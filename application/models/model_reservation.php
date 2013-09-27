@@ -36,22 +36,11 @@ class Model_reservation extends CI_Model
         // if no account id, it means a non globe subscriber [?] TODO : verify with team
         // reserve data right away
 		$this->db->insert($this->tbl_name, $data);
-        // unset reserved item spec session
+        // unset reserved item spec session        
+        $insert_id = $this->db->insert_id();
         $this->session->unset_userdata('reserved_item_specs');
-        return $this->db->insert_id();
+
+        return $insert_id;
 	}
-
-/*    function activateReservation($reserve_id, $data)
-    {
-        // get account by mobile number
-        $this->load->model('estate/accounts_model');
-        $this->load->model('model_reservation');
-        $account_info = $this->accounts_model->get_account_info_by_id($data['mobile_number']);
-
-        $this->db->where('reserve_id', $reserve_id);
-        $this->db->update($this->tbl_name, $data); 
-    }*/
-
-
 }
 ?>

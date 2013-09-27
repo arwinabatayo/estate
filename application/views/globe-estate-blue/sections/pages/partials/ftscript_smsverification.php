@@ -1,5 +1,4 @@
-
-
+								
 					<?php if($this->session->userdata('showcaptcha')){ ?>
 							$('#resetVerification').modal('show');
 							createCaptcha();
@@ -39,10 +38,12 @@
 									if(resp.status == 'success'){
 										if( resp.is_globe_subscriber == 'false' && resp.order_type == 'reserve'){
 											$('#dialog_reserve_form').dialog( "open" );
+											alert('test 1');
 											return;
 										}
 									}else{
 										if(resp.tries < 3){
+											alert('test');
 											return; // donot redirect yet
 										}
 									
@@ -112,8 +113,7 @@
 						
 						s.show();
 						s.html('Validating...Please wait...');
-
-						e.preventDefault();
+		
 							$.ajax({
 							    type: 'post',
 							    data: 'input_code='+code,
@@ -123,15 +123,17 @@
 									
 									if(resp.status == 'success'){
 										s.hide();
-										$('#resetVerification').modal('close');
-										$('#verifyNumber').modal('show');
+										$('#resetVerification').modal('hide');
+										$('#verifyNumber').modal({show:true});
 									}else{
 										s.html(resp.msg);
 										createCaptcha();
 										$('input#code_id').val('');
 									}
+									
 								}	
 							});
+							
 					});
 					
 					

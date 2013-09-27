@@ -145,13 +145,14 @@ class Home extends MY_Controller
 		$this->_data->show_breadcrumbs    =  false;
 		$this->_data->page = 'test';
 		
-		$acc_info = $this->accounts_model->get_account_info_by_id('9151178863');	
+		//$acc_info = $this->accounts_model->get_account_info_by_id('9151178863');	
 		
 		//$this->_initSubscriberInfo('9151178863');
+		$acc_info  = $this->accounts_model->is_msisdn_exist('09151178863');
 		
-		print_r($acc_info);
+		//print_r($acc_info);
 						  
-		//echo var_dump( $acc_info );  
+		echo var_dump( $acc_info );  
 		//print_r( $this->accounts_model->get_account_info() );
 		//$this->load->view($this->_data->tpl_view, $this->_data);
 	}
@@ -178,67 +179,72 @@ class Home extends MY_Controller
 		  "status" => "success",
 		  "msg"  => ""
 		);
-		
-		// TODO : add correct checking if mobile number is globe or non globe
+
 		if($mobile_number) {
-			if(!is_numeric($mobile_number)) {
-			// if (true) {
 			
-					if( $this->_check_if_globe_number($mobile_number) == TRUE && strlen($mobile_number) == 11) {
-					// if (1 != 1) {
-							
-							$data['success_msg'] = "SMS successfully sent to you mobile number";
-							$this->session->set_userdata('msisdn',$mobile_number);
-							// TODO : remove
-							$this->session->unset_userdata('current_subscriber_mobileno');
-							$this->session->set_userdata('current_subscriber_mobileno', $mobile_number);
-						
-					} else {
-						$data['status'] = "error";
-						$data['error'] = "You must enter a valid Globe Mobile Number";
-						// for reservation, redirect to reservation form if non globe
-						if ($this->session->userdata('order_config')['order_type'] == 'reserve') {
-							$data['status'] = "success";
-							$data['non_globe_reserve'] = 1;
-							// save mobile number on session
-							$this->session->unset_userdata('current_subscriber_mobileno');
-							$this->session->set_userdata('current_subscriber_mobileno', $mobile_number);
-						}
-					}
+			if(!is_numeric($mobile_number)) {
 				
 				$data['status'] = "error";
 				$data['msg'] = "Mobile number should all be numeric";
-			} else {
-                $this->load->library('GlobeWebService','','api_globe');
-                // TODO : add checking if globe number
-                $verification_code = random_string('alnum', 6);
-                $message = "Please use this code ".$verification_code." to verify your account.";
-                
-                if(IS_GLOBE_API_ENV){
-					$sms_status = $this->api_globe->api_send_sms($mobile_number, $message, "Project Esate");
-				}else{
-					$sms_status = TRUE;
-				}
-               
-                if($sms_status == TRUE) {
-                    $this->load->model('estate/networks_model');
-                    $this->networks_model->insert_sms_verification($mobile_number, $verification_code);
-                    $this->session->unset_userdata('current_subscriber_mobileno');
-                    $this->session->set_userdata('current_subscriber_mobileno', $mobile_number);
+				
+			} else {                 
+                 $is_user_exist = $this->accounts_model->is_msisdn_exist($mobile_number);
+                        
+                 //NO need to check if using a globe mobile num, all data in estate_account is currently globe subscriber       
+				//if( $this->_check_if_globe_number($mobile_number) == TRUE && strlen($mobile_number) == 11) {	
+				if( $is_user_exist && strlen($mobile_number) == 11) {
+						
+						$data['status'] = 'success';
+						$data['msg']    = "SMS successfully sent to you mobile number";
+						$this->session->set_userdata('msisdn',$mobile_number);
+					
+                        $this->load->library('GlobeWebService','','api_globe');
+                        $verification_code = random_string('alnum', 6);
+                        $message = "Please use this code ".$verification_code." to verify your account.";
+                        
+                        if(IS_GLOBE_API_ENV){
+							$sms_status = $this->api_globe->api_send_sms($mobile_number, $message, "Project Esate");
+						}else{
+							$sms_status = TRUE;
+						}
+                       
+                        
+                        if($sms_status == TRUE) {
+                            $this->load->model('estate/networks_model');
+                            $this->networks_model->insert_sms_verification($mobile_number, $verification_code);
+                            $this->session->unset_userdata('current_subscriber_mobileno');
+                            $this->session->set_userdata('current_subscriber_mobileno', $mobile_number);
+                            $data['status'] = 'success';
+                            
 
-					/* Temporary Code For SAT and UAT Purposes */
-					$email = $this->session->userdata('current_subscriber_email');
-					$this->load->library('GlobeWebService','','api_globe');
-					$email_status = $this->api_globe->SendEmail($email, "Project Estate SMS Verification Code", $verification_code);
-                } else {
-                    $data['status'] = "error";
-					$data['msg'] = "Failed sending sms. Please try again.";
-                }
-            }			
+							/* Temporary Code For SAT and UAT Purposes */
+							$email = $this->session->userdata('current_subscriber_email');
+							$this->load->library('GlobeWebService','','api_globe');
+							$email_status = $this->api_globe->SendEmail($email, "Project Estate SMS Verification Code", $verification_code);
+                        } else {
+                            $data['status'] = "error";
+							$data['msg'] = "Failed sending sms. Please try again.";
+                        }
+					
+				} else {
+					$data['status'] = "error";
+					//$v = var_dump($is_user_exist);
+					$data['msg'] = "You must enter a valid Globe Mobile Number or an existing Globe Subscriber ".$mobile_number;
+
+                    if ($this->session->userdata('order_config')['order_type'] == 'reserve') {
+                        $data['status'] = "success";
+                        $data['non_globe_reserve'] = 1;
+                        // save mobile number on session
+                        $this->session->unset_userdata('current_subscriber_mobileno');
+                        $this->session->set_userdata('current_subscriber_mobileno', $mobile_number);
+                    }
+				}            
+            }
 		} else {
 			$data['status'] = "error";
 			$data['msg'] = "Mobile number is required.";
 		}
+		
 		echo json_encode($data);
 	}
 	
@@ -277,7 +283,7 @@ class Home extends MY_Controller
                 $is_user_exist = $this->_initSubscriberInfo($mobile);
 				
 				if($is_user_exist){
-				
+					$data['status'] = "success";
 					$data['msg'] = "Successfully Verified. Page is redirecting please wait...";
 					$token =  md5('Globe0917'.'$4Lt*G'); //generate token/session here to access nextpage
 	                $this->networks_model->delete_sms_verification($mobile);
@@ -305,6 +311,7 @@ class Home extends MY_Controller
 			$this->session->set_userdata('vcode_tries',$try);
 		}
 		$data['tries'] = $try;
+
 		
 		if($try > 2){
 			$this->networks_model->delete_sms_verification($mobile);
@@ -538,8 +545,10 @@ class Home extends MY_Controller
 		// TODO : check if email needs to be registered first with globe
 		if ($d->code == $captcha_code) {
 			if ($email_isvalid) {
-				$is_sent = $this->_sendMail($email, $flow_type);
-
+				//$is_sent = $this->_sendMail($email, $flow_type);
+				
+				$is_sent=true;
+                
                 if ($flow_type == 'saved_transaction') {
                     $success_msg = "We have sent an email to " . $email . ". Click on the link to resume previously saved transaction. ";
                 } else if ($flow_type == 'forgot_refnum') {

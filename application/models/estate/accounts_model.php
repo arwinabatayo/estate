@@ -14,6 +14,7 @@ class Accounts_model extends CI_Model
 	function get_account_info_by_id($mobile_number, $return_array = TRUE, $what = '*')
 	{
 		$this->db->trans_start();
+		$mobile_number = ltrim($mobile_number,0);
 		
 		$query = $this->db->select('a.*, c.name as account_type_name')
 						 ->from('estate_accounts as a')
@@ -101,8 +102,14 @@ class Accounts_model extends CI_Model
 	//check mobile number if exist
 	function is_msisdn_exist($msisdn)
 	{
-		$query = $this->db->get_where('estate_accounts',array('mobile_number'=>$mobile_number));
-		return $this->db->count_all_results() ? TRUE : FALSE;
+		$msisdn = ltrim($msisdn,0);
+		
+		$query = $this->db->select('*')
+						  ->from('estate_accounts')
+						  ->where('mobile_number', $msisdn)
+						  ->or_where('mobile_number', '0'.$msisdn);
+						  
+		return $this->db->count_all_results() > 0 ? TRUE : FALSE;
 	}
 	
 	//Get subscriber info from session

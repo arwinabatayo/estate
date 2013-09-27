@@ -108,6 +108,8 @@ class Model_pickup extends CI_Model
     {
         if($like === TRUE ) {
             $this->db->like($search_by, $store_name); 
+            $this->db->where('status', '1');
+            $this->db->where('on_top', '0');
         } else {
             $this->db->where($search_by, $store_name);
         }
@@ -117,7 +119,7 @@ class Model_pickup extends CI_Model
         return $result;
     }
     
-    function list_stores_nearby($array_values)
+    function list_stores_nearby($array_values, $all = TRUE)
     {
         $this->db->where($array_values);
         $this->db->where('status', '1');

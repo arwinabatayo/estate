@@ -1,4 +1,13 @@
-
+				<?php 
+				/**
+				 * Add for sku
+				 * $('.buynow-btn').click(function() {...})
+				 * Robert Hughes
+				 */
+				?>
+				$('.buynow-btn').click(function() {
+					window.location = "<?php echo base_url(); ?>sku-configuration?device=iphone5";
+				});
 								
 				$('form#addGadget button').click(function(){
 						var itemid    = $(this).find('input[name=product-id]').val();

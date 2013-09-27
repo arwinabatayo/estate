@@ -7,7 +7,7 @@
 					}
 				?>
                 
-                <div class="span9">
+                <div class="span9 ">
                     <div id="addonsAccessories" class="account-content">						
                         <ul class="nav nav-tabs addons-acc">
                             <li class="active"><a data-toggle="tab" href="#addons" class="tab-addons"><span>Add Ons</span></a></li>
@@ -80,23 +80,27 @@
 						  </div>
                         </div>
 					</div>  
-
+					<br />	
                     <!-- start bottom links -->
                     <div class="row-fluid link-bottom">
+						
                         <a class="pull-left grey" href="<?php echo base_url() ?>subscriber-info">Skip &amp; Go to Subscribers Info</a>
+                        
                         <div class="pull-right">
-                            <ul>
-                                <li><button class="blue-btn" id="btnAddonNextPage" >Continue</button></li>
-                                <li><button class="blue-btn">Load More</button></li>
-                            </ul>                        
-                        	<br>
+								<button class="blue-btn" id="btnAddonNextPage">Continue</button>&nbsp;&nbsp;
+								<button class="blue-btn">Load More</button>                                              
+                        </div>
+ 
+
+                    </div>
+                    <div class="row-fluid link-bottom">
                             <ul class="pull-right">
                                 <li><a>Contact Us</a></li>
                                 <li>|</li>
                                 <li><a>Live Chat</a></li>
-                            </ul>                        
-                        </div>
+                            </ul> 
                     </div>
+                    
                     <!-- end bottom links --> 
                                                 
                 </div>

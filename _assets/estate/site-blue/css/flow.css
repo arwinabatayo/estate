@@ -340,7 +340,13 @@ input.pop-email-input{border:2px solid #bdc3c7; width:90%; margin:10px 0 0 0; pa
  
  .get-new-line label.fl {margin: 0 15px 0 53px; padding-top:5px;}
 
-
+ .modal-anchor {display:block; color:#fff; margin:10px auto 10px !important; min-width:173px; width:173px;}
+ .modal-anchor:hover {color:#fff;}
+ 
+ #exceed-limit .pull-left, #exceed-limit .pull-right {display:block; color:#fff; margin:20px 10px; min-width:250px; width:250px;}
+ #exceed-limit .pull-left:hover, #exceed-limit .pull-right:hover {color:#fff;}
+ 
+ 
 /*addons,accessories*/
 .addons-acc{background-color:#1763af; font-size:24px;font-weight:bold;-webkit-box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.23) inset;-moz-box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.23) inset;box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.23) inset;}
 .addons-acc li{width:50%; text-align:center}

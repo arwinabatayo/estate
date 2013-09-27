@@ -119,12 +119,23 @@
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
+                                
                                 <div class="item">
 					<div class="label">Status</div>
                                         <div class="input">
                                                 <select class="g_select h_width100px" name="status">
                                                     <option value="1" selected="selected">Active</option>
                                                     <option value="0">Inactive</option>					
+                                                </select>
+                                        </div>
+                                        <div class="h_clearboth"></div>
+                                </div>
+                                <div class="item">
+					<div class="label">Display on Top</div>
+                                        <div class="input">
+                                                <select class="g_select h_width100px" name="on_top">
+                                                    <option value="1" selected="selected">Yes</option>
+                                                    <option value="0">No</option>					
                                                 </select>
                                         </div>
                                 </div>
