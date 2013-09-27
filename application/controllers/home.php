@@ -149,7 +149,7 @@ class Home extends MY_Controller
 		//$acc_info = $this->accounts_model->get_account_info_by_id('9151178863');	
 		
 		//$this->_initSubscriberInfo('9151178863');
-		$acc_info  = $this->accounts_model->is_msisdn_exist('915117');
+		$acc_info  = $this->accounts_model->is_msisdn_exist('09151178863');
 		
 		//print_r($acc_info);
 						  
@@ -231,7 +231,8 @@ class Home extends MY_Controller
 						
 					} else {
 						$data['status'] = "error";
-						$data['msg'] = "You must enter a valid Globe Mobile Number or an existing Globe Subscriber";
+						//$v = var_dump($is_user_exist);
+						$data['msg'] = "You must enter a valid Globe Mobile Number or an existing Globe Subscriber ".$mobile_number;
 					}            
                             
 
