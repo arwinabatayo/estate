@@ -101,7 +101,11 @@ class Accounts_model extends CI_Model
 	//check mobile number if exist
 	function is_msisdn_exist($msisdn)
 	{
-		$query = $this->db->get_where('estate_accounts',array('mobile_number'=>$mobile_number));
+		$query = $this->db->select('mobile_number')
+						  ->from('estate_accounts')
+						  ->where('mobile_number', $msisdn)
+						  ->or_where('mobile_number', '0'.$msisdn);
+						  
 		return $this->db->count_all_results() ? TRUE : FALSE;
 	}
 	

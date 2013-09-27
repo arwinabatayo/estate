@@ -146,13 +146,14 @@ class Home extends MY_Controller
 		$this->_data->show_breadcrumbs    =  false;
 		$this->_data->page = 'test';
 		
-		$acc_info = $this->accounts_model->get_account_info_by_id('9151178863');	
+		//$acc_info = $this->accounts_model->get_account_info_by_id('9151178863');	
 		
 		//$this->_initSubscriberInfo('9151178863');
+		$acc_info  = $this->accounts_model->is_msisdn_exist('915117');
 		
-		print_r($acc_info);
+		//print_r($acc_info);
 						  
-		//echo var_dump( $acc_info );  
+		echo var_dump( $acc_info );  
 		//print_r( $this->accounts_model->get_account_info() );
 		//$this->load->view($this->_data->tpl_view, $this->_data);
 	}
@@ -180,22 +181,26 @@ class Home extends MY_Controller
 		  "msg"  => ""
 		);
 		
+		
 		if($mobile_number) {
-			if(!is_numeric($mobile_number)) {
 			
-					if( $this->_check_if_globe_number($mobile_number) == TRUE && strlen($mobile_number) == 11) {
-							
-							$data['success_msg'] = "SMS successfully sent to you mobile number";
-							$this->session->set_userdata('msisdn',$mobile_number);
-						
-					} else {
-						$data['status'] = "error";
-						$data['error'] = "You must enter a valid Globe Mobile Number";
-					}
+			if(!is_numeric($mobile_number)) {
 				
 				$data['status'] = "error";
 				$data['msg'] = "Mobile number should all be numeric";
+				
 			} else {
+                     
+                     $is_user_exist = $this->accounts_model->is_msisdn_exist($mobile_number);
+                            
+                     //NO need to check if using a globe mobile num, all data in estate_account is current globe subscriber       
+					//if( $this->_check_if_globe_number($mobile_number) == TRUE && strlen($mobile_number) == 11) {	
+					if( $is_user_exist && strlen($mobile_number) == 11) {
+							
+							$data['status'] = 'success';
+							$data['msg']    = "SMS successfully sent to you mobile number";
+							$this->session->set_userdata('msisdn',$mobile_number);
+						
                             $this->load->library('GlobeWebService','','api_globe');
                             $verification_code = random_string('alnum', 6);
                             $message = "Please use this code ".$verification_code." to verify your account.";
@@ -212,6 +217,8 @@ class Home extends MY_Controller
                                 $this->networks_model->insert_sms_verification($mobile_number, $verification_code);
                                 $this->session->unset_userdata('current_subscriber_mobileno');
                                 $this->session->set_userdata('current_subscriber_mobileno', $mobile_number);
+                                $data['status'] = 'success';
+                                
 
 								/* Temporary Code For SAT and UAT Purposes */
 								$email = $this->session->userdata('current_subscriber_email');
@@ -221,11 +228,20 @@ class Home extends MY_Controller
                                 $data['status'] = "error";
 								$data['msg'] = "Failed sending sms. Please try again.";
                             }
-                        }			
+						
+					} else {
+						$data['status'] = "error";
+						$data['msg'] = "You must enter a valid Globe Mobile Number or an existing Globe Subscriber";
+					}            
+                            
+
+            }
+            			
 		} else {
 			$data['status'] = "error";
 			$data['msg'] = "Mobile number is required.";
 		}
+		
 		echo json_encode($data);
 	}
 	
