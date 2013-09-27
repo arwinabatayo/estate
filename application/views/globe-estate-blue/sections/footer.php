@@ -20,6 +20,10 @@
 	} else if($page == 'plan'){ 
 		
 		include('pages/partials/modal_plan.php');
+		
+	} else if($page == 'addons'){ 
+		
+		include('pages/partials/modal_addons.php');
 	}
 	
 	

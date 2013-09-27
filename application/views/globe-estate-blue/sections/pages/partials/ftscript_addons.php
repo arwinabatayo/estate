@@ -1,4 +1,6 @@
-
+		
+		//$('#exceed-limit').modal('show');
+		
 		//accessories & addons addtocart - mark
 		$('form.addtoCart .box-content').click(function(){
 
