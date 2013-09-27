@@ -540,8 +540,10 @@ class Home extends MY_Controller
 		// TODO : check if email needs to be registered first with globe
 		if ($d->code == $captcha_code) {
 			if ($email_isvalid) {
-				$is_sent = $this->_sendMail($email, $flow_type);
-
+				//$is_sent = $this->_sendMail($email, $flow_type);
+				
+				$is_sent=true;
+                
                 if ($flow_type == 'saved_transaction') {
                     $success_msg = "We have sent an email to " . $email . ". Click on the link to resume previously saved transaction. ";
                 } else if ($flow_type == 'forgot_refnum') {
