@@ -394,6 +394,9 @@ class Home extends MY_Controller
 					$data['msg'] = "Your email was not successfully sent";
 				} else {
 					$data['msg'] = "Your email was succesfully sent";
+					
+					//remove reset verification
+					$this->session->unset_userdata('showcaptcha');
 				}
 			} else {
 				$data['status'] = "error";
@@ -428,12 +431,10 @@ class Home extends MY_Controller
                 $email_tpl = 'view_activation';
             
                 $verification_code = $this->_create_hash($email_to);
-				//$mobile =  ltrim($this->session->userdata('current_subscriber_mobileno'),0);
-				
+
                 $msg = array(
                     'name'              => $email_to,
                     'verification_code' => $verification_code,
-                    //'verification_url'  => base_url().'home/verify/'.$verification_code.'?e='.$email_to.'&m='.$mobile,
                     'verification_url'  => base_url().'home/verify/'.$verification_code.'?e='.$email_to,
                 );
 
@@ -540,9 +541,10 @@ class Home extends MY_Controller
 		// TODO : check if email needs to be registered first with globe
 		if ($d->code == $captcha_code) {
 			if ($email_isvalid) {
-				//$is_sent = $this->_sendMail($email, $flow_type);
 				
-				$is_sent=true;
+				$is_sent = $this->_sendMail($email, $flow_type);
+				
+				//$is_sent=true;
                 
                 if ($flow_type == 'saved_transaction') {
                     $success_msg = "We have sent an email to " . $email . ". Click on the link to resume previously saved transaction. ";

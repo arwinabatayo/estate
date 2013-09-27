@@ -38,12 +38,9 @@
 									if(resp.status == 'success'){
 										if( resp.is_globe_subscriber == 'false' && resp.order_type == 'reserve'){
 											$('#dialog_reserve_form').dialog( "open" );
-											alert('test 1');
-											return;
 										}
 									}else{
 										if(resp.tries < 3){
-											alert('test');
 											return; // donot redirect yet
 										}
 									
