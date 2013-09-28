@@ -53,6 +53,11 @@ a{cursor: pointer}
  .fr {float:right;}
  .fl {float:left;}
 
+ /* Shorcuts */
+ .fr {float:right;}
+ .fl {float:left;}
+
+
 form {margin:0;padding:0}
 
 /* * * PRELOADER */
@@ -661,3 +666,15 @@ body{ font-family: 'fs_elliot_cyrilliclight' }
      .search-form .search-input {width:auto}
  }
 
+ #reserve-08 { width:926px; }
+ #reserve-08 form ul {list-style:none; text-align:left;}
+ #reserve-08 form ul li {margin-bottom:42px;}
+ #reserve-08 form ul li label {color:#363636;}
+ #reserve-08 form ul li p {margin:0;}
+ #reserve-08 .span4 {text-align:left;}
+ #reserve-08 label {color:#1f608a;}
+ #reserve-08 .consultation-radio label:nth-child(1) {color:#363636;}
+
+ .req-val {
+    color: #FF0000;
+}

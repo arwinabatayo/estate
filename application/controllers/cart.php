@@ -750,6 +750,12 @@ class Cart extends CI_Controller {
 				if( !(preg_match("/^[a-zA-Z'-]/", $d->middle_name)) ) {
 					$error_msg .= 'Middle name is invalid.<br/>'; 
 				}
+			} else {
+				$error_msg .= 'Middle name is required.<br/>'; 
+			}
+
+			if (!$d->sn_uid) {
+				$error_msg .= 'Social network ID is required.<br/>'; 
 			}
 
 			if (!$item_data) {
@@ -766,7 +772,7 @@ class Cart extends CI_Controller {
 					'middle_name'				=> $d->middle_name,
 					'email'						=> $d->email ? $d->email : $this->session->userdata('current_subscriber_email'),
 					'msisdn'					=> $d->phone ? $d->phone : $this->session->userdata('current_subscriber_mobileno'),
-					'network_carrier'			=> $d->network_carrier,
+					// 'network_carrier'			=> $d->network_carrier,
 					'social_network_sitename' 	=> $d->sns_id,
 					'social_network_user_id'	=> $d->sn_uid,
 					'reserved_item_specs' 		=> $item_data,

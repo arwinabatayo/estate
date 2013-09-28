@@ -68,10 +68,12 @@
                           </div>
                           <div id="collapse5" class="accordion-body in collapse" style="height: <?php echo $_GET['ordertype'] == 'renew' ? 'auto' : '0' ?>; ">
                             <div class="accordion-inner last-border">
+
 									
 								<?php 
-									if( isset($_GET['ordertype']) && $_GET['ordertype'] == 'newline' ){
-								
+									if( isset($_GET['ordertype']) && $_GET['ordertype'] == 'renew' ){
+										//include here
+									}		
 								 ?>
 								
 

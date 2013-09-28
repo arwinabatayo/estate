@@ -36,8 +36,12 @@
 									s.html(resp.msg);
 								    
 									if(resp.status == 'success'){
-										if( resp.is_globe_subscriber == 'false' && resp.order_type == 'reserve'){
-											$('#dialog_reserve_form').dialog( "open" );
+										if (resp.order_type == 'reserve') {
+											// close current dialog box
+											$('#verifyNumber').modal( "hide" );
+												// open ty page, close after x secs and redirect to homepage
+												$('#04-thank-you').modal( "show" );
+												setTimeout('$("#04-thank-you").modal("hide")', 5000);
 										}
 									}else{
 										if(resp.tries < 3){
@@ -59,8 +63,7 @@
 							$('#verification_code').css('border', '2px solid #bdc3c7');
 							$('.vcode-alert').fadeOut('fast');
 					});
-					
-					
+
 					$('button#btnEnterMobileNum').click( function(){
 							var s =	$('#enterMobile div.status');
 							var msisdn = $('input#msisdn').val();
@@ -86,11 +89,24 @@
 									if(resp.status == 'success'){
 										s.hide();
 										$( '#enterMobile' ).modal( "hide" );
-										
-										
+
 										if (resp.non_globe_reserve) {
+											// set value of email and mobile
+											$('form#reserve-form #email').val(resp.email);
+											$('#email-cont').html(resp.email);
+											$('form#reserve-form #phone').val(resp.mobile_number);
+											$('#phone-cont').html(resp.mobile_number);
+
 											// open reserve form for non globe
-											$('#reserveForm').modal("show");
+											$('#reserve-08').modal('show').css(
+												{
+													'margin-left': function () {
+													return window.pageXOffset-($(this).width() / 2 );
+												}
+											});
+											$('.consultation-radio input').iCheck({
+												radioClass: 'iradio_flat-blue'
+											});
 										} else {
 											$( '#verifyNumber' ).modal( "show" );
 										}

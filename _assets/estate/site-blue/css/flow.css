@@ -460,6 +460,7 @@ input.pop-email-input{border:2px solid #bdc3c7; width:90%; margin:10px 0 0 0; pa
 .recommendation ul li .recmd-content .text{color:#1853a3}
 .recommendation ul li .recmd-content .price{font-size:18px}
 
+
  /**Plan Options **/
 .plan-tile-option4{width:321px; height:277px; background:url(../images/tile-plan-bg4.jpg) repeat-x; text-align:center; color:#FFF; display:table; cursor:pointer}
 .plan-tile-option4 .plan-name{font-family:'fs_elliot_cyrillicregular'; font-size:25px; font-weight:bold}
@@ -524,3 +525,169 @@ input.pop-email-input{border:2px solid #bdc3c7; width:90%; margin:10px 0 0 0; pa
 	 .tab-cont .thumbnails li .thumbnail span{display:block}
 	 
  }
+
+
+.icon-big-mail{
+    background:url(../images/icon-big-mail.png) no-repeat; 
+    width:152px; 
+    height:152px;
+    margin:auto;
+}
+.icon-consumable{
+    background:url(../images/icon-consumable.png) no-repeat; 
+    width:139px; 
+    height:128px;
+    margin:12px;
+}
+.icon-peso-selected{
+    background:url(../images/icon-peso-selected.png) no-repeat; 
+    width:29px; 
+    height:29px;
+    margin:12px;
+}
+.icon-coins{
+    background:url(../images/icon-coins.png) no-repeat; 
+    width:25px; 
+    height:14px;
+}
+.icon-coins-selected{
+    background:url(../images/icon-cons-selected.png) no-repeat; 
+    width:25px; 
+    height:14px;
+}
+.icon-big-coins{
+    background:url(../images/icon-big-coins.png) no-repeat; 
+    width:47px; 
+    height:47px;
+}
+.icon-medium-coins{
+    background:url(../images/icon-medium-coins.png) no-repeat; 
+    width:32px; 
+    height:32px;
+}
+.icon-create{
+    background:url(../images/icon-create.png) no-repeat; 
+    margin:0;
+    width:43px; 
+    height:42px;
+}
+
+
+/*ICONS */
+.icon{
+    
+}
+.icon-peso{
+    background:url(../images/icon-peso-sign.png) no-repeat; 
+    width:29px; 
+    height:29px;
+    margin:12px;
+}
+.icon-check{
+    background:url(../images/icon-check.jpg) no-repeat; 
+    width:31px; 
+    height:30px;
+}
+.icon-big-peso{
+    background:url(../images/icon-big-peso-sign.png) no-repeat; 
+    width:122px; 
+    height:123px;
+    margin:12px;
+}
+.get-peso{
+    font-family: 'fs_elliot_cyrillicregular';
+    font-size:30px;
+    width:98%;
+    background-color:#e7e7e7;
+    margin:auto;
+    padding: 20px 0;
+    font-size: 25px;
+}
+/*END Added CSS*/
+
+/*new css start*/
+.plan-tile-option-pink{
+    width:211px; 
+    height:163px;
+    background:url(../images/tile-plan-pink.png) repeat-x; 
+    text-align:center;
+    color:#FFFFFF;
+    display: table;
+    cursor:pointer;
+}
+.plan-tile-option-pink .plan-name{
+    font-family: 'fs_elliot_cyrillicregular';
+    font-size:25px;
+    font-weight:bold;
+}
+.plan-tile-option-pink .plan-off{
+    font-family: 'fs_elliot_cyrillicregular';
+    font-size:13px;
+    background-color:#7ebe36;
+    padding: 3px;
+}
+
+.plan-tile-option-pink-pink .ribbon-new{
+    background:url(../images/ribbon-new.png) no-repeat; 
+    width:86px; 
+    height:86px;
+    position:absolute;
+    margin-left: 125px;
+}
+.plan-text{margin-right:0px;padding:0 10px;border-right:1px #d7d7d7 solid}
+.plan-text:last-child{margin-right:0px;padding:0 15px;border-right:none}
+.plan-text span{font-size:12px;}
+.plan-text img{margin-right:10px;}
+.mLeft{
+    margin-left:30px;
+}
+/*new css end*/
+
+/*Center */
+.center{
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+/*Float */
+.floatLeft{
+    float:left;
+}
+.floatRight{
+    float:right;
+}
+
+/*Border */
+.borderLeftGray{
+    border-bottom:1px solid #d7d7d7;
+}
+
+.borderBottomGray{
+    border-bottom:1px solid #d7d7d7;
+}
+.borderTopWhite{
+    border-top:1px solid #f9f9f9;
+}
+
+.dispalyTable{
+    display:table;
+}
+
+/* Margin */
+.margin2{
+    margin:0 2px;
+}
+.marginAuto{
+    margin:auto;
+}
+.margin20{
+    margin:20px 0;
+}
+/*Float */
+.floatLeft{
+    float:left;
+}
+.floatRight{
+    float:right;
+}

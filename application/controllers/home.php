@@ -189,7 +189,7 @@ class Home extends MY_Controller
 				
 			} else {                 
                  $is_user_exist = $this->accounts_model->is_msisdn_exist($mobile_number);
-                        
+                  
                  //NO need to check if using a globe mobile num, all data in estate_account is currently globe subscriber       
 				//if( $this->_check_if_globe_number($mobile_number) == TRUE && strlen($mobile_number) == 11) {	
 				if( $is_user_exist && strlen($mobile_number) == 11) {
@@ -207,7 +207,7 @@ class Home extends MY_Controller
 						}else{
 							$sms_status = TRUE;
 						}
-                       
+                       	// $sms_status = TRUE;
                         
                         if($sms_status == TRUE) {
                             $this->load->model('estate/networks_model');
@@ -235,6 +235,10 @@ class Home extends MY_Controller
                     if ( @$order_cfg['order_type'] == 'reserve' ) {
                         $data['status'] = "success";
                         $data['non_globe_reserve'] = 1;
+
+                        $data['mobile_number'] = $mobile_number;
+                        $data['email'] = $this->session->userdata('current_subscriber_email');
+
                         // save mobile number on session
                         $this->session->unset_userdata('current_subscriber_mobileno');
                         $this->session->set_userdata('current_subscriber_mobileno', $mobile_number);
@@ -340,7 +344,7 @@ class Home extends MY_Controller
 				$this->load->model('model_reservation');
 				$reserve_data = array(
 						// TODO : change to $data['mobile_number'] if API already works
-						'mobile_number'	=> '09173858958',
+						'mobile_number'	=> $data['mobile_number'],
 						'specs'	=> $reserved_specs
 					);
 				// add reservation
