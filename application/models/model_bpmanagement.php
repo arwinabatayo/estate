@@ -3,6 +3,7 @@ class Model_bpmanagement extends CI_Model
 {
 	var $tbl_name = 'business_process_management';
 
+    // return int status by string process_code
 	function getProcessStatusByCode($pcode)
 	{
 		$q = $this->db->get_where($this->tbl_name, array('process_code' => $pcode));
@@ -10,6 +11,7 @@ class Model_bpmanagement extends CI_Model
         return $result->enabled_flag;
 	}
 
+    // return int current status by string process_code
 	function updateProcessByCode($pcode)
     {
 		$this->db->where('process_code', $pcode);
@@ -19,6 +21,7 @@ class Model_bpmanagement extends CI_Model
         return $enabled_flag;
 	}
 
+    // return all process
     function getAllProcess()
     {        
         $q = $this->db->get($this->tbl_name);

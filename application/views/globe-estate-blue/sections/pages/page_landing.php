@@ -8,7 +8,7 @@
 		                <p class="content-desc">
 		                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.                     
 		                </p>
-		                <button class="buynow-btn" onclick="window.location.href='<?php echo base_url() ?>sku-configuration'"><i class="arrow"></i>Buy Now!</button>
+		                <button class="buynow-btn" onclick="window.location.href='<?php echo base_url() ?>sku-configuration'"><i class="arrow"></i><?php echo $process_button_text; ?></button>
 		            </div>
 		        </div>
 		    </div>
@@ -32,7 +32,7 @@
 		                </p>
 		                <button class="buynow-btn"><i class="arrow"></i>Learn More</button>
 		            </div>
-		        </div>
+		        </div>	
 		    </div>    
 		    
 		    <div class="row-fluid content content-insetshadow">

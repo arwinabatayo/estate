@@ -17,7 +17,7 @@
 			<tr>
 				<th>Title</th>
 				<th>Description</th>
-				<th>Status</th>
+				<th>Action</th>
 			</tr>
 			
 			<?php foreach ($processes as $process => $a) { ?>
@@ -26,12 +26,12 @@
 				<td><?php echo $a->process_desc; ?></td>
 				<td width="50" align="center">
 					<?php if ( $a->enabled_flag == 1 ) { 
-							$status_label = "Enabled";
+							$action_label = "Enable";
 						  } else {
-						  	$status_label = "Disabled";
+						  	$action_label = "Disable";
 						  }
 					?>
-					<a href="javascript: void(0);" id="process-status-<?php echo $a->process_code; ?>" onclick="updateStatus('<?php echo $a->process_code; ?>');"><?php echo $status_label; ?></a>
+					<a href="javascript: void(0);" id="process-status-<?php echo $a->process_code; ?>" onclick="updateStatus('<?php echo $a->process_code; ?>');"><?php echo $action_label; ?></a>
 				</td>
 			</tr>
 			<?php } ?> 

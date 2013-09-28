@@ -77,7 +77,71 @@
       </div>
     </div> 
     
-    
+      <div id="reserveForm"  tabindex="-1" class="modal hide fade pop-modal" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+      <div class="modal-body pop-content">
+        <br />
+        <div>
+            <h4 class="normal">Please fillout the form</h4>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+             
+             <br />
+            <h4 class="normal">Your Name</h4>
+              <form name="reserve-form" id="reserve-form">
+                <div class="row-fluid">
+                  <div class="span4">
+                      <label>First Name</label>
+                      <span><input class="inputbox" style="" type="text" name="first_name" id="first_name" /></span>
+                  </div>
+                          
+                  <div class="span4">
+                      <label>Last Name</label>
+                      <span><input class="inputbox" style="" type="text" name="last_name" id="last_name" /></span>
+                  </div>
+                          
+                  <div class="span4">
+                      <label>Middle Name</label>
+                      <span><input class="inputbox" style="" type="text" name="middle_name" id="middle_name" /></span>
+                  </div>
+                </div> 
+                <br />
+                        <?php // use session values for email and number ?>
+                  <div class="row-fluid">
+                  <div class="span3">
+                      <label>Email</label>
+                      <span><input type="hidden" name="email" id="email" value="<?php echo $this->session->userdata('current_subscriber_email'); ?>" /><?php echo $this->session->userdata('current_subscriber_email'); ?></span>
+                  </div>
+                          
+                  <div class="span3">
+                      <label>Phone</label>
+                      <span><input type="hidden" name="phone" id="phone" value="<?php echo $this->session->userdata('current_subscriber_mobileno'); ?>" /><?php echo $this->session->userdata('current_subscriber_mobileno'); ?></span> <?php // why is this hardcoded on the requirement? ?>
+                  </div>
+                          
+                  <div class="span3">
+                      <label>Network Carrier</label>
+                      <span><select id="network_carrier" name="network_carrier">
+                        <option value="Smart">Smart</option>
+                        <option value="Sun Cellular">Sun Cellular</option>
+                        <option value="Others">Others</option>
+                      </select></span>
+                  </div>
+                          
+                  <div class="span3">
+                        <label>Social Network User ID</label>
+                        <span><input type="text" name="sn_uid" id="sn_uid" /></span>
+                        <br>
+                        <span>
+                             <input name="sns_id" value="facebook" type="radio" checked="checked"> Facebook
+                             <input name="sns_id" value="twitter" type="radio"> Twitter
+                             <input name="sns_id" value="linkedin" type="radio"> LinkedIn
+                        </span>
+                      </div>                        
+                    </div>
+                    <input type="hidden" name="from_reserve_form" id="from_reserve_form" value="1" />
+                    <div style="display:none" class="status alert textcenter"></div>
+                </form> 
+          </div>    
+      </div>
+    </div>
     
     
     

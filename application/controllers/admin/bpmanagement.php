@@ -34,9 +34,13 @@ class Bpmanagement extends MY_Controller
 
 	function updateProcessStatus()
 	{
+		// get variables from view
 		$d = (object) $this->input->post();
+		// update status and get current one
 		$curr_status = $this->model_bpmanagement->updateProcessByCode($d->process_code);
-		if ($curr_status == 1) { $curr_status = "Enabled"; } else { $curr_status = "Disabled"; }
+		// convert status to word
+		if ($curr_status == 1) { $curr_status = "Enable"; } else { $curr_status = "Disable"; }
+		// send data to view
 		echo json_encode(array('status' => 'success', 'curr_status' => $curr_status));
 	}
 }

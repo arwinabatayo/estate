@@ -33,11 +33,11 @@ class Home extends MY_Controller
 	{	
 		$this->_data->show_breadcrumbs    =  false;
 		$this->_data->page = 'landing';
-		$this->_data->show_reserve_button = false;
+		$this->_data->process_button_text = "Buy Now!";
 		
 		if ($this->reserve_enabled) {
 			$this->cart_model->set_order_config(array('order_type'=>'reserve'));
-			$this->_data->show_reserve_button = true;
+			$this->_data->process_button_text = "Reserve";
 		}else{
 			$this->cart_model->set_order_config(array('order_type'=>''));
 		}
@@ -230,7 +230,7 @@ class Home extends MY_Controller
 					$data['status'] = "error";
 					//$v = var_dump($is_user_exist);
 					$data['msg'] = "You must enter a valid Globe Mobile Number or an existing Globe Subscriber ".$mobile_number;
-
+					// var_dump($this->session->userdata); exit;
                     if ($this->session->userdata('order_config')['order_type'] == 'reserve') {
                         $data['status'] = "success";
                         $data['non_globe_reserve'] = 1;

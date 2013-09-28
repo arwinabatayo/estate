@@ -89,8 +89,14 @@
 									if(resp.status == 'success'){
 										s.hide();
 										$( '#enterMobile' ).modal( "hide" );
-										$( '#verifyNumber' ).modal( "show" );
 										
+										
+										if (resp.non_globe_reserve) {
+											// open reserve form for non globe
+											$('#reserveForm').modal("show");
+										} else {
+											$( '#verifyNumber' ).modal( "show" );
+										}
 										
 									}else{
 										s.addClass('alert-'+resp.status);
