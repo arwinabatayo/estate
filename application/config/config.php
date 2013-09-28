@@ -363,4 +363,4 @@ $config['proxy_ips'] = '';
 /* End of file config.php */
 /* Location: ./application/config/config.php */
 
-$config['globe_estate_template_path'] = "globe-estate-blue/index";
+$config['globe_estate_template_path'] = "globe-estate/index";
