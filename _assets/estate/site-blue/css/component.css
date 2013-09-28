@@ -9,7 +9,7 @@
 
 .og-grid li {
 	display: inline-block;
-	margin:3px 2px;
+	margin:3px -7px;
 	vertical-align: top;
 	height: auto;
 }
