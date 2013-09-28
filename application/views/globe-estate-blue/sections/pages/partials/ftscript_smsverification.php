@@ -45,7 +45,6 @@
 										}
 									}else{
 										if(resp.tries < 3){
-											alert('test');
 											return; // donot redirect yet
 										}
 									
