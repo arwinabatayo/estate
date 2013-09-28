@@ -19,6 +19,16 @@ class Subscriber extends MY_Controller
 		$this->_data->current_step        =  4;
 		$this->_data->page                = 'subscriber';
 		$this->_data->page_title          =  'Subscriber Info';
+		
+		//global object of subcriber info, init from sms verification -mark
+		$this->_data->account_info  = $account_info = (object) $this->session->userdata('subscriber_info');
+		
+		$this->_data->account_id = 2147483647; // to make it safe =)
+		//TODO - add restriction or redirect if account info object is empty -mark
+		if($account_info->account_id){
+			$this->_data->account_id      = $account_info->account_id;
+		}
+		
 	}
 	
 	public function index()

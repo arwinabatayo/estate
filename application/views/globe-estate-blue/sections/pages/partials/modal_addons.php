@@ -9,7 +9,7 @@
 			
 			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
 			
-			<a href="<?php echo base_url() ?>plan?setOrderConfig=true&ordertype=package" class="blue-btn pull-left">Modify Your Plan</a>
+			<a href="<?php echo base_url() ?>plan?setOrderConfig=true&plantype=package" class="blue-btn pull-left">Modify Your Plan</a>
 			<!--<a class="blue-btn pull-right" data-toggle="modal" data-target="#modifyPlan2" data-dismiss="modal">Upload Financial Document</a>-->
 			<a class="blue-btn pull-right" id="showUploadForm">Upload Financial Document</a>
 			

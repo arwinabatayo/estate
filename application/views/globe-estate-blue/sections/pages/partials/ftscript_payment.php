@@ -149,7 +149,18 @@
 				    })
 				    
 				    
-				    
+				    //Pickup Stores-mark
+					$('.radio-btn input').iCheck({
+						checkboxClass: 'icheckbox_flat-red',
+						radioClass: 'iradio_flat-blue'
+					});
+					
+					$('#receipt-popup').modal({dynamic:true});
+					
+					$('.accordion').on('show hide', function (n) {
+						$(n.target).siblings('.accordion-heading').find('.accordion-toggle i').toggleClass('icon-arrow-up icon-arrow-down');
+						$(n.target).siblings('.accordion-heading').toggleClass('a-h-white a-h-whiteno');
+					});
 				    
 				    
 				    
