@@ -231,7 +231,8 @@ class Home extends MY_Controller
 					//$v = var_dump($is_user_exist);
 					$data['msg'] = "You must enter a valid Globe Mobile Number or an existing Globe Subscriber ".$mobile_number;
 					// var_dump($this->session->userdata); exit;
-                    if ($this->session->userdata('order_config')['order_type'] == 'reserve') {
+					$order_cfg = $this->session->userdata('order_config');
+                    if ( @$order_cfg['order_type'] == 'reserve' ) {
                         $data['status'] = "success";
                         $data['non_globe_reserve'] = 1;
                         // save mobile number on session
