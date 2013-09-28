@@ -82,7 +82,7 @@
 
 		});
 		
-		$('#btnAddonNextPage').click(function(){
+		$('button#btnAddonNextPage').click(function(){
 			
 				$.ajax({
 					url: base_url+'cart/check_credit_limit',
@@ -105,7 +105,10 @@
 			
 		});
 			
-		//
+		$('#myfile').change(function(){
+			$('#path').val($(this).val());
+		});	
 		
+
 		
 		

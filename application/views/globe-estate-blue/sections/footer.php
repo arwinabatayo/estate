@@ -54,17 +54,6 @@
 	
     $(function () {
 	
-		<?php //Do not move. Must be initialize above.  ?>
-		/*$(".jq-accordion").accordion({
-			header: "h3",
-			navigation: true, 
-			heightStyle: "content",
-			//event: false,
-			icons: { header: "ui-icon-circle-plus", activeHeader: "ui-icon-circle-minus"}, 
-		});*/
-		
-		//$('#emailConfirm').modal('show');	
-		//$('#emailConfirm').modal( {show:true} );
 		<?php 
 		//---COMMON SCRIPT
 		include('pages/partials/ftscript_commons.php'); 
