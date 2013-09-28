@@ -234,6 +234,10 @@ class Home extends MY_Controller
                     if ($this->session->userdata('order_config')['order_type'] == 'reserve') {
                         $data['status'] = "success";
                         $data['non_globe_reserve'] = 1;
+
+                        $data['mobile_number'] = $mobile_number;
+                        $data['email'] = $this->session->userdata('current_subscriber_email');
+
                         // save mobile number on session
                         $this->session->unset_userdata('current_subscriber_mobileno');
                         $this->session->set_userdata('current_subscriber_mobileno', $mobile_number);
@@ -276,8 +280,8 @@ class Home extends MY_Controller
 		
 		if($verification_code) {
 
-			// if($verification_code == $verification_info['code']) {
-			if (true) {
+			if($verification_code == $verification_info['code']) {
+			// if (true) {
 				
 				//init/save subscriber info here
                 $is_user_exist = $this->_initSubscriberInfo($mobile);
@@ -339,7 +343,7 @@ class Home extends MY_Controller
 				$this->load->model('model_reservation');
 				$reserve_data = array(
 						// TODO : change to $data['mobile_number'] if API already works
-						'mobile_number'	=> '09173858958',
+						'mobile_number'	=> $data['mobile_number'],
 						'specs'	=> $reserved_specs
 					);
 				// add reservation
@@ -392,8 +396,8 @@ class Home extends MY_Controller
 	
 		if($email){
 			if (valid_email($email)) {
-				// $is_sent = $this->_sendMail($email, 'verify_account');
-				$is_sent = true;
+				$is_sent = $this->_sendMail($email, 'verify_account');
+				// $is_sent = true;
 				if($is_sent === false) {
 					$data['status'] = "error";
 					$data['msg'] = "Your email was not successfully sent";

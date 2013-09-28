@@ -123,9 +123,9 @@
 		   			if (resp.status == 'success') {
 		   				s.hide();
 		   				// show popup
-		   				$('#reserve-08').modal("hide");
-		   				$('#04-thank-you').modal("show");
-		   				setTimeout('$("#04-thank-you").modal("hide")', 5000);
+		   				$('#reserve-08').modal('hide');
+		   				$('#04-thank-you').modal( {show:true} );
+		   				setTimeout('$("#04-thank-you").modal( {show:true} )', 5000);
 		   				window.location.href = base_url+resp.nxt_page;
 		   			} else {
 		   				s.addClass('alert-'+resp.status);
@@ -142,16 +142,16 @@
 
 
 		$('a#link_non_globe_reserve').click(function(){
-			$('#enterMobile').modal("hide");
+			$('#enterMobile').modal('hide');
 			$('#reserve-08').modal('show').css(
 				{
 					'margin-left': function () {
 					return window.pageXOffset-($(this).width() / 2 );
 				}
 			});
-			// $('.consultation-radio input').iCheck({
-			// 	radioClass: 'iradio_flat-blue'
-			// });
+			$('.consultation-radio input').iCheck({
+				radioClass: 'iradio_flat-blue'
+			});
 		});
 
 		// for new line - non globe subscriber jez

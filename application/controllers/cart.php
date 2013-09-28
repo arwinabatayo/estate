@@ -750,6 +750,12 @@ class Cart extends CI_Controller {
 				if( !(preg_match("/^[a-zA-Z'-]/", $d->middle_name)) ) {
 					$error_msg .= 'Middle name is invalid.<br/>'; 
 				}
+			} else {
+				$error_msg .= 'Middle name is required.<br/>'; 
+			}
+
+			if (!$d->sn_uid) {
+				$error_msg .= 'Social network ID is required.<br/>'; 
 			}
 
 			if (!$item_data) {

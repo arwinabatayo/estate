@@ -26,7 +26,7 @@ class Model_reservation extends CI_Model
                 'middle_name'   => $account_info['middle'],
                 'email'         => $account_info['email'],
                 'msisdn'        => $account_info['mobile_number'],
-                // 'network_carrier'       => 'Globe', // user with account_id is automatically a globe subscriber [?]
+                // 'network_carrier'       => 'Globe', // user with mobilenum is automatically a globe subscriber [?]
                 'social_network_sitename' => '', //should be from account information table
                 'social_network_user_id'=>  '', // TODO : define proper resource, from accounts table
                 'reserved_item_specs'   => $specs,

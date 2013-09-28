@@ -64,8 +64,7 @@
 							$('#verification_code').css('border', '2px solid #bdc3c7');
 							$('.vcode-alert').fadeOut('fast');
 					});
-					
-					
+
 					$('button#btnEnterMobileNum').click( function(){
 							var s =	$('#enterMobile div.status');
 							var msisdn = $('input#msisdn').val();
@@ -91,9 +90,14 @@
 									if(resp.status == 'success'){
 										s.hide();
 										$( '#enterMobile' ).modal( "hide" );
-										
-										
+
 										if (resp.non_globe_reserve) {
+											// set value of email and mobile
+											$('form#reserve-form #email').val(resp.email);
+											$('#email-cont').html(resp.email);
+											$('form#reserve-form #phone').val(resp.mobile_number);
+											$('#phone-cont').html(resp.mobile_number);
+
 											// open reserve form for non globe
 											$('#reserve-08').modal('show').css(
 												{
@@ -101,9 +105,9 @@
 													return window.pageXOffset-($(this).width() / 2 );
 												}
 											});
-											// $('.consultation-radio input').iCheck({
-											// 	radioClass: 'iradio_flat-blue'
-											// });
+											$('.consultation-radio input').iCheck({
+												radioClass: 'iradio_flat-blue'
+											});
 										} else {
 											$( '#verifyNumber' ).modal( "show" );
 										}

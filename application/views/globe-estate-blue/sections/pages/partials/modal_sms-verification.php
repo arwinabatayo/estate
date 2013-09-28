@@ -95,7 +95,7 @@
             
             <p>YOUR NAME</p>
             
-            <form id="reserve-form" name="reserve-form" method="post">
+            <form id="reserve-form" name="reserve-form" onsubmit="return false">
                 <ul>
                     <li class="span3">
                         <label for="First Name">First Name <span class="req-val">*</span></label>
@@ -111,11 +111,11 @@
                     </li>
                     <li class="span3">
                         <label for="Email address">Email address</label>
-                        <p><strong><input type="hidden" name="email" id="email" value="<?php echo $this->session->userdata('current_subscriber_email'); ?>" /><?php echo $this->session->userdata('current_subscriber_email'); ?></strong></p>
+                        <p><strong><input type="hidden" name="email" id="email" value="<?php echo $this->session->userdata('current_subscriber_email'); ?>" /><span id="email-cont"><?php echo $this->session->userdata('current_subscriber_email'); ?></span></strong></p>
                     </li>
                     <li class="span2">
                         <label for="Phone Number">Phone Number</label>
-                        <p><strong><input type="hidden" name="phone" id="phone" value="<?php echo $this->session->userdata('current_subscriber_mobileno'); ?>" /><?php echo $this->session->userdata('current_subscriber_mobileno'); ?></strong></p>
+                        <p><strong><input type="hidden" name="phone" id="phone" value="<?php echo $this->session->userdata('current_subscriber_mobileno'); ?>" /><span id="phone-cont"><?php echo $this->session->userdata('current_subscriber_mobileno'); ?></span></strong></p>
                     </li>
                 </ul>
                 
@@ -157,7 +157,7 @@
             
             <hr/>
             
-            <a href="#" class="blue-btn modal-anchor" id="ty-btn-lbl">OK</a>
+            <a href="/home" class="blue-btn modal-anchor" id="ty-btn-lbl" data-dismiss="modal">OK</a>
         </div>
     </div>    
     
