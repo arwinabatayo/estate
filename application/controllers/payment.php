@@ -23,7 +23,7 @@ class Payment extends MY_Controller
 		$this->_data->assets_url  = base_url().$assets_path;
 		$this->_data->current_method      = $this->router->method;
 		$this->_data->current_controller  = strtolower( $this->router->class );
-		$this->_data->show_breadcrumbs    =  true;
+		$this->_data->show_breadcrumbs    =  false;
 		$this->_data->current_step        =  5;
 		$this->_data->page                = 'payment';
 		$this->_data->page_title          = 'Payment';
@@ -44,15 +44,50 @@ class Payment extends MY_Controller
 	public function index()
 	{	
 		
-		$account_id = $this->_data->account_id; //TODO get subs id
+
+		
+		
+	}
+	
+	public function plan_summary()
+	{	
+		$this->_data->page  = 'payment_plan_summary';
+		
+		$this->_data->cartItems = $this->cart->contents();
+		//~ print_r($this->_data->cartItems);
+		//~ die();
+		$this->load->view($this->_data->tpl_view, $this->_data);
+	}
+	
+	public function delivery_pickup()
+	{	
+		$this->_data->page  = 'payment_delivery_pickup';
+
+		$this->load->view($this->_data->tpl_view, $this->_data);
+	}
+	
+	public function shipping_address()
+	{
+		
+		$this->_data->page  = 'payment_shipping_address';
+
+		$this->load->view($this->_data->tpl_view, $this->_data);
+	}
+	
+	//TODO - pls refer to old template(globe-estate) as implemented by Stephen
+	public function pickup_store()
+	{
+		
+		$this->_data->page  = 'payment_pickup_store';
+
+		$account_id = $this->_data->account_id;
 		
 		$this->_data->billing_address = $this->accounts_model->get_account_address($account_id,'billing',FALSE);
 		
 		$this->_data->account_info = $this->accounts_model->get_account_address($account_id);
-		
-		
+	
 		$this->_data->cartItems = $this->cart->contents();
-                
+       /*         
                 $this->load->model('model_pickup');
                 $params = array(
                     'postal_code' => $this->_data->billing_address->postal_code,
@@ -82,43 +117,50 @@ class Payment extends MY_Controller
                 }
 
                 $this->_data->store_properties = $store_properties;
+        */
         
 		$this->load->view($this->_data->tpl_view, $this->_data);
+
 	}
 	
-	public function plan_summary()
-	{	
-		$this->_data->page  = 'plan_summary';
-		$this->_data->show_breadcrumbs    =  false;
+	public function confirm_order()
+	{
 		
-		$this->_data->cartItems = $this->cart->contents();
-		//~ print_r($this->_data->cartItems);
-		//~ die();
+		$this->_data->page  = 'payment_confirm_order';
+
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
 	
+	public function payment_method()
+	{
+		
+		$this->_data->page  = 'payment_method';
+		
+		$this->load->view($this->_data->tpl_view, $this->_data);
+	}
+	
+	public function payment_form()
+	{
+		
+		$this->_data->page  = 'payment_form';
+
+		$this->load->view($this->_data->tpl_view, $this->_data);
+	}
+	
+	//Note/TODO: Thank you survey - Pls. make it ajax display after answering the survey
+	public function survey()
+	{	
+		$this->_data->page  = 'survey';
+		$this->_data->show_breadcrumbs    =  false;
+		
+		$this->load->view($this->_data->tpl_view, $this->_data);
+	}
+	
+	//Thank you for... / Check Eligibilty
 	public function thankyou()
 	{	
-		$this->_data->page  = 'thankyou';
+		$this->_data->page  = 'thankyou_check_eligibility';
 		$this->_data->page_title          = 'Thank you for your order';
-		$this->_data->show_breadcrumbs    =  false;
-		
-		$this->load->view($this->_data->tpl_view, $this->_data);
-	}
-	
-	public function gateway()
-	{	
-		$this->_data->page  = 'gateway';
-		$this->_data->page_title          = 'Secure Credit Card Payment';
-		$this->_data->show_breadcrumbs    =  false;
-		
-		$this->load->view($this->_data->tpl_view, $this->_data);
-	}
-	
-	public function survey_result()
-	{	
-		$this->_data->page  = 'survey_result';
-		$this->_data->page_title          = 'Thank You';
 		$this->_data->show_breadcrumbs    =  false;
 		
 		$this->load->view($this->_data->tpl_view, $this->_data);
@@ -139,48 +181,48 @@ class Payment extends MY_Controller
 		
 	}
         
-        public function search_store()
-        {
-            $store_name = $this->input->post('store_name');
-            $this->load->model('model_pickup');
-            $stores = $this->model_pickup->search_store($store_name);
-            $_data['stores'] = $stores;
-            
-            $store_properties = array();
-            foreach($stores as $k=>$v) {
-                $properties = $this->model_pickup->get_store_properties($v['id'],'date_of_operation', 'DESC', NULL, 'all', '1', TRUE);
-                unset($properties['total_count']);
-                $store_properties[$v['id']] = $properties;  
-            }
-            $_data['store_properties'] = $store_properties;
-            $data['temp'] = $this->load->view('globe-estate/sections/pages/partials/ajax_payment_delivery_pickup', $_data, TRUE);
-            echo json_encode($data);
-        }
-        
-        public function search_nearest_stores()
-        {
-            $keyword = $this->input->post('keyword');
-            $default_search_values = array('postal_code', 'province', 'city', 'municipality', 'barangay');
-            $this->load->model('model_pickup');
-            
-            $stores = array();
-            foreach($default_search_values as $v) {
-                if(empty($stores)) {
-                    $stores = $this->model_pickup->search_store($keyword, $v, TRUE);
-                }
-            }
-            $_data['stores'] = $stores;
-            
-            $store_properties = array();
-            foreach($stores as $k=>$v) {
-                $properties = $this->model_pickup->get_store_properties($v['id'],'date_of_operation', 'DESC', NULL, 'all', '1', TRUE);
-                unset($properties['total_count']);
-                $store_properties[$v['id']] = $properties;  
-            }
-            $_data['store_properties'] = $store_properties;
-            $data['temp'] = $this->load->view('globe-estate/sections/pages/partials/ajax_payment_delivery_pickup', $_data, TRUE);
-            echo json_encode($data);
-        }
+	public function search_store()
+	{
+		$store_name = $this->input->post('store_name');
+		$this->load->model('model_pickup');
+		$stores = $this->model_pickup->search_store($store_name);
+		$_data['stores'] = $stores;
+		
+		$store_properties = array();
+		foreach($stores as $k=>$v) {
+			$properties = $this->model_pickup->get_store_properties($v['id'],'date_of_operation', 'DESC', NULL, 'all', '1', TRUE);
+			unset($properties['total_count']);
+			$store_properties[$v['id']] = $properties;  
+		}
+		$_data['store_properties'] = $store_properties;
+		$data['temp'] = $this->load->view('globe-estate/sections/pages/partials/ajax_payment_delivery_pickup', $_data, TRUE);
+		echo json_encode($data);
+	}
+	
+	public function search_nearest_stores()
+	{
+		$keyword = $this->input->post('keyword');
+		$default_search_values = array('postal_code', 'province', 'city', 'municipality', 'barangay');
+		$this->load->model('model_pickup');
+		
+		$stores = array();
+		foreach($default_search_values as $v) {
+			if(empty($stores)) {
+				$stores = $this->model_pickup->search_store($keyword, $v, TRUE);
+			}
+		}
+		$_data['stores'] = $stores;
+		
+		$store_properties = array();
+		foreach($stores as $k=>$v) {
+			$properties = $this->model_pickup->get_store_properties($v['id'],'date_of_operation', 'DESC', NULL, 'all', '1', TRUE);
+			unset($properties['total_count']);
+			$store_properties[$v['id']] = $properties;  
+		}
+		$_data['store_properties'] = $store_properties;
+		$data['temp'] = $this->load->view('globe-estate/sections/pages/partials/ajax_payment_delivery_pickup', $_data, TRUE);
+		echo json_encode($data);
+	}
 	
 
 }
