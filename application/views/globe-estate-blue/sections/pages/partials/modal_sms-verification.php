@@ -157,7 +157,10 @@
             
             <hr/>
             
-            <a href="/home" class="blue-btn modal-anchor" id="ty-btn-lbl" data-dismiss="modal">OK</a>
+            <!-- <a href="#" class="blue-btn modal-anchor" id="ty-btn-lbl" data-dismiss="modal">OK</a> -->
+
+              <button class="blue-btn" data-dismiss="modal">OK</button>
+
         </div>
     </div>    
     
