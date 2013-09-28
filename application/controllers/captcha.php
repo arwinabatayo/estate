@@ -34,12 +34,14 @@ class Captcha extends CI_Controller {
 		$result['msg']    = 'Characters did not match!';
 		
 		if($d->input_code == $captcha_code){
+			
 			$result['status'] = 'success';
             
             $mobile_number = $this->session->userdata('msisdn');
             $verification_code_sent = true; // API CALL - sendVerificationCode
             
-            if( $verification_code_sent ){
+			
+				if( $verification_code_sent ){
                         $this->load->model('estate/networks_model');
                         $mobile = $this->session->userdata('current_subscriber_mobileno');
                         
@@ -49,22 +51,27 @@ class Captcha extends CI_Controller {
                         $message = "Please use this code ".$verification_code." to verify your account.";
                         $sms_status = $this->api_globe->api_send_sms($mobile, $message, "Project Esate");
 						
-						/* Temporary Code For SAT and UAT Purposes */
+						/* Temporary Code For SAT and UAT Purposes */ 
 						$email = $this->session->userdata('current_subscriber_email');
 						$this->load->library('GlobeWebService','','api_globe');
 						$email_status = $this->api_globe->SendEmail($email, "Project Estate SMS Verification Code", $verification_code);
 
                         if($sms_status == TRUE) {
+							
                             $this->load->model('estate/networks_model');
                             $this->networks_model->insert_sms_verification($mobile, $verification_code);
                             $result['msg']    = 'SMS successfully sent to you mobile number!';
+                            
                         } else {
+                            
                             $result['status'] = "error";
                             $result['msg'] = "Failed sending sms. Please try again.";
                         }
-                    }else{
+                }else{
                             $result['msg']    = 'Error occured while sending verification code';
-                    }
+                }
+                
+                
 		}
 
 		echo json_encode($result);
