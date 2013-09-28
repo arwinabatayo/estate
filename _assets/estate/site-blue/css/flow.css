@@ -477,7 +477,7 @@ input.pop-email-input{border:2px solid #bdc3c7; width:90%; margin:10px 0 0 0; pa
  
 .blue_underline{ color:#0054a6;border-bottom:1px solid #0054a6; }
 .accordion-title{font-family:'fs_elliot_cyrillicregular'; font-size:30px; }
-.accordion-link-holder{font-family:'fs_elliot_cyrillicregular'; }
+.accordion-link-holder{font-family:'fs_elliot_cyrillicregular'; margin-top:5px}
 .accordion-link-holder a{ text-decoration:none; font-size:16px; font-weight:normal; color:#0054a6}
 
  /*alternative responsive*/

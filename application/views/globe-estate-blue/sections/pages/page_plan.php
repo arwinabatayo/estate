@@ -15,7 +15,7 @@
                               ORDER TYPE <i class="tcoll collapse-toggle"></i>
                             </a>
                           </div>
-                          <div id="collapse4" class="accordion-body collapse" style="height: <?php echo $_GET['ordertype'] == 'renew' ? '0' : 'auto' ?>;">
+                          <div id="collapse4" class="accordion-body collapse" style="height: <?php echo ($_GET['ordertype'] == 'renew'|| isset($_GET['plantype'])) ? '0' : 'auto' ?>;">
                             <div class="accordion-inner">
 								
 								<?php 
@@ -66,18 +66,21 @@
                           <div class="accordion-heading">
                             <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapse5">SELECT PLAN <i class="tcoll collapse-toggle"></i></a>
                           </div>
-                          <div id="collapse5" class="accordion-body in collapse" style="height: <?php echo $_GET['ordertype'] == 'renew' ? 'auto' : '0' ?>; ">
-                            <div class="accordion-inner last-border">
+                          <div id="collapse5" class="accordion-body in collapse" style="height: <?php echo ($_GET['ordertype'] == 'renew' || isset($_GET['plantype'])) ? 'auto' : '0' ?>; ">
 
-									
-								<?php 
-									if( isset($_GET['ordertype']) && $_GET['ordertype'] == 'renew' ){
-										//include here
-									}		
-								 ?>
-								
+									<?php 
+										
+										if( isset($_GET['plantype']) && $_GET['plantype'] == 'create' ){
+											include('page_plan_create.php'); 
+											
+										}else if( isset($_GET['plantype']) && $_GET['plantype'] == 'package' ){
+											include('page_plan_package.php'); 
+										}else{
+											//default
+											include('page_plan_retain.php'); 
+										}		
+									 ?>
 
-                            </div>
                           </div>
                         </div>
                     </div>
