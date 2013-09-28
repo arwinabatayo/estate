@@ -766,7 +766,7 @@ class Cart extends CI_Controller {
 					'middle_name'				=> $d->middle_name,
 					'email'						=> $d->email ? $d->email : $this->session->userdata('current_subscriber_email'),
 					'msisdn'					=> $d->phone ? $d->phone : $this->session->userdata('current_subscriber_mobileno'),
-					'network_carrier'			=> $d->network_carrier,
+					// 'network_carrier'			=> $d->network_carrier,
 					'social_network_sitename' 	=> $d->sns_id,
 					'social_network_user_id'	=> $d->sn_uid,
 					'reserved_item_specs' 		=> $item_data,

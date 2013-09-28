@@ -26,9 +26,9 @@
 				<td><?php echo $a->process_desc; ?></td>
 				<td width="50" align="center">
 					<?php if ( $a->enabled_flag == 1 ) { 
-							$action_label = "Enable";
+							$action_label = "Disable";
 						  } else {
-						  	$action_label = "Disable";
+						  	$action_label = "Enable";
 						  }
 					?>
 					<a href="javascript: void(0);" id="process-status-<?php echo $a->process_code; ?>" onclick="updateStatus('<?php echo $a->process_code; ?>');"><?php echo $action_label; ?></a>

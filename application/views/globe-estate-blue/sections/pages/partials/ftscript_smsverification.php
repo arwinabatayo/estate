@@ -36,10 +36,12 @@
 									s.html(resp.msg);
 								    
 									if(resp.status == 'success'){
-										if( resp.is_globe_subscriber == 'false' && resp.order_type == 'reserve'){
-											$('#dialog_reserve_form').dialog( "open" );
-											alert('test 1');
-											return;
+										if (resp.order_type == 'reserve') {
+											// close current dialog box
+											$('#verifyNumber').modal( "hide" );
+												// open ty page, close after x secs and redirect to homepage
+												$('#04-thank-you').modal( "show" );
+												setTimeout('$("#04-thank-you").modal("hide")', 5000);
 										}
 									}else{
 										if(resp.tries < 3){
@@ -93,7 +95,15 @@
 										
 										if (resp.non_globe_reserve) {
 											// open reserve form for non globe
-											$('#reserveForm').modal("show");
+											$('#reserve-08').modal('show').css(
+												{
+													'margin-left': function () {
+													return window.pageXOffset-($(this).width() / 2 );
+												}
+											});
+											// $('.consultation-radio input').iCheck({
+											// 	radioClass: 'iradio_flat-blue'
+											// });
 										} else {
 											$( '#verifyNumber' ).modal( "show" );
 										}

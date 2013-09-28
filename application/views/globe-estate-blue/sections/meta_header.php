@@ -12,6 +12,10 @@
 	<!-- Styles -->
 	<link href="<?php echo $assets_url?>site-blue/css/bootstrap.css" type="text/css" rel="stylesheet">
 	<link href="<?php echo $assets_url?>site-blue/css/bootstrap-responsive.css" type="text/css" rel="stylesheet">
+
+	<link href="<?php echo $assets_url?>site-blue/css/skins/all.css" type="text/css" rel="stylesheet">
+	<link href="<?php echo $assets_url?>site-blue/css/custom.css" type="text/css" rel="stylesheet">
+
 	<link href="<?php echo $assets_url?>site-blue/css/style.css" type="text/css" rel="stylesheet">
 	<link href="<?php echo $assets_url?>site-blue/css/flow.css" type="text/css" rel="stylesheet">
 	

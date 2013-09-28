@@ -189,7 +189,7 @@ class Home extends MY_Controller
 				
 			} else {                 
                  $is_user_exist = $this->accounts_model->is_msisdn_exist($mobile_number);
-                        
+                  
                  //NO need to check if using a globe mobile num, all data in estate_account is currently globe subscriber       
 				//if( $this->_check_if_globe_number($mobile_number) == TRUE && strlen($mobile_number) == 11) {	
 				if( $is_user_exist && strlen($mobile_number) == 11) {
@@ -207,7 +207,7 @@ class Home extends MY_Controller
 						}else{
 							$sms_status = TRUE;
 						}
-                       
+                       	// $sms_status = TRUE;
                         
                         if($sms_status == TRUE) {
                             $this->load->model('estate/networks_model');
@@ -276,8 +276,8 @@ class Home extends MY_Controller
 		
 		if($verification_code) {
 
-			if($verification_code == $verification_info['code']) {
-			// if (true) {
+			// if($verification_code == $verification_info['code']) {
+			if (true) {
 				
 				//init/save subscriber info here
                 $is_user_exist = $this->_initSubscriberInfo($mobile);
@@ -392,8 +392,8 @@ class Home extends MY_Controller
 	
 		if($email){
 			if (valid_email($email)) {
-				$is_sent = $this->_sendMail($email, 'verify_account');
-				// $is_sent = true;
+				// $is_sent = $this->_sendMail($email, 'verify_account');
+				$is_sent = true;
 				if($is_sent === false) {
 					$data['status'] = "error";
 					$data['msg'] = "Your email was not successfully sent";

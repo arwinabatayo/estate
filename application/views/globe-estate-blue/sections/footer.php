@@ -40,7 +40,7 @@
 <script src="<?php echo $assets_url?>site-blue/js/jquery.js"></script>    
 <script src="<?php echo $assets_url?>site-blue/js/bootstrap.js"></script>
 
-
+<script type="text/javascript" src="<?php echo $assets_url?>site-blue/js/jquery.icheck.min.js"></script>
    
 <!--<script src="<?php echo $assets_url?>site/js/defines.js" type="text/javascript"></script>-->
     
