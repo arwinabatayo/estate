@@ -346,7 +346,7 @@ var Grid = (function() {
 			this.$description = $( '<div class="center padding5"></div>' );
 			this.$getPesoValue = $( '<div class="center padding5"></div>' );
 			this.$mediumCoins = $( '<i class="icon icon-medium-coins"></i>' );
-			this.$dispalyTable = $( '<div class="dispalyTable mLeft"></div>' ).append( this.$bigCoins, this.$getPesoValue, this.$title);
+			this.$dispalyTable = $( '<div class="dispalyTable marginAuto"></div>' ).append( this.$bigCoins, this.$getPesoValue, this.$title);
 			this.$dispalyTable2 = $( '<div class="dispalyTable marginAuto"></div>' ).append( this.$mediumCoins, this.$getPesoValue, this.$description);
 			this.$getPeso = $( '<div class="get-peso floatLeft center borderBottomGray" ></div>' ).append( this.$dispalyTable);
 			this.$cashOut = $( '<div class="get-peso floatLeft center borderBottomGray" ></div>' ).append( this.$dispalyTable2);

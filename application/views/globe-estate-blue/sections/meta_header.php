@@ -18,9 +18,12 @@
 	<link href="<?php echo $assets_url?>site-blue/css/style.css" type="text/css" rel="stylesheet">
 	<link href="<?php echo $assets_url?>site-blue/css/flow.css" type="text/css" rel="stylesheet">
 	<link href="<?php echo $assets_url?>site-blue/css/component.css" type="text/css" rel="stylesheet">
-
 	
+	<link href="<?php echo $assets_url?>site-blue/css/skins/all.css" type="text/css" rel="stylesheet"><!-- Robert From aldrin -->
+	<link href="<?php echo $assets_url?>site-blue/css/custom.css" type="text/css" rel="stylesheet"><!-- Robert From aldrin -->
 	
+	<link href="<?php echo $assets_url?>site-blue/css/style.css" type="text/css" rel="stylesheet">
+	<link href="<?php echo $assets_url?>site-blue/css/flow.css" type="text/css" rel="stylesheet">
 	
 	
 	<script type="text/javascript">
