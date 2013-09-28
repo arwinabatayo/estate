@@ -3,8 +3,8 @@
 									<h2 class="fleft"><img src="<?php echo $assets_path ?>site-blue/images/icons/icon_phone.jpg" width="42" height="42" alt=""/>Get Additional Line</h2>
 									
 									<div class="ot-toplinks fright">
-										<a href="<?php echo base_url() ?>plan?setOrderConfig=true&key=ordertype&val=renew">Renew Contract</a>
-										<a href="<?php echo base_url() ?>plan?setOrderConfig=true&key=ordertype&val=reset">Reset</a>
+										<a href="<?php echo base_url() ?>plan?setOrderConfig=true&ordertype=renew">Renew Contract</a>
+										<a href="<?php echo base_url() ?>plan?setOrderConfig=true&ordertype=reset">Reset</a>
 									</div>
 									
 									<div class="clr"></div>

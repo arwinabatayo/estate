@@ -5,9 +5,21 @@ define('ESTATE_THEME_BASEPATH', dirname(__FILE__));
 
 
 if(isset($_GET['setOrderConfig'])){
+	
 	//ordertype
-	$key = $this->input->get('key', TRUE);
-	$val = $this->input->get('val', TRUE);
+	$ordertype = $this->input->get('ordertype', TRUE);
+	$plantype = $this->input->get('plantype', TRUE);
+	
+	if($ordertype){
+		$key = 'ordertype';
+		$val = $ordertype;
+	}
+	
+	if($plantype){
+		$key = 'plantype';
+		$val = $plantype;
+	}
+	
 	
 	$this->cart_model->set_order_config(array($key=>$val));
 }

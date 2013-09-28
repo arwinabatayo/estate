@@ -343,30 +343,7 @@ input.pop-email-input{border:2px solid #bdc3c7; width:90%; margin:10px 0 0 0; pa
  .modal-anchor {display:block; color:#fff; margin:10px auto 10px !important; min-width:173px; width:173px;}
  .modal-anchor:hover {color:#fff;}
  
- /**Plan Options **/
- .plan-tile-option4{
-	width:321px; 
-	height:277px;
-	background:url(../images/tile-plan-bg4.jpg) repeat-x; 
-	text-align:center;
-	color:#FFFFFF;
-	display: table;
-	cursor:pointer;
-}
 
-.plan-tile-option4 .plan-name{
-	font-family: 'fs_elliot_cyrillicregular';
-	font-size:25px;
-	font-weight:bold;
-}
-
-.plan-tile-option4 .plan-off{
-	font-family: 'fs_elliot_cyrillicregular';
-	font-size:13px;
-	background-color:#7ebe36;
-	padding: 3px;
-    width: 208px;
-}
  
  
  #exceed-limit .pull-left, #exceed-limit .pull-right {display:block; color:#fff; margin:20px 10px; min-width:250px; width:250px;}
@@ -482,7 +459,26 @@ input.pop-email-input{border:2px solid #bdc3c7; width:90%; margin:10px 0 0 0; pa
 .recommendation ul li .recmd-content .boxes{background-color:#cccccc; width:50%; height:90px; margin:auto;  -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; margin-bottom:10px}
 .recommendation ul li .recmd-content .text{color:#1853a3}
 .recommendation ul li .recmd-content .price{font-size:18px}
+
+ /**Plan Options **/
+.plan-tile-option4{width:321px; height:277px; background:url(../images/tile-plan-bg4.jpg) repeat-x; text-align:center; color:#FFF; display:table; cursor:pointer}
+.plan-tile-option4 .plan-name{font-family:'fs_elliot_cyrillicregular'; font-size:25px; font-weight:bold}
+.plan-tile-option4 .plan-off{font-family:'fs_elliot_cyrillicregular'; font-size:13px; background-color:#7ebe36; padding:3px;  width:208px}
+
+.icon-big-mail {background:url(../images/icon-big-mail.png) no-repeat; width:152px; height:152px; margin:auto}
+.icon-consumable{background:url(../images/icon-consumable.png) no-repeat; width:139px; height:128px; margin:12px}
+.icon-peso-selected{background:url(../images/icon-peso-selected.png) no-repeat; width:29px; height:29px; margin:12px}
+.icon-coins{background:url(../images/icon-coins.png) no-repeat; width:25px; height:14px}
+.icon-coins-selected{background:url(../images/icon-cons-selected.png) no-repeat; width:25px; height:14px}
+.icon-big-coins{background:url(../images/icon-big-coins.png) no-repeat; width:47px; height:47px}
+.icon-medium-coins{background:url(../images/icon-medium-coins.png) no-repeat; width:32px; height:32px}
+.icon-create{background:url(../images/icon-create.png) no-repeat; margin:0; width:43px; height:42px}
  
+.blue_underline{ color:#0054a6;border-bottom:1px solid #0054a6; }
+.accordion-title{font-family:'fs_elliot_cyrillicregular'; font-size:30px; }
+.accordion-link-holder{font-family:'fs_elliot_cyrillicregular'; }
+.accordion-link-holder a{ text-decoration:none; font-size:16px; font-weight:normal; color:#0054a6}
+
  /*alternative responsive*/
  @media (max-width: 767px) {
 	.flow-breadcrumb .arrow{padding:0 0 0 15px}
