@@ -1,7 +1,7 @@
 <?php
 class Model_reservation extends CI_Model
 {
-	var $tbl_name = 'estate_reserved_items';
+	var $tbl_name = 'estate_reservation';
 
 	function __construct()
     {
@@ -11,9 +11,12 @@ class Model_reservation extends CI_Model
 
 	function addReservation($data)
 	{  
-        if ($data['account_id']) {
-            $this->load->model('estate/accounts_model');
+        // users with mobile_number means a globe subscriber [?]
+        // get account details if mobile_number is not empty
+        if ($data['mobile_number']) {
             $account_info = $this->accounts_model->get_account_info_by_id($data['mobile_number']);
+            
+            // serialized specs
             $specs = $data['specs'];
 
             $data = array (
@@ -23,28 +26,21 @@ class Model_reservation extends CI_Model
                 'middle_name'   => $account_info['middle'],
                 'email'         => $account_info['email'],
                 'msisdn'        => $account_info['mobile_number'],
-                'network_carrier'       => 'Globe',
-                'social_network_user_id'=>  '000', // TODO : define proper resource
+                // 'network_carrier'       => 'Globe', // user with mobilenum is automatically a globe subscriber [?]
+                'social_network_sitename' => '', //should be from account information table
+                'social_network_user_id'=>  '', // TODO : define proper resource, from accounts table
                 'reserved_item_specs'   => $specs,
                 'reserved_datetime'     => date("Y-m-d H:i:s")
             );
         }
-
+        // if no account id, it means a non globe subscriber [?] TODO : verify with team
+        // reserve data right away
 		$this->db->insert($this->tbl_name, $data);
-        return $this->db->insert_id();
+        // unset reserved item spec session        
+        $insert_id = $this->db->insert_id();
+        $this->session->unset_userdata('reserved_item_specs');
+
+        return $insert_id;
 	}
-
-/*    function activateReservation($reserve_id, $data)
-    {
-        // get account by mobile number
-        $this->load->model('estate/accounts_model');
-        $this->load->model('model_reservation');
-        $account_info = $this->accounts_model->get_account_info_by_id($data['mobile_number']);
-
-        $this->db->where('reserve_id', $reserve_id);
-        $this->db->update($this->tbl_name, $data); 
-    }*/
-
-
 }
 ?>

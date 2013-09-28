@@ -32,7 +32,13 @@
 		<button class="blue-btn" id="btnEnterMobileNum">Submit</button>
 		<div style="display:none" class="status alert textcenter"></div>
         <br/><br/>
-        <a class="pop-txtblue-link clearfix" id="link_non_globe">For Non -Globe postpaid subscribers, click here</a>
+        <?php
+            $non_globe_id = "link_non_globe"; 
+            if ($is_reserve) {
+                $non_globe_id = "link_non_globe_reserve";
+            }
+        ?>
+        <a class="pop-txtblue-link clearfix" id="<?php echo $non_globe_id; ?>">For Non -Globe postpaid subscribers, click here</a>
         <br/><br/>
       </div>
     </div> 
@@ -77,7 +83,86 @@
       </div>
     </div> 
     
-    
+    <div id="reserve-08" class="modal hide fade pop-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <button type="button" class="close pop-close" data-dismiss="modal" aria-hidden="true">×</button>  
+        <div class="modal-body pop-content">
+            <p class="pop-txtblue-large">Reserve</p>
+            
+            <hr/>
+            
+            <p>Please fill out the form</p>
+            <p>Lorem ipsum dolor sit amet, consectuer adipiscing elit. Cras justo nulla,  commodo nec mauris ut,  interdum adipiscing  nisi..</p>
+            
+            <p>YOUR NAME</p>
+            
+            <form id="reserve-form" name="reserve-form" onsubmit="return false">
+                <ul>
+                    <li class="span3">
+                        <label for="First Name">First Name <span class="req-val">*</span></label>
+                        <input type="text" name="first_name" id="first_name" />
+                    </li>
+                    <li class="span3">
+                        <label for="Last Name">Last Name <span class="req-val">*</span></label>
+                        <input type="text" name="last_name" id="last_name"/>
+                    </li>
+                    <li class="span3">
+                        <label for="Middle Name">Middle Name <span class="req-val">*</span></label>
+                        <input type="text" name="middle_name" id="middle_name"/>
+                    </li>
+                    <li class="span3">
+                        <label for="Email address">Email address</label>
+                        <p><strong><input type="hidden" name="email" id="email" value="<?php echo $this->session->userdata('current_subscriber_email'); ?>" /><span id="email-cont"><?php echo $this->session->userdata('current_subscriber_email'); ?></span></strong></p>
+                    </li>
+                    <li class="span2">
+                        <label for="Phone Number">Phone Number</label>
+                        <p><strong><input type="hidden" name="phone" id="phone" value="<?php echo $this->session->userdata('current_subscriber_mobileno'); ?>" /><span id="phone-cont"><?php echo $this->session->userdata('current_subscriber_mobileno'); ?></span></strong></p>
+                    </li>
+                </ul>
+                
+                <div class="span4 consultation-radio">
+                    <label for="Phone Number">Social Network ID <span class="req-val">*</span></label>
+                    <input type="text" name="sn_uid" id="sn_uid" class="span3"/>
+                    
+                    <ul>
+                        <li>
+                            <input type="radio" name="sns_id" id="flat-radio-1" value="facebook" checked="checked" />
+                            <label for="Facebook">Facebook</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="sns_id" id="flat-radio-1" value="twitter" />
+                            <label for="Facebook">Twitter</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="sns_id" id="flat-radio-1" value="linkedin" />
+                            <label for="Facebook">LinkedIn</label>
+                        </li>
+                        <input type="hidden" name="from_reserve_form" id="from_reserve_form" value="1" />
+                    </ul>
+                </div>
+                <button class="blue-btn" id="btnSendReservation">Submit</button>
+                <div style="display:none" class="status alert textcenter"></div>
+            </form>
+            
+            <div class="clr"></div>
+        </div>
+    </div>
+
+    <div id="04-thank-you" class="modal hide fade pop-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-body pop-content">
+            <div class="o-i-icon"><img src="<?php echo $assets_path ?>site-blue/images/icons/icon_4_thank_you.png" width="150" height="150" alt="Reserve"/></div>
+            
+            <p class="pop-txtblue-large">Thank You</p>
+            
+            <p id="ty-msg">We will send you an email update once the device become available.</p>
+            
+            <hr/>
+            
+            <!-- <a href="#" class="blue-btn modal-anchor" id="ty-btn-lbl" data-dismiss="modal">OK</a> -->
+
+              <button class="blue-btn" data-dismiss="modal">OK</button>
+
+        </div>
+    </div>    
     
     
     

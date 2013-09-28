@@ -51,6 +51,15 @@ $route['preview/(:any)'] = 'preview/index/$1/$2';
 $route['sms-verification']  = 'home/sms_verification';
 $route['sku-configuration'] = 'home/sku_configuration';
 $route['subscriber-info']   = 'subscriber/index';
+$route['plan-summary']      = 'payment/plan_summary';
+$route['delivery-pickup']   = 'payment/delivery_pickup';
+$route['shipping-address']  = 'payment/shipping_address';
+$route['pickup-store']      = 'payment/pickup_store';
+$route['confirm-order']     = 'payment/confirm_order';
+$route['payment-method']    = 'payment/payment_method';
+$route['payment-checkout']  = 'payment/payment_form';
+$route['survey']            = 'payment/survey';
+$route['thankyou']          = 'payment/thankyou';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
