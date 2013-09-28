@@ -15,7 +15,7 @@ if(isset($_GET['setOrderConfig'])){
 ?>
  
 <?php include('sections/meta_header.php'); ?>
-
+ 
 
 <body class="<?php echo $current_method ?>">
 <!-- Preloader -->
