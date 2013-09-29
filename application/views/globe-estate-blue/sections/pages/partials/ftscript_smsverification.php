@@ -24,6 +24,9 @@
 								$('.vcode-alert').fadeIn('fast');
 								return;
 							}
+							
+							s.show();
+							s.html('Validating...Please wait...');
 
 							$.ajax({
 								url: base_url+'home/check_verification_code',
