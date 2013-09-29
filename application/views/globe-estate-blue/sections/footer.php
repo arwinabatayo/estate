@@ -24,6 +24,12 @@
 	} else if($page == 'addons'){ 
 		
 		include('pages/partials/modal_addons.php');
+		
+	} 
+    
+    if($current_controller == 'payment'){ 
+		
+		include('pages/partials/modal_payment.php');
 	}
 	
 	

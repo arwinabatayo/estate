@@ -145,7 +145,7 @@
 				    	
 				    	
 				    	$(this).parent().parent().parent().fadeOut("slow", function(){
-    						var toView = '<div class="span6 lgreybg" ><div class="row-fluid"><span class="flow-title pull-left offset1"><i class="flow-icon icon-apprvicon pull-left"></i><span>Thank you for taking time to<br />answer our Survey Questions</span></span><p class="flow-instruction pull-left">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></div><div class="row-fluid"><p class="flow-instruction p-r-t-u-answer pull-left">We are about to post  what you\'ve purchased on your Facebook wall. Please confirm.</p><br /><div class="span6 flow-btns pull-left"><button class="blue-btn">Confirm</button></div><div class="span5 flow-btns pull-left"><button class="blue-btn">Cancel</button></div><div class="clr"></div></div></div>';
+    						var toView = '<div class="span6 lgreybg" ><div class="row-fluid"><span class="flow-title pull-left offset1"><i class="flow-icon icon-apprvicon pull-left"></i><span>Thank you for taking time to<br />answer our Survey Questions</span></span><p class="flow-instruction pull-left">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></div><div class="row-fluid"><p class="flow-instruction p-r-t-u-answer pull-left">We are about to post  what you\'ve purchased on your Facebook wall. Please confirm.</p><br /><div class="span6 flow-btns pull-left"><button class="blue-btn" data-toggle="modal" data-target="#postFB" data-dismiss="modal">Confirm</button></div><div class="span5 flow-btns pull-left"><button class="blue-btn">Cancel</button></div><div class="clr"></div></div></div>';
     						$(this).replaceWith(toView).fadeIn("slow");
     					});
 				    })
@@ -164,6 +164,9 @@
 						$(n.target).siblings('.accordion-heading').toggleClass('a-h-white a-h-whiteno');
 					});
 				    
+				    
+				    //Post to SNS/FB - mark
+				    $('#postFB').modal('show');
 				    
 				    
 				    
