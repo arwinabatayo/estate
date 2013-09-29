@@ -165,9 +165,6 @@
 					});
 				    
 				    
-				    //Post to SNS/FB - mark
-				    $('#postFB').modal('show');
-				    
 				    
 				    
 				    

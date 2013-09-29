@@ -1,6 +1,6 @@
     <!-- Modal -->
     <!-- resend verification code -->
-    <div id="resetVerification" class="modal hide fade pop-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+    <div id="resetVerification" class="modal fade pop-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static" style="display:none">
       <div class="modal-body pop-content">
         <span class="pop-txtblue-large">Reset Verification Code</span>
         <p>You have exceeded the number of attempts allowed for entering your verification code. Type the characters you see and click Reset button to get a new verification code.</p>
@@ -18,7 +18,7 @@
     </div>
     
 	<!-- Enter Mobile Number -->
-    <div id="enterMobile" class="modal hide fade pop-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="enterMobile" class="modal fade pop-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none">
 	<button type="button" class="close pop-close" data-dismiss="modal" aria-hidden="true">×</button>        
       <div class="modal-body pop-content">
       	<img src="<?php echo $assets_path ?>site-blue/images/pop-entermodile.png" />
@@ -44,7 +44,7 @@
     </div> 
 	
 	<!-- Prepaid kit - non-globe -->
-	<div id="selectBuyType" class="modal hide fade pop-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div id="selectBuyType" class="modal fade pop-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none">
 	<button type="button" class="close pop-close" data-dismiss="modal" aria-hidden="true">×</button>        
       <div class="modal-body pop-content">
       	<img src="<?php echo $assets_path ?>site-blue/images/pop-entermodile.png" />
