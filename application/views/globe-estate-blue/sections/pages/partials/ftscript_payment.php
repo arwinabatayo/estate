@@ -54,7 +54,7 @@
 							success: function(response){
 								var resp = jQuery.parseJSON( response );
 								if(resp.status == 'success'){
-								    window.location.href= base_url+'payment/shipping_address';
+								    window.location.href= base_url+'shipping-address';
 								}
 							}, 
 							error: function(){
@@ -123,7 +123,7 @@
 							success: function(response){
 								var resp = jQuery.parseJSON( response );
 								if(resp.status == 'success'){
-								    window.location.href= base_url + api;
+								    window.location.href= base_url + 'payment-checkout';
 								}
 							}, 
 							error: function(){

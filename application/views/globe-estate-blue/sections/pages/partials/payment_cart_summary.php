@@ -1,10 +1,6 @@
     <?php
 		
 		//print_r($cartItems);
-		$prod_type_label = array(
-			'addon'=>'ADD-ONS',
-			'addon'=>'ADD-ONS',
-		);
     ?>
     <div id="cartSummaryTable">
         <?php if($cartItems){ ?>
@@ -25,7 +21,7 @@
 		                <tr class="<?php echo ($prodType == 'gadget') ? '':'light' ?>" id="prod-item-<?php echo $item['rowid'] ?>">
 		                    	<td name="product" align="center">
 									<!-- #IMAGE HERE-->
-									<img src="images/prod-img1.png" />
+									<div class="prod-image-box"></div>
 								</td>
 		                    	<td>
 		                        	<span><?php echo $item['name'] ?></span>
@@ -66,10 +62,20 @@
 							</span>
 						</td>                        
                     </tr>
+                    <?php 
+                    //Plan Summary & Confirm Order is sharing this tpl - m4rk
+                    if($current_method == 'confirm_order'){ ?>
+                	<tr>
+                    	<td align="right">Shipping and handling cost</td>
+                    	<td class="price"><?php echo $this->cart_model->get_shipping_fee(true)  ?></td>                        
+                    </tr>
+                    <?php }else{ ?>
                 	<tr>
                     	<td align="right">Reset Cost</td>
                     	<td class="price">-</td>                        
                     </tr>
+                    <?php } ?>
+
                 	<tr class="gtotal">
                     	<td align="right">Total</td>
                     	<td class="gprice">
@@ -81,12 +87,26 @@
                 </table>
                 <br />
                 <div class="plan-sum-btn">
-                	<button class="blue-btn pull-right">Continue</button>
+					 <?php if($current_method == 'confirm_order'){ ?>
+						
+						<button class="blue-btn pull-right" onclick="window.location.href='<?php echo base_url() ?>payment-method'">Continue</button>
+                	  
+                	  <?php }else{ ?>
+                	  
+						<button class="blue-btn pull-right" onclick="window.location.href='<?php echo base_url() ?>delivery-pickup'">Continue</button>
+                	  
+                	  <?php } ?>
                 </div>
 
 		<?php } else { ?>
+            	<table width="100%" cellpadding="0" cellspacing="0">
+                	<tr class="plan-sum-title">
+						<td>
+							<p class="textcenter">Your shopping cart is empty.</p>
+						</td>
+                	</tr>
+                </table>	
 		
-		<p>Your shopping cart is empty.</p>
 		
 		<?php } ?>
 

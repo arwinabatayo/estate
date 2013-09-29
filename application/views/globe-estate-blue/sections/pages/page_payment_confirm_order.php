@@ -1,7 +1,7 @@
 	                    
 	                    
 
-           <h3>Confirm Order</h3>
+           <h3>Confirm Your Order</h3>
             
             <div class="row-fluid plan-summary">
 				
@@ -10,6 +10,7 @@
                 
             </div>
             
+            <?php /*TODO- add to module */ ?>
             <h3>Recommendation</h3>
             <div class="row-fluid recommendation">
             	<ul>

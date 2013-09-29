@@ -131,7 +131,7 @@ class Payment extends MY_Controller
 	{
 		
 		$this->_data->page  = 'payment_confirm_order';
-
+		$this->_data->cartItems = $this->cart->contents();
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
 	

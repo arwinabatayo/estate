@@ -47,7 +47,7 @@
 												<p>1:00 AM - 3:00 PM</p>
 											</div>
 											<div class="span4">
-												<span class="radio-btn"><input type="radio" name="" id="flat-radio-1"/></span>
+												<span class="radio-btn"><input type="radio" name="pickup_store" id="flat-radio-1"/></span>
 											</div>
 											
 											<div class="clr"></div><br />
@@ -59,7 +59,7 @@
 												<p>1:00 AM - 3:00 PM</p>
 											</div>
 											<div class="span4">
-												<span class="radio-btn"><input type="radio" name="" id="flat-radio-1"/></span>
+												<span class="radio-btn"><input type="radio" name="pickup_store" id="flat-radio-1"/></span>
 											</div>
 											
 											<div class="clr"></div><br />
@@ -71,7 +71,7 @@
 												<p>1:00 AM - 3:00 PM</p>
 											</div>
 											<div class="span4">
-												<span class="radio-btn"><input type="radio" name="" id="flat-radio-1"/></span>
+												<span class="radio-btn"><input type="radio" name="pickup_store" id="flat-radio-1"/></span>
 											</div>
 											
 											<div class="clr"></div>
@@ -93,7 +93,7 @@
 												<p>1:00 AM - 3:00 PM</p>
 											</div>
 											<div class="span4">
-												<span class="radio-btn"><input type="radio" name="" id="flat-radio-1"/></span>
+												<span class="radio-btn"><input type="radio" name="pickup_store" id="flat-radio-1"/></span>
 											</div>
 											
 											<div class="clr"></div><br />
@@ -105,7 +105,7 @@
 												<p>1:00 AM - 3:00 PM</p>
 											</div>
 											<div class="span4">
-												<span class="radio-btn"><input type="radio" name="" id="flat-radio-1"/></span>
+												<span class="radio-btn"><input type="radio" name="pickup_store" id="flat-radio-1"/></span>
 											</div>
 											
 											<div class="clr"></div><br />
@@ -117,7 +117,7 @@
 												<p>1:00 AM - 3:00 PM</p>
 											</div>
 											<div class="span4">
-												<span class="radio-btn"><input type="radio" name="" id="flat-radio-1"/></span>
+												<span class="radio-btn"><input type="radio" name="pickup_store" id="flat-radio-1"/></span>
 											</div>
 											
 											<div class="clr"></div>
@@ -139,7 +139,7 @@
 												<p>1:00 AM - 3:00 PM</p>
 											</div>
 											<div class="span4">
-												<span class="radio-btn"><input type="radio" name="" id="flat-radio-1"/></span>
+												<span class="radio-btn"><input type="radio" name="pickup_store" id="flat-radio-1"/></span>
 											</div>
 											
 											<div class="clr"></div><br />
@@ -151,7 +151,7 @@
 												<p>1:00 AM - 3:00 PM</p>
 											</div>
 											<div class="span4">
-												<span class="radio-btn"><input type="radio" name="" id="flat-radio-1"/></span>
+												<span class="radio-btn"><input type="radio" name="pickup_store" id="flat-radio-1"/></span>
 											</div>
 											
 											<div class="clr"></div><br />
@@ -163,7 +163,7 @@
 												<p>1:00 AM - 3:00 PM</p>
 											</div>
 											<div class="span4">
-												<span class="radio-btn"><input type="radio" name="" id="flat-radio-1"/></span>
+												<span class="radio-btn"><input type="radio" name="pickup_store" id="flat-radio-1"/></span>
 											</div>
 											
 											<div class="clr"></div>
@@ -185,7 +185,7 @@
 												<p>1:00 AM - 3:00 PM</p>
 											</div>
 											<div class="span4">
-												<span class="radio-btn"><input type="radio" name="" id="flat-radio-1"/></span>
+												<span class="radio-btn"><input type="radio" name="pickup_store" id="flat-radio-1"/></span>
 											</div>
 											
 											<div class="clr"></div><br />
@@ -197,7 +197,7 @@
 												<p>1:00 AM - 3:00 PM</p>
 											</div>
 											<div class="span4">
-												<span class="radio-btn"><input type="radio" name="" id="flat-radio-1"/></span>
+												<span class="radio-btn"><input type="radio" name="pickup_store" id="flat-radio-1"/></span>
 											</div>
 											
 											<div class="clr"></div><br />
@@ -209,7 +209,7 @@
 												<p>1:00 AM - 3:00 PM</p>
 											</div>
 											<div class="span4">
-												<span class="radio-btn"><input type="radio" name="" id="flat-radio-1"/></span>
+												<span class="radio-btn"><input type="radio" name="pickup_store" id="flat-radio-1"/></span>
 											</div>
 											
 											<div class="clr"></div>
@@ -231,7 +231,7 @@
 												<p>1:00 AM - 3:00 PM</p>
 											</div>
 											<div class="span4">
-												<span class="radio-btn"><input type="radio" name="" id="flat-radio-1"/></span>
+												<span class="radio-btn"><input type="radio" name="pickup_store" id="flat-radio-1"/></span>
 											</div>
 											
 											<div class="clr"></div><br />
@@ -243,7 +243,7 @@
 												<p>1:00 AM - 3:00 PM</p>
 											</div>
 											<div class="span4">
-												<span class="radio-btn"><input type="radio" name="" id="flat-radio-1"/></span>
+												<span class="radio-btn"><input type="radio" name="pickup_store" id="flat-radio-1"/></span>
 											</div>
 											
 											<div class="clr"></div><br />
@@ -255,7 +255,7 @@
 												<p>1:00 AM - 3:00 PM</p>
 											</div>
 											<div class="span4">
-												<span class="radio-btn"><input type="radio" name="" id="flat-radio-1"/></span>
+												<span class="radio-btn"><input type="radio" name="pickup_store" id="flat-radio-1"/></span>
 											</div>
 											
 											<div class="clr"></div>

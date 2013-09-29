@@ -505,7 +505,12 @@ input.pop-email-input{border:2px solid #bdc3c7; width:90%; margin:10px 0 0 0; pa
 .del-option input[type='radio']:checked + label:before {  content: "\2022";color: #007ab3; color:#EBEBEB\0/;text-align: center;;border: 3px solid #007ab3; border: none\0/;background-color: #ebebeb;}
 #shipContent td span {font-size:14px}
 
+/*cart summary*/
+.prod-image-box {background-color:#e5e5e5; width:88%; height:90px; margin:auto;  -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; margin-bottom:10px}
 
+/*payment method */
+
+.payment_container .fl {float:left;margin-left: 16.08%;}
 
  /*alternative responsive*/
  @media (max-width: 767px) {

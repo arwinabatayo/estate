@@ -12,7 +12,7 @@
 								 <form method="POST" id="delorpickForm" onsubmit="return false">
 								<div class="span6">
 									<img src="<?php echo $assets_url ?>site-blue/images/icon-delpick.png" alt="" height="87" width="86">
-									<span class="radio-btn"><input value="delivery" name="delivery_mode" id="delivery" type="radio"></span>
+									<span class="radio-btn"><input value="delivery" name="delivery_mode" id="delivery" type="radio" /></span>
 									<label for="Delivery">Delivery</label>
 								</div>
 								
