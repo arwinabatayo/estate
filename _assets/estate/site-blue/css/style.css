@@ -110,6 +110,9 @@ body{ font-family: 'fs_elliot_cyrilliclight' }
     background: linear-gradient(to bottom,  #005faf 0%,#0070b5 52%,#0080b8 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#005faf', endColorstr='#0080b8',GradientType=0 ); /* IE6-9 */    
 }
+
+.blue-navbarlink i {display:block; margin:0 auto;}
+
 .navbar .navbar-divider{ border-left:1px solid #003d77;}
 .navbar .navbar-divider:last-child { border: 1px solid #003d77; border-width: 0 1px }
 
