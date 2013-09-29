@@ -38,15 +38,15 @@
 												
 												<ul class="social-btn">
 													<li>
-														<input type="radio" name="sns_id" value="facebook" />
+														<span class="radio-btn"><input type="radio" name="sns_id" value="facebook" /></span>
 														<label for="Facebook">Facebook</label>
 													</li>
 													<li>
-														<input type="radio" name="sns_id" value="facebook"/>
+														<span class="radio-btn"><input type="radio" name="sns_id" value="facebook"/></span>
 														<label for="Twitter">Twitter</label>
 													</li>
 													<li>
-														<input type="radio" name="sns_id" value="facebook" />
+														<span class="radio-btn"><input type="radio" name="sns_id" value="facebook" /></span>
 														<label for="Linkedln">Linkedln</label>
 													</li>
 												</ul>

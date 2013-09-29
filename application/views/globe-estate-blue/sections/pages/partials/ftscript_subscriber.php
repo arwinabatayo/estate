@@ -9,3 +9,8 @@
 					window.location.href=base_url+'payment/plan_summary';
 			  });
 				
+				$('.radio-btn input').iCheck({
+					checkboxClass: 'icheckbox_flat-red',
+					radioClass: 'iradio_flat-blue'
+				});
+	

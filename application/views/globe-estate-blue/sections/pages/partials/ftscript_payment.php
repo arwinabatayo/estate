@@ -5,7 +5,7 @@
 							var prodName = $(this).attr('rel');
 			
 							if( !confirm('Are you sure you want to delete "'+prodName+'"?')) return;
-			
+
 							$.ajax({
 								url: base_url+'cart/delete',
 								data: 'keyid='+rowid+'&type',
@@ -15,7 +15,8 @@
 									var resp = jQuery.parseJSON( response );
 			
 									if(resp.status == 'success'){
-										$('#prod-item-'+rowid).slideUp('slow', function(){ $(this).remove() });
+										$('tr#prod-item-'+rowid).fadeOut('slow', function(){ $(this).remove() });
+										$('#cashoutLabelSubtotal').html(resp.total);
 										$('#cashoutLabel').html(resp.total);
 									}else{
 										alert(resp.msg);
