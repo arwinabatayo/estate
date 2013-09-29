@@ -265,7 +265,12 @@ input.pop-email-input{border:2px solid #bdc3c7; width:90%; margin:10px 0 0 0; pa
 .pop-content .form input[type="file"]{z-index: 999;line-height: 0;font-size: 50px;position: absolute;opacity: 0;filter: alpha(opacity = 0);-ms-filter: "alpha(opacity=0)";cursor: pointer;_cursor: hand;margin: 0;left:0;}
 .pop-content .add-photo-btn{background-color: #83B81A;color: #FFFFFF;cursor: pointer;display: block;font-size: 18px;height: 37px;margin: 0;min-width: 110px;overflow: hidden;padding: 0;position: absolute;right: 30px;text-align: center;top: 5px;}
 
+.pfb{clear:both; width:74%; margin:0 70px; border:1px solid #ccc;border-width:0 1px 1px 0; float:left; padding:5px 0}
+.pfb .context{width:80%; text-align:left}
+.pfb .context .blue{color:#1f608a; font-size:16px; font-weight:bold;}
+.pfb .context p{margin:0; font-size:13px; line-height:18px; padding:10px 0}
 
+#postFB .modal-body {background:#FFF}
 
 /*typehead - customize*/
 .pop-content .dropdown-menu{width:68.7%; background-color:#34495e; border:none; padding:3px; margin-top:25px}
