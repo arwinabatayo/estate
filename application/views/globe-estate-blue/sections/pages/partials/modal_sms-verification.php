@@ -62,7 +62,7 @@
     </div> 
     
     <!-- verifyNumber -->
-    <div id="verifyNumber" class="modal hide fade pop-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="verifyNumber" class="modal fade pop-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none">
 	<button type="button" class="close pop-close" data-dismiss="modal" aria-hidden="true">×</button>        
       <div class="modal-body pop-content">
       	<img src="<?php echo $assets_path ?>site-blue/images/pop-entermodile.png" />
