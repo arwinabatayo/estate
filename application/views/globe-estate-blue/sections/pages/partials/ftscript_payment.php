@@ -83,7 +83,8 @@
 				    	e.preventDefault();
 				    	
 				    	var shippingType = $('input[name=shipping_address]:checked').val();
-				    	alert(shippingType);
+				    	//alert(shippingType);
+				    	window.location.href= base_url + 'pickup-store';
 				    	/**
 				    	$.ajax({
 								url: base_url+'order/save_address',
