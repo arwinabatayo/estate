@@ -467,7 +467,11 @@ class Home extends MY_Controller
                     );
             break;
             case 'forgot_refnum' :
-                $refnum = "1234"; // TODO : value for correct refnumber
+            	// get order number by user email
+            	$this->load->model('estate/order_model'); 
+            	$order = $this->order_model->get_recent_order_by_email($email_to);
+
+                $refnum = $order['order_number'];
                 $sender = "no-reply@project-estate.com";
                 $subject = "myGlobe - Reference Number";
                 $email_tpl = 'view_refnum';

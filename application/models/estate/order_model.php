@@ -96,4 +96,20 @@ class Order_model extends CI_Model
         return $result;
     }
 
+    function get_recent_order_by_email($email)
+    {
+    	// get account id by email
+    	$q = $this->db->select('estate_orders.*')
+				->from($this->tbl_name)
+				->join('estate_accounts', 'estate_orders.account_id = estate_accounts.account_id')
+				->where('estate_accounts.email', $email)
+				->order_by("estate_orders.order_number", "desc")
+				->get();
+		$result = $q->row_array();
+
+		if(count($result) == 0) return FALSE;
+        return $result;
+    	// get recent order by account id
+    }
+
 }

@@ -48,7 +48,7 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'localhost';
+$db['default']['hostname'] = 'n-cubator.com';
 
 
 
@@ -61,9 +61,9 @@ switch (ENVIRONMENT)
 		break;
 	case 'staging':
 
-		$db['default']['username'] = 'root';
-		$db['default']['password'] = '';
-		$db['default']['database'] = 'globe_estate';
+		$db['default']['username'] = 'ncubator_estate';
+		$db['default']['password'] = 'sObz_Jmd2hT%';
+		$db['default']['database'] = 'ncubator_dbestate003';
 
 
 		break;
