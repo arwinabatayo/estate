@@ -6,7 +6,7 @@
 			
 			<p class="pop-txtblue-large">Thank You</p>
 			
-			<p>An email has been sent to OM for your application approval.</p>
+			<p>An email has been sent to Order Manager for your application approval.</p>
 
 			<p>Kindly check your email for the link back to this site.  Use the reference  number we sent to check the status of your application.</p><br /><br />
 			
@@ -25,7 +25,7 @@
 			
 			<p class="pop-txtblue-large">Thank You</p>
 			
-			<p>An email has been sent to OM for your application approval.</p>
+			<p>An email has been sent to Order Manager for your application approval.</p>
 
 			<p>Kindly check your email for the link back to this site.  Use the reference  number we sent to check the status of your application.</p><br /><br />
 			

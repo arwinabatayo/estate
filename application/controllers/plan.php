@@ -139,6 +139,28 @@ class Plan extends MY_Controller
 		$secret_key = 'gL0b3-E$sT4te'.date('m-d-y');
 		return md5($key.$secret_key);
 	}
+	
+	function send_newline_request() 
+	{
+		$data['status'] = "error";
+		$this->load->library('email');
+		$account_info = $this->_data->account_info;
+		
+		$refnum = "1234"; // TODO : value for correct refnumber
+		$sender = "no-reply@project-estate.com";
+		$subject = "myGlobe - Get A New Line - Customer Copy"; //TODO- send to actual OM email then create a cc for customer
+		$email_tpl = 'view_getnewline';
+
+		$msg = array(
+				'name'  => $account_info->name,
+				'refnum'=> strtoupper( random_string('alnum', 6) );
+				'link'  => base_url(),
+			);
+                    
+		$this->email->send_email_api($account_info->email, $subject, $email_tpl, $msg, $sender); 
+		
+		echo json_encode($data); exit;
+	}
 
 
 
