@@ -49,9 +49,11 @@ class Plan extends MY_Controller
 		$this->_data->plans = $plans;
 
 
-		
-		$query = $this->db->query('SELECT * FROM estate_plans WHERE is_active="1"');
-		$this->_data->plans_options = $query->result();
+		/**  Robert for ultima **/
+		$this->_data->plan_options = $this->products_model->get_plans(1); // gadget id is need to get all details
+		$this->_data->active_plan = $this->cart_model->get_active_plan();
+// 		$query = $this->db->query('SELECT * FROM estate_plans WHERE is_active="1"');
+// 		$this->_data->plans_options = $query->result();
 		
 		$this->_data->account_m = $this->accounts_model;
         //temporary token = d25c1265aee883d97ffeec28b7e852cb        
