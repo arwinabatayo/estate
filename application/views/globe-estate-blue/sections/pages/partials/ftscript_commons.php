@@ -255,4 +255,3 @@
 		        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
 		    );
 		}
-
