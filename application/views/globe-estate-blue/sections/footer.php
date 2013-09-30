@@ -52,6 +52,11 @@
 <script type="text/javascript" src="<?php echo $assets_url?>site-blue/js/jquery-ui-1.10.0.custom.min.js"></script>  
 <script type="text/javascript" src="<?php echo $assets_url?>site-blue/js/jquery.icheck.min.js"></script>
 
+<!-- Added for Survey -- robert -->
+<script type="text/javascript" src="<?php echo $assets_url ?>site-blue/js/jquery.icheck.min.js"></script>
+
+<!--<script src="<?php echo $assets_url?>site/js/defines.js" type="text/javascript"></script>-->
+
 <script type="text/javascript">
 	
 	$(document).ready(function(){
@@ -94,7 +99,10 @@
 			
 			//---PLAN PAGE > ULTIMA ADDTOCART(plan, combos & boosters) - ROBERT
 			include('pages/partials/ftscript_plan_ultima.php'); 
-		
+		?>
+			$('#accChooseYourPlan .accordion-body').height('auto');
+			$('#accChooseYourPlan .accordion-toggle').removeClass('in collapse').addClass('collapsed');
+		<?php 
 		} else if($current_controller == 'addons' ){
 
 			//---ADDONS PAGE

@@ -29,9 +29,6 @@ class Plan extends MY_Controller
 		if($account_info->account_id){
 			$this->_data->current_plan    = $this->accounts_model->get_account_current_plan($account_info->account_id);
 			$this->_data->account_id      = $account_info->account_id;
-		}else{
-			//temp force login
-			//redirect('home/login');
 		}
 		
 	}
@@ -52,9 +49,11 @@ class Plan extends MY_Controller
 		$this->_data->plans = $plans;
 
 
-		
-		$query = $this->db->query('SELECT * FROM estate_plans WHERE is_active="1"');
-		$this->_data->plans_options = $query->result();
+		/**  Robert for ultima **/
+		$this->_data->plan_options = $this->products_model->get_plans(1); // gadget id is need to get all details
+		$this->_data->active_plan = $this->cart_model->get_active_plan();
+// 		$query = $this->db->query('SELECT * FROM estate_plans WHERE is_active="1"');
+// 		$this->_data->plans_options = $query->result();
 		
 		$this->_data->account_m = $this->accounts_model;
         //temporary token = d25c1265aee883d97ffeec28b7e852cb        
@@ -141,6 +140,28 @@ class Plan extends MY_Controller
     private function _create_hash($key=''){
 		$secret_key = 'gL0b3-E$sT4te'.date('m-d-y');
 		return md5($key.$secret_key);
+	}
+	
+	function send_newline_request() 
+	{
+		$data['status'] = "error";
+		$this->load->library('email');
+		$account_info = $this->_data->account_info;
+		
+		$refnum = "1234"; // TODO : value for correct refnumber
+		$sender = "no-reply@project-estate.com";
+		$subject = "myGlobe - Get A New Line - Customer Copy"; //TODO- send to actual OM email then create a cc for customer
+		$email_tpl = 'view_getnewline';
+
+		$msg = array(
+				'name'  => $account_info->name,
+				'refnum'=> strtoupper( random_string('alnum', 6) ),
+				'link'  => base_url(),
+			);
+                    
+		$this->email->send_email_api($account_info->email, $subject, $email_tpl, $msg, $sender); 
+		
+		echo json_encode($data); exit;
 	}
 
 

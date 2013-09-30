@@ -23,8 +23,19 @@
 			});
 			
 			$('button#btnGetNewline').click(function() {
-					//TODO - call ajax here to send email to OM
-					$('#order-thankyou').modal('show');
+
+			    	$.ajax({
+						url: base_url+'plan/send_newline_request',
+						data: 'task=send_newline_request',
+						type:'post',
+						success: function(response){
+								$('#order-thankyou').modal('show');
+						}, 
+						error: function(){
+							alert('Email is not sent. System error');	
+						}
+					});
+				
 			});
 			
 			$('button#btnGetNewlineSubs').click(function() {

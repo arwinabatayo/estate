@@ -48,7 +48,7 @@ class Home extends MY_Controller
 	
 	//temp force login
 	public function login() {
-		if($this->_initSubscriberInfo('09151178863')){
+		if($this->_initSubscriberInfo('9151178863')){
 			redirect('plan');
 		}
 		
@@ -146,10 +146,10 @@ class Home extends MY_Controller
 		$this->_data->show_breadcrumbs    =  false;
 		$this->_data->page = 'test';
 		
-		//$acc_info = $this->accounts_model->get_account_info_by_id('9151178863');	
+		$acc_info = $this->accounts_model->get_account_info_by_id('9151178863');	
 		
 		//$this->_initSubscriberInfo('9151178863');
-		$acc_info  = $this->accounts_model->is_msisdn_exist('09151178863');
+		//$acc_info  = $this->accounts_model->is_msisdn_exist('9151178863');
 		
 		//print_r($acc_info);
 						  
@@ -164,7 +164,7 @@ class Home extends MY_Controller
 		$this->_data->page = 'home';
 		$this->_data->page_title = 'SMS Verification';
 		$this->_data->is_reserve = $this->reserve_enabled;
-		echo $this->_data->tpl_view;
+
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
 	
@@ -427,7 +427,7 @@ class Home extends MY_Controller
 		echo json_encode($data);
 		exit;
 	}
-
+	
 	function subscriber_info() 
 	{
 		$this->_data->page = 'subscriber';
@@ -467,7 +467,11 @@ class Home extends MY_Controller
                     );
             break;
             case 'forgot_refnum' :
-                $refnum = "1234"; // TODO : value for correct refnumber
+            	// get order number by user email
+            	$this->load->model('estate/order_model'); 
+            	$order = $this->order_model->get_recent_order_by_email($email_to);
+
+                $refnum = $order['order_number'];
                 $sender = "no-reply@project-estate.com";
                 $subject = "myGlobe - Reference Number";
                 $email_tpl = 'view_refnum';
@@ -477,15 +481,12 @@ class Home extends MY_Controller
                         'refnum'=> $refnum
                     );
             break;
+            
         }
 
-        if (DEV_ENV) {
-        	// return $this->email->send_email($email_to, $sender, $subject, $msg, $email_tpl );
-        	// echo $msg['verification_url'];
-        	return true; 
-        } else {
-        	return $this->email->send_email_api($email_to, $subject, $email_tpl, $msg, $sender ); 
-        }        
+        return $this->email->send_email_api($email_to, $subject, $email_tpl, $msg, $sender ); 
+        
+     
     }
     
     //move this function to helper -- SOON
@@ -640,7 +641,7 @@ class Home extends MY_Controller
 
     	echo json_encode($data); exit;
     }
-
+	
 
 }
 
