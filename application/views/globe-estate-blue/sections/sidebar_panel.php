@@ -125,8 +125,7 @@
                                 </div>
                               </div>
                             </div>
-                            
-                            <div id="accChooseYourPlan" class="accordion-group account-group chooseyourplan">
+                            <div class="accordion-group account-group chooseyourplan">
                               <div class="row-fluid accordion-heading">
                                 <a class="accordion-toggle account-name collapsed" data-toggle="collapse" data-target="#collapseThree">
                                     CHOOSE YOUR PLAN <i class="expand icon-pn"></i>
@@ -134,78 +133,7 @@
                               </div>
                               <div id="collapseThree" class="accordion-body collapse" style="height: 0px; ">
                                 <div class="accordion-inner">
-                                	<ul>
-                                		<li>
-                                			<span>Plan</span>
-                                			<?php
-												$cartItemsPlan='';
-												$cartItemsPlan = $cartProdFiltered['plan'];
-											?>
-                                			<div id="PlanCartWidget" class="cartWidget">
-                                				<?php if($cartItemsPlan){ ?>
-												<?php foreach($cartItemsPlan as $item) {?>
-													<div data-prod-type="plan" id="prod-item-<?php echo $item['rowid'] ?>" class="item" data-cashout="<?php echo $item['price']; ?>" data-pv="<?php echo $item['this_pv_value']; ?>">
-														<div class="fleft">
-															<span class="productName block"><?php echo $item['name'] ?></span>
-														</div>
-														<span class="icoDelete"> <a href="javascript:void(0)" class="btnDelete" id="<?php echo $item['rowid'] ?>" rel="<?php echo $item['name'] ?>"><i class="icon-remove">&nbsp;X&nbsp;</i></a> </span>
-														<br class="clear" />
-													</div>	
-											
-												<?php } ?>
-												<?php } ?>	 
-                                			</div>
-                                		</li>
-                                		<li>
-                                			<span>Combos</span>
-                                			<?php
-												$cartItemsCombos='';
-												$cartItemsCombos = $cartProdFiltered['combos'];
-											?>
-                                			<div id="CombosCartWidget" class="cartWidget">
-                                				<?php if($cartItemsCombos){ ?>
-												<?php foreach($cartItemsCombos as $item) {?>
-													<div data-prod-type="combos" id="prod-item-<?php echo $item['rowid'] ?>" class="item">
-														<div class="fleft">
-															<span class="productName block"><?php echo $item['name'] ?></span>
-															<span class="price block arial italic">x<?php echo $item['combos_qty'] ?></span>
-														</div>
-														<span class="icoDelete"> 
-														<a data-amount="<?php echo $item['price']; ?>" data-pv="<?php echo $item['this_pv_value']; ?>" data-id="<?php echo $item['product_id']; ?>" href="javascript:void(0)" class="btnDeleteCombos" id="<?php echo $item['rowid'] ?>" rel="<?php echo $item['name'] ?>">
-														<i class="icon-remove">&nbsp;X&nbsp;</i></a> </span>
-														<br class="clear" />
-													</div>	
-											
-												<?php } ?>
-												<?php } ?>	
-                                			</div>
-                                		</li>
-                                		<li>
-                                			<span>Boosters</span>
-                                			<?php
-												$cartItemsBoosters ='';
-												$cartItemsBoosters = $cartProdFiltered['boosters'];
-											?>
-                                			<div id="BoostersCartWidget" class="cartWidget">
-                                				<?php if($cartItemsBoosters){ ?>
-												<?php foreach($cartItemsBoosters as $item) {?>
-													<div data-prod-type="boosters" id="prod-item-<?php echo $item['rowid'] ?>" class="item">
-														<div class="fleft">
-															<span class="productName block"><?php echo $item['name'] ?></span>
-															<span class="price block arial italic"><?php echo $item['price_formatted'] ?></span>
-														</div>
-														<span class="icoDelete"> 
-														<a data-amount="<?php echo $item['price']; ?>" data-pv="<?php echo $item['this_pv_value']; ?>" data-id="<?php echo $item['product_id']; ?>" href="javascript:void(0)" class="btnDeleteBoosters" id="<?php echo $item['rowid'] ?>" rel="<?php echo $item['name'] ?>">
-														<i class="icon-remove">&nbsp;X&nbsp;</i></a> </span>
-														<br class="clear" />
-													</div>	
-											
-												<?php } ?>
-												<?php } ?>	
-                                			</div>      
-                                		</li>
-                                	</ul>
-                                          
+                                    choose you plan content                              
                                 </div>
                               </div>
                             </div>
@@ -225,6 +153,7 @@
                                 <div class="accordion-inner">
 								<div id="AddonCartWidget" class="cartWidget">	
 									<?php
+
 										if($cartItems){
 											foreach($cartItems as $item) {
 									?>
@@ -288,12 +217,6 @@
                             </div>                                                
                         </div>                          
                     </div>
-                    <!-- div id="pesovalueBox" class="cash-out">
-                    	<span class="blue">PESO VALUE</span>
-                        <span class="black" id="pesovalueLabel">
-							<?php echo $this->cart_model->remaining_pv(false); ?>
-						</span>
-                    </div -->   
                     <div id="cashoutBox" class="cash-out">
                     	<span class="blue">YOUR CASHOUT</span>
                         <span class="black" id="cashoutLabel">

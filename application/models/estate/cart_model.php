@@ -254,17 +254,7 @@ class Cart_model extends CI_Model
 		return ($show_currency) ? $currency.' '.number_format($price,2) : $price;
 	}
 	
-	function get_active_plan() {
-		$planid = 0;
-		$cart_contents = $this->cart->contents();
-		
-		foreach($cart_contents as $k=>$v) {
-			if(trim($cart_contents[$k]['product_type']) == "plan") {
-				$planid = $cart_contents[$k]['product_id'];
-			}
-		}
-		return $planid;
-	}
+	
 	function get_plan_pv() {
 		$cart_contents = $this->cart->contents();
 		

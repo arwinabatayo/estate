@@ -23,5 +23,16 @@ class Subscriber_model extends CI_Model
                           
     }
 
+    function save_personal($data)
+    {
+        $this->db->insert("estate_account_personal_information_non_globe", $data);
+        $id = $this->db->insert_id();
+
+        $this->load->model('estate/order_model');
+
+
+        $this->db->update("estate_orders", array("company_id" => $id), array("id" => $this->session->userdata("order_id")));
+    }
+
     
 }

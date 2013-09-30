@@ -23,12 +23,13 @@
                                 if(isset($_GET['subscriber_flag'])){
                                     $subscriber_flag = "&subscriber_flag=" . $_GET['subscriber_flag'];
                                 }
-								if( isset($_GET['ordertype']) && $_GET['ordertype'] == 'newline' ){
-								
-									//GET NEWLINE
-									//IMPLEMENTED: MANAGE - PLATINUM ACCOUNT
-									//TODO: BUSINESS - 
-									include('page_ordertype_newline.php'); 
+                                if( isset($_GET['ordertype']) && $_GET['ordertype'] == 'newline' ){
+                                
+                                    //GET NEWLINE
+                                    //IMPLEMENTED: MANAGE - PLATINUM ACCOUNT
+                                    //TODO: BUSINESS - 
+                                    include('page_ordertype_newline.php'); 
+
 								
 								}else if( isset($_GET['ordertype']) && $_GET['ordertype'] == 'reset' ){
 								
@@ -67,11 +68,12 @@
                         </div>
                         <div class="accordion-group account-content-grp">
                           <div class="accordion-heading">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapse5">SELECT PLAN <i class="tcoll collapse-toggle"></i></a>
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapse5" id="select-plan-order-type">SELECT PLAN <i class="tcoll collapse-toggle"></i></a>
                           </div>
-                          <div id="collapse5" class="accordion-body in collapse" style="height: <?php echo (  ( isset($_GET['ordertype']) && $_GET['ordertype']=='renew' ) || isset($_GET['plantype'])) ? 'auto' : '0' ?>; ">
+                          <div id="collapse5" class="accordion-body in collapse" style="height: <?php echo ($_GET['ordertype'] == 'renew' || isset($_GET['plantype'])) ? 'auto' : '0' ?>; ">
 
 									<?php 
+<<<<<<< HEAD
 <<<<<<< HEAD
 										$changeBtnId = 'retain';
 										$display = "display:none;";
@@ -109,6 +111,18 @@
 											include('page_plan_choose.php'); 
 										}	
 
+=======
+										
+										if( isset($_GET['plantype']) && $_GET['plantype'] == 'create' ){
+											include('page_plan_create.php'); 
+											
+										}else if( isset($_GET['plantype']) && $_GET['plantype'] == 'package' ){
+											include('page_plan_package.php'); 
+										}else{
+											//default
+											include('page_plan_retain.php'); 
+										}		
+>>>>>>> e438bab68ebfa6d489efff84e197ff9a8738b3bc
 									 ?>
 
                           </div>
@@ -117,10 +131,7 @@
                     <div class="row-fluid link-bottom">
                         <a class="pull-left">Get A Prepaid Kit</a>
                         <div class="pull-right">
-                        	<!-- Updated by Robert 92913 -->
-                        	<!-- button class="blue-btn" onclick="window.location.href='<?php echo base_url() ?>addons'" id="<?php echo $changeBtnId; ?>">Continue</button-->
-                        	<button class="blue-btn" id="<?php echo $gobackBtnId; ?>" data-goto="<?php echo $goto; ?>" style="<?php echo $display; ?>">Go Back</button>
-                        	<button class="blue-btn" id="<?php echo $changeBtnId; ?>">Continue</button>
+                        	<button class="blue-btn" onclick="window.location.href='<?php echo base_url() ?>addons?<?php echo $subscriber_flag; ?>'">Continue</button>
                         	<br class="clear" />
                         	<br />
                             <ul class="">

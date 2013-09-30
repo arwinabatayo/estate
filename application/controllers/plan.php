@@ -29,17 +29,12 @@ class Plan extends MY_Controller
 		if($account_info->account_id){
 			$this->_data->current_plan    = $this->accounts_model->get_account_current_plan($account_info->account_id);
 			$this->_data->account_id      = $account_info->account_id;
-		}else{
-			//temp force login
-			//redirect('home/login');
-	}
-	
+		}
+		
 	}
 	
 	public function index()
-	{	
-		$this->load->model('estate/accounts_model');
-		
+	{		
 		$this->load->model('estate/products_model');
 		
 		$this->load->model('estate/cart_model');
@@ -54,14 +49,12 @@ class Plan extends MY_Controller
 		$this->_data->plans = $plans;
 
 
-		/**  Robert for ultima **/
-		$this->_data->plan_options = $this->products_model->get_plans(1); // gadget id is need to get all details
-		$this->_data->active_plan = $this->cart_model->get_active_plan();
-// 		$query = $this->db->query('SELECT * FROM estate_plans WHERE is_active="1"');
-// 		$this->_data->plans_options = $query->result();
+		
+		$query = $this->db->query('SELECT * FROM estate_plans WHERE is_active="1"');
+		$this->_data->plans_options = $query->result();
 		
 		$this->_data->account_m = $this->accounts_model;
-        //temporary token = d25c1265aee883d97ffeec28b7e852cb
+        //temporary token = d25c1265aee883d97ffeec28b7e852cb        
         
 		$this->_data->combos_datas = $this->products_model->get_bundles(2);
 		$this->_data->boosters_datas = $this->products_model->get_bundles(1);

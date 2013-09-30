@@ -82,10 +82,6 @@
 							s.show();
 						    s.html('Sending...Please wait...');
 
-							//$( '#enterMobile' ).modal( 'hide' );
-							//$( '#verifyNumber' ).modal( {show:true} );
-							//return;
-
 							$.ajax({
 								url: base_url+'home/send_sms_verification',
 								data: 'msisdn='+msisdn,
