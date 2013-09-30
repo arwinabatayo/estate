@@ -45,6 +45,10 @@
 												// open ty page, close after x secs and redirect to homepage
 												$('#04-thank-you').modal( "show" );
 												setTimeout('$("#04-thank-you").modal("hide")', 5000);
+										} else if (resp.overdue_flag) {
+											// show overdue popup
+											// alert("You need to settle your overdue balance before you can proceed");
+											$('#settle-overdue').modal({show:true});
 										}
 									}else{
 										if(resp.tries < 3){

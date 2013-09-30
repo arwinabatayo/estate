@@ -27,7 +27,7 @@ class Home extends MY_Controller
 		//print_r($this->_data->site_config);
 		//flag for testing
 		define('IS_GLOBE_API_ENV', TRUE);
-		define('DEV_ENV', false);
+		define('DEV_ENV', true);
 	}
 	
 	public function index()
@@ -293,13 +293,12 @@ class Home extends MY_Controller
 				//init/save subscriber info here
                 $is_user_exist = $this->_initSubscriberInfo($mobile);
 				
-				if($is_user_exist){
+				if ($is_user_exist) {
 					$data['status'] = "success";
 					$data['msg'] = "Successfully Verified. Page is redirecting please wait...";
 					$token =  md5('Globe0917'.'$4Lt*G'); //generate token/session here to access nextpage
 	                $this->networks_model->delete_sms_verification($mobile);
-	                
-				}else{
+				} else {
 					
 					$data['status'] = "error";
 					$data['msg'] = "Subscriber info not found.";	
@@ -338,6 +337,20 @@ class Home extends MY_Controller
 			
 			$_cfg = $this->cart_model->get_order_config();
 			
+			// return flag to show overdue balance popup
+			// check if user has overdue balance
+			$account_info = $this->session->userdata('subscriber_info');
+			$outstanding_balance = $account_info['outstanding_balance'];
+			$due_date = $account_info['due_date'];
+			$date_now = date("Y-m-d");
+
+			if ($outstanding_balance !== 0) {
+				if (strtotime($due_date) <= strtotime($date_now)) {
+					$data['overdue_flag'] = true;
+				}
+			}
+
+			// -- reservation flow
 			if(isset($_cfg['order_type']) && $_cfg['order_type'] == 'reserve'){
 				$data['order_type'] = $_cfg['order_type'];
 				// $data['next_page'] = 'home?showtymsg=true';
