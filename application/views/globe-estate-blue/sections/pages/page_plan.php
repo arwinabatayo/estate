@@ -23,7 +23,7 @@
                                 if(isset($_GET['subscriber_flag'])){
                                     $subscriber_flag = "&subscriber_flag=" . $_GET['subscriber_flag'];
                                 }
-                                if( isset($_GET['ordertype']) && $_GET['ordertype'] == 'newline' ){
+                                if( isset($_GET['ordertype']) && $_GET['ordertype'] == 'newline' || !empty($subscriber_flag)){
                                 
                                     //GET NEWLINE
                                     //IMPLEMENTED: MANAGE - PLATINUM ACCOUNT
@@ -39,6 +39,7 @@
 								
 								?>
 								
+                                <?php if(empty($subscriber_flag)){ ?>
 								<div class="row-fluid">
                                 	<div class="ac-box-plan">
                                         <div class="span4 ac-boxes g-content">
@@ -51,7 +52,7 @@
                                             <img src="<?php echo $assets_url ?>site-blue/images/get-a-new-line.png" />
                                             <span>Get additional Line</span>
                                             <blockquote>Lorem ipsum dolor sit amet, consectuer adispising  elit. Cras justo nulla, commodo nec mauris ut, interdum adipiscing  nisi</blockquote>  
-                                            <button class="blue-btn" onclick="window.location='<?php echo base_url() ?>plan?setOrderConfig=true&ordertype=newline<?php echo $subscriber_flag; ?>'">Click here!</button>
+                                            <button class="blue-btn" onclick="window.location='<?php echo base_url() ?>plan?setOrderConfig=true&ordertype=newline'">Click here!</button>
                                         </div>
                                         <div class="span4 ac-boxes r-content">
                                             <img src="<?php echo $assets_url ?>site-blue/images/reset.png" />
@@ -61,6 +62,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <?php } ?>
                                 
                                 <?php } ?>
                             </div>

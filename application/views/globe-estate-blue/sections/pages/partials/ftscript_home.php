@@ -170,7 +170,7 @@
 			});
 
 			$("#new_line_prepaid_kit").click(function(){
-				window.location = base_url+"payment"
+				window.location = base_url+"plan-summary"
 			});
 			
 		});

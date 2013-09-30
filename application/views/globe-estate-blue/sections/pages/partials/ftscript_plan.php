@@ -69,16 +69,9 @@
 					},
 					type:'post',
 					success: function(response){
-						if(number_line == ">10"){
-							$("#business-10").modal("show");
 
-							$("#close-business-10").click(function(){
-								window.location = base_url;
-							});
-							//
-						}else{
-							window.location = "subscriber/companyPersonalInfo";
-						}
+						window.location = "subscriber/companyPersonalInfo";
+
 					}, 
 					error: function(){
 						alert('Some error occured or the system is busy. Please try again later');	
@@ -446,4 +439,15 @@
 					return $('#get-prepaid-content').html();
 				}
 			}).click(function (e) {$(this).popover('toggle');});
+
+			$('a#get-prepaid-kit').click(function(){
+				// show bubble info where add to cart link is present
+				$('#tooltip-prepaid-kit').dialog("open");
+			});
+			
+			$('button#retain').click(function(){
+				window.location = base_url+'addons';
+			});
+
+
 

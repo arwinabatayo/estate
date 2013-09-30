@@ -158,8 +158,12 @@ class Plan extends MY_Controller
 				'refnum'=> strtoupper( random_string('alnum', 6) ),
 				'link'  => base_url(),
 			);
-                    
-		$this->email->send_email_api($account_info->email, $subject, $email_tpl, $msg, $sender); 
+       
+		if( $this->email->send_email_api('mhaark29@gmail.com', $subject, $email_tpl, $msg, $sender) ){
+			$data['status'] = "success";
+			
+		}
+		//echo $this->email->print_debugger();
 		
 		echo json_encode($data); exit;
 	}

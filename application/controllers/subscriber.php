@@ -81,6 +81,8 @@ class Subscriber extends MY_Controller
 
 
 			$this->subscriber_model->save_company($data);
+
+			header("location: /");
 		}else if($info_type == "personal"){
 			$data['fname'] = $this->input->post('fname');
 			$data['lname'] = $this->input->post('lname');
@@ -101,6 +103,59 @@ class Subscriber extends MY_Controller
 			$data['sns_type'] = $this->input->post('sns_type');
 
 			$this->subscriber_model->save_personal($data);
+		}
+	}
+
+	public function getCitizenship()
+	{
+
+	}
+
+	public function saveBillingInfo($info_type)
+	{
+		$this->load->model('estate/subscriber_model');
+		
+		$info_type = $this->input->get("info_type");
+
+		$data = array();
+
+		if($info_type == "company"){
+
+			$data['detailed_billing_type'] = $this->input->post('detailed_billing_type');
+			$data['detailed_billing_email'] = $this->input->post('detailed_billing_email');
+			$data['fname'] = $this->input->post('fname');
+			$data['lname'] = $this->input->post('lname');
+			$data['department'] = $this->input->post('department');
+			$data['address'] = $this->input->post('address');
+			$data['barangay'] = $this->input->post('barangay');
+			$data['municipality'] = $this->input->post('municipality');
+			$data['city'] = $this->input->post('city');
+			$data['postal'] = $this->input->post('postal');
+			$data['bill_summary_flag'] = $this->input->post('bill_summary_flag');
+			$data['bill_summary_type'] = $this->input->post('bill_summary_type');
+			$data['bill_email'] = $this->input->post('bill_email');
+			$data['bfname'] = $this->input->post('bfname');
+			$data['blname'] = $this->input->post('blname');
+			$data['bdepartment'] = $this->input->post('bdepartment');
+			$data['baddress'] = $this->input->post('baddress');
+			$data['bbarangay'] = $this->input->post('bbarangay');
+			$data['bmunicipality'] = $this->input->post('bmunicipality');
+			$data['bcity'] = $this->input->post('bcity');
+			$data['bpostal'] = $this->input->post('bpostal');
+
+			$this->subscriber_model->save_company_billing($data);
+
+		}else if($info_type == "personal"){
+			$data['house_no'] = $this->input->post('house_no');
+			$data['street'] = $this->input->post('street');
+			$data['barangay'] = $this->input->post('barangay');
+			$data['municipality'] = $this->input->post('municipality');
+			$data['province'] = $this->input->post('province');
+			$data['postal_code'] = $this->input->post('postal_code');
+			$data['mobile_number'] = $this->input->post('mobile_number');
+			$data['landline_number'] = $this->input->post('landline_number');
+
+			$this->subscriber_model->save_personal_billing($data);
 		}
 	}
 	
