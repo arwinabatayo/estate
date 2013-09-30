@@ -118,7 +118,7 @@
                         </div>
                     </div>
                     <div class="row-fluid link-bottom">
-                        <a class="pull-left">Get A Prepaid Kit</a>
+                        <a data-placement="top" id="get-prepaid" class="pull-left" data-original-title="" title="">Get A Prepaid Kit</a>
                         <div class="pull-right">
                         	<!-- Updated by Robert 92913 -->
                         	<!-- button class="blue-btn" onclick="window.location.href='<?php echo base_url() ?>addons'" id="<?php echo $changeBtnId; ?>">Continue</button-->

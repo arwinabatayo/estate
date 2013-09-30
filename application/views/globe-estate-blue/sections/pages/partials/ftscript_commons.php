@@ -222,7 +222,3 @@
 			// remove status
 			$('div.status').hide();
 		});
-	
-		// function for downloading print forms on status page -- gellie
-		
-
