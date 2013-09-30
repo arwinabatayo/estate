@@ -49,7 +49,7 @@
                                         </div>
                                         <div class="span4 ac-boxes o-content">
                                             <img src="<?php echo $assets_url ?>site-blue/images/get-a-new-line.png" />
-                                            <span>Get A New Line</span>
+                                            <span>Get additional Line</span>
                                             <blockquote>Lorem ipsum dolor sit amet, consectuer adispising  elit. Cras justo nulla, commodo nec mauris ut, interdum adipiscing  nisi</blockquote>  
                                             <button class="blue-btn" onclick="window.location='<?php echo base_url() ?>plan?setOrderConfig=true&ordertype=newline<?php echo $subscriber_flag; ?>'">Click here!</button>
                                         </div>
