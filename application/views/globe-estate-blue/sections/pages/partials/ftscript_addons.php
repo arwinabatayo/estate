@@ -109,6 +109,10 @@
 		$('#myfile').change(function(){
 			$('#path').val($(this).val());
 		});	
+
+		$("button#btnAddonNextPage2").click(function(){
+			window.location.href= base_url+'subscriber-info?subscriber_flag=false';
+		});
 		
 		$(document).on('click', '#showUploadForm', function(){
 			$('#exceed-limit').modal('hide');
