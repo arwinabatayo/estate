@@ -118,7 +118,10 @@
                     <div class="row-fluid link-bottom">
                         <a class="pull-left">Get A Prepaid Kit</a>
                         <div class="pull-right">
-                        	<button class="blue-btn" onclick="window.location.href='<?php echo base_url() ?>addons?<?php echo $subscriber_flag; ?>'">Continue</button>
+                        	<!-- Updated by Robert 92913 -->
+                        	<!-- button class="blue-btn" onclick="window.location.href='<?php echo base_url() ?>addons'" id="<?php echo $changeBtnId; ?>">Continue</button-->
+                        	<button class="blue-btn" id="<?php echo $gobackBtnId; ?>" data-goto="<?php echo $goto; ?>" style="<?php echo $display; ?>">Go Back</button>
+                        	<button class="blue-btn" id="<?php echo $changeBtnId; ?>">Continue</button>
                         	<br class="clear" />
                         	<br />
                             <ul class="">
