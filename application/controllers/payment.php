@@ -38,7 +38,7 @@ class Payment extends MY_Controller
 			$this->_data->account_id      = $account_info->account_id;
 		}else{
 			//temp force login
-			redirect('home/login');
+			//redirect('home/login');
 		}
 		
 

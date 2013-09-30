@@ -168,3 +168,14 @@
         </div>
     </div>
 </div>
+
+
+
+<div id="receipt" class="modal fade pop-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" style="display:none">
+	<button type="button" class="close pop-close" data-dismiss="modal" aria-hidden="true">×</button>  	
+		<div class="modal-body pop-content">
+			
+			
+			<div class="clr"></div>
+		</div>
+	</div> 

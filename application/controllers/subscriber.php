@@ -82,7 +82,7 @@ class Subscriber extends MY_Controller
 
 			$this->subscriber_model->save_company($data);
 
-			header("location: ");
+			header("location: /");
 		}else if($info_type == "personal"){
 			$data['fname'] = $this->input->post('fname');
 			$data['lname'] = $this->input->post('lname');
