@@ -444,3 +444,10 @@
 				// show bubble info where add to cart link is present
 				$('#tooltip-prepaid-kit').dialog("open");
 			});
+			
+			$('button#retain').click(function(){
+				window.location = base_url+'addons';
+			});
+
+
+
