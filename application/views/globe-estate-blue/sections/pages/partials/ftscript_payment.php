@@ -164,6 +164,24 @@
 						$(n.target).siblings('.accordion-heading').toggleClass('a-h-white a-h-whiteno');
 					});
 				    
+					
+					$('#store_keyword').on('keypress', function (e) {
+                                            var keycode = (e.keyCode ? e.keyCode : e.which);
+                                            if(keycode == '13') {
+						var keyword = $("#store_keyword").val();
+						$.post(base_url+'payment/search_nearest_stores', {keyword: keyword}, function(data){
+							$('.store_placeholder').html(data.temp);
+						 }, "json");
+                                                 return false;
+                                            }
+					 });
+                                         
+                                         $("#prefered_loc_search").change(function(){
+                                                var location = $("#prefered_loc_search option:selected").text();
+						$.post(base_url+'payment/search_store', {store_name: location}, function(data){
+							$('.store_placeholder').html(data.temp);
+						 }, "json");
+                                        });
 				    
 				    
 				    

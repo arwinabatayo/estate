@@ -38,7 +38,7 @@ class Payment extends MY_Controller
 			$this->_data->account_id      = $account_info->account_id;
 		}else{
 			//temp force login
-			//redirect('home/login');
+			redirect('home/login');
 		}
 		
 
@@ -91,7 +91,7 @@ class Payment extends MY_Controller
 		$this->_data->account_info = $this->accounts_model->get_account_address($account_id);
 	
 		$this->_data->cartItems = $this->cart->contents();
-       /*         
+                
                 $this->load->model('model_pickup');
                 $params = array(
                     'postal_code' => $this->_data->billing_address->postal_code,
@@ -121,7 +121,7 @@ class Payment extends MY_Controller
                 }
 
                 $this->_data->store_properties = $store_properties;
-        */
+        
         
 		$this->load->view($this->_data->tpl_view, $this->_data);
 
