@@ -4,7 +4,7 @@
 													<div class="dispalyTable ">
 														<i class="icon icon-create"></i>
 														<div class="center padding5">
-															Create Your Own Plan
+															Boosters
 														</div>
 													</div>
 												</div>
@@ -19,17 +19,22 @@
 						
 												<div class="main" style="width:100%;">
 													<ul id="og-grid" class="og-grid">
-													<?php if($plan_options){ ?>
-														<?php foreach($plan_options as $plan) { ?>
-			                                            <li class="<?php echo $isCollapse; ?>">
-			                                                <a class="create_add_this_plan" href="#" data-plan-cashout="<?php echo $plan->cashout_val; ?>" data-name="<?php echo $plan->title; ?>" data-pv="<?php echo $plan->total_pv; ?>" data-id="<?php echo $plan->id ?>" data-largesrc="" data-title="<i class='icon icon-big-coins'></i>Get <?php echo $plan->total_pv ?> Peso Value/Month" data-description="CASHOUT P<?php echo number_format($plan->cashout_val,2) ?>">
-			                                                    <div class="plan-tile-option-blue">
+													<?php if($boosters_datas){ ?>
+														<?php foreach($boosters_datas as $boosters) { ?>
+			                                            <li>
+			                                                <a class="create_add_this_boosters" href="#" data-name="<?php echo $boosters->name; ?>" 
+			                                                	data-pv="<?php echo $boosters->peso_value ?>"
+			                                                	data-amount="<?php echo $boosters->amount ?>" 
+			                                                	data-id="<?php echo $boosters->id ?>" 
+			                                                	data-largesrc="" 
+			                                                	data-title="<i class='icon icon-big-coins'></i>P <?php echo $boosters->amount ?> /Month" data-description="CASHOUT P<?php echo number_format($boosters->amount,2) ?>">
+			                                                    <div class="plan-tile-option-green">
 			                                                        <div class="arrow-point-up"></div>
 			                                                        <div class="ribbon-new hide"></div>
 			                                                        <div class="center">
 			                                                            <i class="icon icon-peso"></i>
-			                                                            <div class="plan-name"><?php echo $plan->title ?></div>
-			                                                            <div class="">get <i class="icon icon-coins"></i> <?php echo $plan->total_pv ?> PV/mo.</div>
+			                                                            <div class="plan-name"><?php echo $boosters->name ?></div>
+			                                                            <div class="plan-description"><?php echo $boosters->description ?></div>
 			                                                            <div class="plan-off hide"></div>
 			                                                        </div>
 			                                                        
@@ -42,6 +47,7 @@
 													<div class="clr"></div>
 												</div>
 											
-									</div>
+									</div>					
+									
 
 										
