@@ -156,6 +156,7 @@
 			// change input type from hidden to text
 			$('#phone-cont').hide();
 			$('#phone').attr('type', 'text');
+			$('#phone').addClass('span2');
 			$('#phone').val('');
 		});
 

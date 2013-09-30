@@ -59,6 +59,15 @@
 
 <script type="text/javascript">
 	
+	$(document).ready(function(){
+
+		$('.radio-btn input').iCheck({
+			checkboxClass: 'icheckbox_flat-red',
+			radioClass: 'iradio_flat-blue'
+		});
+		
+	});
+
     $(function () {
 	
 		<?php 
