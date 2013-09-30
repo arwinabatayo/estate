@@ -45,7 +45,7 @@ a{cursor: pointer}
 .textright   {text-align:right}
 .textcenter {text-align:center}
 .show{display:block; visibility:visible}
-.hide{display:none; visibility:hidden}
+/*.hide{display:none; visibility:hidden}*/
 .dispalyTable{display:table}
 .clear{clear:both}
 .center{display:table-cell; vertical-align:middle; text-align:center}

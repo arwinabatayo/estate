@@ -65,24 +65,32 @@ class Order extends MY_Controller
 		$cart_contents = $this->cart->contents();
 		$account_id    = 1; //TODO get subs id from
 		$order_config  = $this->cart_model->get_order_config();
+		$order_type = ($this->input->post('order_type')) ? $this->input->post('order_type') : 1;
+		$status = ($this->input->post('status')) ? $this->input->post('status') : 1;
+		$industry_id = ($this->input->post('industry_id')) ? $this->input->post('industry_id') : "";
+		$total_line = ($this->input->post('total_line')) ? $this->input->post('total_line') : "";
 
 		$d = array();
 
-		if( count($cart_contents) > 0 ){
+		//if( count($cart_contents) > 0 ){
 
 			$d['account_id']   = $account_id;
-			$d['status']       = 2;
+			$d['status']       = $status;
 			$d['subtotal']     = $this->cart->total();
 			$d['total']        = $this->cart_model->total();
 			$d['date_ordered'] = date('Y-m-d h:i:s');
-			$d['order_type']   = 1; //renew,newline,reset: todo get the actual id
+			$d['order_type']   = $order_type; //renew,newline,reset: todo get the actual id
 			$d['peso_value']   = ($this->cart_model->total_pv > 0 ) ? $this->cart_model->total_pv : 0; // todo
 			$d['shipping_address_id']   = @$order_config['shipping_address_id'];  //if empty set the billing id
 			//$d['shipping_address_id']   = @$order_config['billing_address_id']; <<- TODO - get default billing id
 			$d['delivery_type']   = @$order_config['delivery_mode'];
 			$d['items']           = $cart_contents;
+			$d['industry_id'] = $industry_id;
+			$d['total_line'] = $total_line;
 
 			$order_number = $this->order_model->save_order($d);
+
+			
 
 			if($order_number){
 
@@ -98,10 +106,10 @@ class Order extends MY_Controller
 			}
 
 
-		}else{
+		//}else{
 
-			return FALSE;
-		}
+			//return FALSE;
+		//}
 
 
 

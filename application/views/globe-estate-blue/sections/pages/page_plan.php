@@ -19,13 +19,17 @@
                             <div class="accordion-inner">
 								
 								<?php 
-								
-								if( isset($_GET['ordertype']) && $_GET['ordertype'] == 'newline' ){
-								
-									//GET NEWLINE
-									//IMPLEMENTED: MANAGE - PLATINUM ACCOUNT
-									//TODO: BUSINESS - 
-									include('page_ordertype_newline.php'); 
+								$subscriber_flag = ""; // jason 092913
+                                if(isset($_GET['subscriber_flag'])){
+                                    $subscriber_flag = "&subscriber_flag=" . $_GET['subscriber_flag'];
+                                }
+                                if( isset($_GET['ordertype']) && $_GET['ordertype'] == 'newline' ){
+                                
+                                    //GET NEWLINE
+                                    //IMPLEMENTED: MANAGE - PLATINUM ACCOUNT
+                                    //TODO: BUSINESS - 
+                                    include('page_ordertype_newline.php'); 
+
 								
 								}else if( isset($_GET['ordertype']) && $_GET['ordertype'] == 'reset' ){
 								
@@ -47,7 +51,7 @@
                                             <img src="<?php echo $assets_url ?>site-blue/images/get-a-new-line.png" />
                                             <span>Get A New Line</span>
                                             <blockquote>Lorem ipsum dolor sit amet, consectuer adispising  elit. Cras justo nulla, commodo nec mauris ut, interdum adipiscing  nisi</blockquote>  
-                                            <button class="blue-btn" onclick="window.location='<?php echo base_url() ?>plan?setOrderConfig=true&ordertype=newline'">Click here!</button>
+                                            <button class="blue-btn" onclick="window.location='<?php echo base_url() ?>plan?setOrderConfig=true&ordertype=newline<?php echo $subscriber_flag; ?>'">Click here!</button>
                                         </div>
                                         <div class="span4 ac-boxes r-content">
                                             <img src="<?php echo $assets_url ?>site-blue/images/reset.png" />

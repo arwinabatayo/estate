@@ -6,7 +6,7 @@
 							$('#enterMobile').modal('show');
 					<?php } ?>
 										
-					$('button#open_verify_mobile').click( function(e){
+					$('button#open_verify_mobile').click( function(e){   
 						e.preventDefault();
 						$('#dialog_enter_mobile').dialog( "close" );
 						$('#dialog_verify_mobile').dialog( "open" );

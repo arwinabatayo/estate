@@ -40,4 +40,19 @@ class Plans_model extends CI_Model
         if(count($result) == 0) return FALSE;
         return $result;
     }
+
+    function getIndustry($industry_type = ""){
+
+      $where = "";
+
+      if(!empty($industry_type)){
+        $where = " WHERE type = '" . $industry_type . "'";
+      } 
+
+      $query = $this->db->query(" SELECT  *
+                    FROM estate_industry" . $where);
+      $data = $query->result_array();
+
+      return $data;
+  }
 }

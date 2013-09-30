@@ -59,6 +59,7 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1767b2', endColorstr='#1854a5',GradientType=0 ); /* IE6-9 */    
 }
 
+
 .flow-breadcrumb { background:none; color: #58595b; padding-right:0}
 .flow-breadcrumb .arrow{ position: relative; width: 192px; padding: 10px 0 5px 15px; margin-left:-27px; background:url(../images/breadcrumb-strip.png) repeat-x;
     -webkit-border-radius: 10px;
@@ -498,6 +499,7 @@ input.pop-email-input{border:2px solid #bdc3c7; width:90%; margin:10px 0 0 0; pa
 .accordion-link-holder{font-family:'fs_elliot_cyrillicregular'; margin-top:5px}
 .accordion-link-holder a{ text-decoration:none; font-size:16px; font-weight:normal; color:#0054a6}
 
+
 /*Delivery Ship to my address */
 .del-option{}
 .del-option ul{list-style:none; padding:0; margin:0; text-align:left;}
@@ -516,6 +518,7 @@ input.pop-email-input{border:2px solid #bdc3c7; width:90%; margin:10px 0 0 0; pa
 /*payment method */
 
 .payment_container .fl {float:left;margin-left: 16.08%;}
+
 
  /*alternative responsive*/
  @media (max-width: 767px) {
@@ -564,6 +567,15 @@ input.pop-email-input{border:2px solid #bdc3c7; width:90%; margin:10px 0 0 0; pa
  }
 
 
+
+/* Added by Jason */
+.blue-btn-flat{
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius:  0 !important;
+    border-radius:  0 !important;  
+    width: 230px;    
+}
+
 .icon-big-mail      {background:url(../images/icon-big-mail.png) no-repeat;     width:152px;     height:152px;     margin:auto}
 .icon-consumable    {background:url(../images/icon-consumable.png) no-repeat;     width:139px;     height:128px;     margin:12px}
 .icon-peso-selected {background:url(../images/icon-peso-selected.png) no-repeat;     width:29px;     height:29px;     margin:12px}
@@ -603,3 +615,4 @@ input.pop-email-input{border:2px solid #bdc3c7; width:90%; margin:10px 0 0 0; pa
 .margin20{ margin:20px 0}
 .floatLeft{ float:left}
 .floatRight{ float:right}
+
