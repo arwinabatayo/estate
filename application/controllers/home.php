@@ -163,6 +163,7 @@ class Home extends MY_Controller
 		$this->_data->page = 'home';
 		$this->_data->page_title = 'SMS Verification';
 		$this->_data->is_reserve = $this->reserve_enabled;
+		echo $this->_data->tpl_view;
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
 	

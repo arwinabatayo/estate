@@ -29,6 +29,8 @@ class Plan extends MY_Controller
 		
 		$this->load->model('estate/cart_model');
 
+		$this->load->model('estate/plans_model');
+
 		//TODO: move to model
 		$this->db->where('status >',0);
 		$query = $this->db->get('estate_main_plan');
@@ -50,6 +52,8 @@ class Plan extends MY_Controller
 		$this->_data->package_plan_options = $this->products_model->get_package_plan();
 		$this->_data->package_plan_bundle = $this->products_model->get_package_plan_bundle();
 		$this->_data->cart_contents = $this->cart->contents();
+		$this->_data->s_industry = $this->plans_model->getIndustry('s');
+		$this->_data->e_industry = $this->plans_model->getIndustry('e');
 		
 		if($this->input->get("get_new_line")){
 			$this->_data->new_line_flag = true;

@@ -9,3 +9,4 @@
 					window.location.href=base_url+'payment/plan_summary';
 			  });
 				
+			  

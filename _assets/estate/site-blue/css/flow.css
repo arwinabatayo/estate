@@ -59,6 +59,7 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1767b2', endColorstr='#1854a5',GradientType=0 ); /* IE6-9 */    
 }
 
+
 .flow-breadcrumb { background:none; color: #58595b; padding-right:0}
 .flow-breadcrumb .arrow{ position: relative; width: 192px; padding: 10px 0 5px 15px; margin-left:-27px; background:url(../images/breadcrumb-strip.png) repeat-x;
     -webkit-border-radius: 10px;
@@ -703,4 +704,13 @@ input.pop-email-input{border:2px solid #bdc3c7; width:90%; margin:10px 0 0 0; pa
 }
 .floatRight{
     float:right;
+}
+
+
+/* Added by Jason */
+.blue-btn-flat{
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius:  0 !important;
+    border-radius:  0 !important;  
+    width: 230px;    
 }

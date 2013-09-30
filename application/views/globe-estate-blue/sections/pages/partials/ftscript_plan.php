@@ -29,7 +29,44 @@
 			
 			$('button#btnGetNewlineSubs').click(function() {
 					//TODO - call ajax here to send email to OM
-					$('#order-thankyou').modal('show');
+					//$('#order-thankyou').modal('show');
+				var industry_id = ($("#s-industry").val() != 0) ? $("#s-industry").val() : $("#e-industry").val();
+				var number_line = $("#number_line").val();
+				//alert(base_url+'order/save_order');
+		    	$.ajax({
+					url: base_url+'order/save_order',
+					data: {
+						'order_number' 				: "",
+						'account_id' 				: "",
+						'status' 					: 2,
+						'status_comments' 			: "",
+						'shipping_address_id' 		: "",
+						'billing_address_id' 		: "",
+						'shipping_fee' 				: "",
+						'tax' 						: "",
+						'total' 					: "",
+						'subtotal' 					: "",
+						'peso_value' 				: "",
+						'order_type' 				: 4,
+						'peso_value' 				: "",
+						'industry_id' 				: industry_id,
+						'total_line' 				: number_line,
+						'lock_in_period' 			: "",
+						'payment_info' 				: "",
+						'tracking_id' 				: "",
+						'delivery_type' 			: ""
+					},
+					type:'post',
+					success: function(response){
+						
+						window.location = "subscriber/companyPersonalInfo";
+					}, 
+					error: function(){
+						alert('Some error occured or the system is busy. Please try again later');	
+					}
+				});
+
+
 			});
 			
 			//ORDER TYPE
@@ -305,18 +342,54 @@
 				$("input[name=new-line-non-globe-option]").each(function(){
 					$(this).click(function(){
 
+						$("#industry-section-text").text("").css("display", "none");
 
 						if(parseInt($(this).val()) == 1){
-							$("#order-type-new-line-section-footer").slideDown();
+							//$("#order-type-new-line-section-footer").slideDown();
 							//$( "#plan-order-page" ).accordion( "option", "active", 0 );
+							$("#btnSmallIndustry").show();
+							$("#btnEnterpriseIndustry").show();
+							$("#industry-section").slideDown();
+							document.getElementById("s-industry").selectedIndex = 0;
+							document.getElementById("e-industry").selectedIndex = 0;
 						}else if(parseInt($(this).val()) == 2){
 							$("#order-type-new-line-section-footer").slideUp();
 							//$( "#plan-order-page" ).accordion( "option", "active", 1 );
+							$("#industry-section").slideUp();
 						}
 
 					});
 				});
 
+				$("#btnSmallIndustry").click(function(){
+					$("#s-industry").show();
+					$("#e-industry").hide();
+				});
+
+				$("#btnEnterpriseIndustry").click(function(){
+					$("#s-industry").hide();
+					$("#e-industry").show();
+				});
+
+				$("#s-industry").change(function(){
+					var txt = $("#btnSmallIndustry").text();
+					var stxt = $("#s-industry option:selected").text();
+					$("#industry-section-text").text(txt + " - " + stxt).css("display", "block");
+					$("#order-type-new-line-section-footer").slideDown();
+					$(this).hide();
+					$("#btnSmallIndustry").hide();
+					$("#btnEnterpriseIndustry").hide();
+				});
+
+				$("#e-industry").change(function(){
+					var txt = $("#btnEnterpriseIndustry").text();
+					var stxt = $("#e-industry option:selected").text();
+					$("#industry-section-text").text(txt + " - " + stxt).css("display", "block");
+					$("#order-type-new-line-section-footer").slideDown();
+					$(this).hide();
+					$("#btnSmallIndustry").hide();
+					$("#btnEnterpriseIndustry").hide();
+				});
 
 				$("#new-line-continue").click(function(){
 		    	

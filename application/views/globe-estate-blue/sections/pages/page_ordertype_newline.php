@@ -58,9 +58,37 @@
 										
 										<div class="clr"></div>
 										<br /><br /><br />
+										<div id="industry-section" style="display:none;">
+											<p class="textcenter">
+												<button id="btnSmallIndustry" class="blue-btn blue-btn-flat">Small / Medium Industry</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+												<button id="btnEnterpriseIndustry" class="blue-btn blue-btn-flat">Enterprise Industry</button>
+											</p>
+											<p class="textcenter">
+												<select id="s-industry" style="display:none;">
+													<option value="0">Select type of industry</option>
+													<?php for($ctrS = 0 ; $ctrS < count($s_industry); $ctrS++){ ?>
+														<option value="<?php echo $s_industry[$ctrS]['industry_id']; ?>"><?php echo $s_industry[$ctrS]['industry_name']; ?></option>
+													<?php } ?>
+												</select>
+												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+												<select id="e-industry" style="display:none;">
+													<option value="0">Select type of industry</option>
+													<?php for($ctrE = 0 ; $ctrE < count($e_industry); $ctrE++){ ?>
+														<option value="<?php echo $e_industry[$ctrE]['industry_id']; ?>"><?php echo $e_industry[$ctrE]['industry_name']; ?></option>
+													<?php } ?>
+												</select>
+											</p>
+										</div>
+
+										<div class="clr"></div>
+
+										<div id="industry-section-text" style="display:none;"></div>
+
+										<div class="clr"></div>
+
 										<div id="order-type-new-line-section-footer" style="display:none;">										
 											<p class="fleft ot-description">How many additional line would  you like to get?</p>
-											<select id="id_select" class="selectpicker fright" style="width:92px">
+											<select id="number_line" class="selectpicker fright" style="width:92px">
 												<option>1</option>
 												<option>2</option>
 												<option>3</option>
