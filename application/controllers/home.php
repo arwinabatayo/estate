@@ -349,7 +349,7 @@ class Home extends MY_Controller
 					$data['overdue_flag'] = true;
 				}
 			}
-			
+
 			// -- reservation flow
 			if(isset($_cfg['order_type']) && $_cfg['order_type'] == 'reserve'){
 				$data['order_type'] = $_cfg['order_type'];

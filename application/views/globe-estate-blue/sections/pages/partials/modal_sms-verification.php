@@ -162,7 +162,33 @@
               <button class="blue-btn" data-dismiss="modal">OK</button>
 
         </div>
-    </div>    
+    </div> 
+
+    <div aria-hidden="false" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" class="modal hide fade pop-modal in" id="settle-overdue">
+        <div class="modal-body pop-content">
+            <div class="o-i-icon"><img width="150" height="150" alt="Settle Your Overdue" src="<?php echo $assets_path ?>site-blue/images/icons/icon_settle_overdue.png"></div>
+            
+            <p class="pop-txtblue-large">Past Due</p>
+            
+            <p>To proceed with the order, please settle the overdue balance immediately.</p>
+            
+            <p class="s-o-text">
+                <span>Overdue:</span>
+                P36, 750.00
+            </p>
+            
+            <hr>
+            
+            <a class="blue-btn" href="#">Settle Due with Credit Card</a>
+            <a class="blue-btn" href="#">I already settled my account</a>
+            <a class="blue-btn" href="#">Settle Due with GCash</a>
+            
+            <a class="pull-left" href="#">Get a Prepaid Phone Kit&nbsp;</a>
+            <a class="pull-right" href="#">Learn more ways to settle due</a>
+            
+            <div class="clr"></div>
+        </div>
+    </div>
     
     
     
