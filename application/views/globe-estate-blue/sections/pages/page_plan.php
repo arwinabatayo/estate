@@ -66,18 +66,25 @@
                           <div class="accordion-heading">
                             <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapse5">SELECT PLAN <i class="tcoll collapse-toggle"></i></a>
                           </div>
-                          <div id="collapse5" class="accordion-body in collapse" style="height: <?php echo ($_GET['ordertype'] == 'renew' || isset($_GET['plantype'])) ? 'auto' : '0' ?>; ">
+                          <div id="collapse5" class="accordion-body in collapse" style="height: <?php echo (  ( isset($_GET['ordertype']) && $_GET['ordertype']=='renew' ) || isset($_GET['plantype'])) ? 'auto' : '0' ?>; ">
 
 									<?php 
 										
 										if( isset($_GET['plantype']) && $_GET['plantype'] == 'create' ){
+											
 											include('page_plan_create.php'); 
 											
 										}else if( isset($_GET['plantype']) && $_GET['plantype'] == 'package' ){
+											
 											include('page_plan_package.php'); 
-										}else{
-											//default
+											
+										}else if( isset($_GET['plantype']) && $_GET['plantype'] == 'retain' ){
+
 											include('page_plan_retain.php'); 
+											
+										}else{
+											//default - CHOOSE YOUR PLAN
+											include('page_plan_choose.php'); 
 										}		
 									 ?>
 
