@@ -155,7 +155,7 @@ class Plan extends MY_Controller
 
 		$msg = array(
 				'name'  => $account_info->name,
-				'refnum'=> strtoupper( random_string('alnum', 6) );
+				'refnum'=> strtoupper( random_string('alnum', 6) ),
 				'link'  => base_url(),
 			);
                     
