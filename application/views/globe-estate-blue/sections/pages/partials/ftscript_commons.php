@@ -51,9 +51,13 @@
 			$('#tooltip-prepaid-kit').dialog("open");
 		});
 
+		// set dialog for opening refnum verification - gellie
+		$('a#open_application_status').on('click', function(){
+			$( '#my-application' ).modal({show:true});
+		});
 
 		// validate reference number - gellie
-		$('form#refnum-verification button').on('click', function(){
+		$('form#refnum-verification').submit(function(){
 	
 				var s = $('form#refnum-verification div.status');
 				var refnum = $('input#reference_number').val();
@@ -92,6 +96,64 @@
 					}
 				});
 		}); 
+
+
+		// forgot reference number link
+		$('a#lnk_forgot_refnum').on('click', function(){
+			$( '#my-application' ).modal( "hide" );
+			$( '#dialog_forgot_refnum' ).dialog({show:true});
+
+			// show captcha image
+			createCaptcha('fr_captcha') ;
+		});
+
+		// validate email and captcha code - gellie
+		$('form#forgot-refnum button').on('click', function(){
+	
+				var s = $('form#forgot-refnum div.status');
+				// TODO : add validation for email
+				var email = $('#forgot-refnum input#email').val();
+				var code_id = $('#forgot-refnum input#code_id').val();
+
+
+				// reset error class
+				s.removeClass('alert-error');
+				//e.preventDefault();
+				
+				s.show();
+				s.html('Sending...Please wait...');
+				
+				// may problem pa sa cache
+				//$(this).attr('disabled',true);
+
+				$.ajax({
+					url: base_url+'home/verify_email_captcha',
+					data: 'email='+email+'&code='+code_id+'&flow_type=forgot_refnum',
+					type:'post',
+					success: function(response){
+						var resp = jQuery.parseJSON( response );
+						
+						if(resp.status == 'success') {
+							// close current dialog box
+							$( '#dialog_forgot_refnum' ).dialog( "close" );
+							// open thank you dialog
+							$( '#dialog_saved_transaction_success' ).dialog( "open" );
+							// show success message
+							$('#msg-success').html(resp.msg);
+							$('#ty-note').hide();
+							$('#resend-link-info').hide();
+						} else {
+							s.addClass('alert-'+resp.status);
+							s.html(resp.msg);
+						}
+						
+					}, 
+					error: function(){
+						alert('Some error occured or the system is busy. Please try again later');  
+					}
+				});
+		});
+		
 
 		// set dialog for resume uncomp transaction - gellie
 		$('a#open_resume_uncomp_transaction').on('click', function(){
@@ -160,63 +222,6 @@
 			// remove status
 			$('div.status').hide();
 		});
-
-		// forgot reference number link
-		$('a#lnk_forgot_refnum').on('click', function(){
-			$( '#dialog_application_status' ).dialog( "close" );
-			$( '#dialog_forgot_refnum' ).dialog( "open" );
-
-			// show captcha image
-			createCaptcha('fr_captcha') ;
-		});
-
-		// validate email and captcha code - gellie
-		$('form#forgot-refnum button').on('click', function(){
-	
-				var s = $('form#forgot-refnum div.status');
-				// TODO : add validation for email
-				var email = $('#forgot-refnum input#email').val();
-				var code_id = $('#forgot-refnum input#code_id').val();
-
-
-				// reset error class
-				s.removeClass('alert-error');
-				//e.preventDefault();
-				
-				s.show();
-				s.html('Sending...Please wait...');
-				
-				// may problem pa sa cache
-				//$(this).attr('disabled',true);
-
-				$.ajax({
-					url: base_url+'home/verify_email_captcha',
-					data: 'email='+email+'&code='+code_id+'&flow_type=forgot_refnum',
-					type:'post',
-					success: function(response){
-						var resp = jQuery.parseJSON( response );
-						
-						if(resp.status == 'success') {
-							// close current dialog box
-							$( '#dialog_forgot_refnum' ).dialog( "close" );
-							// open thank you dialog
-							$( '#dialog_saved_transaction_success' ).dialog( "open" );
-							// show success message
-							$('#msg-success').html(resp.msg);
-							$('#ty-note').hide();
-							$('#resend-link-info').hide();
-						} else {
-							s.addClass('alert-'+resp.status);
-							s.html(resp.msg);
-						}
-						
-					}, 
-					error: function(){
-						alert('Some error occured or the system is busy. Please try again later');  
-					}
-				});
-		});
-		
 	
 		// function for downloading print forms on status page -- gellie
 		function downloadForm(_type)

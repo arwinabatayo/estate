@@ -67,7 +67,7 @@
                             </a>
                         </li>
                         <li class="sub-navbar-link">
-                            <a href="#">
+                            <a href="javascript: void(0);" id="open_application_status">
                                 <i class="icon-align-center navicon icon-status pull-left"></i>
                                 <span class="sub-navbar-txt">Status</span>
                             </a>
