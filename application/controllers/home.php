@@ -27,7 +27,7 @@ class Home extends MY_Controller
 		//print_r($this->_data->site_config);
 		//flag for testing
 		define('IS_GLOBE_API_ENV', TRUE);
-		define('DEV_ENV', true);
+		define('DEV_ENV', false);
 	}
 	
 	public function index()
