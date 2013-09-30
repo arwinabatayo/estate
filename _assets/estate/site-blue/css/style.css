@@ -678,3 +678,7 @@ body{ font-family: 'fs_elliot_cyrilliclight' }
  .req-val {
     color: #FF0000;
 }
+
+#btnAddonNextPage2{
+    z-index: 100;
+}

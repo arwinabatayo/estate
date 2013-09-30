@@ -4,6 +4,11 @@
 				<?php
 				    if($current_controller != 'home' && ($current_step < 5) ){
 						include(ESTATE_THEME_BASEPATH.'/sections/sidebar_panel.php');
+
+                        $subscriber_flag = ""; // jason 092913
+                        if(isset($_GET['subscriber_flag'])){
+                            $subscriber_flag = "&subscriber_flag=" . $_GET['subscriber_flag'];
+                        }
 					}
 				?>
                 
@@ -86,10 +91,17 @@
 						
                         <a class="pull-left grey" href="<?php echo base_url() ?>subscriber-info">Skip &amp; Go to Subscribers Info</a>
                         
+                        <?php if(empty($subscriber_flag)){ ?>
                         <div class="pull-right">
 								<button class="blue-btn" id="btnAddonNextPage">Continue</button>&nbsp;&nbsp;
 								<button class="blue-btn">Load More</button>                                              
                         </div>
+                        <?php }else{ ?>
+                            <div class="pull-right">
+                                <button class="blue-btn" id="btnAddonNextPage2">Continue</button>&nbsp;&nbsp;
+                                <button class="blue-btn">Load More</button>                                              
+                            </div>
+                        <?php } ?>
  
 
                     </div>

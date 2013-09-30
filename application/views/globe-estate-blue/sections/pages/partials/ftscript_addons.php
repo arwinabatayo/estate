@@ -108,6 +108,10 @@
 		$('#myfile').change(function(){
 			$('#path').val($(this).val());
 		});	
+
+		$("button#btnAddonNextPage2").click(function(){
+			window.location.href= base_url+'subscriber-info?subscriber_flag=false';
+		});
 		
 
 		

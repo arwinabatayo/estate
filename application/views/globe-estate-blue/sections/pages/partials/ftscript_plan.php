@@ -58,8 +58,16 @@
 					},
 					type:'post',
 					success: function(response){
-						
-						window.location = "subscriber/companyPersonalInfo";
+						if(number_line == ">10"){
+							$("#business-10").modal("show");
+
+							$("#close-business-10").click(function(){
+								window.location = base_url;
+							});
+							//
+						}else{
+							window.location = "subscriber/companyPersonalInfo";
+						}
 					}, 
 					error: function(){
 						alert('Some error occured or the system is busy. Please try again later');	
@@ -353,6 +361,9 @@
 							document.getElementById("s-industry").selectedIndex = 0;
 							document.getElementById("e-industry").selectedIndex = 0;
 						}else if(parseInt($(this).val()) == 2){
+
+							$("#select-plan-order-type").click();
+
 							$("#order-type-new-line-section-footer").slideUp();
 							//$( "#plan-order-page" ).accordion( "option", "active", 1 );
 							$("#industry-section").slideUp();

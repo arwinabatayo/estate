@@ -45,31 +45,53 @@ class Subscriber extends MY_Controller
 	{
 		$this->load->model('estate/subscriber_model');
 		
+		$info_type = $this->input->get("info_type");
 
 		$data = array();
 
-		$data['company_name'] = $this->input->post('name');
-		$data['unit_floor'] = $this->input->post('unit');
-		$data['building_name_street_no'] = $this->input->post('building_name');
-		$data['street_name'] = $this->input->post('street');
-		$data['barangay'] = $this->input->post('barangay');
-		$data['municipality_town'] = $this->input->post('municipality');
-		$data['city_province'] = $this->input->post('city');
-		$data['postal_code'] = $this->input->post('postal');
-		$data['industry_id'] = $this->input->post('industry');
-		$data['position_1'] = $this->input->post('position_1');
-		$data['email_address_1'] = $this->input->post('email_1');
-		$data['contact_number_1'] = $this->input->post('contact_1');
-		$data['authorized_corporate_1'] = $this->input->post('authorized_1');
-		$data['position_2'] = $this->input->post('position_2');
-		$data['email_address_2'] = $this->input->post('email_2');
-		$data['contact_number_2'] = $this->input->post('contact_2');
-		$data['vat_exemption_flag'] = $this->input->post('vat');
-		$data['oct_flag'] = $this->input->post('oct');
+		if($info_type == "company"){
+			$data['company_name'] = $this->input->post('name');
+			$data['unit_floor'] = $this->input->post('unit');
+			$data['building_name_street_no'] = $this->input->post('building_name');
+			$data['street_name'] = $this->input->post('street');
+			$data['barangay'] = $this->input->post('barangay');
+			$data['municipality_town'] = $this->input->post('municipality');
+			$data['city_province'] = $this->input->post('city');
+			$data['postal_code'] = $this->input->post('postal');
+			$data['industry_id'] = $this->input->post('industry');
+			$data['position_1'] = $this->input->post('position_1');
+			$data['email_address_1'] = $this->input->post('email_1');
+			$data['contact_number_1'] = $this->input->post('contact_1');
+			$data['authorized_corporate_1'] = $this->input->post('authorized_1');
+			$data['position_2'] = $this->input->post('position_2');
+			$data['email_address_2'] = $this->input->post('email_2');
+			$data['contact_number_2'] = $this->input->post('contact_2');
+			$data['vat_exemption_flag'] = $this->input->post('vat');
+			$data['oct_flag'] = $this->input->post('oct');
 
 
-		$this->subscriber_model->save_company($data);
+			$this->subscriber_model->save_company($data);
+		}else if($info_type == "personal"){
+			$data['fname'] = $this->input->post('fname');
+			$data['lname'] = $this->input->post('lname');
+			$data['mname'] = $this->input->post('mname');
+			$data['gender'] = $this->input->post('gender');
+			$data['bday'] = $this->input->post('bday');
+			$data['civil_status'] = $this->input->post('civil_status');
+			$data['mfname'] = $this->input->post('mfname');
+			$data['mlname'] = $this->input->post('mlname');
+			$data['mmname'] = $this->input->post('mmname');
+			$data['citizenship'] = $this->input->post('citizenship');
+			$data['government_id'] = $this->input->post('government_id');
+			$data['government_id_type'] = $this->input->post('government_id_type');
+			//$data['email'] = $this->input->post('email');
+			//$data['phone'] = $this->input->post('phone');
+			$data['network_carrier'] = $this->input->post('network_carrier');
+			$data['sns_username'] = $this->input->post('sns_username');
+			$data['sns_type'] = $this->input->post('sns_type');
 
+			$this->subscriber_model->save_personal($data);
+		}
 	}
 	
 
