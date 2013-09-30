@@ -26,7 +26,8 @@ class Home extends MY_Controller
 		
 		//print_r($this->_data->site_config);
 		//flag for testing
-		define('IS_GLOBE_API_ENV',TRUE);
+		define('IS_GLOBE_API_ENV', TRUE);
+		define('DEV_ENV', true);
 	}
 	
 	public function index()
@@ -203,7 +204,7 @@ class Home extends MY_Controller
                         $verification_code = random_string('alnum', 6);
                         $message = "Please use this code ".$verification_code." to verify your account.";
                         
-                        if(IS_GLOBE_API_ENV){
+                        if(IS_GLOBE_API_ENV && !DEV_ENV){
 							$sms_status = $this->api_globe->api_send_sms($mobile_number, $message, "Project Esate");
 						}else{
 							$sms_status = TRUE;
@@ -280,6 +281,10 @@ class Home extends MY_Controller
 		if(!$try)
 			$try = 0;
 		
+		if (DEV_ENV) {
+			$verification_info['code'] = "test";
+		}
+
 		if($verification_code) {
 
 			if($verification_code == $verification_info['code']) {
@@ -474,8 +479,13 @@ class Home extends MY_Controller
             break;
         }
 
-        return $this->email->send_email_api($email_to, $subject, $email_tpl, $msg, $sender ); 
-        
+        if (DEV_ENV) {
+        	// return $this->email->send_email($email_to, $sender, $subject, $msg, $email_tpl );
+        	// echo $msg['verification_url'];
+        	return true; 
+        } else {
+        	return $this->email->send_email_api($email_to, $subject, $email_tpl, $msg, $sender ); 
+        }        
     }
     
     //move this function to helper -- SOON

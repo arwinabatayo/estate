@@ -152,6 +152,11 @@
 			$('.consultation-radio input').iCheck({
 				radioClass: 'iradio_flat-blue'
 			});
+			// if user clicks on non globe link, show mobile number input field
+			// change input type from hidden to text
+			$('#phone-cont').hide();
+			$('#phone').attr('type', 'text');
+			$('#phone').val('');
 		});
 
 		// for new line - non globe subscriber jez
