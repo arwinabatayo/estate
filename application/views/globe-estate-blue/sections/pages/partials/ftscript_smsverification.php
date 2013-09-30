@@ -24,6 +24,9 @@
 								$('.vcode-alert').fadeIn('fast');
 								return;
 							}
+							
+							s.show();
+							s.html('Validating...Please wait...');
 
 							$.ajax({
 								url: base_url+'home/check_verification_code',
@@ -78,7 +81,7 @@
 							
 							s.show();
 						    s.html('Sending...Please wait...');
-		
+
 							$.ajax({
 								url: base_url+'home/send_sms_verification',
 								data: 'msisdn='+msisdn,
@@ -108,7 +111,7 @@
 												radioClass: 'iradio_flat-blue'
 											});
 										} else {
-											$( '#verifyNumber' ).modal( "show" );
+											$( '#verifyNumber' ).modal( {show:true} );
 										}
 										
 									}else{

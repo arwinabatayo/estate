@@ -25,28 +25,38 @@ a{cursor: pointer}
 
 }
 
- .clear,.clr   {clear:both}
- .fleft       {float:left}
- .fright      {float:right}
- .border      {border:1px solid red}
- .bg          {background:#ffe0d1}
- .bold        {font-weight:bold}
- .italic      {font-style:italic}
- .normal      {font-weight:normal}
- .block        {display:block}
- .absolute     {position: absolute}
- .relative     {position: relative}
- .small     {font-size:12px}
- .xsmall     {font-size:10px}
- .fff     {color:#fff}
- .red     {color:red}
- .arial {font-family:Arial,sans-serif}
- .textleft    {text-align:left}
- .textright   {text-align:right}
- .textcenter {text-align:center}
+.clear,.clr   {clear:both}
+.fleft       {float:left}
+.fright      {float:right}
+.border      {border:1px solid red}
+.bg          {background:#ffe0d1}
+.bold        {font-weight:bold}
+.italic      {font-style:italic}
+.normal      {font-weight:normal}
+.block        {display:block}
+.absolute     {position: absolute}
+.relative     {position: relative}
+.small     {font-size:12px}
+.xsmall     {font-size:10px}
+.fff     {color:#fff}
+.red     {color:red}
+.arial {font-family:Arial,sans-serif}
+.textleft    {text-align:left}
+.textright   {text-align:right}
+.textcenter {text-align:center}
+.show{display:block; visibility:visible}
+/*.hide{display:none; visibility:hidden}*/
+.dispalyTable{display:table}
+.clear{clear:both}
+.center{display:table-cell; vertical-align:middle; text-align:center}
 
  .fr {float:right;}
  .fl {float:left;}
+
+ /* Shorcuts */
+ .fr {float:right;}
+ .fl {float:left;}
+
 
 form {margin:0;padding:0}
 
@@ -435,7 +445,9 @@ body{ font-family: 'fs_elliot_cyrilliclight' }
  .s-p-current-title label {font-size:1.2em;}
  .s-p-current-plan .row {margin-left:0; padding:30px 0;}
  .s-p-title {font-weight:bold;}
- 
+
+
+
  #thankyou-08 a {width:173px; margin:10px auto;}
  #reserve-08 {width:926px;}
  #reserve-08 form ul {list-style:none; text-align:left;}
@@ -522,7 +534,7 @@ body{ font-family: 'fs_elliot_cyrilliclight' }
  .compare .col-lg-3:nth-child(1) ul li:nth-child(6) {background:#e75e9b;}
  .compare .col-lg-3:nth-child(1) ul li:nth-child(7) {background:#1769b3;}
 
- .pickup {background:#f1f3f5; border-radius:10px; box-shadow:2px 2px 5px #bbc3cf; margin-bottom:170px; padding:40px 55px;}
+ .pickup {background:#f1f3f5; border-radius:10px; box-shadow:2px 2px 5px #bbc3cf; margin-bottom:30px; padding:40px 55px;}
  .pickup hr {border-top:1px solid #cccccc; border-bottom:1px solid #fff; border-right:none; border-left:none; height:2px; margin:0 0 10px; padding:0;}
  
  .pickup-places-accordion .accordion-inner {background:#f8fafb; border-left:5px solid #7ebe36;}

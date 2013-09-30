@@ -5,7 +5,7 @@
                         <div class="flow-title offset1">
                             <i class="flow-icon icon-appl pull-left"></i>
                             <?php 
-                            
+                            $deviceName = '';
 								if($devices['count'] > 1) {
 									unset($devices['count']);
 							?>
@@ -17,6 +17,7 @@
 										$selectedKey = $arrKey[1];
 										if($selectedKey == $devs['id']) {
 											$setSelected = " selected";
+											$deviceName = $devs['name'];
 										}
 									}
 								?>
@@ -88,7 +89,7 @@
 			 <?php /*TODO: make it db driven */ ?>
 			 <input type="hidden" name="cart_id" value="1_gadget" />
 		     <input type="hidden" name="product_id" value="1" />
-		     <input type="hidden" name="product_name" value="iPhone 5" />
+		     <input type="hidden" name="product_name" value="<?php echo $deviceName ?>" />
 		     <input type="hidden" name="product_price" value="12500" />
 		     <input type="hidden" name="product_type" value="gadget" />
              <?php if ($is_reserve) { ?>

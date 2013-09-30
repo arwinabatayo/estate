@@ -111,5 +111,7 @@ class Model_plans extends CI_Model
 			return array();
 		}
 	}
+
+	
 }
 ?>

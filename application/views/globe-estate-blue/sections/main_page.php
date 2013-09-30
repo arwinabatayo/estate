@@ -32,6 +32,7 @@
 				
 						
 			if(file_exists( dirname(__FILE__) . '/pages/page_'.$page.'.php')){
+			echo $page;
 				include('pages/page_'.$page.'.php'); 
 			}else{
 				echo 'Template file not exist: <strong>'.$page.'</strong>';

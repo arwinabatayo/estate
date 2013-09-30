@@ -15,21 +15,25 @@
                               ORDER TYPE <i class="tcoll collapse-toggle"></i>
                             </a>
                           </div>
-                          <div id="collapse4" class="accordion-body collapse" style="height: <?php echo $_GET['val'] == 'renew' ? '0' : 'auto' ?>;">
+                          <div id="collapse4" class="accordion-body collapse" style="height: <?php echo ($_GET['ordertype'] == 'renew'|| isset($_GET['plantype'])) ? '0' : 'auto' ?>;">
                             <div class="accordion-inner">
 								
 								<?php 
+								$subscriber_flag = ""; // jason 092913
+                                if(isset($_GET['subscriber_flag'])){
+                                    $subscriber_flag = "&subscriber_flag=" . $_GET['subscriber_flag'];
+                                }
+                                if( isset($_GET['ordertype']) && $_GET['ordertype'] == 'newline' ){
+                                
+                                    //GET NEWLINE
+                                    //IMPLEMENTED: MANAGE - PLATINUM ACCOUNT
+                                    //TODO: BUSINESS - 
+                                    include('page_ordertype_newline.php'); 
+
 								
-								if( isset($_GET['val']) && $_GET['val'] == 'newline' ){
+								}else if( isset($_GET['ordertype']) && $_GET['ordertype'] == 'reset' ){
 								
-									//GET NEWLINE
-									//IMPLEMENTED: MANAGE - PLATINUM ACCOUNT
-									//TODO: BUSINESS - 
-									include('page_plan_newline.php'); 
-								
-								}else if( isset($_GET['val']) && $_GET['val'] == 'reset' ){
-								
-									include('page_plan_reset.php'); 
+									include('page_ordertype_reset.php'); 
 								
 								}else{	
 								
@@ -41,19 +45,19 @@
                                             <img src="<?php echo $assets_url ?>site-blue/images/retain-current-plan.png" />
                                             <span>Renew Contract</span>
                                             <blockquote>Lorem ipsum dolor sit amet, consectuer adispising  elit. Cras justo nulla, commodo nec mauris ut, interdum adipiscing  nisi</blockquote>
-                                            <button class="blue-btn" onclick="window.location.href='<?php echo base_url() ?>plan?setOrderConfig=true&key=ordertype&val=renew'">Click here!</button>
+                                            <button class="blue-btn" onclick="window.location='<?php echo base_url() ?>plan?setOrderConfig=true&ordertype=renew'">Click here!</button>
                                         </div>
                                         <div class="span4 ac-boxes o-content">
                                             <img src="<?php echo $assets_url ?>site-blue/images/get-a-new-line.png" />
                                             <span>Get A New Line</span>
                                             <blockquote>Lorem ipsum dolor sit amet, consectuer adispising  elit. Cras justo nulla, commodo nec mauris ut, interdum adipiscing  nisi</blockquote>  
-                                            <button class="blue-btn" onclick="window.location.href='<?php echo base_url() ?>plan?setOrderConfig=true&key=ordertype&val=newline'">Click here!</button>
+                                            <button class="blue-btn" onclick="window.location='<?php echo base_url() ?>plan?setOrderConfig=true&ordertype=newline<?php echo $subscriber_flag; ?>'">Click here!</button>
                                         </div>
                                         <div class="span4 ac-boxes r-content">
                                             <img src="<?php echo $assets_url ?>site-blue/images/reset.png" />
                                             <span>Reset</span>
                                             <blockquote>Lorem ipsum dolor sit amet, consectuer adispising  elit. Cras justo nulla, commodo nec mauris ut, interdum adipiscing  nisi</blockquote>                                    
-                                            <button class="blue-btn" onclick="window.location.href='<?php echo base_url() ?>plan?setOrderConfig=true&key=ordertype&val=reset'">Click here!</button>
+                                            <button class="blue-btn" onclick="window.location='<?php echo base_url() ?>plan?setOrderConfig=true&ordertype=reset'">Click here!</button>
                                         </div>
                                     </div>
                                 </div>
@@ -66,117 +70,21 @@
                           <div class="accordion-heading">
                             <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapse5">SELECT PLAN <i class="tcoll collapse-toggle"></i></a>
                           </div>
-                          <div id="collapse5" class="accordion-body in collapse" style="height: <?php echo $_GET['val'] == 'renew' ? 'auto' : '0' ?>; ">
-                            <div class="accordion-inner last-border">
-								<div class="row-fluid tabbed">
-                                    <div class="tabbable package-plan">
-                                        <ul class="nav nav-tabs">
-                                            <li><a href="#tab1" data-toggle="tab" class="ret-curr"><span><i class="icon-retcurr"><img src="images/icon-retaincurr.png" /></i>Retain Current Plan</span></a></li>
-                                            <li class="active"><a href="#tab2" data-toggle="tab" class="pack-plan"><span><i class="icon-packplan"><img src="images/icon-packplan.png" /></i>Package Plan</span></a></li>
-                                            <li><a href="#tab3" data-toggle="tab" class="create-own"><span><i class="icon-createown"><img src="images/icon-createown.png" /></i>Create Your Own</span></a></li>
-                                        </ul>
-                                        <div class="tab-content">
-                                            <div class="tab-pane" id="tab1">
-                                                <div class="tab-cont">
-                                                
-															<div>
-																<div class="accordion-title floatLeft" >
-																	<div class="dispalyTable ">
-																		<i class="icon icon-create"></i>
-																		<div class="center padding5">
-																			Retain Current Plan
-																		</div>
-																	</div>
-																</div>
-																<div class="accordion-link-holder floatLeft" >
-																	<div class="dispalyTable">
-																		<label class="floatLeft margin2 blue_underline">
-																			<a href="">Retain Current Plan</a>
-																		</label>
-																		<label class="floatLeft margin2 blue_underline">
-																			<a href="">Package Plan</a>
-																		</label>
-																	</div>
-																</div>
-																<div class="clear"></div><br />
-																<label>Create your own plan by selecting your own Combos.</label>
-																
-																
-																<!-- Plan Option -->
-																<div class="main" style="width:100%;">
-																	<ul id="og-grid" class="og-grid">
-																		<li class="fl">
-																			<a href="#" data-largesrc="" data-title="Get 500 Peso Value/Month" data-description="CASHOUT P500.00">
-																				<div class="plan-tile-option4">
-																					<div class="arrow-point-up"></div>
-																					<div class="ribbon-new hide"></div>
-																					<div class="center">
-																						<i class="icon icon-big-peso"></i>
-																						<div class=""><b>Current Plan:</b></div>
-																						<div class="plan-name">Best Ever <br />Mysuper Plan 3799</div>
-																						<div class="plan-off hide"></div>
-																					</div>
-																					
-																				</div>
-																			</a>
-																		</li>
-																		<li class="fl">
-																			<a href="#" data-largesrc="" data-title="Get 900 Peso Value/Month" data-description="CASHOUT P900.00" >
-																				<div class="plan-tile-option4 ">
-																					<div class="arrow-point-up"></div>
-																					<div class="ribbon-new hide"></div>
-																					<div class="center">
-																						<i class="icon icon-consumable"></i>
-																						<div class=""><b>Consumamable amount:</b></div>
-																						<div class="plan-name"><br />1000</div>
-																						<div class=""></div>
-																						<div class="plan-off hide"></div>
-																					</div>
-																					
-																				</div>
-																			</a>
-																		</li>
-																	</ul>
-																	
-																	<div class="clr"></div>
-																</div>
-															</div>
-								                            
-                                                
-                                                </div>
-                                            </div>
-                                            <div class="tab-pane active" id="tab2">
-                                                <div class="tab-cont">
-                                                    <div class="tab-title">Package Plan</div>
-                                                    <p class="tab-p">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                                                    <ul class="thumbnails">
-                                                        <li class="span4"><a class="thumbnail"><img src="images/plan-299.png" alt="Plan 299" /><span>Plan 299</span></a></li>
-                                                        <li class="span4">
-                                                        	<a id="plan499" class="thumbnail"><img src="images/plan-499.png" alt="Plan 499"/><span>Plan 499</span></a>
-                                                            <ul id="plan499-content" style="display:none">
-                                                            	<li><span class="plan-cont">TEXT<span>Unlitext 30days</span></span></li>
-                                                            	<li><span class="plan-cont">CALL<span>Free 20mins</span></span></li>
-                                                            	<li><span class="plan-cont">SURF<span>100 hrs/month</span></span></li>
-                                                            	<li><span class="plan-cont">IDD<span>2hrs free call</span></span></li>
-                                                            	<li class="c-out">CASHOUT <strong>P 12,000.00</strong></li>                                                                                                                                                                                                                                                                
-                                                            </ul>
-                                                        </li>
-                                                        <li class="span4"><a class="thumbnail"><img src="images/plan-999.png" alt="Plan 999" /><span>Plan 999</span></a></li>           
-                                                        <li class="span4"><a class="thumbnail"><img src="images/plan-1799.png" alt="Plan 1799" /><span>Plan 1799</span></a></li>                    
-                                                        <li class="span4"><a class="thumbnail"><img src="images/plan-2499.png" alt="Plan 2499" /><span>Plan 2499</span></a></li>                    
-                                                        <li class="span4"><a class="thumbnail"><img src="images/plan-3799.png" alt="Plan 3799" /><span>Plan 3799</span></a></li>    
-                                                        <li class="span4"><a class="thumbnail"><img src="images/plan-unli.png" alt="Unli Plan" /><span>Unli Plan</span></a></li>
-                                                        <li class="span4"><a class="thumbnail"><img src="images/plan-family.png" alt="Family Plan" /><span>Family Plan</span></a></li>                    
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="tab-pane" id="tab3">
-                                                <div class="tab-cont"></div>
-                                            </div>        
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                          <div id="collapse5" class="accordion-body in collapse" style="height: <?php echo ($_GET['ordertype'] == 'renew' || isset($_GET['plantype'])) ? 'auto' : '0' ?>; ">
+
+									<?php 
+										
+										if( isset($_GET['plantype']) && $_GET['plantype'] == 'create' ){
+											include('page_plan_create.php'); 
+											
+										}else if( isset($_GET['plantype']) && $_GET['plantype'] == 'package' ){
+											include('page_plan_package.php'); 
+										}else{
+											//default
+											include('page_plan_retain.php'); 
+										}		
+									 ?>
+
                           </div>
                         </div>
                     </div>

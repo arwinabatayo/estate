@@ -45,7 +45,7 @@
 					if ($('#is_reserve').val()) {
 						_action = 'cart/reserveitem';
 					}
-
+					
 					showPreloader();
 					$.ajax({
 						url: base_url + _action,

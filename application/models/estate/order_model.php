@@ -28,6 +28,11 @@ class Order_model extends CI_Model
 			
 			$this->db->where('id', $id);
 			$this->db->update('estate_orders', $order);
+
+			if($data['order_type'] == 4){
+				//$this->session->userdata('user_type')
+				$this->session->set_userdata('order_id', $id);
+			}
 						
 			//return the order id 
 			$order_number = $order['order_number'];	

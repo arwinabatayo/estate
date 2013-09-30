@@ -24,6 +24,12 @@
 	} else if($page == 'addons'){ 
 		
 		include('pages/partials/modal_addons.php');
+		
+	} 
+    
+    if($current_controller == 'payment'){ 
+		
+		include('pages/partials/modal_payment.php');
 	}
 	
 	
@@ -37,28 +43,19 @@
 ?>   
     
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="<?php echo $assets_url?>site-blue/js/jquery.js"></script>    
-<script src="<?php echo $assets_url?>site-blue/js/bootstrap.js"></script>
-
+<script type="text/javascript" src="<?php echo $assets_url?>site-blue/js/jquery.js"></script>    
+<script type="text/javascript" src="<?php echo $assets_url?>site-blue/js/bootstrap.js"></script>
+<script type="text/javascript" src="<?php echo $assets_url?>site-blue/js/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="<?php echo $assets_url?>site-blue/js/modernizr.custom.js"></script>
+<script type="text/javascript" src="<?php echo $assets_url?>site-blue/js/grid2.js"></script>
+<script type="text/javascript" src="<?php echo $assets_url?>site-blue/js/prettify.js"></script> 
+<script type="text/javascript" src="<?php echo $assets_url?>site-blue/js/jquery-ui-1.10.0.custom.min.js"></script>  
 <script type="text/javascript" src="<?php echo $assets_url?>site-blue/js/jquery.icheck.min.js"></script>
-   
-<!--<script src="<?php echo $assets_url?>site/js/defines.js" type="text/javascript"></script>-->
-    
+
 <script type="text/javascript">
 	
     $(function () {
 	
-		<?php //Do not move. Must be initialize above.  ?>
-		/*$(".jq-accordion").accordion({
-			header: "h3",
-			navigation: true, 
-			heightStyle: "content",
-			//event: false,
-			icons: { header: "ui-icon-circle-plus", activeHeader: "ui-icon-circle-minus"}, 
-		});*/
-		
-		//$('#emailConfirm').modal('show');	
-		//$('#emailConfirm').modal( {show:true} );
 		<?php 
 		//---COMMON SCRIPT
 		include('pages/partials/ftscript_commons.php'); 

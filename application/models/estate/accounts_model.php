@@ -63,6 +63,17 @@ class Accounts_model extends CI_Model
 		return $result;
 	}
 	
+	function get_account_current_plan($account_id)
+	{
+		$query = $this->db->select($what)
+						 ->from('estate_account_current_plan')
+						 ->where('account_id', $account_id)
+						 ->get();
+						$result = $query->row();
+		if(count($result) == 0) return FALSE;
+		return $result;
+	}
+	
 	function save_account_address($data)
 	{
 		if( $this->db->insert('estate_account_addresses',$data) ){
