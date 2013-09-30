@@ -166,7 +166,7 @@ class Cart extends CI_Controller {
 		$package_plan_combos = '';
 
 		$in_coexist['coexist'] = TRUE;
-
+		$boosterInCart = FALSE;
 		$cart_contents = $this->cart->contents();
 		$out = array(
 			'status' => 'failed',
@@ -227,10 +227,13 @@ class Cart extends CI_Controller {
 			 //peso value, ultima rules
 			 if( $d->product_type == 'plan' ) {
 
-				 $plan_pv = $this->products_model->get_plan_pv($d->plan);
-				 $amount = number_format($this->products_model->get_gadget_cash_out($d->plan, $d->device),2);
-
-
+				$plan_pv = $this->products_model->get_plan_pv($d->plan);
+// 				 $amount = number_format($this->products_model->get_gadget_cash_out($d->plan, $d->device),2);
+				if($d->plan_cashout == 0) {
+					$amount = "0.00";
+				} else {
+				 	$amount = $d->plan_cashout;
+				}
 				 // remove existing plan
 				 $this->cart_model->remove_gadget_or_plan("plan");
 				 $out['plan_pv'] = $cart_input['plan_pv'] = $plan_pv;
@@ -268,6 +271,7 @@ class Cart extends CI_Controller {
 			 		$remainingpv = abs($remainingPV);
 			 		$amount = "0.00";
 			 	}
+// 			 	print_r($in_coexist);
 			 }
 			 
 			 if( $d->product_type == 'boosters' ) {
@@ -278,11 +282,18 @@ class Cart extends CI_Controller {
  						$plan_pv = intval($cart_contents[$k]['this_pv_value']);
  					 }
 				}
-
+				foreach($cart_contents as $k => $v) {
+					if(trim($cart_contents[$k]['product_type']) == 'boosters') {
+						if($cart_contents[$k]['product_id'] == $d->product_id) { // already exist :: Do not add
+							$boosterInCart = TRUE;
+						}
+					}
+				}
 			 	$out['status'] = 'success';
 			 	$in_coexist = $this->products_model->get_coexist($d->product_id);
-// 			 	print_r($in_coexist);
+			 	
 			 	$amount = number_format($qty * $amount,2);
+			 	
 			 }
 
 			 if( $d->product_type == 'package_plan' ) {
@@ -346,23 +357,28 @@ class Cart extends CI_Controller {
 				$out['msg'] = 'credit_exceeded ';
 			}
 
+			
 			/* cart */
-			if($in_coexist['coexist'] == TRUE) {
+			if($in_coexist['coexist'] == "no") { // not in cart
 				//print_r($cart_input); exit;
-				$out['rowid']  = $rowid = $this->cart->insert($cart_input);
-				$out['total']  = $this->cart_model->total(true);
-
-		       	$out = array_merge($cart_input,$out);
-
-		       	/* db */
-		       	if($rowid){
-					$this->_data->cartItem  = $info = $this->_parse_contents();
-					$this->cart_model->insert_previous_info($account_id, $info);
-			   	} else {
-					$out['status'] = 'failed';
+				if($boosterInCart == false) {
+					$out['rowid']  = $rowid = $this->cart->insert($cart_input);
+					$out['total']  = $this->cart_model->total(true);
+	
+			       	$out = array_merge($cart_input,$out);
+	
+			       	/* db */
+			       	if($rowid){
+						$this->_data->cartItem  = $info = $this->_parse_contents();
+						$this->cart_model->insert_previous_info($account_id, $info);
+				   	} else {
+						$out['status'] = 'failed';
+					}
+	
+					$out['total_remaining_pv'] = $this->cart_model->remaining_pv(false);
+				} else {
+					$out['msg'] = "duplicateentry";
 				}
-
-				$out['total_remaining_pv'] = $this->cart_model->remaining_pv(false);
 
 			} else {
 
@@ -417,23 +433,33 @@ class Cart extends CI_Controller {
 
 				$comboqty = $this->checkProductIfExist($d->product_type, "combos_qty", $d->product_id, "minus");
 
-				foreach($cart_contents as $k => $v) {
-					if(trim($cart_contents[$k]['product_type']) == 'plan') {
-						$plan_pv = intval($cart_contents[$k]['this_pv_value']);
-					}
-				}
+// 				foreach($cart_contents as $k => $v) {
+// 					if(trim($cart_contents[$k]['product_type']) == 'plan') {
+// 						$plan_pv = intval($cart_contents[$k]['this_pv_value']);
+// 					}
+// 				}
+				$plan_pv = $d->plan_pv;
+				$this_pv_value = $d->product_pv;
 
-				$this_pv_value = $d->combopv;
-
-				$remainingPV = $plan_pv + ($comboqty * $this_pv_value);
-
-				if($remainingPV < 0) { // Negative
-					$amount = abs($remainingPV - $this_pv_value); // to be added to cashout
-					$remainingpv = 0;
+				$thisTotalPV = $comboqty * $this_pv_value;
+				
+				if($thisTotalPV > $plan_pv) {
+					$remainingPV = $thisTotalPV - $plan_pv; 
+					$amount = abs($remainingPV); // to be added to cashout
 				} else {
-					$remainingpv = abs($remainingPV);
+					$remainingPV = $plan_pv - $thisTotalPV;
 					$amount = "0.00";
 				}
+				
+// 				echo $remainingPV = $plan_pv + ($comboqty * $this_pv_value);
+
+// 				if($remainingPV < 0) { // Negative
+// 					$amount = abs($remainingPV - $this_pv_value); // to be added to cashout
+// 					$remainingpv = 0;
+// 				} else {
+// 					$remainingpv = abs($remainingPV);
+// 					$amount = "0.00";
+// 				}
 			}
 
 			if( $d->product_type == 'boosters' ) {
@@ -480,7 +506,7 @@ class Cart extends CI_Controller {
 			/* cart */
 			$out['status'] = 'success';
 			$out['rowid']  = $rowid = $this->cart->insert($cart_input);
-			$out['total']  = $this->cart_model->total(true);
+			$out['total']  = "P ".number_format($this->cart_model->total(false),2);
 
 			$out = array_merge($cart_input,$out);
 
