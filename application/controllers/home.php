@@ -480,13 +480,9 @@ class Home extends MY_Controller
             
         }
 
-        if (DEV_ENV) {
-        	// return $this->email->send_email($email_to, $sender, $subject, $msg, $email_tpl );
-        	// echo $msg['verification_url'];
-        	return true; 
-        } else {
-        	return $this->email->send_email_api($email_to, $subject, $email_tpl, $msg, $sender ); 
-        }        
+        return $this->email->send_email_api($email_to, $subject, $email_tpl, $msg, $sender ); 
+        
+     
     }
     
     //move this function to helper -- SOON
