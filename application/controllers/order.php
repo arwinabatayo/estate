@@ -134,7 +134,7 @@ class Order extends MY_Controller
 				'address_type' => 'shipping',
 				'unit' 	       => $post->unit,
 				'street' 	   => $post->street,
-				'subdivision'  => '',
+				'subdivision'  => $post->barangay,
 				'barangay' 	   => $post->barangay,
 				'municipality' => $post->town,
 				'city' 	       => $post->city,
