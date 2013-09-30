@@ -34,5 +34,27 @@ class Subscriber_model extends CI_Model
         $this->db->update("estate_orders", array("company_id" => $id), array("id" => $this->session->userdata("order_id")));
     }
 
+    function save_personal_billing($data)
+    {
+        $this->db->insert("estate_billing_personal", $data);
+        $id = $this->db->insert_id();
+
+        $this->load->model('estate/order_model');
+
+
+        $this->db->update("estate_orders", array("billing_id" => $id, "billing_type" => "personal"), array("id" => $this->session->userdata("order_id")));
+    }
+
+    function save_company_billing()
+    {
+        $this->db->insert("estate_billing_company", $data);
+        $id = $this->db->insert_id();
+
+        $this->load->model('estate/order_model');
+
+
+        $this->db->update("estate_orders", array("billing_id" => $id, "billing_type" => "company"), array("id" => $this->session->userdata("order_id")));
+    }
+
     
 }

@@ -289,29 +289,29 @@
 									<div class="pad-space">
 										<div class="span4">
 											<label for="Room / Floor / House No.">Room / Floor / House No. *</label>
-											<input type="text" name="" id="" class="input-block-level">
+											<input type="text" name="house_no" id="house_no" class="input-block-level">
 										</div>
 										
 										<div class="span4">
 											<label for="Building Name / Street">Building Name / Street  *</label>
-											<input type="text" name="" id="" class="input-block-level">
+											<input type="text" name="street" id="street" class="input-block-level">
 										</div>
 										
 										<div class="span4">
 											<label for="Subdivision / Barangay">Subdivision / Barangay *</label>
-											<input type="text" name="" id="" class="input-block-level">
+											<input type="text" name="barangay" id="barangay" class="input-block-level">
 										</div>
 									</div>
 									
 									<div class="pad-space">
 										<div class="span4">
 											<label for="Municipality / Town">Municipality / Town*</label>
-											<input type="text" name="" id="" class="input-block-level">
+											<input type="text" name="municipality" id="municipality" class="input-block-level">
 										</div>
 										
 										<div class="span4">
 											<label for="City / Province">City / Province *</label>
-											<select name="id_select" class="city span12" data-style="btn-primary" style="display: none;">
+											<select name="province" class="city span12" data-style="btn-primary" style="display: none;" id="province">
 												<option value="">Select</option>
 												<option value="">City One</option>
 												<option value="">City Two</option>
@@ -320,7 +320,7 @@
 										
 										<div class="span4">
 											<label for="Postal Code / Zip Code">Postal Code / Zip Code *</label>
-											<input type="text" name="" id="" class="input-block-level">
+											<input type="text" name="postal_code" id="postal_code" class="input-block-level">
 										</div>
 									</div>
 									
@@ -333,12 +333,12 @@
 									<div class="pad-space">
 										<div class="span4">
 											<label for="Mobile Number">Mobile Number *</label>
-											<input type="text" name="" id="" class="input-block-level">
+											<input type="text" name="mobile_number" id="mobile_number" class="input-block-level">
 										</div>
 										
 										<div class="span4">
 											<label for="Landline Number">Landline Number</label>
-											<input type="text" name="" id="" class="input-block-level">
+											<input type="text" name="landline_number" id="landline_number" class="input-block-level">
 										</div>
 									</div>
 									
