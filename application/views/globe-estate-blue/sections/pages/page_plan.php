@@ -73,16 +73,43 @@
                           <div id="collapse5" class="accordion-body in collapse" style="height: <?php echo ($_GET['ordertype'] == 'renew' || isset($_GET['plantype'])) ? 'auto' : '0' ?>; ">
 
 									<?php 
-										
-										if( isset($_GET['plantype']) && $_GET['plantype'] == 'create' ){
-											include('page_plan_create.php'); 
-											
+									
+										$changeBtnId = 'retain';
+										$display = "display:none;";
+										if( isset($_GET['plantype']) && $_GET['plantype'] == 'create' ) {
+											if(isset($_GET['bundles'])) {
+												switch ($_GET['bundles']) {
+													case "combos": include('page_plan_create_combos.php'); 
+																$changeBtnId="combos";
+																$gobackBtnId ="backPlans";
+																$display = "";
+																$goto = "&plantype=".$_GET['plantype'];
+													break;
+													case "boosters": include('page_plan_create_boosters.php'); 
+																$changeBtnId="boosters"; 
+																$gobackBtnId ="backCombos";
+																$display = "";
+																$goto = "&plantype=".$_GET['plantype']."&bundles=combos";
+													break;
+												}
+											} else {
+												include('page_plan_create.php');
+												$changeBtnId = $_GET['plantype'];
+											}
 										}else if( isset($_GET['plantype']) && $_GET['plantype'] == 'package' ){
-											include('page_plan_package.php'); 
-										}else{
-											//default
+											
+											include('page_plan_package.php');
+											$changeBtnId = $_GET['plantype'];
+											
+										}else if( isset($_GET['plantype']) && $_GET['plantype'] == 'retain' ){
+
 											include('page_plan_retain.php'); 
-										}		
+											
+										}else{
+											//default - CHOOSE YOUR PLAN
+											include('page_plan_choose.php'); 
+										}	
+
 									 ?>
 
                           </div>

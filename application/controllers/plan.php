@@ -29,9 +29,6 @@ class Plan extends MY_Controller
 		if($account_info->account_id){
 			$this->_data->current_plan    = $this->accounts_model->get_account_current_plan($account_info->account_id);
 			$this->_data->account_id      = $account_info->account_id;
-		}else{
-			//temp force login
-			redirect('home/login');
 		}
 		
 	}
