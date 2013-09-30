@@ -96,21 +96,9 @@
 												$changeBtnId = $_GET['plantype'];
 											}
 										}else if( isset($_GET['plantype']) && $_GET['plantype'] == 'package' ){
+											
 											include('page_plan_package.php');
 											$changeBtnId = $_GET['plantype'];
-										}else{
-											//default
-											include('page_plan_retain.php'); 
-										}	
-=======
-										
-										if( isset($_GET['plantype']) && $_GET['plantype'] == 'create' ){
-											
-											include('page_plan_create.php'); 
-											
-										}else if( isset($_GET['plantype']) && $_GET['plantype'] == 'package' ){
-											
-											include('page_plan_package.php'); 
 											
 										}else if( isset($_GET['plantype']) && $_GET['plantype'] == 'retain' ){
 
@@ -119,8 +107,8 @@
 										}else{
 											//default - CHOOSE YOUR PLAN
 											include('page_plan_choose.php'); 
-										}		
->>>>>>> 4cfa5b676bf61e6c381465fe5d6368a84b3614ca
+										}	
+
 									 ?>
 
                           </div>
