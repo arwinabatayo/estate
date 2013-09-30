@@ -82,6 +82,7 @@
 
 		});
 		
+		
 		$('button#btnAddonNextPage').click(function(){
 			
 				$.ajax({
@@ -109,6 +110,10 @@
 			$('#path').val($(this).val());
 		});	
 		
+		$(document).on('click', '#showUploadForm', function(){
+			$('#exceed-limit').modal('hide');
+			$('#modifyPlan2').modal('show');
+		});	
 
 		
 		

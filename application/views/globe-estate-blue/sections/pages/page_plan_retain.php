@@ -27,7 +27,7 @@
 																	<div class="center">
 																		<i class="icon icon-big-peso"></i>
 																		<div class=""><b>Current Plan:</b></div>
-																		<div class="plan-name">Best Ever <br />Mysuper Plan 3799</div>
+																		<div class="plan-name"><?php echo $current_plan->current_plan ?></div>
 																		<div class="plan-off hide"></div>
 																	</div>
 																	
@@ -42,7 +42,7 @@
 																	<div class="center">
 																		<i class="icon icon-consumable"></i>
 																		<div class=""><b>Consumamable amount:</b></div>
-																		<div class="plan-name"><br />1000</div>
+																		<div class="plan-name"><br /><?php echo number_format($current_plan->consumable_amount,2); ?></div>
 																		<div class=""></div>
 																		<div class="plan-off hide"></div>
 																	</div>

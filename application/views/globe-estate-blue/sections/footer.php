@@ -24,6 +24,12 @@
 	} else if($page == 'addons'){ 
 		
 		include('pages/partials/modal_addons.php');
+		
+	} 
+    
+    if($current_controller == 'payment'){ 
+		
+		include('pages/partials/modal_payment.php');
 	}
 	
 	
@@ -37,21 +43,15 @@
 ?>   
     
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="<?php echo $assets_url?>site-blue/js/jquery.js"></script>    
-<script src="<?php echo $assets_url?>site-blue/js/bootstrap.js"></script>
-<script src="<?php echo $assets_url?>site-blue/js/bootstrap-select.min.js"></script>
-<script src="<?php echo $assets_url?>site-blue/js/modernizr.custom.js"></script>
-<script src="<?php echo $assets_url?>site-blue/js/grid2.js"></script>
-<script src="<?php echo $assets_url?>site-blue/js/prettify.js"></script> 
-<script src="<?php echo $assets_url?>site-blue/js/jquery-ui-1.10.0.custom.min.js"></script>  
+<script type="text/javascript" src="<?php echo $assets_url?>site-blue/js/jquery.js"></script>    
+<script type="text/javascript" src="<?php echo $assets_url?>site-blue/js/bootstrap.js"></script>
+<script type="text/javascript" src="<?php echo $assets_url?>site-blue/js/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="<?php echo $assets_url?>site-blue/js/modernizr.custom.js"></script>
+<script type="text/javascript" src="<?php echo $assets_url?>site-blue/js/grid2.js"></script>
+<script type="text/javascript" src="<?php echo $assets_url?>site-blue/js/prettify.js"></script> 
+<script type="text/javascript" src="<?php echo $assets_url?>site-blue/js/jquery-ui-1.10.0.custom.min.js"></script>  
 <script type="text/javascript" src="<?php echo $assets_url?>site-blue/js/jquery.icheck.min.js"></script>
 
-
-<!-- Added for Survey -- robert -->
-<script type="text/javascript" src="<?php echo $assets_url ?>site-blue/js/jquery.icheck.min.js"></script>
-
-<!--<script src="<?php echo $assets_url?>site/js/defines.js" type="text/javascript"></script>-->
-    
 <script type="text/javascript">
 	
     $(function () {
