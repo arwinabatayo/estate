@@ -73,8 +73,7 @@
                           <div id="collapse5" class="accordion-body in collapse" style="height: <?php echo ($_GET['ordertype'] == 'renew' || isset($_GET['plantype'])) ? 'auto' : '0' ?>; ">
 
 									<?php 
-<<<<<<< HEAD
-<<<<<<< HEAD
+									
 										$changeBtnId = 'retain';
 										$display = "display:none;";
 										if( isset($_GET['plantype']) && $_GET['plantype'] == 'create' ) {
@@ -111,18 +110,6 @@
 											include('page_plan_choose.php'); 
 										}	
 
-=======
-										
-										if( isset($_GET['plantype']) && $_GET['plantype'] == 'create' ){
-											include('page_plan_create.php'); 
-											
-										}else if( isset($_GET['plantype']) && $_GET['plantype'] == 'package' ){
-											include('page_plan_package.php'); 
-										}else{
-											//default
-											include('page_plan_retain.php'); 
-										}		
->>>>>>> e438bab68ebfa6d489efff84e197ff9a8738b3bc
 									 ?>
 
                           </div>
