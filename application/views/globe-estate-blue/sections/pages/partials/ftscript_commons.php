@@ -101,14 +101,14 @@
 		// forgot reference number link
 		$('a#lnk_forgot_refnum').on('click', function(){
 			$( '#my-application' ).modal( "hide" );
-			$( '#dialog_forgot_refnum' ).dialog({show:true});
+			$( '#forgot-reference' ).modal({show:true});
 
 			// show captcha image
 			createCaptcha('fr_captcha') ;
 		});
 
 		// validate email and captcha code - gellie
-		$('form#forgot-refnum button').on('click', function(){
+		$('form#forgot-refnum').submit(function(){
 	
 				var s = $('form#forgot-refnum div.status');
 				// TODO : add validation for email
@@ -135,12 +135,12 @@
 						
 						if(resp.status == 'success') {
 							// close current dialog box
-							$( '#dialog_forgot_refnum' ).dialog( "close" );
+							$( '#forgot-reference' ).modal( "hide" );
 							// open thank you dialog
-							$( '#dialog_saved_transaction_success' ).dialog( "open" );
+							$( '#04-thank-you' ).modal({show:true});
 							// show success message
-							$('#msg-success').html(resp.msg);
-							$('#ty-note').hide();
+							$('#ty-msg').html(resp.msg);
+							// $('#ty-note').hide();
 							$('#resend-link-info').hide();
 						} else {
 							s.addClass('alert-'+resp.status);
@@ -157,16 +157,15 @@
 
 		// set dialog for resume uncomp transaction - gellie
 		$('a#open_resume_uncomp_transaction').on('click', function(){
-			$( '#dialog_application_status' ).dialog( "close" );
-			$( '#dialog_resume_uncomp_transaction' ).dialog( "open" );
+			$( '#my-application' ).modal( "hide" );
+			$( '#uncomplete-transaction' ).modal({show:true});
 
 			// show captcha image
 			createCaptcha('ut_captcha') ;
 		});
 		
 		// validate email and captcha code - gellie
-		$('form#resume-uncomp-transaction button').on('click', function(){
-	
+		$('form#resume-uncomp-transaction').submit(function(){
 				var s =	$('form#resume-uncomp-transaction div.status');
 				// TODO : add validation for email
 				var email = $('#resume-uncomp-transaction input#email').val();
@@ -192,13 +191,13 @@
 						
 						if(resp.status == 'success') {
 							// close current dialog box
-							$( '#dialog_resume_uncomp_transaction' ).dialog( "close" );
+							$( '#uncomplete-transaction' ).modal( "hide" );
 							// open thank you dialog
-							$( '#dialog_saved_transaction_success' ).dialog( "open" );
+							$( '#04-thank-you' ).modal({show:true});
 							// show success message
-							$('#msg-success').html(resp.msg);
-							$('#ty-note').show();
-							$('#resend-link-info').show();
+							$('#ty-msg').html(resp.msg);
+							// $('#ty-note').show();
+							// $('#resend-link-info').show();
 						} else {
 							s.addClass('alert-'+resp.status);
 							s.html(resp.msg);
@@ -214,11 +213,12 @@
 		// resend link
 		$('a#resend_saved_transaction_lnk').on('click', function(){
 			// close thank you dialog
-			$( '#dialog_saved_transaction_success' ).dialog( "close" );
+			$( '#04-thank-you' ).modal( "hide" );
 			// reopen resume uncompleted transaction form
 			$('a#open_resume_uncomp_transaction').click();
 			// reset fields
-			$("input").val('');
+			$("#email").val('');
+			$("#code_id").val('');
 			// remove status
 			$('div.status').hide();
 		});
