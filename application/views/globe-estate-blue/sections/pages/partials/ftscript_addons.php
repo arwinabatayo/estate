@@ -82,6 +82,7 @@
 
 		});
 		
+		
 		$('button#btnAddonNextPage').click(function(){
 			
 				$.ajax({
@@ -113,6 +114,10 @@
 			window.location.href= base_url+'subscriber-info?subscriber_flag=false';
 		});
 		
+		$(document).on('click', '#showUploadForm', function(){
+			$('#exceed-limit').modal('hide');
+			$('#modifyPlan2').modal('show');
+		});	
 
 		
 		

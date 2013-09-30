@@ -7,8 +7,9 @@
 						include(ESTATE_THEME_BASEPATH.'/sections/sidebar_panel.php');
 					}
 				?>
-                
+        
                 <div class="span9">
+
                 	<?php if(!isset($_GET['subscriber_flag'])){ ?>
                     <div class="accordion2 account-content active" id="accordion3">
                         
@@ -353,6 +354,8 @@
 
                     <?php } ?>
 
+
+                 
                           
                 </div>
             

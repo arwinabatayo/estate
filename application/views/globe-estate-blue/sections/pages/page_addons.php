@@ -93,8 +93,8 @@
                         
                         <?php if(empty($subscriber_flag)){ ?>
                         <div class="pull-right">
-								<button class="blue-btn" id="btnAddonNextPage">Continue</button>&nbsp;&nbsp;
-								<button class="blue-btn">Load More</button>                                              
+								<button class="blue-btn" id="btnAddonNextPage" style="z-index:999999999">Continue</button> &nbsp;&nbsp;
+								<button class="blue-btn">Load More</button>   
                         </div>
                         <?php }else{ ?>
                             <div class="pull-right">

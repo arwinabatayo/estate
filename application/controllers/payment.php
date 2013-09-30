@@ -36,6 +36,9 @@ class Payment extends MY_Controller
 		//TODO - add restriction or redirect if account info object is empty -mark
 		if($account_info->account_id){
 			$this->_data->account_id      = $account_info->account_id;
+		}else{
+			//temp force login
+			redirect('home/login');
 		}
 		
 
@@ -62,7 +65,7 @@ class Payment extends MY_Controller
 	public function delivery_pickup()
 	{	
 		$this->_data->page  = 'payment_delivery_pickup';
-
+		
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
 	
@@ -70,6 +73,7 @@ class Payment extends MY_Controller
 	{
 		
 		$this->_data->page  = 'payment_shipping_address';
+		$this->_data->billing_address = $this->accounts_model->get_account_address($this->_data->account_id,'billing',FALSE);
 
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
@@ -127,7 +131,7 @@ class Payment extends MY_Controller
 	{
 		
 		$this->_data->page  = 'payment_confirm_order';
-
+		$this->_data->cartItems = $this->cart->contents();
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
 	

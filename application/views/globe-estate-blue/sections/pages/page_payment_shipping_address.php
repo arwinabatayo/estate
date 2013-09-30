@@ -2,117 +2,115 @@
 	                    
 
            <h3>Delivery</h3>
-            
-            <div class="row-fluid" id="delivery">
-            <form>
-	            <table width="100%" cellspacing="0" cellpadding="0">                         
-	                    <tbody><tr>
-	                    	<td>                	
-								<div class="account-group">
-									<div class="accordion-body">
-										<div class="accordion-inner">
-											<ul>
-												<li>
-													<div class="billing-container">
-														<input type="radio" value="billing" name="shipping_address" id="billing"><label for="billing">Ship to my Billing Address</label>
-													</div>
-													<div class="delContent" id="billingContent" style="max-width:850px;margin:0 auto;width:100%;background:#ffffff;padding:20px;">
-														<div class="billing-address fl">
-															<span>Billing Address</span>
-															<span>111 Manzanilla Street, San Jose Village 2 Binan, Laguna</span>
-														</div>
-														<div class="fl home-telephone">
-															<span>Home Telephone</span>
-															<span>09278475698</span>
-														</div>
-														<div class="fl mobile-number">
-															<span>Mobile Number</span>
-															<span>09164785786</span>
-														</div>
-														<div class="clr"></div>
-													</div>
-													
-												</li>
-												<li>
-													<div class="ship-container">
-														<input type="radio" value="ship" name="shipping_address" id="ship"><label for="ship">Ship to Different Address</label>
-													</div>
-													<div class="delContent" id="shipContent" style="display: none;">
-													
-													  <fieldset>
-														<div class="delivery-wrapper">
-															<div class="fl">
-																<span>Room / Floor / House Number</span>
-																<input type="text">
-															</div>
-															<div class="fl">
-																<span>Building Name / Street</span>
-																<input type="text">
-															</div>
-															<div class="fl">
-																<span>Subdivision / Barangay</span>
-																<input type="text">
-															</div>
-															<div class="clr"></div>
-															<div class="fl">
-																<span>Municipality / Town</span>
-																<input type="text">
-															</div>
-															<div class="fl">
-																<span>City / Province</span>
-																<input type="text">
-															</div>
-															<div class="fl">
-																<span>Postal Code / Zip Code</span>
-																<input type="text">
-															</div>
-															<div class="clr"></div>
-															<h2>Contact Details</h2>
-															<h4>Home Telephone Number</h4>
-															<div class="fl">
-																<span>Area Code</span>
-																<input type="text">
-															</div>
-															<div class="fl">
-																<span>Telephone Number</span>
-																<input type="text">
-															</div>
-															<div class="clr"></div>
-															<h4>Mobile Number</h4>
-															<div class="fl">
-																<span>Access Code</span>
-																<input type="text">
-															</div>
-															<div class="fl">
-																<span>Mobile Number</span>
-																<input type="text">
-															</div>
-															<div class="fl">
-																<span>Network Carrier</span>
-																<div class="styled-select">
-																   <select>
-																	  <option>Smart Postpaid</option>
-																	  <option>Smart Postpaid</option>
-																   </select>
-																</div>
-															</div>													
-															<div class="clr"></div>			
-														</div>
-													  </fieldset>
-														
-												</div>
-												</li>
-											</ul>	
+		    <div style="background:linear-gradient(to bottom, #ffffff 0%,#d7e2f1 100%);">
+		      
+					<div class="pickup">
+							<div class="del-option">
+								<ul>
+									<li>
+										<div class="billing-container">
+											<input type="radio" value="billing" name="shipping_address" id="billing"><label for="billing">Ship to my Billing Address</label>
 										</div>
-									</div>	  	
-								</div>						
-	                    	</td>                	
-	                    </tr>                
-	                </tbody>
-				</table>
-            <div class="plan-sum-btn adjuster">
-				<button class="blue-btn pull-right" id="shippingTypeBtn">Continue</button>
+										<div class="delContent myAdd" id="billingContent">
+	
+	
+				                            <table width="100%" cellpadding="5" cellspacing="0">
+				                                <tr class="title">
+				                                    <td>Billing Address</td>
+				                                    <td>Home Telephone</td>
+				                                    <td>Mobile Number</td>                                                                
+				                                </tr>
+				                                <tr>
+				                                    <td>
+													<?php //TODO - move to address formatter helper  ?>
+													<?php echo $billing_address->street.', '.$billing_address->subdivision .'<br />' ?>
+													<?php echo $billing_address->municipality.', '.$billing_address->city .' '. $billing_address->postal_code.'<br />' ?>
+													                            
+				                                    </td>
+				                                    <td>049 5117788</td>
+				                                    <td><?php echo $account_info->mobile_number ?></td>                                                                
+				                                </tr>                            
+				                            </table>
+	
+											<div class="clr"></div>
+										</div>
+										
+									</li>
+									<li>
+										<div class="ship-container">
+											<input type="radio" value="ship" name="shipping_address" id="ship"><label for="ship">Ship to Different Address</label>
+										</div>
+										<div class="delContent myAdd" id="shipContent" style="display: none;">
+				                            <table width="100%" cellpadding="2" cellspacing="0">
+				                                <tr>
+				                                    <td><span>Room / Floor / House Number</span></td>
+				                                    <td><span>Building Name / Street</span></td>
+				                                    <td><span>Subdivision / Barangay</span></td>                                                                
+				                                </tr>
+				                                <tr>
+				                                    <td><input type="text" id="unit" name="unit" required class="input-large" /></td>
+				                                    <td><input type="text" id="unit" name="street" class="input-large" /></td>
+				                                    <td><input type="text" id="unit" name="barangay" class="input-large" /></td>                                                                
+				                                </tr>                            
+				                                <tr>
+				                                    <td><span>Municipality/Town</span></td>
+				                                    <td><span>City/Province</span></td>
+				                                    <td><span>Postal Code/Zip Code</span></td>                                                                
+				                                </tr>
+				                                <tr>
+				                                    <td><input type="text" id="city" name="city" class="input-large" /></td>
+				                                    <td><input type="text" id="town" name="town" class="input-large" /></td>
+				                                    <td><input type="text" id="postal" name="postal" class="input-large" /></td>                                                                
+				                                </tr>   
+				                                <tr>
+													<td colspan="3">
+														<p class="bold">Contact Details</p>
+														<h6>Home Telephone Number</h6>
+													</td>
+				                                </tr>                         
+				                                <tr>
+				                                    <td><span>Area Code</span></td>
+				                                    <td><span>Telephone Number</span></td>
+				                                    <td></td>                                                                
+				                                </tr>
+				                                <tr>
+				                                    <td><input type="text" id="area" name="area" class="input-large" /></td>
+				                                    <td><input type="text" id="landline" name="landline" class="input-large" /></td>
+				                                    <td></td>                                                                
+				                                </tr>                            
+				                                <tr>
+													<td colspan="3">
+														<p>&nbsp;</p>
+														<h6>Mobile Number</h6>
+													</td>
+				                                </tr>                         
+				                                <tr>
+				                                    <td><span>Area Code</span></td>
+				                                    <td><span>Mobile Number</span></td>
+				                                    <td><span>Network Carrier</span></td>                                                            
+				                                </tr>
+				                                <tr>
+				                                    <td><input type="text" id="access_code" name="access_code" class="input-large" /></td>
+				                                    <td><input type="text" id="mobile_number" name="mobile_number" class="input-large" /></td>
+				                                    <td>
+														<select name="network_carrier" class="input-large">
+															<option value="smart">Smart Post Paid</option>
+															<option value="sun">Sun Cellular</option>
+														</select>
+				                                    </td>                                                                
+				                                </tr>                            
+				                            </table>
+															
+									</div>
+									</li>
+								</ul>	
+							</div>
+					</div>
+		    </div>
+			<div class="textright">
+					<br />
+					<button class="blue-btn" id="shippingTypeBtn">Continue</button>   
 			</div>
-			</form>		
-		</div>
             
+	
+

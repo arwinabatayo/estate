@@ -5,7 +5,7 @@
 							var prodName = $(this).attr('rel');
 			
 							if( !confirm('Are you sure you want to delete "'+prodName+'"?')) return;
-			
+
 							$.ajax({
 								url: base_url+'cart/delete',
 								data: 'keyid='+rowid+'&type',
@@ -15,7 +15,8 @@
 									var resp = jQuery.parseJSON( response );
 			
 									if(resp.status == 'success'){
-										$('#prod-item-'+rowid).slideUp('slow', function(){ $(this).remove() });
+										$('tr#prod-item-'+rowid).fadeOut('slow', function(){ $(this).remove() });
+										$('#cashoutLabelSubtotal').html(resp.total);
 										$('#cashoutLabel').html(resp.total);
 									}else{
 										alert(resp.msg);
@@ -53,7 +54,7 @@
 							success: function(response){
 								var resp = jQuery.parseJSON( response );
 								if(resp.status == 'success'){
-								    window.location.href= base_url+'payment/shipping_address';
+								    window.location.href= base_url+'shipping-address';
 								}
 							}, 
 							error: function(){
@@ -82,7 +83,8 @@
 				    	e.preventDefault();
 				    	
 				    	var shippingType = $('input[name=shipping_address]:checked').val();
-				    	alert(shippingType);
+				    	//alert(shippingType);
+				    	window.location.href= base_url + 'pickup-store';
 				    	/**
 				    	$.ajax({
 								url: base_url+'order/save_address',
@@ -121,7 +123,7 @@
 							success: function(response){
 								var resp = jQuery.parseJSON( response );
 								if(resp.status == 'success'){
-								    window.location.href= base_url + api;
+								    window.location.href= base_url + 'payment-checkout';
 								}
 							}, 
 							error: function(){
@@ -143,13 +145,24 @@
 				    	
 				    	
 				    	$(this).parent().parent().parent().fadeOut("slow", function(){
-    						var toView = '<div class="span6 lgreybg" ><div class="row-fluid"><span class="flow-title pull-left offset1"><i class="flow-icon icon-apprvicon pull-left"></i><span>Thank you for taking time to<br />answer our Survey Questions</span></span><p class="flow-instruction pull-left">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></div><div class="row-fluid"><p class="flow-instruction p-r-t-u-answer pull-left">We are about to post  what you\'ve purchased on your Facebook wall. Please confirm.</p><br /><div class="span6 flow-btns pull-left"><button class="blue-btn">Confirm</button></div><div class="span5 flow-btns pull-left"><button class="blue-btn">Cancel</button></div><div class="clr"></div></div></div>';
+    						var toView = '<div class="span6 lgreybg" ><div class="row-fluid"><span class="flow-title pull-left offset1"><i class="flow-icon icon-apprvicon pull-left"></i><span>Thank you for taking time to<br />answer our Survey Questions</span></span><p class="flow-instruction pull-left">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></div><div class="row-fluid"><p class="flow-instruction p-r-t-u-answer pull-left">We are about to post  what you\'ve purchased on your Facebook wall. Please confirm.</p><br /><div class="span6 flow-btns pull-left"><button class="blue-btn" data-toggle="modal" data-target="#postFB" data-dismiss="modal">Confirm</button></div><div class="span5 flow-btns pull-left"><button class="blue-btn">Cancel</button></div><div class="clr"></div></div></div>';
     						$(this).replaceWith(toView).fadeIn("slow");
     					});
 				    })
 				    
 				    
-				    
+				    //Pickup Stores-mark
+					$('.radio-btn input').iCheck({
+						checkboxClass: 'icheckbox_flat-red',
+						radioClass: 'iradio_flat-blue'
+					});
+					
+					$('#receipt-popup').modal({dynamic:true});
+					
+					$('.accordion').on('show hide', function (n) {
+						$(n.target).siblings('.accordion-heading').find('.accordion-toggle i').toggleClass('icon-arrow-up icon-arrow-down');
+						$(n.target).siblings('.accordion-heading').toggleClass('a-h-white a-h-whiteno');
+					});
 				    
 				    
 				    
