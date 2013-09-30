@@ -34,8 +34,8 @@
             </p>
         </div>
         <p>(Two-months credit card statement , ITR with BIR or Bank received stamp-Form 1700, W-2 or Form 2316, Certificate of Employment  and Compensation , One month  computerized payslip, Two months bank statement of account or passbook, three months certificate  of allotment plus employment contract)</p>
-
-        <p><button class="blue-btn">Upload</button></p>
+		<p id="uploading"></p>
+        <p><button class="blue-btn" id="financialUpload">Upload</button></p>
         
       </div>
     </div> 

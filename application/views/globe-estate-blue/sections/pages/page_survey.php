@@ -16,23 +16,23 @@
 							</li>
 							<li>
 								<input type="checkbox" name="survey" id="" value="healthandfashion"/>
-								<label for="Gadgets">Health & Fashion</label>
+								<label for="Gadgets">Health &amp; Fashion</label>
 							</li>
 							<li>
 								<input type="checkbox" name="survey" id="" value="foodanddining"/>
-								<label for="Gadgets">Food & Dining</label>
+								<label for="Gadgets">Food &amp; Dining</label>
 							</li>
 							<li>
 								<input type="checkbox" name="survey" id="" value="beautyandhome"/>
-								<label for="Gadgets">Beauty & Home</label>
+								<label for="Gadgets">Beauty &amp; Home</label>
 							</li>
 							<li>
 								<input type="checkbox" name="survey" id="" value="travelandphotography"/>
-								<label for="Gadgets">Travel & Photography</label>
+								<label for="Gadgets">Travel &amp; Photography</label>
 							</li>
 							<li>
 								<input type="checkbox" name="survey" id="" value="beautyandhome"/>
-								<label for="Gadgets">Beauty & Home</label>
+								<label for="Gadgets">Beauty &amp; Home</label>
 							</li>
 							<li>
 								<input type="checkbox" name="survey" id="" value="sports"/>
@@ -60,7 +60,7 @@
 	                    </div>
 	                </div>
 	                <div class="row-fluid">
-	                    <p class="flow-instruction">We successfuly received your payment & will send you an email confirmation shortly with your reference number for checking of status.</p>
+	                    <p class="flow-instruction">We successfuly received your payment &amp; will send you an email confirmation shortly with your reference number for checking of status.</p>
 	                </div>
 	            </div>
 	        </div>

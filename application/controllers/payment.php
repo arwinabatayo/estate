@@ -36,9 +36,6 @@ class Payment extends MY_Controller
 		//TODO - add restriction or redirect if account info object is empty -mark
 		if($account_info->account_id){
 			$this->_data->account_id      = $account_info->account_id;
-		}else{
-			//temp force login
-			redirect('home/login');
 		}
 		
 
