@@ -23,12 +23,13 @@
                                 if(isset($_GET['subscriber_flag'])){
                                     $subscriber_flag = "&subscriber_flag=" . $_GET['subscriber_flag'];
                                 }
-								if( isset($_GET['ordertype']) && $_GET['ordertype'] == 'newline' ){
-								
-									//GET NEWLINE
-									//IMPLEMENTED: MANAGE - PLATINUM ACCOUNT
-									//TODO: BUSINESS - 
-									include('page_ordertype_newline.php'); 
+                                if( isset($_GET['ordertype']) && $_GET['ordertype'] == 'newline' ){
+                                
+                                    //GET NEWLINE
+                                    //IMPLEMENTED: MANAGE - PLATINUM ACCOUNT
+                                    //TODO: BUSINESS - 
+                                    include('page_ordertype_newline.php'); 
+
 								
 								}else if( isset($_GET['ordertype']) && $_GET['ordertype'] == 'reset' ){
 								
@@ -69,58 +70,19 @@
                           <div class="accordion-heading">
                             <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapse5">SELECT PLAN <i class="tcoll collapse-toggle"></i></a>
                           </div>
-                          <div id="collapse5" class="accordion-body in collapse" style="height: <?php echo (  ( isset($_GET['ordertype']) && $_GET['ordertype']=='renew' ) || isset($_GET['plantype'])) ? 'auto' : '0' ?>; ">
+                          <div id="collapse5" class="accordion-body in collapse" style="height: <?php echo ($_GET['ordertype'] == 'renew' || isset($_GET['plantype'])) ? 'auto' : '0' ?>; ">
 
 									<?php 
-<<<<<<< HEAD
-										$changeBtnId = 'retain';
-										$display = "display:none;";
-										if( isset($_GET['plantype']) && $_GET['plantype'] == 'create' ) {
-											if(isset($_GET['bundles'])) {
-												switch ($_GET['bundles']) {
-													case "combos": include('page_plan_create_combos.php'); 
-																$changeBtnId="combos";
-																$gobackBtnId ="backPlans";
-																$display = "";
-																$goto = "&plantype=".$_GET['plantype'];
-													break;
-													case "boosters": include('page_plan_create_boosters.php'); 
-																$changeBtnId="boosters"; 
-																$gobackBtnId ="backCombos";
-																$display = "";
-																$goto = "&plantype=".$_GET['plantype']."&bundles=combos";
-													break;
-												}
-											} else {
-												include('page_plan_create.php');
-												$changeBtnId = $_GET['plantype'];
-											}
-										}else if( isset($_GET['plantype']) && $_GET['plantype'] == 'package' ){
-											include('page_plan_package.php');
-											$changeBtnId = $_GET['plantype'];
-										}else{
-											//default
-											include('page_plan_retain.php'); 
-										}	
-=======
 										
 										if( isset($_GET['plantype']) && $_GET['plantype'] == 'create' ){
-											
 											include('page_plan_create.php'); 
 											
 										}else if( isset($_GET['plantype']) && $_GET['plantype'] == 'package' ){
-											
 											include('page_plan_package.php'); 
-											
-										}else if( isset($_GET['plantype']) && $_GET['plantype'] == 'retain' ){
-
-											include('page_plan_retain.php'); 
-											
 										}else{
-											//default - CHOOSE YOUR PLAN
-											include('page_plan_choose.php'); 
+											//default
+											include('page_plan_retain.php'); 
 										}		
->>>>>>> 4cfa5b676bf61e6c381465fe5d6368a84b3614ca
 									 ?>
 
                           </div>
@@ -129,10 +91,7 @@
                     <div class="row-fluid link-bottom">
                         <a class="pull-left">Get A Prepaid Kit</a>
                         <div class="pull-right">
-                        	<!-- Updated by Robert 92913 -->
-                        	<!-- button class="blue-btn" onclick="window.location.href='<?php echo base_url() ?>addons'" id="<?php echo $changeBtnId; ?>">Continue</button-->
-                        	<button class="blue-btn" id="<?php echo $gobackBtnId; ?>" data-goto="<?php echo $goto; ?>" style="<?php echo $display; ?>">Go Back</button>
-                        	<button class="blue-btn" id="<?php echo $changeBtnId; ?>">Continue</button>
+                        	<button class="blue-btn" onclick="window.location.href='<?php echo base_url() ?>addons'">Continue</button>
                         	<br class="clear" />
                         	<br />
                             <ul class="">
