@@ -61,7 +61,7 @@ switch (ENVIRONMENT)
 		break;
 	case 'staging':
 		$db['default']['username'] = 'root';
-		$db['default']['password'] = 'jdam';
+		$db['default']['password'] = '';
 		$db['default']['database'] = 'globe_estate';
 		break;
 	case 'production':
