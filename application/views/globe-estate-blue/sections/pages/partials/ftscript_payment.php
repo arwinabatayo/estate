@@ -91,7 +91,9 @@
 				    	$(this).parent().next('div.delContent').slideDown();
 				    });
 				    
-				    
+					$(window).bind('beforeunload', function(){
+				        return 'Are you sure you want to leave?';
+				     });
 				    
 				    $('#shippingTypeBtn').click(function(e) {
 				    	e.preventDefault();
@@ -168,7 +170,11 @@
     						$(this).replaceWith(toView).fadeIn("slow");
     					});
 				    })
-				    
+
+					$('.check-eligibility-btn input').iCheck({
+						checkboxClass: 'icheckbox_flat-red',
+						radioClass: 'iradio_flat-blue'
+					});
 				    
 				    //Pickup Stores-mark
 					$('.radio-btn input').iCheck({
@@ -195,12 +201,12 @@
                                             }
 					 });
                                          
-                                         $("#prefered_loc_search").change(function(){
-                                                var location = $("#prefered_loc_search option:selected").text();
-						$.post(base_url+'payment/search_store', {store_name: location}, function(data){
-							$('.store_placeholder').html(data.temp);
-						 }, "json");
-                                        });
+					$("#prefered_loc_search").change(function(){
+							var location = $("#prefered_loc_search option:selected").text();
+							$.post(base_url+'payment/search_store', {store_name: location}, function(data){
+									$('.store_placeholder').html(data.temp);
+							}, "json");
+					});
 				    
 				    
 				    
