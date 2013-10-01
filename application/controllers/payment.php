@@ -148,13 +148,40 @@ class Payment extends MY_Controller
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
 	
+	/**
+	 * Update By Robert 10.01
+	 */
 	//Note/TODO: Thank you survey - Pls. make it ajax display after answering the survey
-	public function survey()
-	{	
+	public function survey() {	
+		$this->load->model('estate/survey_model');
+		
+		echo $this->session->subscriber_info->account_id;
+		$this->_data->survey_list = $this->survey_model->get_all_survey();
 		$this->_data->page  = 'survey';
 		$this->_data->show_breadcrumbs    =  false;
 		
 		$this->load->view($this->_data->tpl_view, $this->_data);
+	}
+	public function save_survey() {
+		$ret = "yes";
+		$account_info = (object) $this->session->userdata('subscriber_info');
+		
+		$post = $this->input->post();
+		$str = implode("|", $post['survey']);
+		
+		if(!empty($str)) {
+			$selected_survey_ids = str_pad($str,strlen($str)+2,"|",STR_PAD_BOTH);
+			
+			$this->load->model('estate/survey_model');
+			
+			$data['order_number'] = 12345;
+			$data['account_id'] = $account_info->account_id;
+			
+			$data['selected_offers'] = $selected_survey_ids;
+			
+			$this->survey_model->save_survey($data);
+		}
+		echo "yes";
 	}
 	
 	//Thank you for... / Check Eligibilty
