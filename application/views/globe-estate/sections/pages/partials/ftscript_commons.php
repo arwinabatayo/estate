@@ -294,13 +294,6 @@
 				});
 		});
 
-		$('a#printable-forms').click(function(){
-			$("#dialog_print_forms").dialog("open");
-		});
-
-		$('a#delivery-tracker').click(function(){
-			$("#dialog_delivery_tracker").dialog("open");
-		});
 
 		// function for downloading print forms on status page -- gellie
 		function downloadForm(_type)
