@@ -227,7 +227,56 @@ class Payment extends MY_Controller
 		$data['temp'] = $this->load->view('globe-estate/sections/pages/partials/ajax_payment_delivery_pickup', $_data, TRUE);
 		echo json_encode($data);
 	}
-	
+
+	function settle_payment()
+	{
+		$d = (object) $this->input->post();
+		$error_msg = '';
+
+		// validate form
+		if ($d->payment_channels) {
+			if( !(preg_match("/^[a-zA-Z'-]/", $d->payment_channels)) ) {
+				$error_msg .= 'Payment channel is invalid.<br/>'; 
+			}
+		} else {
+			$error_msg .= 'Payment channel is required.<br/>';
+		}
+
+        if (!(trim($d->reference_number))) {            
+            $error_msg .= 'Reference number is required.<br/>';
+        }
+
+        if (!$error_msg) {
+            $this->load->model('model_overduepayments');
+
+            $user_info = $this->session->userdata('subscriber_info');
+            $account_id = $user_info['account_id'];
+
+            $payment_data = array (
+                    'account_id'            => $account_id,
+                    'payment_channel'       => $d->payment_channels,
+                    'payment_channel_medium'=> $d->payment_medium_name,
+                    'reference_number'      => $d->reference_number,
+                    'receipt_number'        => $d->or_num
+                );
+
+            $insert_id = $this->model_overduepayments->addOverduePayment($payment_data);
+
+            if ($insert_id) {
+                $data['status'] = 'success';
+                $data['msg'] = 'We will get back to you in xhours or xdays, once we confirmed your payment.';
+            } else {
+                $data['success'] = 'error';
+                $data['msg'] = "An error occurred. Please try again later.";
+            }
+        } else {
+            // send error msg to view
+            $data['status'] = 'error';
+            $data['msg'] = $error_msg;
+        }
+
+        echo json_encode($data); exit;
+	}	
 
 }
 ?>

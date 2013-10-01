@@ -45,11 +45,6 @@
 			var sel = $(this).siblings('img').attr('id');
 			createCaptcha(sel) ;
 		});	
-		
-		$('a#get-prepaid-kit').click(function(){
-			// show bubble info where add to cart link is present
-			$('#tooltip-prepaid-kit').dialog("open");
-		});
 
 		// set dialog for opening refnum verification - gellie
 		$('a#open_application_status').on('click', function(){
