@@ -613,6 +613,40 @@ input.pop-email-input{border:2px solid #bdc3c7; width:90%; margin:10px 0 0 0; pa
 .plan-tile-option-pink .plan-off{    font-family:'fs_elliot_cyrillicregular';     font-size:13px;     background-color:#7ebe36;     padding:3px}
 
 .plan-tile-option-pink-pink .ribbon-new{background:url(../images/ribbon-new.png) no-repeat;  width:86px;  height:86px;  position:absolute;  margin-left:125px}
+
+
+/*Robert*/
+.plan-tile-option-green {
+	width:211px; 
+	height:163px;
+	background:url(../images/tile-plan-bg3.jpg) repeat-x; 
+	text-align:center;
+	color:#FFFFFF;
+	display: table;
+	cursor:pointer;
+}
+.plan-tile-option-green .plan-name{
+	font-family: 'fs_elliot_cyrillicregular';
+	font-size:25px;
+	font-weight:bold;
+}
+.plan-tile-option-green .plan-off{
+	font-family: 'fs_elliot_cyrillicregular';
+	font-size:13px;
+	background-color:#7ebe36;
+	padding: 3px;
+}
+
+.plan-tile-option-green-green .ribbon-new{
+	background:url(../images/ribbon-new.png) no-repeat; 
+	width:86px; 
+	height:86px;
+	position:absolute;
+	margin-left: 125px;
+}
+/*Robert*/
+
+
 .plan-text{margin-right:0px; padding:0 10px; border-right:1px #d7d7d7 solid}
 .plan-text:last-child{margin-right:0px; padding:0 15px; border-right:none}
 .plan-text span{font-size:12px}
