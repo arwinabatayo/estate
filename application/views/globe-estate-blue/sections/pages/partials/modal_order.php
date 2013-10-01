@@ -92,3 +92,149 @@
         <div class="clr"></div>
     </div>
 </div>
+
+<!--<div id="receipt-popup" class="modal hide fade pop-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-body pop-content">
+        
+        
+        <div class="clr"></div>
+    </div>
+</div>-->
+
+<div id="receipt-popup" class="modal fade pop-modal">
+        <div class="modal-body pop-content">
+            <button type="button" class="close pop-close" data-dismiss="modal" aria-hidden="true">×</button>   
+            <div class="r-p-logo fl"><img src="images/icons/icon_globe.png" width="" height="" alt=""/></div>
+            <div class="r-p-number fr">Receipt i768576957955</div>
+            
+            <div class="clr"></div>
+            
+            <div class="r-p-title">
+                <p class="fl">Date: July 18, 2013</p>
+                <p class="fr">Order Number: 645</p>
+                
+                <div class="clr"></div>
+            </div>
+            
+            <div class="r-p-title2"><p>Billing Information</p></div>
+            
+            <div class="r-p-personal-info-left fl">
+                <p>Allan V. Argosino</p>
+                <p>
+                    111 Manzanilla St. San Jose Village 2<br />
+                    Binan, Lzaguna
+                </p>
+                <p>
+                    <strong>PHONE</strong><br />
+                    0225365869
+                </p>
+                <p>
+                    <strong>EMAIL</strong><br />
+                    Avargosino@gmail.com
+                </p>
+            </div>
+            
+            <div class="r-p-personal-info-right fr">
+                <ul>
+                    <li>
+                        <label for="NAME">NAME</label> 
+                            <span>Allan V. Argosino</span>
+                            
+                            <div class="clr"></div>
+                    </li>
+                    <li>
+                        <label for="PAID">PAID</label>  
+                            <span>(Visa) P 19, 750.00</span>
+                    
+                            <div class="clr"></div>
+                    </li>
+                    <li>
+                        <label for="EMAIL">EMAIL</label> 
+                            <span>Avargosino@gmail.com</span>
+                            
+                            <div class="clr"></div>
+                    </li>
+                    <li>
+                        <label for="ACCOUNT NO.">ACCOUNT NO.</label> 
+                            <span>############9876</span>
+                            
+                            <div class="clr"></div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="clr"></div>
+            
+            <ul class="r-product-details">
+                <li class="r-p-title3">
+                    <span class="col-lg-2">Product</span>
+                    <span class="col-lg-3">Item Description</span>
+                    <span class="col-lg-1">Qty</span>
+                    <span class="col-lg-2">Unit Price</span>
+                    <span class="col-lg-2">% Discount</span>
+                    <span class="col-lg-2">Total</span>
+                    
+                    <div class="clr"></div>
+                </li>
+                <li>
+                    <div class="col-lg-2"><div class="r-p-frame"><img src="images/item_phone.jpg" width="52" height="80" alt=""/></div></div>
+                    <div class="col-lg-3">
+                        <p>iPhone 5<br />16 GB</p>
+                        <p>Package Plan 2499</p>
+                    </div>
+                    <div class="col-lg-1">1</div>
+                    <div class="col-lg-2">P 12,500.00</div>
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-2">P 12,500.00</div>
+                    
+                    <div class="clr"></div>
+                </li>
+                <li>
+                    <div class="col-lg-2"><div class="r-p-frame"><img src="images/item_gadget_care.jpg" width="67" height="78" alt=""/></div></div>
+                    <div class="col-lg-3">
+                        <p>Gadget Care</p>
+                        <p>Add-Ons</p>
+                    </div>
+                    <div class="col-lg-1">1</div>
+                    <div class="col-lg-2">P 4,500.00</div>
+                    <div class="col-lg-2">Less 20%</div>
+                    <div class="col-lg-2">P 4,500.00</div>
+                    
+                    <div class="clr"></div>
+                </li>
+                <li>
+                    <div class="col-lg-2"><div class="r-p-frame"><img src="images/item_headset.jpg" width="70" height="79" alt=""/></div></div>
+                    <div class="col-lg-3">
+                        <p>iPhone 5<br />16 GB</p>
+                        <p>Package Plan 2499</p>
+                    </div>
+                    <div class="col-lg-1">1</div>
+                    <div class="col-lg-2">P 4,500.00</div>
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-2">P 4,500.00</div>
+                    
+                    <div class="clr"></div>
+                </li>
+                <li class="r-p-cost">
+                    <label for="Subtotal">Subtotal</label>
+                        <span class="span2">P 19,600.00</span>
+                        
+                        <div class="clr"></div>
+                    <label for="Shipping and Handling Cost">Shipping and Handling Cost</label>
+                        <span class="span2">P 850.00</span>
+                        
+                        <div class="clr"></div>
+                </li>
+                <li class="r-p-title4">
+                    <label for="Total">Total</label>
+                        <span>P 20,450.00</span>
+                        
+                        <div class="clr"></div>
+                </li>
+            </ul>
+            
+            <div class="clr"></div>
+            
+            <input type="submit" name="submit" value="Print" class="blue-btn"/>
+        </div>
+    </div>
