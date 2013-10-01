@@ -91,10 +91,12 @@
 				    	$(this).parent().next('div.delContent').slideDown();
 				    });
 				    
+				    <?php if($current_method=='shipping_address'){ ?>
 					$(window).bind('beforeunload', function(){
 				        return 'Are you sure you want to leave?';
 				     });
-				    
+				    <?php } ?>
+				      
 				    $('#shippingTypeBtn').click(function(e) {
 				    	e.preventDefault();
 				    	

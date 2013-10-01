@@ -52,12 +52,8 @@
 <script type="text/javascript" src="<?php echo $assets_url?>site-blue/js/jquery-ui-1.10.0.custom.min.js"></script>  
 <script type="text/javascript" src="<?php echo $assets_url?>site-blue/js/jquery.icheck.min.js"></script>
 
-<!-- Added for Survey -- robert -->
-<script type="text/javascript" src="<?php echo $assets_url ?>site-blue/js/jquery.icheck.min.js"></script>
-<!-- Robert 930 -->
+<!-- #Robert 930 -->
 <script type="text/javascript" src="<?php echo $assets_url ?>site-blue/js/ajaxfileupload.js"></script>
-
-<!--<script src="<?php echo $assets_url?>site/js/defines.js" type="text/javascript"></script>-->
 
 <script type="text/javascript">
 	
