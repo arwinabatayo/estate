@@ -393,7 +393,12 @@
 				$('#tooltip-prepaid-kit').dialog("open");
 			});
 			
+
 			$('button#retain').click(function(){
+				var subs_flag = $("#subs_flag").val();
+				window.location = base_url+'addons'+subs_flag;
+
+			$('button#retain, button#package').click(function(){
 				var subs_flag = $("#subs_flag").val();
 				window.location = base_url+'addons'+subs_flag;
 			});
