@@ -9,7 +9,7 @@
                           </div>
             
             <div class="row-fluid" id="delivery">
-            <form method="post" action="/estate_new/subscriber/saveCompanyPersonalInfo">
+            <form method="post" action="/estate_new/subscriber/saveCompanyPersonalInfo?info_type=company">
               	
 								<div class="account-group">
 									<div class="accordion-body">
@@ -201,10 +201,96 @@
 
 			<div>
 				<div>
+					<strong>Address</strong></br>
 					<input type="text" name="address">
 				</div>
 			</div>
+
+			<div>
+				<div>
+					<strong>Barangay</strong></br>
+					<input type="text" name="fname">
+				</div>
+				<div>
+					<strong>Municipality / Town</strong></br>
+					<input type="text" name="lname">
+				</div>
+			</div>
+
+			<div>
+				<div>
+					<strong>City / Province</strong></br>
+					<input type="text" name="fname">
+				</div>
+				<div>
+					<strong>Postal Code / Zip Code</strong></br>
+					<input type="text" name="lname">
+				</div>
+			</div>
+
+
+			<p>How would you like to receive the billing statement?</p>
+
+		    <div>
+				<div>
+					<input type="radio" name="detailed_billing_type" value="soft"> Soft copy, email to this address
+				</div>
+				<div id="detailed_billing_email">
+					<input type="text" name="detailed_billing_email">
+				</div>
+				<div>
+					<input type="radio" name="detailed_billing_type" value="hard"> Hard copy, send to this preffered address
+				</div>
+
+				<div>
+				<div>
+					<strong>First Name</strong></br>
+					<input type="text" name="fname">
+				</div>
+				<div>
+					<strong>Last Name</strong></br>
+					<input type="text" name="lname">
+				</div>
+				<div>
+					<strong>Department</strong></br>
+					<input type="text" name="department">
+				</div>
+			</div>
+
+			<div>
+				<div>
+					<strong>Address</strong></br>
+					<input type="text" name="address">
+				</div>
+			</div>
+
+			<div>
+				<div>
+					<strong>Barangay</strong></br>
+					<input type="text" name="fname">
+				</div>
+				<div>
+					<strong>Municipality / Town</strong></br>
+					<input type="text" name="lname">
+				</div>
+			</div>
+
+			<div>
+				<div>
+					<strong>City / Province</strong></br>
+					<input type="text" name="fname">
+				</div>
+				<div>
+					<strong>Postal Code / Zip Code</strong></br>
+					<input type="text" name="lname">
+				</div>
+			</div>
+			</div>
+
+
 		</div>
+
+		<p class="textcenter"><button id="btnGetNewlineSubs" class="blue-btn">Continue</button></p>
 
     </div>
 

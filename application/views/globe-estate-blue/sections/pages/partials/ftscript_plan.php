@@ -23,8 +23,19 @@
 			});
 			
 			$('button#btnGetNewline').click(function() {
-					//TODO - call ajax here to send email to OM
-					$('#order-thankyou').modal('show');
+
+			    	$.ajax({
+						url: base_url+'plan/send_newline_request',
+						data: 'task=send_newline_request',
+						type:'post',
+						success: function(response){
+								$('#order-thankyou').modal('show');
+						}, 
+						error: function(){
+							alert('Email is not sent. System error');	
+						}
+					});
+				
 			});
 			
 			$('button#btnGetNewlineSubs').click(function() {
@@ -58,8 +69,16 @@
 					},
 					type:'post',
 					success: function(response){
-						
-						window.location = "subscriber/companyPersonalInfo";
+						if(number_line == ">10"){
+							$("#business-10").modal("show");
+
+							$("#close-business-10").click(function(){
+								window.location = base_url;
+							});
+							//
+						}else{
+							window.location = "subscriber/companyPersonalInfo";
+						}
 					}, 
 					error: function(){
 						alert('Some error occured or the system is busy. Please try again later');	
@@ -353,6 +372,9 @@
 							document.getElementById("s-industry").selectedIndex = 0;
 							document.getElementById("e-industry").selectedIndex = 0;
 						}else if(parseInt($(this).val()) == 2){
+
+							$("#select-plan-order-type").click();
+
 							$("#order-type-new-line-section-footer").slideUp();
 							//$( "#plan-order-page" ).accordion( "option", "active", 1 );
 							$("#industry-section").slideUp();

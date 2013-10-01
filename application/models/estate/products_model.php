@@ -159,59 +159,40 @@ class Products_model extends CI_Model
 	 * 
 	 * @param string $product_id(required)
 	 */
-	function get_coexist($product_id, $is_acceptable="0") {
+function get_coexist($product_id, $is_acceptable="0") {
 		$product_type = array('combos'=>'combos','boosters'=>'boosters');
 		
 		$out = array();
-		$out['coexist'] = TRUE;
+		$coexist = "no";
 		$cart_contents = $this->cart->contents();
-		
-// 		$this->db->where('corb_id_2', $product_id);
-// 		$this->db->where('corb_id_1', $product_id);
-// 		$this->db->where('is_acceptable', $is_acceptable);
-		
-// 		$query = $this->db->get('estate_coexistence');
-		$query = $this->db->query("SELECT * FROM estate_coexistence WHERE (corb_id_1='{$product_id}' 
-									OR corb_id_2='{$product_id}') 
+
+		$query = $this->db->query("SELECT * FROM estate_coexistence WHERE corb_id_2='{$product_id}' 
 									AND is_acceptable='{$is_acceptable}'");
-		
-		
 		$row = $query->result_array();
 		
-		
 		if(!empty($row)) {
-			
 			foreach($row as $key => $value) {
-				if($value['corb_id_1'] == $product_id) {
-					$notValid[$value['corb_id_2']] = $value['corb_type'];
-				} else {
-					$notValid[$value['corb_id_1']] = $value['corb_type'];
-				}
-// 				$notValid[$value['corb_id_1']] = $value['corb_type'];
-				
+				$notValid[$value['corb_id_1']] = $value['corb_type'];
 			}
-			
 			foreach($cart_contents as $k => $v) {
 				if(array_key_exists(trim($cart_contents[$k]['product_type']), $product_type)) {
-					
 					if(!array_key_exists($cart_contents[$k]['product_id'], $notValid)) {
 						// if not in array, product id is available
-						$out['coexist'] = TRUE;
+						$coexist = "no";
 					} else {
 						// else if in array, product id is coexist
-						$out['coexist'] = FALSE;
-						$out['product_name'] = $cart_contents[$k]['name'];
+						$coexist = "yes";
 						$out['product_name'] = $cart_contents[$k]['name'];
 						$out['rowid'] = $cart_contents[$k]['rowid'];
 						$out['product_id'] = $cart_contents[$k]['product_id'];
 						$out['coex_product_type'] = $cart_contents[$k]['product_type'];
 						$out['corb_type'] = $notValid[$cart_contents[$k]['product_id']];
+						break;
 					}
-					
 				}
 			}
 		}
-		
+		$out['coexist'] = $coexist;
 		return $out;
 	}
 	/**
@@ -309,4 +290,42 @@ class Products_model extends CI_Model
 		return $row->cashout_val;
 	}
 	
+
+	/**
+	 * Robert functions for ULTIMA
+	 */
+	function get_plans($gadget_id, $is_active=1) {	
+		$query = $this->db->query("	SELECT 
+									esplan.id,
+									esplan.title,
+									esplan.description,
+									esplan.long_desc,
+									esplan.plan_cid,
+									esplan.total_pv,
+									esplan.max_gadget_pv,
+									esplan.amount, 
+									esgadcahout.cashout_val
+									FROM estate_plans esplan 
+									INNER JOIN estate_gadget_cash_out esgadcahout
+									ON esplan.id = esgadcahout.plan_id
+									WHERE esgadcahout.gadget_id = {$gadget_id}");
+		
+		$data = $query->result();
+		$query = $this->db->query("	SELECT FOUND_ROWS() AS 'count'");
+		return $data;
+	}
+// 	function get_plans_bundles($sBundle) {
+// 		if(!empty($sBundle)) {
+// 			$this->db->where('name', strtolower(trim($sBundle)));
+// 			$query = $this->db->get('estate_plan_bundle_type');
+// 			$row = $query->row();
+// 			$bundleId = $row->id;
+			
+// 			$query = $this->db->query("SELECT * FROM estate_{$sBundle} WHERE id = {$bundleId}");
+// 			$data = $query->result();
+			
+// 			return $data;
+// 		}
+		
+// 	}
 }

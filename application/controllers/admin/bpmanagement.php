@@ -39,7 +39,7 @@ class Bpmanagement extends MY_Controller
 		// update status and get current one
 		$curr_status = $this->model_bpmanagement->updateProcessByCode($d->process_code);
 		// convert status to word
-		if ($curr_status == 1) { $curr_status = "Enable"; } else { $curr_status = "Disable"; }
+		if ($curr_status == 1) { $curr_status = "Disable"; } else { $curr_status = "Enable"; }
 		// send data to view
 		echo json_encode(array('status' => 'success', 'curr_status' => $curr_status));
 	}

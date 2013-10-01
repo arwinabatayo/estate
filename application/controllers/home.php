@@ -26,7 +26,8 @@ class Home extends MY_Controller
 		
 		//print_r($this->_data->site_config);
 		//flag for testing
-		define('IS_GLOBE_API_ENV',TRUE);
+		define('IS_GLOBE_API_ENV', TRUE);
+		define('DEV_ENV', true);
 	}
 	
 	public function index()
@@ -47,7 +48,7 @@ class Home extends MY_Controller
 	
 	//temp force login
 	public function login() {
-		if($this->_initSubscriberInfo('09151178863')){
+		if($this->_initSubscriberInfo('9151178863')){
 			redirect('plan');
 		}
 		
@@ -145,10 +146,10 @@ class Home extends MY_Controller
 		$this->_data->show_breadcrumbs    =  false;
 		$this->_data->page = 'test';
 		
-		//$acc_info = $this->accounts_model->get_account_info_by_id('9151178863');	
+		$acc_info = $this->accounts_model->get_account_info_by_id('9151178863');	
 		
 		//$this->_initSubscriberInfo('9151178863');
-		$acc_info  = $this->accounts_model->is_msisdn_exist('09151178863');
+		//$acc_info  = $this->accounts_model->is_msisdn_exist('9151178863');
 		
 		//print_r($acc_info);
 						  
@@ -163,7 +164,7 @@ class Home extends MY_Controller
 		$this->_data->page = 'home';
 		$this->_data->page_title = 'SMS Verification';
 		$this->_data->is_reserve = $this->reserve_enabled;
-		echo $this->_data->tpl_view;
+
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
 	
@@ -203,7 +204,7 @@ class Home extends MY_Controller
                         $verification_code = random_string('alnum', 6);
                         $message = "Please use this code ".$verification_code." to verify your account.";
                         
-                        if(IS_GLOBE_API_ENV){
+                        if(IS_GLOBE_API_ENV && !DEV_ENV){
 							$sms_status = $this->api_globe->api_send_sms($mobile_number, $message, "Project Esate");
 						}else{
 							$sms_status = TRUE;
@@ -280,6 +281,10 @@ class Home extends MY_Controller
 		if(!$try)
 			$try = 0;
 		
+		if (DEV_ENV) {
+			$verification_info['code'] = "test";
+		}
+
 		if($verification_code) {
 
 			if($verification_code == $verification_info['code']) {
@@ -422,7 +427,7 @@ class Home extends MY_Controller
 		echo json_encode($data);
 		exit;
 	}
-
+	
 	function subscriber_info() 
 	{
 		$this->_data->page = 'subscriber';
@@ -472,10 +477,12 @@ class Home extends MY_Controller
                         'refnum'=> $refnum
                     );
             break;
+            
         }
 
         return $this->email->send_email_api($email_to, $subject, $email_tpl, $msg, $sender ); 
         
+     
     }
     
     //move this function to helper -- SOON
@@ -630,7 +637,7 @@ class Home extends MY_Controller
 
     	echo json_encode($data); exit;
     }
-
+	
 
 }
 
