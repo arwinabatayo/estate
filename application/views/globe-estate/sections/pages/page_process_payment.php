@@ -58,7 +58,7 @@
 	
 	showPreloader();
 	
-	function etchos(){
+	function saveOrder(){
 		$.ajax({
 			url: base_url+'order/save_order',
 			data: {'email' : "mhaark29@gmail.com" },
@@ -66,13 +66,13 @@
 			success: function(response){
 				
 				closePreloader();
-				window.location ="<?php echo base_url() ?>payment/thankyou"
+				window.location ="<?php echo base_url() ?>survey"
 			},
 			error: function(){
 				alert('Some error occured or the system is busy. Please try again later');
 			}
 		});
 	}
-			$(document).ready(function(){ etchos(); })
+			$(document).ready(function(){ saveOrder(); })
 </script>
 
