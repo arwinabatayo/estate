@@ -241,82 +241,29 @@
 				
 			});
 			// jez
-			$("a.btnAddPackagePlan").parent().parent().each(function(){
-				$(this).click(function(i){
+			
+				$("a.btnAddPackagePlan").click(function(i){
 					var that = $(this);
-					$.ajax({
-						url: base_url+'plan/getpackageplancombos',
-						data: {'plan_id' : parseInt($(this).children("div.my-plan-id").text()) },
-						type:'post',
-						success: function(response){
-
-							var resp = jQuery.parseJSON( response );
-							//console.log(resp)
-							for(var ctr = 0; ctr < resp.length; ctr++){
-								//console.log(resp[ctr]['combo_type']);
-								var combo_type = resp[ctr]['category'].toLowerCase();
-								
-								$("#combo-type-" + combo_type + "-desc").text(resp[ctr]['description']);
-								$("#combo-type-" + combo_type).css('display', 'block')
-
-							}
-
-							$("#combo-type").show();
-
-							var plan_payment = that.find("a").text().split("Plan ")[1];
-
-							
-
-							$("#PackagePlanCartWidget").html("<br /><p><b>Plan:</b> " + plan_payment + "</p><p><b>Monthly Payment:</b> " + plan_payment + "</p><p><b>Text:</b> " + $("#combo-type-text-desc").text() + "</p><p><b>Call:</b> " + $("#combo-type-call-desc").text() + "</p><p><b>Surf:</b> " + $("#combo-type-surf-desc").text() + "</p><p><b>IDD:</b> " + $("#combo-type-idd-desc").text() + "</p>");
-							$("#PackagePlanCartWidget").slideDown();
-
-							
-						}, 
-						error: function(){
-							alert('Some error occured or the system is busy. Please try again later');	
-						}
-					});
-
-					/*$.ajax({
-						url: base_url+'plan/getpackageplangadgetcashout',
-						data: {'plan_id' : parseInt($(this).children("div.my-plan-id").text()) },
-						type:'post',
-						success: function(response){
-
-							var resp = jQuery.parseJSON( response );
-							
-							//$(".cashoutLabel").text(resp[0]['cashout_val'])
-
-							
-
-							
-						}, 
-						error: function(){
-							alert('Some error occured or the system is busy. Please try again later');	
-						}
-					});*/
-
-
 
 
 					//add to cart functionality for additional and new line
 
-					var itemid    = $(this).find("a").attr('data-id');
-					var itemname    = $(this).find("a").attr('data-name');
-					var plan_pv    = $(this).find("a").attr('data-pv');
+					var itemid    = $(this).attr('data-id');
+					//var itemname    = $(this).find("a").attr('data-name');
+					var plan_pv    = $(this).attr('data-pv');
 					
 					//alert(itemid + " " + itemname + " " + plan_pv);
 					
 					$.ajax({
 						url: base_url+'cart/addtocart',
-						data: 'product_type=package_plan&product_id='+itemid+'&plan='+itemid+'&device=1',
+						data: 'product_type=package_plan&product_id='+itemid+'&plan='+itemid+'&device=7',
 						type:'post',
 						success: function(response) {
 							//alert(response);
 							var resp = jQuery.parseJSON(response);
 
 
-							var cartItem = '<div id="prod-item-'+resp.rowid+'" class="itemPlan" style="display:none">'+
+							/*var cartItem = '<div id="prod-item-'+resp.rowid+'" class="itemPlan" style="display:none">'+
 							'<div class="fleft"><span class="productName block"><b>'+itemname+
 							'</b></span></div><span class="icoDelete"> <a class="btnDelete" href="javascript:void(0)" id="'+resp.rowid+'">'+
 							'<i class="icon-remove"></i></a> </span><br class="clear" /></div>\n';
@@ -337,7 +284,7 @@
 								$("#planid").attr('data-id',itemid);
 								$("#planid").attr('data-cashout',resp.total);
 								$('#prod-item-'+resp.rowid).show('slow');
-							}
+							}*/
 							
 							
 						}, 
@@ -348,7 +295,7 @@
 
 					// end of add to cart functionality
 				});
-			});
+
 
 			//jez
 				$("input[name=new-line-non-globe-option]").each(function(){
@@ -447,7 +394,8 @@
 			});
 			
 			$('button#retain').click(function(){
-				window.location = base_url+'addons';
+				var subs_flag = $("#subs_flag").val();
+				window.location = base_url+'addons'+subs_flag;
 			});
 
 

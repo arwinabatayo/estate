@@ -1,3 +1,4 @@
+	     
 	     <div class="span9">
                     <div class="accordion2 account-content" id="accordion3">
                         <div class="accordion-group account-content-grp">
@@ -15,7 +16,7 @@
 										
 										<p>Lorem ipsum dolor sit amet, consectetur adpiscing elit Cros justo nulla, commodo nec mauris ut, interdum adipiscing nisi. Duis ut mattis ligula. Suspendisse a dolor eu.</p><br />
 										
-										<form method="post" action="/estate_new/subscriber/saveCompanyPersonalInfo?info_type=company">
+										<form method="post" action="/estate_new/subscriber/saveCompanyPersonalInfo?info_type=company"  enctype="multipart/form-data">
 											<label for="Company Name">Company Name</label>
 											<input type="text" name="name" id="name" class="input-block-level"/><br /><br />
 										
@@ -52,11 +53,14 @@
 											
 											<div class="span6">
 												<label for="City/Province">City/Province</label>
+												<?php 
+													//echo "<pre>"; var_dump($get_city_province); ?>
 												<select name="city" id="city" class="city span11">
-													<option value="">- SELECT -</option>
-													<option value="">City I</option>
-													<option value="">City II</option>
-													<option value="">City III</option>
+													<?php 
+													//echo "<pre>"; var_dump($get_city_province);
+													for($ctr = 0; $ctr < count($get_city_province); $ctr++){ ?>
+														<option value="<?php echo $get_city_province[$ctr]->id; ?>"><?php echo $get_city_province[$ctr]->province_city; ?></option>
+													<?php } ?>
 												</select>
 											</div>
 											
@@ -70,10 +74,9 @@
 											<div class="span6">
 												<label for="Industry">Industry</label>
 												<select name="industry" id="industry"  class="industry span11">
-													<option value="">- SELECT -</option>
-													<option value="">Industry I</option>
-													<option value="">Industry II</option>
-													<option value="">Industry III</option>
+													<?php for($ctrI = 0; $ctrI < count($industry); $ctrI++){ ?>
+														<option value="<?php echo $industry[$ctrI]['industry_id']; ?>"><?php echo $industry[$ctrI]['industry_name']; ?></option>
+													<?php } ?>
 												</select>
 											</div>
 											
@@ -147,11 +150,14 @@
 											<div class="span6">
 												<label for="Attach BIR Certificate/Sample Account No.">Attach BIR Certificate/Sample Account No.</label>
 												
-												<div class="fileupload fileupload-new" data-provides="fileupload">
+												<!--<div class="fileupload fileupload-new" data-provides="fileupload">
 													<div class="input-append">
-														<div class="uneditable-input span5"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-file"><span class="fileupload-new">Attach</span><span class="fileupload-exists">Change</span><input type="file" class="" name="file_data"/></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+														<div class="uneditable-input span5"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-file"><span class="fileupload-new">Attach</span><span class="fileupload-exists">Change</span>
+															<input type="file" class="" name="file_data"/>
+														</span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
 													</div>
-												</div>
+												</div>-->
+												<input type="file" class="" name="file_data"/>
 											</div>
 											
 											<div class="clr"></div>
@@ -173,7 +179,8 @@
 											</div>
 											
 											<div class="clr"></div>
-											<input type="hidden" name="from_page" value="<?php echo $this->uri->uri_string() . '?billing=true'; ?>">
+											<input type="hidden" name="from_page" value="<?php echo base_url() . $this->uri->uri_string() . '?billing=true'; ?>">
+											<input type="hidden" name="MAX_FILE_SIZE" value="100000" />
 											<input type="submit" value="Continue" class="blue-btn"/>
 										</form>
 									</div>
@@ -201,7 +208,7 @@
 										
 										<div class="clr"></div>
 										
-										<div id="soft_copy" style="margin-left:25px; display:block;">
+										<div id="soft_copy" style="margin-left:25px; display:none;">
 											<label for="Email">Email</label>
 											<input type="text" name="detailed_billing_email" id="detailed_billing_email"/>
 										</div><br />

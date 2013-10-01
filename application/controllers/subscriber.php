@@ -37,7 +37,7 @@ class Subscriber extends MY_Controller
 		//$this->load->model('estate/accounts_model');
 		
 		//$this->_data->account_m = $this->accounts_model;
-      
+      	
         
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
@@ -45,22 +45,32 @@ class Subscriber extends MY_Controller
 	public function companyPersonalInfo()
 	{
 		$this->load->model('estate/plans_model');
+		$this->load->model('estate/subscriber_model');
 
 		$this->_data->page = "company_personal_info";
+
+		$this->_data->get_city_province = $this->subscriber_model->get_city_province();
+
 		$this->_data->industry = $this->plans_model->getIndustry();
+
 		$this->load->view($this->_data->tpl_view, $this->_data);
 		//$this->load->view();
 	}
 
 	public function saveCompanyPersonalInfo()
 	{
+		//echo $_FILES['file_data']['tmp_name']; exit;
+
 		$this->load->model('estate/subscriber_model');
+		$this->load->model('estate/blob_model');
 		
 		$info_type = $this->input->get("info_type");
+		
 
 		$data = array();
 
 		if($info_type == "company"){
+			$file = addslashes(file_get_contents($_FILES['file_data']['tmp_name']));
 			$data['company_name'] = $this->input->post('name');
 			$data['unit_floor'] = $this->input->post('unit');
 			$data['building_name_street_no'] = $this->input->post('building_name');
@@ -79,6 +89,7 @@ class Subscriber extends MY_Controller
 			$data['contact_number_2'] = $this->input->post('contact_2');
 			$data['vat_exemption_flag'] = $this->input->post('vat');
 			$data['oct_flag'] = $this->input->post('oct');
+			$data['bir_certificate'] = $file;
 
 
 			$this->subscriber_model->save_company($data);
@@ -182,6 +193,41 @@ class Subscriber extends MY_Controller
             echo json_encode($data);
 	}
 	
+
+	function validate_address_info($post){
+
+		$isValid = true;
+		$msg = '';
+		$post = (array)$post;
+		
+		if(empty($post['unit'])){
+			$msg .= 'Room / Floor / House Number field is required.<br />';
+			$isValid = false;
+		}
+		if(empty($post['street'])){
+			$msg .= 'Building Name / Street field is required.<br />';
+			$isValid = false;
+		}
+		if(empty($post['barangay'])){
+			$msg .= 'Subdivision / Barangay field is required.<br />';
+			$isValid = false;
+		}
+		if(empty($post['town'])){
+			$msg .= 'Municipality/Town field is required.<br />';
+			$isValid = false;
+		}
+		if(empty($post['city'])){
+			$msg .= 'City/Province field is required.<br />';
+			$isValid = false;
+		}
+		if(empty($post['postal'])){
+			$msg .= 'Postal Code/Zip Code field is required.<br />';
+			$isValid = false;
+		}
+		
+		return array('msg'=>$msg,'result'=>$isValid);
+		
+	}
 
 }
 ?>

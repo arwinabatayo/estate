@@ -60,9 +60,42 @@
 	
 	$(document).ready(function(){
 
-		$('.radio-btn input').iCheck({
+		$(' .radio-btn2 input, .radio-btn3 input').iCheck({
 			checkboxClass: 'icheckbox_flat-red',
 			radioClass: 'iradio_flat-blue'
+		});
+
+		$('.radio-btn input').on('ifClicked', function(event){
+		
+			if($(this).val() == "soft") {
+				$("#soft_copy").slideDown();
+				$("#hard_copy").slideUp();
+			} else if($(this).val() == "hard") {
+				$("#soft_copy").slideUp();
+				$("#hard_copy").slideDown();
+			}
+		});
+		
+		$('.radio-btn2 input').on('ifClicked', function(event){
+			if($(this).val() == "1") {
+				$("#choice-bill").slideDown();
+				//$("#hard_copy").slideUp();
+			} else if($(this).val() == "0") {
+				//$("#soft_copy").slideDown();
+				$("#choice-bill").slideUp();
+				//$("#hard_copy").slideDown();
+			}
+		});
+		
+		$('.radio-btn3 input').on('ifClicked', function(event){
+
+			if($(this).val() == "1") {
+				$("#bill_softcopy").slideDown();
+				$("#bill_hardcopy").slideUp();
+			} else if($(this).val() == "0") {
+				$("#bill_softcopy").slideUp();
+				$("#bill_hardcopy").slideDown();
+			}
 		});
 		
 	});
