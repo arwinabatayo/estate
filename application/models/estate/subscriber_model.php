@@ -55,6 +55,5 @@ class Subscriber_model extends CI_Model
 
         $this->db->update("estate_orders", array("billing_id" => $id, "billing_type" => "company"), array("id" => $this->session->userdata("order_id")));
     }
-
-    
+  
 }

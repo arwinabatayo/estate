@@ -319,6 +319,43 @@ class Ajax extends MY_Controller
 	
 		return;
 	}
+	// Robert
+	public function upload_file() {
+		$this->load->model('estate/blob_model');
+		
+		$user = isset($account_info) ? $account_info : (object) $this->session->userdata('subscriber_info');
+		
+		$status = "";
+		$msg = "";
+		$file_element_name = 'myfile';
+	
+		if (empty($_POST['title'])) {
+			$status = "error";
+			$msg = "Please enter a title";
+		}
+		
+		if ($status != "error") {
+			$fileContent = $_FILES[$file_element_name];
+			$config['upload_path'] = base_url()."/_assets/uploads/";
+			$config['allowed_types'] = 'png|pdf';
+			$config['max_size']  = 1024 * 8;
+			$config['encrypt_name'] = TRUE;
+	
+			$data['binary']   		= addslashes(file_get_contents($_FILES[$file_element_name]['tmp_name']));
+			$data['account_id'] 	= $user->account_id;
+			$data['mobile_number'] 	= $user->mobile_number;
+			$data['filename'] 		= $fileContent["name"];
+			$data['filetype'] 		= $fileContent["type"];
+			$data['filesize'] 		= $fileContent["size"];
+			$data['document_type'] 	= 'pofc';
+			
+			$this->load->library('upload', $config);
+			$this->blob_model->save_file($data,"estate_financial_files_table");
+			
+			$status = "ok";
+		}
+		echo json_encode(array('status' => $status, 'msg' => $msg));
+	}
 	
 }
 ?>

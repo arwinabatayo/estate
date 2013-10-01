@@ -91,7 +91,6 @@
 					success: function(response){
 
 						var resp = jQuery.parseJSON( response );
-
 						if( resp.status == 'true' ){
 							//TODO - proceed to next steps
 							$('#exceed-limit').modal('show');
@@ -118,6 +117,40 @@
 			$('#exceed-limit').modal('hide');
 			$('#modifyPlan2').modal('show');
 		});	
+		
+		// Robert
+		$('#financialUpload').click(function(e) {
+			e.preventDefault();
+			$.ajaxFileUpload({
+				url: base_url+'ajax/upload_file',
+		        secureuri : false,
+		        fileElementId :'myfile',
+		        dataType : 'json',
+		        data : {
+		           	'title' : $('#myfile').val()
+		        },
+		        success  : function (data, status) {
+		           if(data.status != 'error') {
+		              $('#uploading').html('<p>Uploading...</p>');
+		              var al = alert("File successfully uploaded");
+		              window.location= base_url;
+		           }
+		        }
+		        
+		     });
+		     return false;
+		});
+		
+		jQuery.extend({
+		    handleError: function( s, xhr, status, e ) {
+		        // If a local callback was specified, fire it
+		        if ( s.error )
+		            s.error( xhr, status, e );
+		        // If we have some XML response text (e.g. from an AJAX call) then log it in the console
+		        else if(xhr.responseText)
+		            console.log(xhr.responseText);
+		    }
+		});
 
 		
 		

@@ -34,7 +34,7 @@
 											
 											<div class="span6">
 												<label for="Social Network Username ">Social Network Username </label>
-												<span><input type="text" name="" class="span10" id=""/></span>
+												<!-- span><input type="text" name="" class="span10" id=""/></span -->
 												
 												<ul class="social-btn">
 													<li>

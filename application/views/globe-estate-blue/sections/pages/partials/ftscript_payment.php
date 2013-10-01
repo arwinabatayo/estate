@@ -54,7 +54,11 @@
 							success: function(response){
 								var resp = jQuery.parseJSON( response );
 								if(resp.status == 'success'){
-								    window.location.href= base_url+'shipping-address';
+									if(deliveryType=='ship'){
+								      window.location.href= base_url+'shipping-address';
+								    }else{
+									  window.location.href= base_url+'pickup-store';	
+									}  
 								}
 							}, 
 							error: function(){

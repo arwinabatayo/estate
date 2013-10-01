@@ -36,9 +36,6 @@ class Payment extends MY_Controller
 		//TODO - add restriction or redirect if account info object is empty -mark
 		if($account_info->account_id){
 			$this->_data->account_id      = $account_info->account_id;
-		}else{
-			//temp force login
-			redirect('home/login');
 		}
 		
 
@@ -199,7 +196,7 @@ class Payment extends MY_Controller
 			$store_properties[$v['id']] = $properties;  
 		}
 		$_data['store_properties'] = $store_properties;
-		$data['temp'] = $this->load->view('globe-estate/sections/pages/partials/ajax_payment_delivery_pickup', $_data, TRUE);
+		$data['temp'] = $this->load->view('globe-estate-blue/sections/pages/partials/ajax_payment_delivery_pickup', $_data, TRUE);
 		echo json_encode($data);
 	}
 	
@@ -224,7 +221,7 @@ class Payment extends MY_Controller
 			$store_properties[$v['id']] = $properties;  
 		}
 		$_data['store_properties'] = $store_properties;
-		$data['temp'] = $this->load->view('globe-estate/sections/pages/partials/ajax_payment_delivery_pickup', $_data, TRUE);
+		$data['temp'] = $this->load->view('globe-estate-blue/sections/pages/partials/ajax_payment_delivery_pickup', $_data, TRUE);
 		echo json_encode($data);
 	}
 

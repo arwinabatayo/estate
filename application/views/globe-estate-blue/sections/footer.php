@@ -54,6 +54,8 @@
 
 <!-- Added for Survey -- robert -->
 <script type="text/javascript" src="<?php echo $assets_url ?>site-blue/js/jquery.icheck.min.js"></script>
+<!-- Robert 930 -->
+<script type="text/javascript" src="<?php echo $assets_url ?>site-blue/js/ajaxfileupload.js"></script>
 
 <!--<script src="<?php echo $assets_url?>site/js/defines.js" type="text/javascript"></script>-->
 
