@@ -323,6 +323,7 @@ class Ajax extends MY_Controller
 	public function upload_file() {
 		$this->load->model('estate/blob_model');
 		
+		
 		$user = isset($account_info) ? $account_info : (object) $this->session->userdata('subscriber_info');
 		
 		$status = "";
@@ -336,12 +337,12 @@ class Ajax extends MY_Controller
 		
 		if ($status != "error") {
 			$fileContent = $_FILES[$file_element_name];
-			$config['upload_path'] = base_url()."/_assets/uploads/";
-			$config['allowed_types'] = 'png|pdf';
-			$config['max_size']  = 1024 * 8;
-			$config['encrypt_name'] = TRUE;
-	
-			$data['binary']   		= addslashes(file_get_contents($_FILES[$file_element_name]['tmp_name']));
+			
+			$allowed =  array('png' ,'pdf');
+			
+			$ext = pathinfo($fileContent['name'], PATHINFO_EXTENSION);
+			
+			$data['binary']   		= addslashes(file_get_contents($fileContent['tmp_name']));
 			$data['account_id'] 	= $user->account_id;
 			$data['mobile_number'] 	= $user->mobile_number;
 			$data['filename'] 		= $fileContent["name"];
@@ -349,10 +350,14 @@ class Ajax extends MY_Controller
 			$data['filesize'] 		= $fileContent["size"];
 			$data['document_type'] 	= 'pofc';
 			
-			$this->load->library('upload', $config);
-			$this->blob_model->save_file($data,"estate_financial_files_table");
+			if(!in_array($ext,$allowed) ) {
+				$status = "error";
+				$msg = "File type is not allowed";
+			} else {
+				$this->blob_model->save_file($data,"estate_financial_files_table");
+				$status = "ok";
+			}
 			
-			$status = "ok";
 		}
 		echo json_encode(array('status' => $status, 'msg' => $msg));
 	}
