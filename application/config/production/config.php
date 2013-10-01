@@ -357,7 +357,7 @@ $config['rewrite_short_tags'] = FALSE;
 */
 $config['proxy_ips'] = '';
 
-$config['prepaid_kit_enabled'] = true;
+// $config['prepaid_kit_enabled'] = true;
 // $config['reserve_flow_enabled'] = false; 
 
 /* End of file config.php */

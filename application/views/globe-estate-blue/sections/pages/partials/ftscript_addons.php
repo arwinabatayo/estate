@@ -91,7 +91,6 @@
 					success: function(response){
 
 						var resp = jQuery.parseJSON( response );
-
 						if( resp.status == 'true' ){
 							//TODO - proceed to next steps
 							$('#exceed-limit').modal('show');

@@ -159,7 +159,7 @@
             
             <!-- <a href="#" class="blue-btn modal-anchor" id="ty-btn-lbl" data-dismiss="modal">OK</a> -->
 
-              <button class="blue-btn" data-dismiss="modal">OK</button>
+              <button class="blue-btn" data-dismiss="modal" id="ty-msg-btn">OK</button>
 
         </div>
     </div> 
@@ -174,21 +174,90 @@
             
             <p class="s-o-text">
                 <span>Overdue:</span>
-                P36, 750.00
+                <div id="outstanding-balance">P0.00</div>
             </p>
             
             <hr>
             
-            <a class="blue-btn" href="#">Settle Due with Credit Card</a>
-            <a class="blue-btn" href="#">I already settled my account</a>
-            <a class="blue-btn" href="#">Settle Due with GCash</a>
-            
-            <a class="pull-left" href="#">Get a Prepaid Phone Kit&nbsp;</a>
-            <a class="pull-right" href="#">Learn more ways to settle due</a>
+            <a class="blue-btn" href="javascript: void(0);" id="settle-overdue-cc">Settle Due with Credit Card</a>
+            <a class="blue-btn" href="javascript: void(0);" id="settle-overdue-gcash">Settle Due with GCash</a>
+            <a class="blue-btn" href="javascript: void(0);" id="settle-account">I already settled my account</a>
+            <?php
+            // check if prepaid kit is enabled on db
+            if ($prepaid_kit_overdue_enabled) { ?>
+                <a class="pull-left" href="javascript: void(0);" id="get-prepaid-kit">Get a Prepaid Phone Kit&nbsp;</a>
+            <?php } ?>
+            <a class="pull-right" href="javascript: void(0);" id="settle-due-ways">Learn more ways to settle due</a>
             
             <div class="clr"></div>
         </div>
     </div>
     
+    <div id="choose-payment" class="modal hide fade pop-modal">
+        <div class="modal-body pop-content">
+            <button type="button" class="close pop-close" data-dismiss="modal" aria-hidden="true">×</button>
+            <div class="o-i-icon"><img src="<?php echo $assets_path ?>site-blue/images/icons/icon_choose_payment.png" width="150" height="150" alt="Settle Your Overdue"/></div>
+            
+            <p class="pop-txtblue-large">Payment Channel</p>
+            
+            <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent</p>
+            
+            <form name="payment-channels-form" id="payment-channels-form" onsubmit="return false;">
+                <div class="choose-payment-radio span3 consultation-radio pad-space">
+                    <ul>
+                        <li>
+                            <input tabindex="13" type="radio" checked="checked" id="flat-radio-1" name="payment_channels" value="Globe Telecom Business Center" style="">
+                            <label for="Globe Telecom Business Center">Globe Telecom Business Center</label>
+                            
+                            <div class="clr"></div>
+                        </li>
+                        <li>
+                            <input type="radio" name="payment_channels" id="flat-radio-1" value="Bank" />
+                            <label for="Bank">Bank</label>
+                            
+                            <div class="clr"></div>
+                        </li>
+                        <li>
+                            <input type="radio" name="payment_channels" id="flat-radio-1" value="GCash" />
+                            <label for="GCash">GCash</label>
+                            
+                            <div class="clr"></div>
+                        </li>
+                        <li>
+                            <input type="radio" name="payment_channels" id="flat-radio-1" value="Online Banking" />
+                            <label for="Online Banking">Online Banking</label>
+                            
+                            <div class="clr"></div>
+                        </li>
+                        <li>
+                            <input type="radio" name="payment_channels" id="flat-radio-1" value="Bayad or Payment Center" />
+                            <label for="Bayad or Payment Center">Bayad / Payment Center</label>
+                            
+                            <div class="clr"></div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="clr"></div>
+                
+                <hr/>
+                
+                <p id="payment-medium-label" class="c-p-title">Globe Telecom Business Center</p>
+                
+                <label for="Payment Medium Name">Payment Medium Name</label>
+                <input type="text" name="payment_medium_name" id="payment_medium_name" class="span3"/>
+
+                <label for="Reference Number">Reference Number</label>
+                <input type="text" name="reference_number" id="reference_number" class="span3"/>
+                
+                <label for="OR Number">OR Number</label>
+                <input type="text" name="or_num" id="or_num" class="span3"/>
+                
+                <div class="clr"></div>
+                
+                <input type="submit" value="Submit" class="blue-btn"/>
+            </form>
+        </div>
+    </div>
     
     

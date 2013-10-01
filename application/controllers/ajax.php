@@ -341,7 +341,7 @@ class Ajax extends MY_Controller
 			$config['max_size']  = 1024 * 8;
 			$config['encrypt_name'] = TRUE;
 	
-			$data['binary']   		= file_get_contents($server_tmp_file);
+			$data['binary']   		= addslashes(file_get_contents($_FILES[$file_element_name]['tmp_name']));
 			$data['account_id'] 	= $user->account_id;
 			$data['mobile_number'] 	= $user->mobile_number;
 			$data['filename'] 		= $fileContent["name"];
