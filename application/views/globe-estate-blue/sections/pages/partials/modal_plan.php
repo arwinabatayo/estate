@@ -32,19 +32,18 @@
 		</div>
 	</div> 
 
-	<div class="popover fade top in" style="top: 851px; left: 480.975px; display: block;"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content">
+	<div class="popover fade top in" style="top: 851px; left: 480.975px; display: none;"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content">
+		<div class="hide" id="get-prepaid-content">
+			<h3><img width="62" height="62" alt="" src="<?php echo $assets_path ?>site-blue/images/order_type/icon_prepaid.jpg">&nbsp; <?php echo $gadget_data['gadget_name'] . " / " . $gadget_data['gadget_specs']['capacity'] . " GB"; ?></h3>
+			
+			<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+			
+			<hr>
+			
+			<p>Price:<?php echo $gadget_data['gadget_price']; ?></span></p>
+			<a href="javascript: void(0);" onclick="addPrepaid();" id="add-prepaid">Add to Cart</a>
+		</div>
 	</div></div>
-
-	<div class="hide" id="get-prepaid-content">
-		<h3><img width="62" height="62" alt="" src="<?php echo $assets_path ?>site-blue/images/order_type/icon_prepaid.jpg">&nbsp; <?php echo $gadget_data['gadget_name'] . " / " . $gadget_data['gadget_specs']['capacity'] . " GB"; ?></h3>
-		
-		<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-		
-		<hr>
-		
-		<p>Price:<?php echo $gadget_data['gadget_price']; ?></span></p>
-		<a href="javascript: void(0);" onclick="addPrepaid();" id="add-prepaid">Add to Cart</a>
-	</div>
 
 	<script type="text/javascript">
 		function addPrepaid () 

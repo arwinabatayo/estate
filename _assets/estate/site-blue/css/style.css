@@ -629,6 +629,8 @@ body{ font-family: 'fs_elliot_cyrilliclight' }
  .delivery-btn .iradio_flat-blue {left:46%;}
  
  .delivery input[type="submit"] {display:block; margin:0 auto;}
+
+ #add-prepaid a {display:block; margin:0 auto; min-width: 173px; width: 173px; }
 	/* =======
 	   End CSS
 	   ==== */
