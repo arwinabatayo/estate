@@ -23,7 +23,7 @@ class Home extends MY_Controller
 		$this->_data->page_title          =  'Add Device';
 		$this->_data->site_config         = $this->getPropertyDataXML(1);
 		$this->reserve_enabled 			  = $this->model_bpmanagement->getProcessStatusByCode('RESERVE');
-		
+		$this->prepaid_kit_overdue_enabled = $this->model_bpmanagement->getProcessStatusByCode('PREPAID_KIT_OVERDUE');
 		//print_r($this->_data->site_config);
 		//flag for testing
 		define('IS_GLOBE_API_ENV', TRUE);
@@ -164,6 +164,7 @@ class Home extends MY_Controller
 		$this->_data->page = 'home';
 		$this->_data->page_title = 'SMS Verification';
 		$this->_data->is_reserve = $this->reserve_enabled;
+		$this->_data->prepaid_kit_overdue_enabled = $this->prepaid_kit_overdue_enabled;
 
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
@@ -293,13 +294,12 @@ class Home extends MY_Controller
 				//init/save subscriber info here
                 $is_user_exist = $this->_initSubscriberInfo($mobile);
 				
-				if($is_user_exist){
+				if ($is_user_exist) {
 					$data['status'] = "success";
 					$data['msg'] = "Successfully Verified. Page is redirecting please wait...";
 					$token =  md5('Globe0917'.'$4Lt*G'); //generate token/session here to access nextpage
 	                $this->networks_model->delete_sms_verification($mobile);
-	                
-				}else{
+				} else {
 					
 					$data['status'] = "error";
 					$data['msg'] = "Subscriber info not found.";	
@@ -338,6 +338,22 @@ class Home extends MY_Controller
 			
 			$_cfg = $this->cart_model->get_order_config();
 			
+			// return flag to show overdue balance popup
+			// check if user has overdue balance
+			$account_info = $this->session->userdata('subscriber_info');
+			$outstanding_balance = $account_info['outstanding_balance'];
+			$due_date = $account_info['due_date'];
+			$date_now = date("Y-m-d");
+
+			if ($outstanding_balance !== 0) {
+				if (strtotime($due_date) <= strtotime($date_now)) {
+					$data['overdue_flag'] = true;
+					$data['outstanding_balance'] = number_format($outstanding_balance, 2);
+					$data['next_page'] = '';
+				}
+			}
+
+			// -- reservation flow
 			if(isset($_cfg['order_type']) && $_cfg['order_type'] == 'reserve'){
 				$data['order_type'] = $_cfg['order_type'];
 				// $data['next_page'] = 'home?showtymsg=true';
@@ -484,9 +500,11 @@ class Home extends MY_Controller
             
         }
 
-        return $this->email->send_email_api($email_to, $subject, $email_tpl, $msg, $sender ); 
-        
-     
+        if (DEV_ENV) {
+        	return true;
+        } else {
+        	return $this->email->send_email_api($email_to, $subject, $email_tpl, $msg, $sender ); 
+        }     
     }
     
     //move this function to helper -- SOON
@@ -564,10 +582,12 @@ class Home extends MY_Controller
 		if ($d->code == $captcha_code) {
 			if ($email_isvalid) {
 				
-				$is_sent = $this->_sendMail($email, $flow_type);
-				
-				//$is_sent=true;
-                
+				if (DEV_ENV) {
+					$is_sent = true;
+				} else {
+					$is_sent = $this->_sendMail($email, $flow_type);
+				}
+				                
                 if ($flow_type == 'saved_transaction') {
                     $success_msg = "We have sent an email to " . $email . ". Click on the link to resume previously saved transaction. ";
                 } else if ($flow_type == 'forgot_refnum') {

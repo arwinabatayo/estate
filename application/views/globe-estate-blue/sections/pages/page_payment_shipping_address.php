@@ -41,66 +41,71 @@
 											<input type="radio" value="ship" name="shipping_address" id="ship"><label for="ship">Ship to Different Address</label>
 										</div>
 										<div class="delContent myAdd" id="shipContent" style="display: none;">
-				                            <table width="100%" cellpadding="2" cellspacing="0">
-				                                <tr>
-				                                    <td><span>Room / Floor / House Number</span></td>
-				                                    <td><span>Building Name / Street</span></td>
-				                                    <td><span>Subdivision / Barangay</span></td>                                                                
-				                                </tr>
-				                                <tr>
-				                                    <td><input type="text" id="unit" name="unit" required class="input-large" /></td>
-				                                    <td><input type="text" id="unit" name="street" class="input-large" /></td>
-				                                    <td><input type="text" id="unit" name="barangay" class="input-large" /></td>                                                                
-				                                </tr>                            
-				                                <tr>
-				                                    <td><span>Municipality/Town</span></td>
-				                                    <td><span>City/Province</span></td>
-				                                    <td><span>Postal Code/Zip Code</span></td>                                                                
-				                                </tr>
-				                                <tr>
-				                                    <td><input type="text" id="city" name="city" class="input-large" /></td>
-				                                    <td><input type="text" id="town" name="town" class="input-large" /></td>
-				                                    <td><input type="text" id="postal" name="postal" class="input-large" /></td>                                                                
-				                                </tr>   
-				                                <tr>
-													<td colspan="3">
-														<p class="bold">Contact Details</p>
-														<h6>Home Telephone Number</h6>
-													</td>
-				                                </tr>                         
-				                                <tr>
-				                                    <td><span>Area Code</span></td>
-				                                    <td><span>Telephone Number</span></td>
-				                                    <td></td>                                                                
-				                                </tr>
-				                                <tr>
-				                                    <td><input type="text" id="area" name="area" class="input-large" /></td>
-				                                    <td><input type="text" id="landline" name="landline" class="input-large" /></td>
-				                                    <td></td>                                                                
-				                                </tr>                            
-				                                <tr>
-													<td colspan="3">
-														<p>&nbsp;</p>
-														<h6>Mobile Number</h6>
-													</td>
-				                                </tr>                         
-				                                <tr>
-				                                    <td><span>Area Code</span></td>
-				                                    <td><span>Mobile Number</span></td>
-				                                    <td><span>Network Carrier</span></td>                                                            
-				                                </tr>
-				                                <tr>
-				                                    <td><input type="text" id="access_code" name="access_code" class="input-large" /></td>
-				                                    <td><input type="text" id="mobile_number" name="mobile_number" class="input-large" /></td>
-				                                    <td>
-														<select name="network_carrier" class="input-large">
-															<option value="smart">Smart Post Paid</option>
-															<option value="sun">Sun Cellular</option>
-														</select>
-				                                    </td>                                                                
-				                                </tr>                            
-				                            </table>
-															
+											
+											<form id="frmShippingInfo" onsubmit="return false">
+												
+												<div style="display:none;line-height:20px;font-size:12px" class="status alert-error textcenter"></div>
+					                            <br />
+					                            <table width="100%" cellpadding="2" cellspacing="0">
+					                                <tr>
+					                                    <td><span>Room / Floor / House Number</span></td>
+					                                    <td><span>Building Name / Street</span></td>
+					                                    <td><span>Subdivision / Barangay</span></td>                                                                
+					                                </tr>
+					                                <tr>
+					                                    <td><input type="text" id="unit" name="unit" required class="input-large" /></td>
+					                                    <td><input type="text" id="street" name="street" class="input-large" /></td>
+					                                    <td><input type="text" id="barangay" name="barangay" class="input-large" /></td>                                                                
+					                                </tr>                            
+					                                <tr>
+					                                    <td><span>Municipality/Town</span></td>
+					                                    <td><span>City/Province</span></td>
+					                                    <td><span>Postal Code/Zip Code</span></td>                                                                
+					                                </tr>
+					                                <tr>
+														<td><input type="text" id="town" name="town" class="input-large" /></td>
+					                                    <td><input type="text" id="city" name="city" class="input-large" /></td>
+					                                    <td><input type="text" id="postal" name="postal" class="input-large" /></td>                                                                
+					                                </tr>   
+					                                <tr>
+														<td colspan="3">
+															<p class="bold">Contact Details</p>
+															<h6>Home Telephone Number</h6>
+														</td>
+					                                </tr>                         
+					                                <tr>
+					                                    <td><span>Area Code</span></td>
+					                                    <td><span>Telephone Number</span></td>
+					                                    <td></td>                                                                
+					                                </tr>
+					                                <tr>
+					                                    <td><input type="text" id="area" name="area" class="input-large" /></td>
+					                                    <td><input type="text" id="landline" name="landline" class="input-large" /></td>
+					                                    <td></td>                                                                
+					                                </tr>                            
+					                                <tr>
+														<td colspan="3">
+															<p>&nbsp;</p>
+															<h6>Mobile Number</h6>
+														</td>
+					                                </tr>                         
+					                                <tr>
+					                                    <td><span>Area Code</span></td>
+					                                    <td><span>Mobile Number</span></td>
+					                                    <td><span>Network Carrier</span></td>                                                            
+					                                </tr>
+					                                <tr>
+					                                    <td><input type="text" id="access_code" name="access_code" class="input-large" /></td>
+					                                    <td><input type="text" id="mobile_number" name="mobile_number" class="input-large" /></td>
+					                                    <td>
+															<select name="network_carrier" class="input-large">
+																<option value="smart">Smart Post Paid</option>
+																<option value="sun">Sun Cellular</option>
+															</select>
+					                                    </td>                                                                
+					                                </tr>                            
+					                            </table>
+											</form>					
 									</div>
 									</li>
 								</ul>	

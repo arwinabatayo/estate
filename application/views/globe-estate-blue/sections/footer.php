@@ -25,6 +25,8 @@
 		
 		include('pages/partials/modal_addons.php');
 		
+	} else if ($page == 'order') {
+		include('pages/partials/modal_order.php');
 	} 
     
     if($current_controller == 'payment'){ 
@@ -35,8 +37,7 @@
 	
 	if($current_method == 'sms_verification'){
 		include('pages/partials/modal_sms-verification.php');
-	}
-	
+	}	
 	
 	include('pages/partials/modal_commons.php');
 
@@ -52,10 +53,8 @@
 <script type="text/javascript" src="<?php echo $assets_url?>site-blue/js/jquery-ui-1.10.0.custom.min.js"></script>  
 <script type="text/javascript" src="<?php echo $assets_url?>site-blue/js/jquery.icheck.min.js"></script>
 
-<!-- Added for Survey -- robert -->
-<script type="text/javascript" src="<?php echo $assets_url ?>site-blue/js/jquery.icheck.min.js"></script>
-
-<!--<script src="<?php echo $assets_url?>site/js/defines.js" type="text/javascript"></script>-->
+<!-- #Robert 930 -->
+<script type="text/javascript" src="<?php echo $assets_url ?>site-blue/js/ajaxfileupload.js"></script>
 
 <script type="text/javascript">
 	
@@ -173,11 +172,6 @@
 	            		for(var a=0; a < resp.order_item_details.length; a++){
 	            			order_item_str += "<tr><td>" + resp.order_item_details[a].product + "</td><td>" + resp.order_item_details[a].description + "</td><td>" + resp.order_item_details[a].unit_price + "</td><td>" + resp.order_item_details[a].discount + "</td><td>" + resp.order_item_details[a].total + "</td></tr>";
 	            		}
-
-	            		
-
-
-	            		
 
 	            		$("#receipt div:eq(0)").html("<div><strong>Date: </strong>" + resp.order_details.date_ordered + "<strong>Order Number:</strong>" + resp.order_details.order_number + "</div><div><strong>Billing Information</strong></div><div><table><tr><td><strong>" + resp.account_details.fullname + "</strong><p>" + resp.billing_details.unit + " " + resp.billing_details.street + " " + resp.billing_details.subdivision + " " + resp.billing_details.barangay + "</p><p>" + resp.billing_details.municipality + " " + resp.billing_details.city + " " + resp.billing_details.postal + "</p><p><strong>Phone: </strong>" + resp.account_details.mobile_number + "</p><p><strong>Email: </strong>" + resp.account_details.email + "</p></td><td><p>Name: " + resp.account_details.fullname + "</p><p>Paid: </p><p>Email: " + resp.account_details.email + "</p><p>Account Number: " + resp.account_details.account_id + "</p></td></tr></table></div><div><table><tr><td>Product</td><td>Item Description</td><td>Unit Price</td><td>% Discount</td><td>Total</td></tr>" + order_item_str + "<tr><td rowspan=\"3\"><strong>Subtotal: </strong></td><td rowspan=\"2\">" + resp.order_details.subtotal + "</td></tr><tr><td rowspan=\"3\"><strong>Shipping and Handling Cost</strong></td><td rowspan=\"2\">" + resp.order_details.shipping_fee + "</td></tr></table></div><div><strong>Total: </strong>" + resp.order_details.total + "</div><div><button class=\"btn btn-primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover\" onclick=\"printeReceipt();\" role=\"button\" aria-disabled=\"false\"><span class=\"ui-button-text\">Print</span></button></div>");
 

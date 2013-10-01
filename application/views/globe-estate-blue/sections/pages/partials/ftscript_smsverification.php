@@ -1,4 +1,5 @@
-								
+/* ---------- SMS VERIFICATION SCRIPTS ---------- */
+
 					<?php if($this->session->userdata('showcaptcha')){ ?>
 							$('#resetVerification').modal('show');
 							createCaptcha();
@@ -45,6 +46,12 @@
 												// open ty page, close after x secs and redirect to homepage
 												$('#04-thank-you').modal( "show" );
 												setTimeout('$("#04-thank-you").modal("hide")', 5000);
+										} else if (resp.overdue_flag) {
+											// show overdue popup
+											// alert("You need to settle your overdue balance before you can proceed");
+											$('#verifyNumber').modal('hide');
+											$('#settle-overdue').modal({show:true});
+											$('#outstanding-balance').html('P'+resp.outstanding_balance);
 										}
 									}else{
 										if(resp.tries < 3){
@@ -53,18 +60,13 @@
 									
 									}
 
-									window.location.href = base_url+resp.next_page;
+									if (resp.next_page != '') {window.location.href = base_url+resp.next_page;}
 								}, 
 								error: function(){
 									s.html('Some error occured or the system is busy. Please try again later');	
 								}
 							});
 								
-					});
-					 
-					$('#verification_code').focus(function(){
-							$('#verification_code').css('border', '2px solid #bdc3c7');
-							$('.vcode-alert').fadeOut('fast');
 					});
 
 					$('button#btnEnterMobileNum').click( function(){
@@ -157,5 +159,86 @@
 							});
 							
 					});
+
+					$('#verification_code').focus(function(){
+						$('#verification_code').css('border', '2px solid #bdc3c7');
+						$('.vcode-alert').fadeOut('fast');
+					});
 					
-					
+/* ---------- OVERDUE BALANCE SCRIPTS ---------- */
+
+					// TODO : get additional details what params are required here
+					$('a#settle-overdue-cc').click(function(){
+						// credit card page
+						// alert('Credit card');
+						window.location.href= base_url + 'payment-method';
+					});
+
+					$('a#settle-overdue-gcash').click(function(){
+						// show gcash flow
+						// alert('G-Cash');
+						window.location.href= base_url+'payment-method';
+					});
+
+					$('a#settle-account').click(function(){
+						// opens payment channel window
+						$('#settle-overdue').modal("hide");
+						$('#choose-payment').modal({show:true});
+						// change payment channel HEADER label on click
+						$('input:radio[name=payment_channels]').click(function(){
+							$('#payment-medium-label').html($('input:radio[name=payment_channels]:checked').val());
+						});
+					});
+
+					$('a#get-prepaid-kit').click(function(){
+						// redirects to prepaid kit flow
+						$.ajax({
+							url: base_url+'cart/addprepaidtocart',
+							success: function(response){
+
+								var resp = jQuery.parseJSON( response );
+
+								if (resp.status == 'success') {
+							       window.location = resp.cart_url;
+								} else {
+									alert(resp.msg);
+								}
+
+							},
+							error: function(){
+								alert('Some error occured or the system is busy. Please try again later');
+							}
+						});
+					});
+
+					$('#settle-due-ways').click(function(){
+						alert('Ways to settle account');
+					});
+
+					$('form#payment-channels-form').submit(function(){
+						var formData = $('form#payment-channels-form').serialize();
+						$.ajax({
+							url : base_url + 'payment/settle_payment',
+							data : formData,
+							type : 'post',
+							success : function(response) {
+								resp = jQuery.parseJSON(response);
+
+								if (resp.status == 'success') {
+									// hide current modal
+									$('#choose-payment').modal('hide');
+									// show ty popup
+									$('#04-thank-you').modal({show:true});
+									$('#ty-msg').html(resp.msg);
+									$('#ty-msg-btn').html('Continue');
+								} else {
+									alert(resp.msg);
+								}
+ 							},
+							error : function () {
+								alert('Some error occured or the system is busy. Please try again later');
+							}
+						});
+					});
+
+

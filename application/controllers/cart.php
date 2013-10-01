@@ -690,13 +690,15 @@ class Cart extends CI_Controller {
 
 		// update estate_cart table
 		$info = $this->_parse_contents();
-		// TODO : changed to correct source of account id
-		$account_id = 1;
-		$status = $this->cart_model->insert_previous_info($account_id, $info);
+
+		$user_info = $this->session->userdata('subscriber_info');
+
+		$account_id = $user_info['account_id'];
+		$status = $this->cart_model->update_cart_info($account_id, $info);
 
 		if ($status) {
 			$data['status'] = 'success';
-			$data['cart_url'] = '/estate/payment';
+			$data['cart_url'] = '/estate/plan-summary';
 		} else {
 			$data['status'] = 'error';
 			$data['msg'] = 'Error occurred.';

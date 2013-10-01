@@ -21,7 +21,7 @@
 				});
 
 			});
-			
+
 			$('button#btnGetNewline').click(function() {
 
 			    	$.ajax({
@@ -432,6 +432,13 @@
 			        $("a.btnAddPackagePlan").parent().parent().show();
 			    }); 
 
+			$("#get-prepaid").popover({
+				trigger: 'manual',
+				html:true,
+				content: function(){
+					return $('#get-prepaid-content').html();
+				}
+			}).click(function (e) {$(this).popover('toggle');});
 
 			$('a#get-prepaid-kit').click(function(){
 				// show bubble info where add to cart link is present

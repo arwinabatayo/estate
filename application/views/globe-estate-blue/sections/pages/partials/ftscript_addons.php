@@ -18,7 +18,7 @@
 					success: function(response){
 
 						var resp = jQuery.parseJSON( response );
-
+alert();return;
 						var cartItem = '<div id="prod-item-'+resp.rowid+'" class="item" style="display:none"><div class="fleft"><span class="productName block">'+resp.name+'</span><span class="price block arial italic">'+resp.price_formatted+'</span></div><span class="icoDelete"> <a class="btnDelete" href="javascript:void(0)" id="'+resp.rowid+'"><i class="icon-remove">&nbsp;X&nbsp;</i></a> </span><br class="clear" /></div>\n';
 
 						if(resp.status == 'success' && resp.rowid){
@@ -54,7 +54,7 @@
 		});
 
 		//delete cart item - mark
-		$(document).on('click', '.cartWidget a.btnDelete, #cartSummaryTable a.btnDelete', function(){
+		$(document).on('click', '.cartWidget a.btnDelete', function(){
 				var rowid = $(this).attr('id');
 				var prodName = $(this).attr('rel');
 
@@ -91,7 +91,6 @@
 					success: function(response){
 
 						var resp = jQuery.parseJSON( response );
-
 						if( resp.status == 'true' ){
 							//TODO - proceed to next steps
 							$('#exceed-limit').modal('show');
@@ -118,6 +117,42 @@
 			$('#exceed-limit').modal('hide');
 			$('#modifyPlan2').modal('show');
 		});	
+		
+		// Robert
+		$('#financialUpload').click(function(e) {
+			e.preventDefault();
+			$.ajaxFileUpload({
+				url: base_url+'ajax/upload_file',
+		        secureuri : false,
+		        fileElementId :'myfile',
+		        dataType : 'json',
+		        data : {
+		           	'title' : $('#myfile').val()
+		        },
+		        success  : function (data, status) {
+		           if(data.status != 'error') {
+		              $('#uploading').html('<p>Uploading...</p>');
+		              alert("File successfully uploaded");
+		              window.location= base_url;
+		           } else {
+		           	alert(data.msg);
+		           }
+		        }
+		        
+		     });
+		     return false;
+		});
+		
+		jQuery.extend({
+		    handleError: function( s, xhr, status, e ) {
+		        // If a local callback was specified, fire it
+		        if ( s.error )
+		            s.error( xhr, status, e );
+		        // If we have some XML response text (e.g. from an AJAX call) then log it in the console
+		        else if(xhr.responseText)
+		            console.log(xhr.responseText);
+		    }
+		});
 
 		
 		

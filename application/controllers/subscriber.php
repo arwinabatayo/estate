@@ -28,6 +28,7 @@ class Subscriber extends MY_Controller
 		if($account_info->account_id){
 			$this->_data->account_id      = $account_info->account_id;
 		}
+		define('FACEBOOK_ON', FALSE);
 		
 	}
 	
@@ -82,7 +83,7 @@ class Subscriber extends MY_Controller
 
 			$this->subscriber_model->save_company($data);
 
-			header("location: /");
+			header("location: ");
 		}else if($info_type == "personal"){
 			$data['fname'] = $this->input->post('fname');
 			$data['lname'] = $this->input->post('lname');
@@ -157,6 +158,28 @@ class Subscriber extends MY_Controller
 
 			$this->subscriber_model->save_personal_billing($data);
 		}
+	}
+	
+	public function fb()
+	{
+            parse_str( $_SERVER['QUERY_STRING'], $_REQUEST );
+            $this->config->load("facebook",TRUE);
+            $config = $this->config->item('facebook');
+            $this->load->library('Facebook', $config);
+            $userId = $this->facebook->getUser();
+
+            if($userId == 0){
+                $this->session->set_userdata('fb_success', FALSE );
+                $data['status'] = 'redirect';
+                $data['url'] = $this->facebook->getLoginUrl(array('scope'=>'publish_stream')); 
+            } else {
+                    $data['status'] = 'success';
+                    $data['url'] = $user;
+                    $this->session->set_userdata('fb_success', TRUE );
+                    redirect('payment/plan_summary', 'refresh');
+                    exit;                    
+            }
+            echo json_encode($data);
 	}
 	
 

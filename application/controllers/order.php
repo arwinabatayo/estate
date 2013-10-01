@@ -28,6 +28,17 @@ class Order extends MY_Controller
 
 		$this->load->model('estate/orderitem_model');
 		$this->load->model('estate/order_model');
+		
+		//global object of subcriber info, init from sms verification -mark
+		$this->_data->account_info  = $account_info = (object) $this->session->userdata('subscriber_info');
+		
+		$this->_data->account_id = 2147483647; // to make it safe =)
+		//TODO - add restriction or redirect if account info object is empty -mark
+		if($account_info->account_id){
+			$this->_data->current_plan    = $this->accounts_model->get_account_current_plan($account_info->account_id);
+			$this->_data->account_id      = $account_info->account_id;
+		}
+		
 	}
 
 	public function index()
@@ -63,7 +74,7 @@ class Order extends MY_Controller
 	function save_order(){
 
 		$cart_contents = $this->cart->contents();
-		$account_id    = 1; //TODO get subs id from
+		$account_id    = $this->_data->account_id; //TODO get subs id from
 		$order_config  = $this->cart_model->get_order_config();
 		$order_type = ($this->input->post('order_type')) ? $this->input->post('order_type') : 1;
 		$status = ($this->input->post('status')) ? $this->input->post('status') : 1;
@@ -118,7 +129,7 @@ class Order extends MY_Controller
 	public function save_address()
 	{
 		$post = (object) $this->input->post();
-		$account_id = 1; //TODO get subs id from
+		$account_id = $this->_data->account_id; //TODO get subs id from
 
 		//* * * * TODO - validate $post here
 
@@ -126,15 +137,17 @@ class Order extends MY_Controller
 			'status' => 'failed',
 			'msg'    => 'Some error occured or the system is busy. Please try again later'
 		);
-
-		if($_POST){
+		
+		$is_valid = $this->validate_address_info($post);
+		
+		if($_POST && $is_valid['result']==true){
 
 			$data = array(
 				'account_id'   => $account_id,
 				'address_type' => 'shipping',
 				'unit' 	       => $post->unit,
 				'street' 	   => $post->street,
-				'subdivision'  => '',
+				'subdivision'  => $post->barangay,
 				'barangay' 	   => $post->barangay,
 				'municipality' => $post->town,
 				'city' 	       => $post->city,
@@ -153,6 +166,10 @@ class Order extends MY_Controller
 				$out['msg'] = $result;
 			}
 
+		}else{
+			
+			$out['msg'] = $is_valid['msg'];
+		
 		}
 
 		echo json_encode($out);
@@ -178,6 +195,42 @@ class Order extends MY_Controller
 		return $this->accounts_model->save_personal_info($data);
 	}
 
+	//hardcode validation. TODO - use ci form validation - mark
+	function validate_address_info($post){
+
+		$isValid = true;
+		$msg = '';
+		$post = (array)$post;
+		
+		if(empty($post['unit'])){
+			$msg .= 'Room / Floor / House Number field is required.<br />';
+			$isValid = false;
+		}
+		if(empty($post['street'])){
+			$msg .= 'Building Name / Street field is required.<br />';
+			$isValid = false;
+		}
+		if(empty($post['barangay'])){
+			$msg .= 'Subdivision / Barangay field is required.<br />';
+			$isValid = false;
+		}
+		if(empty($post['town'])){
+			$msg .= 'Municipality/Town field is required.<br />';
+			$isValid = false;
+		}
+		if(empty($post['city'])){
+			$msg .= 'City/Province field is required.<br />';
+			$isValid = false;
+		}
+		if(empty($post['postal'])){
+			$msg .= 'Postal Code/Zip Code field is required.<br />';
+			$isValid = false;
+		}
+		
+		return array('msg'=>$msg,'result'=>$isValid);
+		
+	}
+	
 	function save_payment_shipping_config(){
 
 		$cfg = $this->input->post();

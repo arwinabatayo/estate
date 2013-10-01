@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="textcenter">
-				<button href="#" class="blue-btn" data-dismiss="modal">Yes</button>
+				<button href="#" class="blue-btn" data-dismiss="modal" onclick="window.location='<?php echo base_url() ?>thankyou'" >Yes</button>
 				&nbsp;
 				<button class="blue-btn" data-dismiss="modal">No</button>
 			</div>

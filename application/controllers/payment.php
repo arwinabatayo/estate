@@ -36,9 +36,6 @@ class Payment extends MY_Controller
 		//TODO - add restriction or redirect if account info object is empty -mark
 		if($account_info->account_id){
 			$this->_data->account_id      = $account_info->account_id;
-		}else{
-			//temp force login
-			//redirect('home/login');
 		}
 		
 
@@ -91,7 +88,7 @@ class Payment extends MY_Controller
 		$this->_data->account_info = $this->accounts_model->get_account_address($account_id);
 	
 		$this->_data->cartItems = $this->cart->contents();
-       /*         
+                
                 $this->load->model('model_pickup');
                 $params = array(
                     'postal_code' => $this->_data->billing_address->postal_code,
@@ -121,7 +118,7 @@ class Payment extends MY_Controller
                 }
 
                 $this->_data->store_properties = $store_properties;
-        */
+        
         
 		$this->load->view($this->_data->tpl_view, $this->_data);
 
@@ -151,13 +148,40 @@ class Payment extends MY_Controller
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
 	
+	/**
+	 * Update By Robert 10.01
+	 */
 	//Note/TODO: Thank you survey - Pls. make it ajax display after answering the survey
-	public function survey()
-	{	
+	public function survey() {	
+		$this->load->model('estate/survey_model');
+		
+		echo $this->session->subscriber_info->account_id;
+		$this->_data->survey_list = $this->survey_model->get_all_survey();
 		$this->_data->page  = 'survey';
 		$this->_data->show_breadcrumbs    =  false;
 		
 		$this->load->view($this->_data->tpl_view, $this->_data);
+	}
+	public function save_survey() {
+		$ret = "yes";
+		$account_info = (object) $this->session->userdata('subscriber_info');
+		
+		$post = $this->input->post();
+		$str = implode("|", $post['survey']);
+		
+		if(!empty($str)) {
+			$selected_survey_ids = str_pad($str,strlen($str)+2,"|",STR_PAD_BOTH);
+			
+			$this->load->model('estate/survey_model');
+			
+			$data['order_number'] = 12345;
+			$data['account_id'] = $account_info->account_id;
+			
+			$data['selected_offers'] = $selected_survey_ids;
+			
+			$this->survey_model->save_survey($data);
+		}
+		echo "yes";
 	}
 	
 	//Thank you for... / Check Eligibilty
@@ -166,6 +190,9 @@ class Payment extends MY_Controller
 		$this->_data->page  = 'thankyou_check_eligibility';
 		$this->_data->page_title          = 'Thank you for your order';
 		$this->_data->show_breadcrumbs    =  false;
+		
+		$this->_data->eligible_numbers    = 0;
+		$this->_data->eligible_numbers    = $this->accounts_model->get_eligible_numbers($this->_data->account_id); 
 		
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
@@ -199,7 +226,7 @@ class Payment extends MY_Controller
 			$store_properties[$v['id']] = $properties;  
 		}
 		$_data['store_properties'] = $store_properties;
-		$data['temp'] = $this->load->view('globe-estate/sections/pages/partials/ajax_payment_delivery_pickup', $_data, TRUE);
+		$data['temp'] = $this->load->view('globe-estate-blue/sections/pages/partials/ajax_payment_delivery_pickup', $_data, TRUE);
 		echo json_encode($data);
 	}
 	
@@ -224,10 +251,59 @@ class Payment extends MY_Controller
 			$store_properties[$v['id']] = $properties;  
 		}
 		$_data['store_properties'] = $store_properties;
-		$data['temp'] = $this->load->view('globe-estate/sections/pages/partials/ajax_payment_delivery_pickup', $_data, TRUE);
+		$data['temp'] = $this->load->view('globe-estate-blue/sections/pages/partials/ajax_payment_delivery_pickup', $_data, TRUE);
 		echo json_encode($data);
 	}
-	
+
+	function settle_payment()
+	{
+		$d = (object) $this->input->post();
+		$error_msg = '';
+
+		// validate form
+		if ($d->payment_channels) {
+			if( !(preg_match("/^[a-zA-Z'-]/", $d->payment_channels)) ) {
+				$error_msg .= 'Payment channel is invalid.<br/>'; 
+			}
+		} else {
+			$error_msg .= 'Payment channel is required.<br/>';
+		}
+
+        if (!(trim($d->reference_number))) {            
+            $error_msg .= 'Reference number is required.<br/>';
+        }
+
+        if (!$error_msg) {
+            $this->load->model('model_overduepayments');
+
+            $user_info = $this->session->userdata('subscriber_info');
+            $account_id = $user_info['account_id'];
+
+            $payment_data = array (
+                    'account_id'            => $account_id,
+                    'payment_channel'       => $d->payment_channels,
+                    'payment_channel_medium'=> $d->payment_medium_name,
+                    'reference_number'      => $d->reference_number,
+                    'receipt_number'        => $d->or_num
+                );
+
+            $insert_id = $this->model_overduepayments->addOverduePayment($payment_data);
+
+            if ($insert_id) {
+                $data['status'] = 'success';
+                $data['msg'] = 'We will get back to you in xhours or xdays, once we confirmed your payment.';
+            } else {
+                $data['success'] = 'error';
+                $data['msg'] = "An error occurred. Please try again later.";
+            }
+        } else {
+            // send error msg to view
+            $data['status'] = 'error';
+            $data['msg'] = $error_msg;
+        }
+
+        echo json_encode($data); exit;
+	}	
 
 }
 ?>

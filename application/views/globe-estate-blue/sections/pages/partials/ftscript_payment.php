@@ -47,6 +47,7 @@
 					$("#deliveryorpickupBtn").click(function(e) {
 						e.preventDefault();
 						var deliveryType = $('input[name=delivery_mode]:checked').val();
+
 						$.ajax({
 							url: base_url+'order/save_payment_shipping_config',
 							data: 'delivery_mode='+deliveryType,
@@ -54,7 +55,12 @@
 							success: function(response){
 								var resp = jQuery.parseJSON( response );
 								if(resp.status == 'success'){
-								    window.location.href= base_url+'shipping-address';
+									
+									if(deliveryType=='delivery'){
+										window.location.href= base_url+'shipping-address';
+								    }else{
+										window.location.href= base_url+'pickup-store';	
+									}  
 								}
 							}, 
 							error: function(){
@@ -70,7 +76,13 @@
 				        radiosShipAdd.filter('[value=billing]').prop('checked', true);
 				        
 				        $('#shipContent').hide();
-				    }
+				      
+				    }else{
+						
+					}
+				    
+				    
+				    //alert(radiosShipAdd);
 				    
 				    radiosShipAdd.click(function(e) {
 						$(this).closest('ul').each(function() {
@@ -79,13 +91,21 @@
 				    	$(this).parent().next('div.delContent').slideDown();
 				    });
 				    
+				    <?php if($current_method=='shipping_address'){ ?>
+					$(window).bind('beforeunload', function(){
+				        return 'Are you sure you want to leave?';
+				     });
+				    <?php } ?>
+				      
 				    $('#shippingTypeBtn').click(function(e) {
 				    	e.preventDefault();
 				    	
+				    	var formData = $('#frmShippingInfo').serialize();
 				    	var shippingType = $('input[name=shipping_address]:checked').val();
-				    	//alert(shippingType);
-				    	window.location.href= base_url + 'pickup-store';
-				    	/**
+				    	var s = $('form#frmShippingInfo div.status');
+				    	
+				    	//alert(formData);			    	
+
 				    	$.ajax({
 								url: base_url+'order/save_address',
 								data: formData,
@@ -95,15 +115,18 @@
 									//alert(JSON.stringify(resp));
 									if(resp.status == 'success'){
 										alert('New shipping address saved!');
-										btn.attr('disabled',true);
-										$( "#personal-info-page" ).accordion( "option", "active", 2 );
+										window.location.href= base_url + 'confirm-order';
+									}else{
+										s.html(resp.msg);
+										s.show();
+										
 									}
 								}, 
 								error: function(){
 									alert('Some error occured or the system is busy. Please try again later');	
 								}
 							});
-				    	**/
+				    	
 				    })
 				    
 				    // Payment Method-- robert
@@ -133,23 +156,40 @@
 				    })
 				    
 				    // Survey -- robert
+
 				    $('.thank-order-check input').iCheck({
 						checkboxClass: 'icheckbox_flat-blue',
 						radioClass: 'iradio_flat-blue'
 					});
+					
+					// update 10.01 Robert
 					$('#surveyBtn').click(function(e) {
 				    	e.preventDefault();
-				    	//$('input[name=survey]:checked').each(function () {
-					    //   var sValues = (this.checked ? $(this).val() : "");
-					  	//});
-				    	
-				    	
-				    	$(this).parent().parent().parent().fadeOut("slow", function(){
-    						var toView = '<div class="span6 lgreybg" ><div class="row-fluid"><span class="flow-title pull-left offset1"><i class="flow-icon icon-apprvicon pull-left"></i><span>Thank you for taking time to<br />answer our Survey Questions</span></span><p class="flow-instruction pull-left">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></div><div class="row-fluid"><p class="flow-instruction p-r-t-u-answer pull-left">We are about to post  what you\'ve purchased on your Facebook wall. Please confirm.</p><br /><div class="span6 flow-btns pull-left"><button class="blue-btn" data-toggle="modal" data-target="#postFB" data-dismiss="modal">Confirm</button></div><div class="span5 flow-btns pull-left"><button class="blue-btn">Cancel</button></div><div class="clr"></div></div></div>';
-    						$(this).replaceWith(toView).fadeIn("slow");
-    					});
+				    	$.ajax({
+							url: base_url+'payment/save_survey',
+							data: $('#surveyForm').serialize(),
+							type: 'post',
+							success: function(response){
+								if(response == "yes") {
+									$('#surveyBtn').parent().parent().parent().fadeOut("slow", function(){
+			    						var toView = '<div class="span6 lgreybg" ><div class="row-fluid"><span class="flow-title pull-left offset1"><i class="flow-icon icon-apprvicon pull-left"></i><span>Thank you for taking time to<br />answer our Survey Questions</span></span><p class="flow-instruction pull-left">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></div><div class="row-fluid"><p class="flow-instruction p-r-t-u-answer pull-left">We are about to post  what you\'ve purchased on your Facebook wall. Please confirm.</p><br /><div class="span6 flow-btns pull-left"><button class="blue-btn" data-toggle="modal" data-target="#postFB" data-dismiss="modal">Confirm</button></div><div class="span5 flow-btns pull-left"><button class="blue-btn">Cancel</button></div><div class="clr"></div></div></div>';
+			    						
+			    						$(this).replaceWith(toView).fadeIn("slow");
+			    					});
+								} else {
+									window.location.href= base_url + 'payment-checkout';
+								}
+							}, 
+							error: function(){
+								alert('Some error occured or the system is busy. Please try again later');	
+							}
+						});
 				    })
-				    
+
+					$('.check-eligibility-btn input').iCheck({
+						checkboxClass: 'icheckbox_flat-red',
+						radioClass: 'iradio_flat-blue'
+					});
 				    
 				    //Pickup Stores-mark
 					$('.radio-btn input').iCheck({
@@ -164,6 +204,24 @@
 						$(n.target).siblings('.accordion-heading').toggleClass('a-h-white a-h-whiteno');
 					});
 				    
+					
+					$('#store_keyword').on('keypress', function (e) {
+                                            var keycode = (e.keyCode ? e.keyCode : e.which);
+                                            if(keycode == '13') {
+						var keyword = $("#store_keyword").val();
+						$.post(base_url+'payment/search_nearest_stores', {keyword: keyword}, function(data){
+							$('.store_placeholder').html(data.temp);
+						 }, "json");
+                                                 return false;
+                                            }
+					 });
+                                         
+					$("#prefered_loc_search").change(function(){
+							var location = $("#prefered_loc_search option:selected").text();
+							$.post(base_url+'payment/search_store', {store_name: location}, function(data){
+									$('.store_placeholder').html(data.temp);
+							}, "json");
+					});
 				    
 				    
 				    

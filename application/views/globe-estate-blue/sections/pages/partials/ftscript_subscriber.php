@@ -1,18 +1,33 @@
 
 			  $('form#personal-info button').click(function() {
-					if ( $("input[name='sns_id']:checked").val() == 'facebook' ) {
+                          
+				if ( $("input[name='sns_id']:checked").val() == 'facebook' ) {
+                                        <?php if(FACEBOOK_ON == TRUE) { ?> 
+                                                    <?php if($this->session->userdata('fb_success') == FALSE) { ?>
+                                                    $.get(base_url+'subscriber/fb', function(data){
+                                                             if(data.status == 'redirect') {
+                                                                     window.location = data.url;
+                                                             }
+
+                                                             if(data.status == 'success') {
+                                                                     window.location.href=base_url+'payment/plan_summary';
+                                                             }
+                                                    }, "json");
+                                                    <?php } else {?>
+                                                    window.location.href=base_url+'payment/plan_summary';
+                                                    <?php } ?>
+                                            <?php } else { ?>
+                                                    window.location.href=base_url+'payment/plan_summary';
+                                       <?php } ?>
+                                
+                                        
 				      // $( '#confim_onbehalf' ).dialog( "open" );
 				    }else{
-						
+					window.location.href=base_url+'payment/plan_summary';
 					}
 					
-					window.location.href=base_url+'payment/plan_summary';
+					
 			  });
-
-
-
-
-
 
 
 			  $("#btnSubmitPersonalInfo").click(function(){
@@ -158,4 +173,9 @@
 				});
 			});
 	
+				
 
+				$('.radio-btn input').iCheck({
+					checkboxClass: 'icheckbox_flat-red',
+					radioClass: 'iradio_flat-blue'
+				});
