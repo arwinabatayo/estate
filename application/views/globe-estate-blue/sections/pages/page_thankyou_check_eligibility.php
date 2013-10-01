@@ -1,6 +1,4 @@
-		<?php //print_r($eligible_numbers);
-		$eligible_numbers=0;
-		 ?>					  
+		<?php //print_r($eligible_numbers); ?>					  
 
 				<div class="check-eligibility">
 					<h2>Thank you for lorem Ipsum, dolor sit amet</h2>
