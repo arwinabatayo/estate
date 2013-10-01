@@ -18,7 +18,7 @@
 					success: function(response){
 
 						var resp = jQuery.parseJSON( response );
-
+alert();return;
 						var cartItem = '<div id="prod-item-'+resp.rowid+'" class="item" style="display:none"><div class="fleft"><span class="productName block">'+resp.name+'</span><span class="price block arial italic">'+resp.price_formatted+'</span></div><span class="icoDelete"> <a class="btnDelete" href="javascript:void(0)" id="'+resp.rowid+'"><i class="icon-remove">&nbsp;X&nbsp;</i></a> </span><br class="clear" /></div>\n';
 
 						if(resp.status == 'success' && resp.rowid){
@@ -54,7 +54,7 @@
 		});
 
 		//delete cart item - mark
-		$(document).on('click', '.cartWidget a.btnDelete, #cartSummaryTable a.btnDelete', function(){
+		$(document).on('click', '.cartWidget a.btnDelete', function(){
 				var rowid = $(this).attr('id');
 				var prodName = $(this).attr('rel');
 
