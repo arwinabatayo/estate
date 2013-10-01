@@ -196,7 +196,7 @@ class Payment extends MY_Controller
 			$store_properties[$v['id']] = $properties;  
 		}
 		$_data['store_properties'] = $store_properties;
-		$data['temp'] = $this->load->view('globe-estate/sections/pages/partials/ajax_payment_delivery_pickup', $_data, TRUE);
+		$data['temp'] = $this->load->view('globe-estate-blue/sections/pages/partials/ajax_payment_delivery_pickup', $_data, TRUE);
 		echo json_encode($data);
 	}
 	
@@ -221,7 +221,7 @@ class Payment extends MY_Controller
 			$store_properties[$v['id']] = $properties;  
 		}
 		$_data['store_properties'] = $store_properties;
-		$data['temp'] = $this->load->view('globe-estate/sections/pages/partials/ajax_payment_delivery_pickup', $_data, TRUE);
+		$data['temp'] = $this->load->view('globe-estate-blue/sections/pages/partials/ajax_payment_delivery_pickup', $_data, TRUE);
 		echo json_encode($data);
 	}
 	
