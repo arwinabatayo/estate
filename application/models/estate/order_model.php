@@ -36,6 +36,10 @@ class Order_model extends CI_Model
 						
 			//return the order id 
 			$order_number = $order['order_number'];	
+
+			$order_config = $this->session->userdata('order_config');
+			$order_config['order_number'] = $order_number;
+			$this->session->set_userdata('order_config', $order_config);
 			
 			//save order items
 			if($cartItems && $id)
