@@ -47,6 +47,7 @@
 					$("#deliveryorpickupBtn").click(function(e) {
 						e.preventDefault();
 						var deliveryType = $('input[name=delivery_mode]:checked').val();
+
 						$.ajax({
 							url: base_url+'order/save_payment_shipping_config',
 							data: 'delivery_mode='+deliveryType,
@@ -54,10 +55,11 @@
 							success: function(response){
 								var resp = jQuery.parseJSON( response );
 								if(resp.status == 'success'){
-									if(deliveryType=='ship'){
-								      window.location.href= base_url+'shipping-address';
+									
+									if(deliveryType=='delivery'){
+										window.location.href= base_url+'shipping-address';
 								    }else{
-									  window.location.href= base_url+'pickup-store';	
+										window.location.href= base_url+'pickup-store';	
 									}  
 								}
 							}, 
@@ -74,7 +76,13 @@
 				        radiosShipAdd.filter('[value=billing]').prop('checked', true);
 				        
 				        $('#shipContent').hide();
-				    }
+				      
+				    }else{
+						
+					}
+				    
+				    
+				    //alert(radiosShipAdd);
 				    
 				    radiosShipAdd.click(function(e) {
 						$(this).closest('ul').each(function() {
@@ -83,13 +91,17 @@
 				    	$(this).parent().next('div.delContent').slideDown();
 				    });
 				    
+				    
+				    
 				    $('#shippingTypeBtn').click(function(e) {
 				    	e.preventDefault();
 				    	
+				    	var formData = $('#frmShippingInfo').serialize();
 				    	var shippingType = $('input[name=shipping_address]:checked').val();
-				    	//alert(shippingType);
-				    	window.location.href= base_url + 'pickup-store';
-				    	/**
+				    	var s = $('form#frmShippingInfo div.status');
+				    	
+				    	//alert(formData);			    	
+
 				    	$.ajax({
 								url: base_url+'order/save_address',
 								data: formData,
@@ -99,15 +111,18 @@
 									//alert(JSON.stringify(resp));
 									if(resp.status == 'success'){
 										alert('New shipping address saved!');
-										btn.attr('disabled',true);
-										$( "#personal-info-page" ).accordion( "option", "active", 2 );
+										window.location.href= base_url + 'confirm-order';
+									}else{
+										s.html(resp.msg);
+										s.show();
+										
 									}
 								}, 
 								error: function(){
 									alert('Some error occured or the system is busy. Please try again later');	
 								}
 							});
-				    	**/
+				    	
 				    })
 				    
 				    // Payment Method-- robert
