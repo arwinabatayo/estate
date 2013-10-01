@@ -92,7 +92,7 @@
 											<?php } ?>
 											
 											<?php if($user->account_id ){ //TODO not in DB ?>
-											<li><span>Overdue:</span> Php <?php echo number_format($user->credit_limit,2) ?></li>
+											<li><span>Overdue:</span> Php <?php echo number_format($user->outstanding_balance,2) ?></li>
 											<?php } ?>
 											
 										<?php } ?>	

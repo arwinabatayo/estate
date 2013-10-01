@@ -92,9 +92,9 @@
 				    });
 				    
 				    <?php if($current_method=='shipping_address'){ ?>
-					$(window).bind('beforeunload', function(){
+					 /*$(window).bind('beforeunload', function(){
 				        return 'Are you sure you want to leave?';
-				     });
+				     });*/
 				    <?php } ?>
 				      
 				    $('#shippingTypeBtn').click(function(e) {
@@ -104,8 +104,6 @@
 				    	var shippingType = $('input[name=shipping_address]:checked').val();
 				    	var s = $('form#frmShippingInfo div.status');
 				    	
-				    	//alert(formData);			    	
-
 				    	$.ajax({
 								url: base_url+'order/save_address',
 								data: formData,
@@ -119,8 +117,13 @@
 									}else{
 										s.html(resp.msg);
 										s.show();
-										
 									}
+									
+									if(shippingType == 'billing'){
+										window.location.href= base_url + 'confirm-order';
+									}
+									
+									
 								}, 
 								error: function(){
 									alert('Some error occured or the system is busy. Please try again later');	
