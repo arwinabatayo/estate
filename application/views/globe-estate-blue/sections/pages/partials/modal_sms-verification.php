@@ -9,7 +9,7 @@
 			<input class="pop-inputreset" id="code_id" name="code_id" type="text" autocomplete="false">
 					<img src="<?php echo base_url() ?>_assets/estate/_captcha/default.png" alt="" id="captcha" />
             <br/>
-            <a class="pull-right" href="javascript:void(0)" id="refresh_code">Refresh Code</a>
+            <a class="pull-right btnRefresh_code" href="javascript:void(0)" rel="captcha">Refresh Code</a>
             <br/><br/>
         </div>
 		<button class="blue-btn" id="btn_resend_vcode">OK</button>
