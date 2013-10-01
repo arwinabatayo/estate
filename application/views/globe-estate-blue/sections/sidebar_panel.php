@@ -76,7 +76,7 @@
 											<?php } ?>
 											
 											<?php if($user->lockin_duration ){ ?>
-											<li><span>Lock-in Duration:</span> <?php echo date('M d, Y',strtotime($user->lockin_duration) ) ?></li>
+											<li><span>Lock-in Duration:</span> <?php echo $user->lockin_duration ) ?></li>
 											<?php } ?>
 											
 											<?php if($user->outstanding_balance ){ ?>
@@ -92,7 +92,7 @@
 											<?php } ?>
 											
 											<?php if($user->account_id ){ //TODO not in DB ?>
-											<li><span>Overdue:</span> Php <?php echo number_format($user->credit_limit,2) ?></li>
+											<li><span>Overdue:</span> Php <?php echo number_format($user->outstanding_balance,2) ?></li>
 											<?php } ?>
 											
 										<?php } ?>	

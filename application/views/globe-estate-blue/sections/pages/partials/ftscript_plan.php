@@ -436,6 +436,7 @@
 				trigger: 'manual',
 				html:true,
 				content: function(){
+					alert();
 					return $('#get-prepaid-content').html();
 				}
 			}).click(function (e) {$(this).popover('toggle');});
