@@ -1,181 +1,106 @@
-<div id="left-siderbar" class="span3">
+    <ul class="c-s-bread-crumb">
+        <li><p><span>Status</span><br /><?php echo $order['status']; ?></p></li>
+        <li><p><span>Device</span><br /><?php echo $gadget_item['name']; ?></p></li>
+        <li><p><span>Plan</span><br /><?php echo $plan_item['name']; ?></p></li>
+        <li><p><span>Forms</span><br /><a href="javascript: void(0);" id="printable-forms">Print</a></p></li>
+        <li><p><span>Delivery Tracker</span><br />Est. Delivery - <?php echo $delivery_info['est_delivery_date']; ?><br /><a href="javascript: void(0);" id="lnk-delivery-tracker">View Delivery Status</a></p></li>
+    </ul>
 
-	<div class="line-tab">LINE 1</div>
-	<br class="clear"/>
-    <section class="jq-accordion" id="siderbar-panel">
-            <div>
-            	<?php $user = $account;?>
-                <h3><a href="#">My Account - <?php echo $user->mobile_number; ?></a></h3>
-                <div>
-					<?php if($user->mobile_number){ ?>
-					<p><strong>Mobile Number:</strong> <?php echo $user->mobile_number ?></p>
-					<?php } ?>
+      <div class="accordion row-fluid chooseplan clearfix" id="accordion2">  
+     
+        <?php   
+            if($current_controller != 'home'){
+                include(ESTATE_THEME_BASEPATH.'/sections/sidebar_panel.php');
+            }
+        ?>
+        
+        <div class="span9">
+            <div class="accordion2 account-content" id="accordion3">
+                <div class="accordion-group account-content-grp">
+                  <div class="accordion-heading">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion3" href="#x">
+                        <ul class="check-status-shop-cart-title">
+                            <li>
+                                <span class="span2">Product</span>
+                                <span class="span3">Item</span>
+                                <span class="span1">Qty.</span>
+                                <span class="span2">Unit</span>
+                                <span class="span2">% Discount</span>
+                                <span class="span2">Total</span>
+                                
+                                <div class="clr"></div>
+                            </li>
+                        </ul>
+                    </a>
+                  </div>
+                  <div id="xx" class="accordion-body collapse" style="height: auto; ">
+                    <div class="accordion-inner c-s-shopCart">
+                        <div class="row-fluid">
+                            <div class="check-status-shop-cart">
+                                <ul>
 
-					<?php if($user->account_id ){ ?>
-					<p><strong>Account #:</strong> <?php echo $user->account_id ?></p>
-					<?php } ?>
-
-					<?php if($user->account_id ){ //TODO: get from account_plan ?>
-					<p><strong>Plan:</strong> 3799</p>
-					<?php } ?>
-
-					<?php if($user->account_id ){ //TODO get from DB ?>
-					<p><strong>Category:</strong> Consumer</p>
-					<?php } ?>
-
-					<?php if($user->name && $user->surname){ ?>
-					<p><strong>Name:</strong> <?php echo $user->name . ' ' . $user->surname ?></p>
-					<?php } ?>
-
-					<?php if($user->lockin_duration ){ ?>
-					<p><strong>Lock-in Duration:</strong> <?php echo date('M d, Y',strtotime($user->lockin_duration) ) ?></p>
-					<?php } ?>
-
-					<?php if($user->outstanding_balance ){ ?>
-					<p><strong>Outstanding Balance:</strong> Php <?php echo number_format($user->outstanding_balance,2) ?></p>
-					<?php } ?>
-
-					<?php if($user->due_date){ ?>
-					<p><strong>Due Date:</strong> <?php echo date('M d, Y',strtotime($user->due_date) ) ?></p>
-					<?php } ?>
-
-					<?php if($user->credit_limit ){ ?>
-					<p><strong>Credit Limit:</strong> Php <?php echo number_format($user->credit_limit,2) ?></p>
-					<?php } ?>
-
-					<?php if($user->account_id ){ //TODO not in DB ?>
-					<p><strong>Overdue:</strong> Php <?php echo number_format($user->credit_limit,2) ?></p>
-					<?php } ?>
+                                    <?php
+                                        // load model orderitem
+                                        $this->load->model('estate/orderitem_model');
+                                        $total = 0;
+                                        // display all order items
+                                        foreach ($order_items as $item) {
+                                            // analyze product info
+                                            $_item = unserialize($item->product_info);
+                                            // var_dump($_item);
+                                            $capacity = $_item['options']['capacity'] ? '/ ' . $_item['options']['capacity'] . ' GB' : '';
+                                            $discount = $_item['discount'] ? $_item['discount'] : '&nbsp;&nbsp;';
+                                    ?>
+                                    <li>
+                                        <div class="pad-space">
+                                            <span class="span2"><div class="c-s-product-image"><img src="<?php echo $_item['product_image']; ?>" /></div></span>
+                                            <span class="span3"><?php echo $_item['name']; ?> <?php echo $capacity; ?><br /> <a href="#" class="input-block-level"><?php echo ucwords($_item['product_type']); ?></a></span>
+                                            <span class="span1"><?php echo $_item['qty'];?></span>
+                                            <span class="span2"><?php echo number_format($_item['price'], 2); ?></span>
+                                            <span class="span2"><?php echo $discount; ?></span>
+                                            <span class="span2"><?php echo 'Php ' .  number_format($_item['subtotal'], 2); ?></span>
+                                            
+                                            <div class="clr"></div>
+                                        </div>
+                                    </li>
+                                    <?php } ?>
+                                </ul>
+                                
+                                <div class="input-block-level c-s-sub-total">
+                                    <span class="span8">Sub-Total</span>
+                                        <span class="span4"><?php echo number_format($order['subtotal'], 2);  ?></span>
+                                </div>
+                                
+                                    <div class="clr"></div>
+                                <div class="input-block-level c-s-shipping">
+                                    <span class="span8">Shipping & Handling</span>
+                                        <?php // add shipping total and handling fee from orders TODO : add handling_fee on orders
+                                            $shipping_handling = $order['shipping_fee'] + $order['handling_fee'];
+                                        ?>
+                                        <span class="span4"><?php echo $shipping_handling; ?></span>
+                                </div>
+                                    
+                                    <div class="clr"></div>
+                                <div class="input-block-level c-s-total">
+                                    <span class="span8">Total</span>
+                                        <span class="span4"><?php echo  'Php ' . number_format($order['total'], 2); ?></span>
+                                </div>
+                                    <div class="clr"></div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
                 </div>
             </div>
-    </section>
-
-</div>
-
-<div id="main-page" class="span9">
-	<?php // display here the product_type 'gadget' ?>
-	<ul style="width: auto; height: 70px; list-style: none;">
-		<li style="display: inline; margin-right: 25px;"><span style="font-weight: bold;">Status : </span><?php echo $order['status']; ?></li>
-		<li style="display: inline; margin-right: 25px;"><span style="font-weight: bold;">Device : </span><?php echo $gadget_item['name']; ?></li>
-		<li style="display: inline; margin-right: 25px;"><span style="font-weight: bold;">Plan : </span><?php echo $plan_item['name']; ?></li>
-		<li style="display: inline; margin-right: 25px;"><span style="font-weight: bold;">Forms : </span><a href="#" id="printable-forms">Forms</a></li>
-		<li style="display: inline; margin-right: 25px;"><span style="font-weight: bold;">Delivery tracker : </span><a href="javascript: void(0);" id="delivery-tracker">.</a><br/><span>Est. Delivery - <?php echo $delivery_info['est_delivery_date']; ?></span></li>
-	</ul>
-
-    <section class="jq-accordion" id="plan-order-page">
-            <div>
-                <table class="table table-striped table-bordered table-hover table-condensed">
-		            <thead>
-		              <tr>
-		                <th>Product</th>
-		                <th>Item Description</th>
-		                <th class="textcenter">QTY</th>
-		                <th>Unit Price</th>
-		                <th>% Discount</th>
-		                <th>Total</th>
-		              </tr>
-		            </thead>
-
-		            <?php
-		            		// load model orderitem
-		            		$this->load->model('estate/orderitem_model');
-		            		$total = 0;
-		            		// display all order items
-		            		foreach ($order_items as $item) {
-		            			// analyze product info
-		            			$_item = unserialize($item->product_info);
-						?>
-				            <tr id="prod-item-<?php echo $_item['id']; ?>">
-				              <td>
-				              	<img src="<?php echo $_item['product_image']; ?>" />
-				               </td>
-				              <td>
-								  <span class="fleft"><?php echo $_item['name']; //. " / " . $_item['product_data_capacity']; ?></span>
-								  <br/>
-							  </td>
-				              <td align="center" class="textcenter"><?php echo $_item['qty'];?></td>
-
-				              <td><?php echo $_item['price']; ?></td>
-				              <td> <?php echo $_item['discount']; ?> </td>
-				              <td><?php echo 'Php ' .  number_format($_item['subtotal'], 2); ?></td>
-				            </tr>
-
-		            <?php
-
-						}
-					?>
-
-		            <tr>
-		              <td colspan="4"></td>
-		              <td><strong>Sub total</strong></td>
-		              <td><span><?php echo 'Php ' . number_format($order['subtotal'], 2);  ?></span> </td>
-		            </tr>
-		            <tr>
-		              <td colspan="4"></td>
-		              <td><strong>Shipping &amp; Handling</strong></td>
-		              <?php // add shipping total and handling fee from orders TODO : add handling_fee on orders
-		              		$shipping_handling = $order['shipping_fee'] + $order['handling_fee'];
-		              ?>
-		              <td><?php echo $shipping_handling; ?></td>
-		            </tr>
-                    <tr>
-		              <td colspan="4"></td>
-		              <td><strong>Total</strong></td>
-		              <td><span class="cashoutLabel"><?php echo  'Php ' . number_format($order['total'], 2); ?></span></td>
-		            </tr>
-			</table>
-            </div>
-    </section>
-</div>
-
-<div class="globe-dialog" id="dialog_print_forms" title="Print">
-    <ul style="list-style: none;">
-    <li style="display: inline; margin-right: 35px;"><button class="btn btn-primary" onClick="downloadForm('msa');">Print</button>&nbsp;MSA Form</li>
-    <li style="display: inline; margin-right: 35px;"><button class="btn btn-primary" onClick="downloadForm('qr');">Print</button>&nbsp;QR Code</li>
-    <li style="display: inline;  margin-right: 35px;"><button class="btn btn-primary" onClick="downloadForm('receipt');">Print</button>&nbsp;Receipt</li>
-    </ul>
-</div>
-
-<div class="globe-dialog" id="dialog_delivery_tracker" title="Tracking Number : <?php echo $order['tracking_id']; ?>">
-    <h4><?php echo $delivery_info['short_summary']; ?></h4>
-    <div style="width: 500px;" class="textcenter">    
-        <div id="desktop-breadcrumbs" class="row textcenter">
-            <div class="steps">
-                <a class="current" id="bc_step1">Initiated</a>
-
-                <a class="current" id="bc_step2">Picked-up</a>
-
-                <a class="current" id="bc_step3">In-transit</a>
-
-                <a class="" id="bc_step4">Delivered</a>         
-            </div>
-            <br>        
-            <br>
-            <h5>On globe vehicle for delivery </h5>
-            <h3><?php echo $delivery_info['delivery_dest']; ?></h3>
-                    <div style="width: 100%; margin-left: 10px;">
-            <div class="left" style="float: left; width: 50%;">
-                Shipment Dates <br/><br/>
-                Ship Date : <?php echo date("F j, Y", strtotime($delivery_info['shipment_date'])); ?> <br/>
-                Estimated Delivery : <?php echo date("F j, Y", strtotime($delivery_info['est_delivery_date']));   ?>
-            </div>
-            <div class="right" style="float: right; width: 50%">
-                Destination <br/><br/>
-                <?php echo $delivery_info['shipment_dest']; ?>
-            </div>
-
+            <div class="row-fluid link-bottom">
+                <ul class="pull-right">
+                    <li><a>Contact Us</a></li>
+                    <li>|</li>
+                    <li><a>Live Chat</a></li>
+                </ul>
+            </div>                             
         </div>
-        </div>
+    
     </div>
-</div>
 
 
-
-<div id="receipt" class="modal fade pop-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" style="display:none">
-	<button type="button" class="close pop-close" data-dismiss="modal" aria-hidden="true">×</button>  	
-		<div class="modal-body pop-content">
-			
-			
-			<div class="clr"></div>
-		</div>
-	</div> 
