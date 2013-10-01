@@ -18,7 +18,7 @@
 					success: function(response){
 
 						var resp = jQuery.parseJSON( response );
-alert();return;
+
 						var cartItem = '<div id="prod-item-'+resp.rowid+'" class="item" style="display:none"><div class="fleft"><span class="productName block">'+resp.name+'</span><span class="price block arial italic">'+resp.price_formatted+'</span></div><span class="icoDelete"> <a class="btnDelete" href="javascript:void(0)" id="'+resp.rowid+'"><i class="icon-remove">&nbsp;X&nbsp;</i></a> </span><br class="clear" /></div>\n';
 
 						if(resp.status == 'success' && resp.rowid){

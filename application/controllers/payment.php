@@ -155,7 +155,6 @@ class Payment extends MY_Controller
 	public function survey() {	
 		$this->load->model('estate/survey_model');
 		
-		echo $this->session->subscriber_info->account_id;
 		$this->_data->survey_list = $this->survey_model->get_all_survey();
 		$this->_data->page  = 'survey';
 		$this->_data->show_breadcrumbs    =  false;
@@ -165,6 +164,8 @@ class Payment extends MY_Controller
 	public function save_survey() {
 		$ret = "yes";
 		$account_info = (object) $this->session->userdata('subscriber_info');
+		$order_config = (object) $this->session->userdata('order_config');
+		
 		
 		$post = $this->input->post();
 		$str = implode("|", $post['survey']);
@@ -173,10 +174,8 @@ class Payment extends MY_Controller
 			$selected_survey_ids = str_pad($str,strlen($str)+2,"|",STR_PAD_BOTH);
 			
 			$this->load->model('estate/survey_model');
-			
-			$data['order_number'] = 12345;
+			$data['order_number'] = $order_config->order_number;
 			$data['account_id'] = $account_info->account_id;
-			
 			$data['selected_offers'] = $selected_survey_ids;
 			
 			$this->survey_model->save_survey($data);
