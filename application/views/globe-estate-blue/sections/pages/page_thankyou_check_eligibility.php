@@ -1,33 +1,38 @@
-							  
-							<div id="main-page" class="span10 divcenter">  
+		<?php //print_r($eligible_numbers); ?>					  
+
+				<div class="check-eligibility">
+					<h2>Thank you for lorem Ipsum, dolor sit amet</h2>
+					<?php if($eligible_numbers){ ?>	
+					<p>However our system shows that you have <?php echo count($eligible_numbers) ?> other numbers associated with this account. You may check the eligibility by selecting the number you want to add. If you wish to leave the page, you may select exit.</p>
+					<?php } ?>	
+					<hr/>
+					
+					<div class="check-eligibility-btn">
+						<ul>
+							<?php 
+
+							if($eligible_numbers){ ?>
+								<?php foreach($eligible_numbers as $row){ ?>
+								
 							
-							   <div class="textcenter contentbox">
-								     <h4 style="font-size:22px;font-weight:normal">Thank you for taking time to answer our survey questions.</h4>
-									<p>Suspendisse a dolor eu felis convallis ultrices sit amet ut metus. In pulvinar justo in odio pretium, ut fringilla massa ornare.</p>
-									<br />
-
-							   </div>
-							   
-							    <div class="textcenter contentbox">
-									<p>Our system shows that you have 3 other numbers associated with this account. Would you like to check the eligibility of these numbers? If yes, please select the number you want to add.</p>
-									<br />
-									<div>
-											<form class="form-inline" onsubmit="return false">
-											<input type="radio" name="number" value="09179998877" checked="checked" />&nbsp;<label for="number">09179998877</label><br /> 
-											<input type="radio" name="number" value="09179656655" />&nbsp;<label for="number">09179656655</label><br />  
-											<input type="radio" name="number" value="09174453344" />&nbsp;<label for="number">09174453344</label> 
-											
-											</form>
-											<br />
-											<p><button class="btn-large ui-button-success">CHECK ELIGIBILITY</button></p>
-									</div>
-							    </div>
-							    
-							    
-							 </div>
-
-						   
-				<br />			   
-				<br />			   
-				<br />			   
-							   
+								<li>
+									<input tabindex="1" type="radio" id="flat-radio-1" name="eligible_number" style="" value="<?php echo $row->mobile_numbers ?>" />
+									<label for=""><?php echo $row->mobile_numbers ?></label>
+								</li>
+								<?php } ?>
+								
+							<?php } ?>
+						</ul>
+						
+						<div class="clr"></div>
+					</div>
+					<br />
+					<?php if($eligible_numbers){ ?>
+					<button class="blue-btn fl">Check Eligibility</button>
+					<button class="blue-btn fr">Exit</button>
+					<?php }else{ ?>
+						<p class="textcenter"><button class="blue-btn" onclick="window.location='<?php echo base_url() ?>'">Exit</button></p>
+					<?php } ?>
+					
+					<div class="clr"></div>
+				</div>

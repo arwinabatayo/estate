@@ -191,6 +191,9 @@ class Payment extends MY_Controller
 		$this->_data->page_title          = 'Thank you for your order';
 		$this->_data->show_breadcrumbs    =  false;
 		
+		$this->_data->eligible_numbers    = 0;
+		$this->_data->eligible_numbers    = $this->accounts_model->get_eligible_numbers($this->_data->account_id); 
+		
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
 	
