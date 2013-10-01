@@ -28,7 +28,7 @@ class Subscriber extends MY_Controller
 		if($account_info->account_id){
 			$this->_data->account_id      = $account_info->account_id;
 		}
-		define('FACEBOOK_ON', FALSE);
+		define('FACEBOOK_ON', TRUE);
 		
 	}
 	
