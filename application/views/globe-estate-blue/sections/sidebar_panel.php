@@ -76,7 +76,7 @@
 											<?php } ?>
 											
 											<?php if($user->lockin_duration ){ ?>
-											<li><span>Lock-in Duration:</span> <?php echo date('M d, Y',strtotime($user->lockin_duration) ) ?></li>
+											<li><span>Lock-in Duration:</span> <?php echo $user->lockin_duration ) ?></li>
 											<?php } ?>
 											
 											<?php if($user->outstanding_balance ){ ?>
