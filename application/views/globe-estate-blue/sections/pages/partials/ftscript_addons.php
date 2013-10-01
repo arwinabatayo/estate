@@ -131,12 +131,11 @@
 		        },
 		        success  : function (data, status) {
 		           if(data.status != 'error') {
-		              $('#uploading').html('<p>Uploading...</p>');
-		              alert("File successfully uploaded");
-		              window.location= base_url;
-		           } else {
-		           	alert(data.msg);
+		           		$('#modifyPlan2').modal('hide');
 		           }
+		        },
+		        complete : function(response){
+		            $('#order-thankyou').modal('show');
 		        }
 		        
 		     });

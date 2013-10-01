@@ -1,4 +1,24 @@
-    
+
+	<!-- Modal -->
+	<?php // Added by Robert ?>
+	<div id="order-thankyou" class="modal hide fade pop-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-body pop-content">
+			<div class="o-i-icon"><img src="<?php echo $assets_path ?>site-blue/images/icons/icon_mail.png" width="150" height="150" alt=""/></div>
+			
+			<p class="pop-txtblue-large">Thank You</p>
+			
+			<p>An email has been sent to Order Manager for your application approval.</p>
+
+			<p>Kindly check your email for the link back to this site.  Use the reference  number we sent to check the status of your application.</p><br /><br />
+			
+			<?php if(!isset($_GET['subscriber_flag'])){ ?>
+				<p class="textcenter"><button class="blue-btn" onclick="window.location.href='<?php echo base_url() ?>'">Continue</button></p>
+			<?php }else{ ?>
+				<p class="textcenter"><button class="blue-btn" onclick="closeModal(this);">Continue</button></p>
+			<?php } ?>
+		</div>
+	</div>
+	
     <!-- Exceed Limit -->
     <div id="exceed-limit" class="modal fade pop-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" style="display:none">
 	<button type="button" class="close pop-close" data-dismiss="modal" aria-hidden="true">×</button>  	
@@ -32,6 +52,10 @@
                 <label class="blue-btn add-photo-btn">Browse<span><input type="file" id="myfile" name="myfile" /></span>
             </label>
             </p>
+            <!-- div id="progress">
+		        <div id="bar"></div>
+		        <div id="percent">0%</div >
+			</div -->
         </div>
         <p>(Two-months credit card statement , ITR with BIR or Bank received stamp-Form 1700, W-2 or Form 2316, Certificate of Employment  and Compensation , One month  computerized payslip, Two months bank statement of account or passbook, three months certificate  of allotment plus employment contract)</p>
 		<p id="uploading"></p>

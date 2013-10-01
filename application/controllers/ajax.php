@@ -323,7 +323,6 @@ class Ajax extends MY_Controller
 	public function upload_file() {
 		$this->load->model('estate/blob_model');
 		
-		
 		$user = isset($account_info) ? $account_info : (object) $this->session->userdata('subscriber_info');
 		
 		$status = "";
@@ -338,7 +337,7 @@ class Ajax extends MY_Controller
 		if ($status != "error") {
 			$fileContent = $_FILES[$file_element_name];
 			
-			$allowed =  array('png' ,'pdf');
+			$allowed =  array('png', 'pdf', 'jpg', 'jpeg');
 			
 			$ext = pathinfo($fileContent['name'], PATHINFO_EXTENSION);
 			
