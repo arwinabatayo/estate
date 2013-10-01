@@ -132,8 +132,10 @@
 		        success  : function (data, status) {
 		           if(data.status != 'error') {
 		              $('#uploading').html('<p>Uploading...</p>');
-		              var al = alert("File successfully uploaded");
+		              alert("File successfully uploaded");
 		              window.location= base_url;
+		           } else {
+		           	alert(data.msg);
 		           }
 		        }
 		        
