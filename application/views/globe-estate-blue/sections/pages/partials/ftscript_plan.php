@@ -446,7 +446,7 @@
 				$('#tooltip-prepaid-kit').dialog("open");
 			});
 			
-			$('button#retain').click(function(){
+			$('button#retain, button#package').click(function(){
 				window.location = base_url+'addons';
 			});
 

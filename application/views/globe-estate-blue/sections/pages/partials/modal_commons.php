@@ -36,10 +36,10 @@
             <label for="Enter Characters You See">Enter Characters You See</label>
             <input type="text" id="code_id" name="code_id" autocomplete="false" />
             <div>
-                <!-- <div class="u-t-captcha"> -->
-                    <img width="404" height="97" alt="" src="<?php echo base_url() ?>_assets/estate/_captcha/default.png" alt="" id="ut_captcha" >
-                <!-- </div> -->
-                <a class="pull-right" href="javascript:void(0)" id="refresh_code">Refresh code</a>
+               
+                <img width="404" height="97" alt="" src="<?php echo base_url() ?>_assets/estate/_captcha/default.png" alt="" id="ut_captcha" >
+               
+                <a class="pull-right btnRefresh_code" href="javascript:void(0)" rel="ut_captcha">Refresh code</a>
             </div>
             <div class="clr"></div>
             <div style="display:none" class="status alert textcenter"></div>
@@ -64,10 +64,10 @@
             <label for="Enter Characters you see"><strong>Enter Characters you see</strong></label>
             <input type="text" name="code_id" id="code_id" class="span4" autocomplete="false" /><br />
             <div>
-                <!-- <div class="u-t-captcha"> -->
+              
                     <img width="404" height="97" alt="" src="<?php echo base_url() ?>_assets/estate/_captcha/default.png" alt="" id="fr_captcha" >
-                <!-- </div> -->
-                <a class="pull-right" href="javascript:void(0)" id="refresh_code">Refresh code</a>
+             
+                <a class="pull-right btnRefresh_code" href="javascript:void(0)" rel="fr_captcha">Refresh code</a>
             </div>
             <div style="display:none" class="status alert textcenter"></div>
             <input type="submit" name="" value="Submit" class="blue-btn"/>
