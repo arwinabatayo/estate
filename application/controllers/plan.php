@@ -96,8 +96,9 @@ class Plan extends MY_Controller
 		$this->load->model('estate/packageplan_model');
 
 		$plan_id = $this->input->post('plan_id');
+		$gadget_id = $this->input->post('gadget_id');
 
-		$this->_data->package_plan_gadget_cashout = $this->packageplan_model->get_package_plan_gadget_cashout($plan_id);
+		$this->_data->package_plan_gadget_cashout = $this->packageplan_model->get_package_plan_gadget_cashout($plan_id, $gadget_id);
 
 		//var_dump($this->_data->package_plan_gadget_cashout);
 		return $this->_data->package_plan_gadget_cashout;
