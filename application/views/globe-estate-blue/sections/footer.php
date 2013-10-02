@@ -163,7 +163,6 @@
 		
 
 		
-	});
 
 		var showPreloader = function(){
 			$("#status").fadeIn(); $("#preLoader").delay(350).fadeIn("fast");
@@ -178,6 +177,7 @@
         });
         
 		
+	});
 	
 
 	function downloadForm(_type)
