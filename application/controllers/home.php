@@ -140,13 +140,14 @@ class Home extends MY_Controller
 			$sRet .= '<li><img src="'.base_url().'_assets/uploads/'.$capacities['dcimg'].'" />
 				<span>
 					<input id="'.strtolower(str_replace(" ", "",$capacities['dcname'])).'" type="radio" name="gadget_capacity" 
-							value="'.strtolower(str_replace(" ", "",$capacities['dcname'])).'"'.$selected.'>
+							value="'.$capacities['dcid'].'"'.$selected.'>
 					<label for="'.strtolower(str_replace(" ", "",$capacities['dcname'])).'">'.$capacities['dcname'].'</label>
 				</span></li>';
 			$x++;
 		}
 		echo $sRet;
 	}
+	
 	public function test()
 	{	
 		$this->_data->show_breadcrumbs    =  false;

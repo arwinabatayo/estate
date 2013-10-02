@@ -2,9 +2,11 @@
 	<?php
 		//Need to separate prod type into basket (accordion)
 		//TODO - add to table
-		$cartProdFiltered = array('accessories'=>array(),'addon'=>array(),'plan'=>array(), 'combos'=>array(), 'boosters'=>array(), 'packageplan'=>array()); //store it on each key(prod type)
+		$cartProdFiltered = array('gadget'=>array(),'accessories'=>array(),'addon'=>array(),'plan'=>array(), 'combos'=>array(), 'boosters'=>array(), 'packageplan'=>array()); //store it on each key(prod type)
 	
 		$cartItems = $this->cart->contents();
+		
+		
 
 		if($cartItems){
 			foreach($cartItems as $item){
@@ -109,17 +111,39 @@
                               </div>
                               <div id="collapseTwo" class="accordion-body collapse" style="height: auto; ">
                                 <div class="accordion-inner">
-                                    <ul>
+                                <?php 
+                                $cartItemsGadget='';
+                                $cartItemsGadget = $cartProdFiltered['gadget'][0];
+                                
+                                $selectedColor 		= $cartItemsGadget['options']['color'];
+                                $selectedCapacity 	= $cartItemsGadget['options']['capacity'];
+                                
+                                $availableColor = $this->home_model->getAvailableColors($cartItemsGadget['product_id']);
+                                $availableCapacity = $this->home_model->getCapacity($cartItemsGadget['product_id'], $selectedColor);
+                                
+                                unset($availableColor['count']);
+                                unset($availableCapacity['count']);
+                                ?>
+                                    <ul id="addDeviceSidePanel">
                                         <li>
                                             <span>Color</span>
-                                            <input id="black" type="radio" name="color" value="black" checked="checked"><label for="black">Black</label>
-                                            <input id="white" type="radio" name="color" value="white"><label for="white">White</label>
+                                            <?php foreach($availableColor as $key => $value) { ?>
+                                            <?php 	if($selectedColor = $value['clid']) {?>
+                                            <input data-device="type_<?php echo $cartItemsGadget['product_id']; ?>" id="<?php echo strtolower(trim($value['clname'])); ?>" type="radio" name="color" value="<?php echo $value['clid']; ?>" checked><label for="<?php echo strtolower(trim($value['clname'])); ?>"><?php echo  $value['clname']; ?></label>
+                                            <?php 	} else {?>
+                                            <input data-device="type_<?php echo $cartItemsGadget['product_id']; ?>" id="<?php echo strtolower(trim($value['clname'])); ?>" type="radio" name="color" value="<?php echo $value['clid']; ?>"><label for="<?php echo strtolower(trim($value['clname'])); ?>"><?php echo  $value['clname']; ?></label>
+                                            <?php 	} ?>
+                                            <?php } ?>
                                         </li>
-                                        <li>
+                                        <li id="dataCapacitySidebarPanel">
                                             <span>Data Capacity</span>
-                                            <input id="16gb" type="radio" name="capacity" value="16gb" checked="checked"><label for="16gb">16GB</label>
-                                            <input id="32gb" type="radio" name="capacity" value="32gb"><label for="32gb">32GB</label>
-                                            <input id="64gb" type="radio" name="capacity" value="64gb"><label for="64gb">64GB</label>
+                                            <?php foreach($availableCapacity as $key => $value) { ?>
+                                            <?php 	if($selectedCapacity = $value['dcid']) {?>
+                                            <input data-device="type_<?php echo $cartItemsGadget['product_id']; ?>" id="<?php echo strtolower(trim($value['dcname'])); ?>" type="radio" name="capacity" value="<?php echo $value['dcid']; ?>" checked><label for="<?php echo strtolower(trim($value['dcname'])); ?>"><?php echo $value['dcname']; ?></label>
+                                            <?php 	} else {?>
+                                            <input data-device="type_<?php echo $cartItemsGadget['product_id']; ?>" id="<?php echo strtolower(trim($value['dcname'])); ?>" type="radio" name="capacity" value="<?php echo $value['dcid']; ?>"><label for="32gb">32GB</label>
+                                            <?php 	} ?>
+                                            <?php } ?>
                                         </li>
                                     </ul>				
                                 </div>
@@ -289,12 +313,12 @@
                             </div>                                                
                         </div>                          
                     </div>
-                    <!-- div id="pesovalueBox" class="cash-out">
+                    <div id="pesovalueBox" class="cash-out">
                     	<span class="blue">PESO VALUE</span>
                         <span class="black" id="pesovalueLabel">
 							<?php echo $this->cart_model->remaining_pv(false); ?>
 						</span>
-                    </div -->   
+                    </div>   
                     <div id="cashoutBox" class="cash-out">
                     	<span class="blue">YOUR CASHOUT</span>
                         <span class="black" id="cashoutLabel">
