@@ -24,9 +24,14 @@
 				$gadget_cash_out =  $item['gadget_cash_out'];
 			}
 		}
+		
+		
+		$user = isset($account_info) ? $account_info : (object) $this->session->userdata('subscriber_info');
+		
 	?>		
                 <div class="span3 left">
                 	<div class="chooseline">
+						<?php if($user){ ?>
                         <div class="line">
                             <span>CHOOSE A LINE</span>
                             <label>
@@ -36,18 +41,12 @@
                                 </select>
                             </label>
                         </div>
+                        <?php  } ?>
+                        
                         <div class="accordion" id="accordion2">
                             <div class="accordion-group account-group account">
-								<?php
-									
-									$user = isset($account_info) ? $account_info : (object) $this->session->userdata('subscriber_info');
-									
-									//Temp Only
-									if(!$user){
-										$user = $this->accounts_model->get_account_info_by_id('9151178863',false);	
-									}
-								?>
 								
+							  <?php if($user){ ?>	
                               <div class="row-fluid accordion-heading">
                                 <a class="accordion-toggle account-name" data-toggle="collapse" data-target="#collapseOne">
                                   MY ACCOUNT <i class="expand icon-pn"></i>
@@ -94,7 +93,7 @@
 											<?php } ?>
 											
 											<?php if($user->account_id ){ //TODO not in DB ?>
-											<li><span>Overdue:</span> Php <?php echo number_format($user->credit_limit,2) ?></li>
+											<li><span>Overdue:</span> Php <?php echo number_format($user->outstanding_balance,2) ?></li>
 											<?php } ?>
 											
 										<?php } ?>	
@@ -103,6 +102,8 @@
                                 </div>
                               </div>
                             </div>
+                            <?php } ?>	
+                            
                             <div class="accordion-group account-group addevice">
                               <div class="row-fluid accordion-heading">
                                 <a class="accordion-toggle account-name in collapse" data-toggle="collapse" data-target="#collapseTwo">
