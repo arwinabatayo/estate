@@ -42,5 +42,44 @@ class Model_reservation extends CI_Model
 
         return $insert_id;
 	}
+
+    function getAllReservations($limit, $limit_by=50, $order_by)
+    {
+
+        $this->db->where('delete_flag', 'n');
+        $query_total = $this->db->get($this->tbl_name);
+
+        if ($order_by) {
+            $this->db->order_by($order_by['field'], $order_by['direction']);
+        }
+        if ($limit_by != 'all') {
+            $query = $this->db->get($this->tbl_name, $limit_by, $limit);
+        }
+        
+        $data = $query->result_array();
+        $data['total_count'] = $query_total->num_rows;
+        // echo $data['total_count']; exit;
+        return $data;
+    
+    }
+
+    function updateReservationById($reserve_id)
+    {   
+        // get current status and negate
+        $temp_flag = $this->getReservationStatusById($reserve_id);
+        if ($temp_flag =='n') { $informed_flag = 'y'; } else { $informed_flag = 'n'; }
+        // echo $reserve_id . ' ' . $temp_flag . ' ' . $informed_flag; exit;
+        $this->db->where('reserve_id', $reserve_id)      
+                ->update($this->tbl_name, array('informed_flag' => $informed_flag));
+        return $informed_flag;
+    }
+
+        // return int status by string process_code
+    function getReservationStatusById($reserve_id)
+    {
+        $q = $this->db->get_where($this->tbl_name, array('reserve_id' => $reserve_id));
+        $result = $q->row();
+        return $result->informed_flag;
+    }
 }
 ?>

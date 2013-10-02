@@ -1,8 +1,4 @@
-
-
-
-
-								   <?php 
+									<?php 
 								       if($items){ 
 										   //print_r($gadget_care);
 											foreach($items as $row){

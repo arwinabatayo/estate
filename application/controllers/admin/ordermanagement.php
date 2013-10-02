@@ -6,7 +6,7 @@ class Ordermanagement extends MY_Controller
 	function __construct()
 	{
 		parent::__construct();
-		if (!$this->session->userdata['logged_in']) { redirect(site_url('admin/logout')); } // logged in?
+		/*if (!$this->session->userdata['logged_in']) { redirect(site_url('admin/logout')); } // logged in?
 		
 		if( $this->session->userdata('user_type') && $this->session->userdata('user_type') < 10 ){ 
 			// is non-ecommerce users
@@ -19,7 +19,7 @@ class Ordermanagement extends MY_Controller
 		}else{
 			// is ecommerce users
 			// allow access
-		}
+		}*/
 	}
 	
 	public function index()

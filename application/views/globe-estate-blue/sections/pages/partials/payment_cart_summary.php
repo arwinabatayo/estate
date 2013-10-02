@@ -83,7 +83,11 @@
 								<?php echo $this->cart_model->total(true) ?>
 							</span>
 						</td>                        
-                    </tr>                         
+                    </tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td><div class="agree-check" style="position:relative; float:left;"><input tabindex="13" type="checkbox" id="flat-checkbox-1"></div> <p style="padding-left:25px;">I agree to the Terms & Conditions</p> <div class="clr"></div></td>
+					</tr>
                 </table>
                 <br />
                 <div class="plan-sum-btn">

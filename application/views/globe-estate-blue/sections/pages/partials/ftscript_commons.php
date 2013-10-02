@@ -27,6 +27,7 @@
 			$("#"+seletorID).after('<span id="captchaPreloder" class="block" style="font-size:12px">Loading Captcha...Please wait...</span>');
 			$.ajax({
 			    dataType: 'json',
+			    type:'POST',
 				url: base_url+'captcha/get_captcha_img',
 			    success: function(response){
 					$("span#captchaPreloder").remove();
