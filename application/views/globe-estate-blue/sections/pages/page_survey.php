@@ -1,53 +1,31 @@
 		<div class="row-fluid flow rec">
 	        <div class="container">
-		        
-	            <div class="span6 lgreybg t-f-order">         
-					<h3>We would like to fit our<br /> offering to your interest</h3>
-					
-					<hr/>
-					
-					<p><strong>Please check all that apply.</strong></p><br />
-					
-					<div class="thank-order-check">
-						<ul>
-							<li>
-								<input type="checkbox" name="survey" id="" value="gadget" />
-								<label for="Gadgets">Gadgets</label>
-							</li>
-							<li>
-								<input type="checkbox" name="survey" id="" value="healthandfashion"/>
-								<label for="Gadgets">Health &amp; Fashion</label>
-							</li>
-							<li>
-								<input type="checkbox" name="survey" id="" value="foodanddining"/>
-								<label for="Gadgets">Food &amp; Dining</label>
-							</li>
-							<li>
-								<input type="checkbox" name="survey" id="" value="beautyandhome"/>
-								<label for="Gadgets">Beauty &amp; Home</label>
-							</li>
-							<li>
-								<input type="checkbox" name="survey" id="" value="travelandphotography"/>
-								<label for="Gadgets">Travel &amp; Photography</label>
-							</li>
-							<li>
-								<input type="checkbox" name="survey" id="" value="beautyandhome"/>
-								<label for="Gadgets">Beauty &amp; Home</label>
-							</li>
-							<li>
-								<input type="checkbox" name="survey" id="" value="sports"/>
-								<label for="Gadgets">Sports</label>
-							</li>
-							<li>
-								<input type="checkbox" name="survey" id="" value="parenting"/>
-								<label for="Gadgets">Parenting</label>
-							</li>
-						</ul>
+		        <form method="post" id="surveyForm">
+		            <div class="span6 lgreybg t-f-order">         
+						<h3>We would like to fit our<br /> offering to your interest</h3>
 						
-		        		<div align="center" class="plan-sum-btn">
-		                	<button class="blue-btn" id="surveyBtn">Continue</button>
-		                </div>
-					</div>
+						<hr/>
+						
+						<p><strong>Please check all that apply.</strong></p><br />
+						
+						<div class="thank-order-check">
+							<ul>
+								<?php if($survey_list) { ?>
+									<?php foreach ($survey_list as $key => $values) { ?>
+								<li>
+									<input type="checkbox" name="survey[<?php echo $values['id'] ?>]" id="<?php echo $values['id'] ?>" value="<?php echo $values['id'] ?>" />
+									<label for="Gadgets"><?php echo $values['name']; ?></label>
+								</li>
+									<?php } ?>
+								<?php } ?>
+								
+							</ul>
+							
+			        		<div align="center" class="plan-sum-btn">
+			                	<button class="blue-btn" id="surveyBtn">Continue</button>
+			                </div>
+						</div>
+					</form>
 	            </div>
 	            <div class="span6 dbluebg" style="min-height: 460px;">
 	                <div class="row-fluid">

@@ -300,6 +300,7 @@ class Cart extends CI_Controller {
 
 				 $plan_pv = $this->products_model->get_package_plan_pv($d->plan);
 				 $amount = number_format($this->get_package_plan_gadget_amount($d->plan, $d->device),2);
+				 echo $amount;
 
 				 // check if package plan amount is still within credit limit
 				 // get user credit limit

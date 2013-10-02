@@ -40,11 +40,21 @@
 			
 		 }
 
+/*
 		$('a#refresh_code').click( function(e){
 			e.preventDefault();
 			var sel = $(this).siblings('img').attr('id');
 			createCaptcha(sel) ;
 		});	
+*/
+		
+		$('.btnRefresh_code').each( function(){
+			$(this).click( function(e){
+				var sel = $(this).attr('rel');
+				createCaptcha(sel) ;	
+			});	
+		});	
+		
 
 		// set dialog for opening refnum verification - gellie
 		$('a#open_application_status').on('click', function(){

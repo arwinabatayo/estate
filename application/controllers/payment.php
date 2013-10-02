@@ -148,13 +148,39 @@ class Payment extends MY_Controller
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}
 	
+	/**
+	 * Update By Robert 10.01
+	 */
 	//Note/TODO: Thank you survey - Pls. make it ajax display after answering the survey
-	public function survey()
-	{	
+	public function survey() {	
+		$this->load->model('estate/survey_model');
+		
+		$this->_data->survey_list = $this->survey_model->get_all_survey();
 		$this->_data->page  = 'survey';
 		$this->_data->show_breadcrumbs    =  false;
 		
 		$this->load->view($this->_data->tpl_view, $this->_data);
+	}
+	public function save_survey() {
+		$ret = "yes";
+		$account_info = (object) $this->session->userdata('subscriber_info');
+		$order_config = (object) $this->session->userdata('order_config');
+		
+		
+		$post = $this->input->post();
+		$str = implode("|", $post['survey']);
+		
+		if(!empty($str)) {
+			$selected_survey_ids = str_pad($str,strlen($str)+2,"|",STR_PAD_BOTH);
+			
+			$this->load->model('estate/survey_model');
+			$data['order_number'] = $order_config->order_number;
+			$data['account_id'] = $account_info->account_id;
+			$data['selected_offers'] = $selected_survey_ids;
+			
+			$this->survey_model->save_survey($data);
+		}
+		echo "yes";
 	}
 	
 	//Thank you for... / Check Eligibilty
@@ -163,6 +189,9 @@ class Payment extends MY_Controller
 		$this->_data->page  = 'thankyou_check_eligibility';
 		$this->_data->page_title          = 'Thank you for your order';
 		$this->_data->show_breadcrumbs    =  false;
+		
+		$this->_data->eligible_numbers    = 0;
+		$this->_data->eligible_numbers    = $this->accounts_model->get_eligible_numbers($this->_data->account_id); 
 		
 		$this->load->view($this->_data->tpl_view, $this->_data);
 	}

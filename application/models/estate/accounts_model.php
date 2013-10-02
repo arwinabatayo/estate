@@ -74,6 +74,18 @@ class Accounts_model extends CI_Model
 		return $result;
 	}
 	
+	function get_eligible_numbers($account_id)
+	{
+		$query = $this->db->select($what)
+						 ->from('estate_account_eligibility_numbers')
+						 ->where('account_id', $account_id)
+						 ->where('is_eligible','y')
+						 ->get();
+						$result = $query->result();
+		if(count($result) == 0) return FALSE;
+		return $result;
+	}
+	
 	function save_account_address($data)
 	{
 		if( $this->db->insert('estate_account_addresses',$data) ){

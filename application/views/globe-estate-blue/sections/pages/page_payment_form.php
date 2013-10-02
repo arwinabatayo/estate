@@ -54,7 +54,7 @@
 				</div>
 				<hr />
                 <div align="center" class="plan-sum-btn">
-                	<button class="blue-btn" onclick="window.location='<?php echo base_url() ?>survey'">Pay Now</button>
+                	<button class="blue-btn" onclick="window.location='<?php echo base_url() ?>payment/payorder'">Pay Now</button>
                 </div>
                 <br class="clear" />
 

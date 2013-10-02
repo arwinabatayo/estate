@@ -10,8 +10,8 @@
 												</div>
 												<div class="accordion-link-holder fright" >
 													<div class="ot-toplinks fright accordion-link-holder textright">
-														<a href="<?php echo base_url() ?>plan?setOrderConfig=true&plantype=retain">Retain Current Plan</a>&nbsp;
-														<a href="<?php echo base_url() ?>plan?setOrderConfig=true&plantype=create">Create Your Own Plan</a>
+														<a href="<?php echo base_url() ?>plan?setOrderConfig=true&plantype=retain<?php echo $subscriber_flag; ?>">Retain Current Plan</a>&nbsp;
+														<a href="<?php echo base_url() ?>plan?setOrderConfig=true&plantype=create<?php echo $subscriber_flag; ?>">Create Your Own Plan</a>
 													</div>
 												</div>
 												<div class="clear"></div><br />
@@ -20,7 +20,7 @@
 												<div class="main" style="width:100%;">
 													<ul id="og-grid" class="og-grid">
                                             <li>
-                                                <a href="#" data-largesrc="" 
+                                                <a href="#" class="btnAddPackagePlan" data-id="2" data-pv="500" data-largesrc="" 
                                                     data-title="
                                                         <div align='left'>
                                                             <div class='plan-text fl'>
@@ -76,7 +76,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#" data-largesrc="" 
+                                                <a href="#" class="btnAddPackagePlan" data-id="3" data-pv="900" data-largesrc="" 
                                                     data-title="
                                                         <div align='left'>
                                                             <div class='plan-text fl'>
@@ -132,7 +132,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a  href="#" data-largesrc="" 
+                                                <a  href="#" class="btnAddPackagePlan" data-id="4" data-pv="1700" data-largesrc="" 
                                                     data-title="
                                                         <div align='left'>
                                                             <div class='plan-text fl'>
@@ -189,7 +189,7 @@
                                             </li>
                                             
                                             <li>
-                                                <a  href="#" data-largesrc="" 
+                                                <a  href="#" class="btnAddPackagePlan" data-id="5" data-pv="3200" data-largesrc="" 
                                                     data-title="
                                                         <div align='left'>
                                                             <div class='plan-text fl'>
@@ -245,7 +245,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a  href="#" data-largesrc="" 
+                                                <a  href="#" class="btnAddPackagePlan" data-id="6" data-pv="4400" data-largesrc="" 
                                                     data-title="
                                                         <div align='left'>
                                                             <div class='plan-text fl'>
@@ -302,7 +302,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a  href="#" data-largesrc="" 
+                                                <a  href="#" class="btnAddPackagePlan" data-id="6" data-pv="6500" data-largesrc="" 
                                                     data-title="
                                                         <div align='left'>
                                                             <div class='plan-text fl'>
@@ -359,7 +359,7 @@
                                                     
                                                 </a>
                                             </li>
-                                            <li>
+                                            <?php /*<li>
                                                 <a  href="#" data-largesrc="" 
                                                     data-title="
                                                         <div align='left'>
@@ -472,7 +472,7 @@
                                                         </div>
                                                     </div>
                                                 </a>
-                                            </li>
+                                            </li>*/ ?>
                                             
                                         </ul>
 													<div class="clr"></div>

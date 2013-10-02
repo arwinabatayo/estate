@@ -45,7 +45,7 @@ class Cart_model extends CI_Model
         if(!is_array($info)) return FALSE;            
 
         $check_iexists = $this->_check($account_id, $info);
-        echo $check_iexists; exit;
+      
         if($check_iexists === FALSE) {
             $this->delete_cart($account_id);
             $this->db->set('previous_selected', json_encode($info))

@@ -23,6 +23,7 @@
                                 if(isset($_GET['subscriber_flag'])){
                                     $subscriber_flag = "&subscriber_flag=" . $_GET['subscriber_flag'];
                                 }
+
                                 if( isset($_GET['ordertype']) && $_GET['ordertype'] == 'newline' || !empty($subscriber_flag)){
                                 
                                     //GET NEWLINE
@@ -85,13 +86,13 @@
 																$changeBtnId="combos";
 																$gobackBtnId ="backPlans";
 																$display = "";
-																$goto = "&plantype=".$_GET['plantype'];
+																$goto = "&plantype=".$_GET['plantype'].$subscriber_flag;
 													break;
 													case "boosters": include('page_plan_create_boosters.php'); 
 																$changeBtnId="boosters"; 
 																$gobackBtnId ="backCombos";
 																$display = "";
-																$goto = "&plantype=".$_GET['plantype']."&bundles=combos";
+																$goto = "&plantype=".$_GET['plantype']."&bundles=combos".$subscriber_flag;
 													break;
 												}
 											} else {
@@ -122,6 +123,7 @@
                         <div class="pull-right">
                         	<!-- Updated by Robert 92913 -->
                         	<!-- button class="blue-btn" onclick="window.location.href='<?php echo base_url() ?>addons'" id="<?php echo $changeBtnId; ?>">Continue</button-->
+                            <input type="hidden" id="subs_flag" value="<?php echo $subscriber_flag; ?>">
                         	<button class="blue-btn" id="<?php echo $gobackBtnId; ?>" data-goto="<?php echo $goto; ?>" style="<?php echo $display; ?>">Go Back</button>
                         	<button class="blue-btn" id="<?php echo $changeBtnId; ?>">Continue</button>
                         	<br class="clear" />

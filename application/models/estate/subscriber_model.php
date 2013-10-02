@@ -52,8 +52,16 @@ class Subscriber_model extends CI_Model
 
         $this->load->model('estate/order_model');
 
-
+        
         $this->db->update("estate_orders", array("billing_id" => $id, "billing_type" => "company"), array("id" => $this->session->userdata("order_id")));
+    }
+
+    function get_city_province()
+    {
+        $query = $this->db->get('estate_province');
+        $row = $query->result();
+    
+        return $row;
     }
   
 }
