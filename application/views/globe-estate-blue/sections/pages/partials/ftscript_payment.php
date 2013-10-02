@@ -39,6 +39,18 @@
 					});		
 					
 					
+					
+					$("button#confirm_order").click(function(e) {
+						e.preventDefault();
+						var iAgree = $('input:checkbox[name=iagreeterms]');
+						if(iAgree.is(':checked') === false) {
+					     	alert('Please agree to the Terms and Condition.');
+					    } else {
+					    	window.location = $(this).attr('data-url');
+					    }
+					});
+					
+					
 					// Delivery -- robert
 					// Selecting Delivery Type
 					
