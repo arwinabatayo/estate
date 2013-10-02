@@ -2,10 +2,10 @@
 	<?php
 		//Need to separate prod type into basket (accordion)
 		//TODO - add to table
-		$cartProdFiltered = array('gadget'=>array(),'accessories'=>array(),'addon'=>array(),'plan'=>array(), 'combos'=>array(), 'boosters'=>array(), 'packageplan'=>array()); //store it on each key(prod type)
+
+		$cartProdFiltered = array('accessories'=>array(),'addon'=>array(),'plan'=>array(), 'combos'=>array(), 'boosters'=>array(), 'package_plan'=>array()); //store it on each key(prod type)
 	
 		$cartItems = $this->cart->contents();
-		
 		
 
 		if($cartItems){
@@ -16,7 +16,8 @@
 			}		
 		}
 		$cart_plan='';
-		$cart_plan = @$cartProdFiltered['plan'];
+		$cart_plan = (@$cartProdFiltered['plan']) ? @$cartProdFiltered['plan'] : @$cartProdFiltered['package_plan'];
+		
 		if($cart_plan) {
 			foreach($cart_plan as $item) {
 				$plan_name =  $item['name'];
@@ -163,7 +164,7 @@
                                 			<span>Plan</span>
                                 			<?php
 												$cartItemsPlan='';
-												$cartItemsPlan = $cartProdFiltered['plan'];
+												$cartItemsPlan = ($cartProdFiltered['plan']) ? $cartProdFiltered['plan'] : $cartProdFiltered['package_plan'];
 											?>
                                 			<div id="PlanCartWidget" class="cartWidget">
                                 				<?php if($cartItemsPlan){ ?>
