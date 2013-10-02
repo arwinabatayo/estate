@@ -128,7 +128,7 @@
                                         <li>
                                             <span>Color</span>
                                             <?php foreach($availableColor as $key => $value) { ?>
-                                            <?php 	if($selectedColor = $value['clid']) {?>
+                                            <?php 	if($selectedColor == $value['clid']) {?>
                                             <input data-device="type_<?php echo $cartItemsGadget['product_id']; ?>" id="<?php echo strtolower(trim($value['clname'])); ?>" type="radio" name="color" value="<?php echo $value['clid']; ?>" checked><label for="<?php echo strtolower(trim($value['clname'])); ?>"><?php echo  $value['clname']; ?></label>
                                             <?php 	} else {?>
                                             <input data-device="type_<?php echo $cartItemsGadget['product_id']; ?>" id="<?php echo strtolower(trim($value['clname'])); ?>" type="radio" name="color" value="<?php echo $value['clid']; ?>"><label for="<?php echo strtolower(trim($value['clname'])); ?>"><?php echo  $value['clname']; ?></label>
@@ -138,10 +138,10 @@
                                         <li id="dataCapacitySidebarPanel">
                                             <span>Data Capacity</span>
                                             <?php foreach($availableCapacity as $key => $value) { ?>
-                                            <?php 	if($selectedCapacity = $value['dcid']) {?>
+                                            <?php 	if($selectedCapacity == $value['dcid']) {  ?>
                                             <input data-device="type_<?php echo $cartItemsGadget['product_id']; ?>" id="<?php echo strtolower(trim($value['dcname'])); ?>" type="radio" name="capacity" value="<?php echo $value['dcid']; ?>" checked><label for="<?php echo strtolower(trim($value['dcname'])); ?>"><?php echo $value['dcname']; ?></label>
                                             <?php 	} else {?>
-                                            <input data-device="type_<?php echo $cartItemsGadget['product_id']; ?>" id="<?php echo strtolower(trim($value['dcname'])); ?>" type="radio" name="capacity" value="<?php echo $value['dcid']; ?>"><label for="32gb">32GB</label>
+                                            <input data-device="type_<?php echo $cartItemsGadget['product_id']; ?>" id="<?php echo strtolower(trim($value['dcname'])); ?>" type="radio" name="capacity" value="<?php echo $value['dcid']; ?>"><label for="<?php echo strtolower(trim($value['dcname'])); ?>"><?php echo $value['dcname']; ?></label>
                                             <?php 	} ?>
                                             <?php } ?>
                                         </li>
