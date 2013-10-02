@@ -26,13 +26,29 @@
 									alert('Some error occured or the system is busy. Please try again later');
 								}
 							});
-			
+					});
+					
+					$('.agree-check input').iCheck({
+						checkboxClass: 'icheckbox_flat-blue',
+						radioClass: 'iradio_flat-blue'
 					});
 		
 				    $('#personal-info-page  button.goNext').click(function() {
 						var btnIndex = $('#personal-info-page  button.goNext').index(this);
 						$( "#personal-info-page" ).accordion({active: btnIndex+1});
 					});		
+					
+					
+					
+					$("button#confirm_order").click(function(e) {
+						e.preventDefault();
+						var iAgree = $('input:checkbox[name=iagreeterms]');
+						if(iAgree.is(':checked') === false) {
+					     	alert('Please agree to the Terms and Condition.');
+					    } else {
+					    	window.location = $(this).attr('data-url');
+					    }
+					});
 					
 					
 					// Delivery -- robert

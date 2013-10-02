@@ -2,6 +2,7 @@
     
     <!-- Modal -->
     <div id="emailConfirm" class="modal fade pop-modal" tabindex="-1" role="dialog" aria-labelledby="emailConfirmLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static" style="display:none">
+        <button type="button" class="close pop-close" data-dismiss="modal" aria-hidden="true">×</button>
         <div class="modal-body pop-content">
 			<img src="<?php echo $assets_url ?>images/pop-email.png" /><br/><br/>
 	            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><br/>
@@ -16,6 +17,7 @@
     </div>
     
     <div id="emailThankConfirm" class="modal fade pop-modal" tabindex="-1" role="dialog" aria-labelledby="emailThankConfirmLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static" style="display:none">
+        <button type="button" class="close pop-close" data-dismiss="modal" aria-hidden="true">×</button>
         <div class="modal-body pop-content">
 			<img src="<?php echo $assets_url ?>images/pop-email-thankyou.png" /><br/><br/>
 	        <span class="pop-txtblue-large">Thank You</span>

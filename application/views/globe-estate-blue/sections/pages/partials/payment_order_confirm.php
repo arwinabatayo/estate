@@ -62,7 +62,7 @@
 		<hr />
 		<br />
 		<div class="textcenter">
-			<p><input type="checkbox" value="1" /> <a href="#">I Agree to the Terms &amp; Conditions</a></p>
+			<p><input type="checkbox" value="1" id="iagreeterms" name="iagreeterms" /> <a href="#">I Agree to the Terms &amp; Conditions</a></p>
 			<button class="btn-large ui-button-success goNext">CONFIRM ORDER</button>
 		</div>
 									    

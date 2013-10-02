@@ -101,7 +101,7 @@
     </div>
 </div>-->
 
-<div id="receipt-popup" class="modal fade pop-modal">
+<div id="receipt-popup" class="modal hide fade pop-modal">
         <div class="modal-body pop-content">
             <button type="button" class="close pop-close" data-dismiss="modal" aria-hidden="true">×</button>   
             <div class="r-p-logo fl"><img src="images/icons/icon_globe.png" width="" height="" alt=""/></div>

@@ -141,7 +141,11 @@ class Model_ordermanagement extends CI_Model
 												estate_order_type.id AS order_type_id, 
 												estate_order_type.title AS order_type_title, 
 												estate_accounts.status AS status, 
-												estate_orders.delivery_type AS delivery_type, 
+												estate_orders.delivery_type AS delivery_type,
+												estate_orders.tracking_id AS tracking_id,
+												estate_orders.shipping_courier AS courier,
+												estate_orders.IMEI AS IMEI,
+												estate_orders.sim_serial AS sim_serial, 
 												estate_orders.status_comments AS status_comments, 
 												estate_order_status.status_name AS order_status_title, 
 												estate_account_plan.main_plan_id AS account_main_plan_id, 
@@ -189,7 +193,11 @@ class Model_ordermanagement extends CI_Model
 												estate_order_type.id AS order_type_id, 
 												estate_order_type.title AS order_type_title, 
 												estate_accounts.status AS status, 
-												estate_orders.delivery_type AS delivery_type, 
+												estate_orders.delivery_type AS delivery_type,
+												estate_orders.tracking_id AS tracking_id,
+												estate_orders.shipping_courier AS courier,
+												estate_orders.IMEI AS IMEI,
+												estate_orders.sim_serial AS sim_serial,
 												estate_orders.status_comments AS status_comments, 
 												estate_order_status.status_name AS order_status_title, 
 												estate_account_plan.main_plan_id AS account_main_plan_id, 
@@ -237,7 +245,11 @@ class Model_ordermanagement extends CI_Model
 												estate_order_type.id AS order_type_id, 
 												estate_order_type.title AS order_type_title, 
 												estate_accounts.status AS status, 
-												estate_orders.delivery_type AS delivery_type, 
+												estate_orders.delivery_type AS delivery_type,
+												estate_orders.tracking_id AS tracking_id,
+												estate_orders.shipping_courier AS courier,
+												estate_orders.IMEI AS IMEI,
+												estate_orders.sim_serial AS sim_serial, 
 												estate_orders.status_comments AS status_comments, 
 												estate_order_status.status_name AS order_status_title, 
 												estate_account_plan.main_plan_id AS account_main_plan_id, 
@@ -285,7 +297,11 @@ class Model_ordermanagement extends CI_Model
 												estate_order_type.id AS order_type_id, 
 												estate_order_type.title AS order_type_title, 
 												estate_accounts.status AS status, 
-												estate_orders.delivery_type AS delivery_type, 
+												estate_orders.delivery_type AS delivery_type,
+												estate_orders.tracking_id AS tracking_id,
+												estate_orders.shipping_courier AS courier,
+												estate_orders.IMEI AS IMEI,
+												estate_orders.sim_serial AS sim_serial, 
 												estate_orders.status_comments AS status_comments, 
 												estate_order_status.status_name AS order_status_title, 
 												estate_account_plan.main_plan_id AS account_main_plan_id, 
@@ -333,7 +349,11 @@ class Model_ordermanagement extends CI_Model
 												estate_order_type.id AS order_type_id, 
 												estate_order_type.title AS order_type_title, 
 												estate_accounts.status AS status, 
-												estate_orders.delivery_type AS delivery_type, 
+												estate_orders.delivery_type AS delivery_type,
+												estate_orders.tracking_id AS tracking_id,
+												estate_orders.shipping_courier AS courier,
+												estate_orders.IMEI AS IMEI,
+												estate_orders.sim_serial AS sim_serial, 
 												estate_orders.status_comments AS status_comments, 
 												estate_order_status.status_name AS order_status_title, 
 												estate_account_plan.main_plan_id AS account_main_plan_id, 
@@ -381,7 +401,11 @@ class Model_ordermanagement extends CI_Model
 												estate_order_type.id AS order_type_id, 
 												estate_order_type.title AS order_type_title, 
 												estate_accounts.status AS status, 
-												estate_orders.delivery_type AS delivery_type, 
+												estate_orders.delivery_type AS delivery_type,
+												estate_orders.tracking_id AS tracking_id,
+												estate_orders.shipping_courier AS courier,
+												estate_orders.IMEI AS IMEI,
+												estate_orders.sim_serial AS sim_serial, 
 												estate_orders.status_comments AS status_comments, 
 												estate_order_status.status_name AS order_status_title, 
 												estate_account_plan.main_plan_id AS account_main_plan_id, 
@@ -429,7 +453,11 @@ class Model_ordermanagement extends CI_Model
 												estate_order_type.id AS order_type_id, 
 												estate_order_type.title AS order_type_title, 
 												estate_accounts.status AS status, 
-												estate_orders.delivery_type AS delivery_type, 
+												estate_orders.delivery_type AS delivery_type,
+												estate_orders.tracking_id AS tracking_id,
+												estate_orders.shipping_courier AS courier,
+												estate_orders.IMEI AS IMEI,
+												estate_orders.sim_serial AS sim_serial, 
 												estate_orders.status_comments AS status_comments, 
 												estate_order_status.status_name AS order_status_title, 
 												estate_account_plan.main_plan_id AS account_main_plan_id, 
@@ -497,6 +525,13 @@ class Model_ordermanagement extends CI_Model
 		}else{
 			return array();
 		}
+	}
+
+	function updateShippingDetails($account_id, $order_number, $data)
+	{
+		$this->db->where('order_number', $order_number)
+				->where('account_id', $account_id)
+				->update('estate_orders', $data);
 	}
 }
 ?>

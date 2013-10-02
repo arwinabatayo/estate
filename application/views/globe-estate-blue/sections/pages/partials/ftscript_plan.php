@@ -441,7 +441,6 @@
 				trigger: 'manual',
 				html:true,
 				content: function(){
-					alert();
 					return $('#get-prepaid-content').html();
 				}
 			}).click(function (e) {$(this).popover('toggle');});
@@ -455,6 +454,7 @@
 			$('button#retain').click(function(){
 				var subs_flag = $("#subs_flag").val();
 				window.location = base_url+'addons'+subs_flag;
+			});
 
 			});
 
