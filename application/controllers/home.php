@@ -36,6 +36,12 @@ class Home extends MY_Controller
 		$this->_data->page = 'landing';
 		$this->_data->process_button_text = "Buy Now!";
 		
+		//- - - - CLEAR ALL PREVIOUS TRANSACTION -  ES-66
+			$this->cart->destroy();
+			$this->session->unset_userdata('order_config');
+			$this->session->unset_userdata('subscriber_info');
+		//- - - - 
+		
 		if ($this->reserve_enabled) {
 			$this->cart_model->set_order_config(array('order_type'=>'reserve'));
 			$this->_data->process_button_text = "Reserve";
