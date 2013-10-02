@@ -26,7 +26,7 @@ class Home extends MY_Controller
 		$this->prepaid_kit_overdue_enabled = $this->model_bpmanagement->getProcessStatusByCode('PREPAID_KIT_OVERDUE');
 		//print_r($this->_data->site_config);
 		//flag for testing
-		define('IS_GLOBE_API_ENV', TRUE);
+		define('IS_GLOBE_API_ENV', true);
 		define('DEV_ENV', false);
 	}
 	
@@ -35,6 +35,12 @@ class Home extends MY_Controller
 		$this->_data->show_breadcrumbs    =  false;
 		$this->_data->page = 'landing';
 		$this->_data->process_button_text = "Buy Now!";
+		
+		//- - - - CLEAR ALL PREVIOUS TRANSACTION -  ES-66
+			$this->cart->destroy();
+			$this->session->unset_userdata('order_config');
+			$this->session->unset_userdata('subscriber_info');
+		//- - - - 
 		
 		if ($this->reserve_enabled) {
 			$this->cart_model->set_order_config(array('order_type'=>'reserve'));
@@ -191,11 +197,15 @@ class Home extends MY_Controller
 				$data['msg'] = "Mobile number should all be numeric";
 				
 			} else {                 
-                 $is_user_exist = $this->accounts_model->is_msisdn_exist($mobile_number);
+                 
                   
-                 //NO need to check if using a globe mobile num, all data in estate_account is currently globe subscriber       
-				//if( $this->_check_if_globe_number($mobile_number) == TRUE && strlen($mobile_number) == 11) {	
-				if( $is_user_exist && strlen($mobile_number) == 11) {
+                 //NO need to check if using a globe mobile num, all data in estate_account is currently globe subscriber   
+                 // TODO- accept also 12 numeric(63) refer to ES-53    
+
+				if( ( $this->_check_if_globe_number($mobile_number) == TRUE )  && 
+				      (strlen($mobile_number) == 11 ) ) {
+						
+						//$is_user_exist = $this->accounts_model->is_msisdn_exist($mobile_number);
 						
 						$data['status'] = 'success';
 						$data['msg']    = "SMS successfully sent to you mobile number";
@@ -210,7 +220,7 @@ class Home extends MY_Controller
 						}else{
 							$sms_status = TRUE;
 						}
-                       	// $sms_status = TRUE;
+     
                         
                         if($sms_status == TRUE) {
                             $this->load->model('estate/networks_model');
@@ -520,7 +530,7 @@ class Home extends MY_Controller
 		
 		$prefixes = '';
 		foreach($globe_prefixes as $v) {
-		   $prefixes[] = $v['f_number_prefix'];
+		   $prefixes[] = $v['number_prefix'];
 		}
 		$mobile_number_prefix = substr($mobile_number, 0, 4);
 		if(in_array($mobile_number_prefix, $prefixes)) {
@@ -661,6 +671,10 @@ class Home extends MY_Controller
 
     	echo json_encode($data); exit;
     }
+	
+	function testmail(){
+			echo var_dump( $this->_sendMail('mhaark29@gmail.com','verify_account'));
+	}
 	
 
 }
