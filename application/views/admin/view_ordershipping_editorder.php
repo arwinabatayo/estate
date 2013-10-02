@@ -15,7 +15,7 @@
 
 	<form id="form_edit_order" class="g_form">
 		
-		
+	<?php /*
 		<div class="g_pagelabel">
 			<div class="g_pagelabel_icon"><img src="<?php echo base_url(); ?>_assets/images/tools/edit.png" /></div>
 			<div class="g_pagelabel_text">My Gadget</div>
@@ -48,10 +48,10 @@
 				
 			</td></tr>
 		</table>
-		
+	*/ ?>
 		<div class="g_pagelabel">
 			<div class="g_pagelabel_icon"><img src="<?php echo base_url(); ?>_assets/images/tools/edit.png" /></div>
-			<div class="g_pagelabel_text">My Order Details</div>
+			<div class="g_pagelabel_text">My Order Shipping Details</div>
 		</div>
 		
 		<table class="g_table zebra">
@@ -83,50 +83,75 @@
 					<div class="h_clearboth"></div>
 				</div>
 				
-				<!-- application type -->
+				<!-- tracking ID -->
 				<div class="item">
-					<div class="label">Application type</div>
+					<div class="label">Tracking ID</div>
 					<div class="input">
-						<select class="g_select" name="order_type" data-required="1">
-							<option value="0">Select application type</option>
-							<?php foreach( $order_types as $order_type ){ ?>
-								<?php if( $order_type['id'] == $this->input->post('order_type') ){ ?>
-									<option value="<?php echo $order_type['id']; ?>" selected="selected"><?php echo $order_type['title']; ?></option>
-								<?php }else{ ?>
-									<option value="<?php echo $order_type['id']; ?>"><?php echo $order_type['title']; ?></option>
-								<?php } ?>
+						<input 	class="g_inputtext" 
+								type="text" 
+								name="tracking_id" 
+								value="<?php echo $order_details['tracking_id']; ?>" 
+								maxlength="100" />
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+				
+				<!-- courier -->
+				<div class="item">
+					<div class="label">Courier</div>
+					<div class="input">
+						<select class="g_select" name="shipping_courier" data-required="1">
+							<option value="">Select Courier</option>
+							<?php foreach( $couriers as $courier ){ ?>
+								<?php 
+									$sel = '';
+									if( $courier['courier_code'] == $order_details['shipping_courier'] ) { 
+										$sel = ' selected="selected"';	
+									}
+								?>
+									<option value="<?php echo $courier['courier_code']; ?>"<?php echo $sel; ?>><?php echo $courier['courier_name']; ?></option>
 							<?php } ?>
 						</select>
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
 				
-				<!-- plan types -->
+				<!-- IMEI -->
 				<div class="item">
-					<div class="label">Plan type</div>
+					<div class="label">IMEI</div>
 					<div class="input">
-						<select class="g_select" name="order_type" data-required="1">
-							<option value="0">Select plan type</option>
-							<?php foreach( $plan_types as $plan_type ){ ?>
-								<?php if( $plan_type['main_plan_id'] == $this->input->post('plan_type') ){ ?>
-									<option value="<?php echo $plan_type['main_plan_id']; ?>" selected="selected"><?php echo $plan_type['title']; ?></option>
-								<?php }else{ ?>
-									<option value="<?php echo $plan_type['main_plan_id']; ?>"><?php echo $plan_type['title']; ?></option>
-								<?php } ?>
-							<?php } ?>
-						</select>
+						<input 	class="g_inputtext" 
+								type="text" 
+								name="imei" 
+								value="<?php echo $order_details['IMEI']; ?>" 
+								maxlength="100" />
 					</div>
 					<div class="h_clearboth"></div>
 				</div>
-				
+
+				<!-- SIM serial -->
+				<div class="item">
+					<div class="label">Sim Serial</div>
+					<div class="input">
+						<input 	class="g_inputtext" 
+								type="text" 
+								name="sim_serial" 
+								value="<?php echo $order_details['sim_serial']; ?>" 
+								maxlength="100" />
+					</div>
+					<div class="h_clearboth"></div>
+				</div>
+
 			</td></tr>
 		</table>
-		
+
+	<?php /*	
 		<div class="g_pagelabel">
 			<div class="g_pagelabel_icon"><img src="<?php echo base_url(); ?>_assets/images/tools/edit.png" /></div>
 			<div class="g_pagelabel_text">My Delivery</div>
 		</div>
 		
+	
 		<table class="g_table zebra">
 			<tr><td class="g_widget">
 				
@@ -227,14 +252,16 @@
 				
 			</td></tr>
 		</table>
-		
+	*/ ?>	
 		<input type="hidden" value="<?php echo $account_id; ?>" name="account_id" />
 		<input type="hidden" value="<?php echo $order_number; ?>" name="order_number" />
 	</form>
+	<?php /*
 	<form id="form_order_done">
 		<input type="hidden" value="<?php echo $account_id; ?>" name="account_id" />
 		<input type="hidden" value="<?php echo $order_number; ?>" name="order_number" />
 	</form>
+	*/ ?>
 </div>
 
 <script type="text/javascript" language="javascript" src="<?php echo base_url() . '_assets/js/ajaxupload.3.5.js'; ?>"></script>
@@ -244,7 +271,7 @@ $(function(){
 	checkSidebarStatus();
 	implementDatePicker();
 });
-
+<?php /*
 $("#btn_order_done").click(function(e){
 	displayNotification("message", "Working...");
 	$.ajax({
@@ -263,18 +290,19 @@ $("#btn_order_done").click(function(e){
 		}
 	});
 });
+*/ ?>
 
 $("#btn_update_order").click(function(e){
 	displayNotification("message", "Working...");
 	$.ajax({
-		url: "<?php echo base_url(); ?>admin/ordermanagement/update_order",
+		url: "<?php echo base_url(); ?>admin/ordershipping/update_order",
 		type: "POST",
-		data: $("#form_order_done").serialize(),
+		data: $("#form_edit_order").serialize(),
 		success: function(response, textStatus, jqXHR){
 			setTimeout(function () {
 				$("#middle_wrapper").html(response);
-				if (typeof history.pushState != 'undefined') { window.history.pushState("object or string", "Title", "<?php echo base_url(); ?>admin/ordermanagement"); }
-				displayNotification("success", "Order succesfully marked as done.");
+				if (typeof history.pushState != 'undefined') { window.history.pushState("object or string", "Title", "<?php echo base_url(); ?>admin/ordershipping"); }
+				displayNotification("success", "Order shipping details updated.");
 			}, 500);
 		},
 		error: function(jqXHR, textStatus, errorThrown){
