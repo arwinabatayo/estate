@@ -108,8 +108,8 @@ $autoload['language'] = array();
 |	$autoload['model'] = array('model1', 'model2');
 |
 */
-
-$autoload['model'] = array('model_main','estate/cart_model','estate/accounts_model','model_bpmanagement');
+/* add 'estate/home_model' - Robert 10-2 */
+$autoload['model'] = array('model_main','estate/cart_model','estate/accounts_model','model_bpmanagement', 'estate/home_model');
 
 
 /* End of file autoload.php */

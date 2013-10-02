@@ -227,3 +227,32 @@
 			// remove status
 			$('div.status').hide();
 		});
+
+		// Robert 10.02
+		$("ul#addDeviceSidePanel input[name=color], ul#addDeviceSidePanel input[name=capacity]").click(function() {
+			var tochange = $(this).attr('name');
+			var thisID = $(this).val();
+			var selectedDevice = $(this).attr('data-device');
+			
+			var capacity = $('input[name=capacity]:checked', 'ul#addDeviceSidePanel').val()
+			var color = $('input[name=color]:checked', 'ul#addDeviceSidePanel').val()
+			
+			$.ajax({
+				url: base_url+'cart/update_gadget_attrs',
+				data: {change:tochange,device:selectedDevice,gadget_color:color,product_type:'gadget',product_id:selectedDevice,gadget_capacity:capacity},
+				type:'post',
+				success: function(response){
+					var resp = jQuery.parseJSON( response );
+					$("ul li#dataCapacitySidebarPanel ").html();
+					$("ul li#dataCapacitySidebarPanel ").html(resp.out);
+					
+					$('#cashoutLabel').html(resp.total);
+					$('#cashoutBox').animate({backgroundColor: '#fff267'}, 'fast', function(){
+						$('#cashoutBox').animate({backgroundColor: '#F4F4F4'}, 'fast');
+					});
+				}, 
+				error: function(){
+					alert('Some error occured or the system is busy. Please try again later');	
+				}
+			});
+		});
