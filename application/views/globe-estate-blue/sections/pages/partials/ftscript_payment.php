@@ -26,7 +26,11 @@
 									alert('Some error occured or the system is busy. Please try again later');
 								}
 							});
-			
+					});
+					
+					$('.agree-check input').iCheck({
+						checkboxClass: 'icheckbox_flat-blue',
+						radioClass: 'iradio_flat-blue'
 					});
 		
 				    $('#personal-info-page  button.goNext').click(function() {

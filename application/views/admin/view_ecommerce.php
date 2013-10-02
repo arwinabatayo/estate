@@ -87,6 +87,18 @@
                 <div class="h_clearboth"></div>
             </td>
         </tr>
+        <tr>
+            <td width="53" align="right">
+                <a  href="<?php echo base_url(); ?>admin/reservations" class="g_tableicon">Reservations</a>
+                <div class="h_clearboth"></div>
+            </td>
+        </tr>
+        <tr>
+            <td width="53" align="right">
+                <a  href="<?php echo base_url(); ?>admin/overduepayments" class="g_tableicon">Overdue Payments</a>
+                <div class="h_clearboth"></div>
+            </td>
+        </tr>
 	</table>
 	
 </div>
