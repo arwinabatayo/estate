@@ -700,7 +700,7 @@ class Cart extends CI_Controller {
 
 		if ($status) {
 			$data['status'] = 'success';
-			$data['cart_url'] = '/estate/plan-summary';
+			$data['cart_url'] = base_url().'plan-summary';
 		} else {
 			$data['status'] = 'error';
 			$data['msg'] = 'Error occurred.';
