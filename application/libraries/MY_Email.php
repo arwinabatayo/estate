@@ -14,7 +14,7 @@ class MY_Email extends CI_Email
     function __construct($data)
     {
             $this->CI =& get_instance();
-            // var_dump($data); exit;
+
             if (is_array($data)) {
                     if (isset($data[0]) && ! empty($data[0])) {
                             $config = strval($data[0]);

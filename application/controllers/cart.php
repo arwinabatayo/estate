@@ -787,6 +787,16 @@ class Cart extends CI_Controller {
 				$error_msg .= 'Social network ID is required.<br/>'; 
 			}
 
+			if ($d->phone) {
+				if( !(preg_match("/^[0-9]{11}$/", $d->phone))) {
+					$error_msg .= 'Phone number is invalid.<br/>'; 
+				}
+			}
+
+			if (!$d->phone && !$this->session->userdata('current_subscriber_mobileno')) {
+				$error_msg .= 'Phone number is required.<br/>';
+			}
+
 			if (!$item_data) {
 				$error_msg .= 'Item not found on session. Please try again later.<br/>';
 			}
@@ -800,7 +810,7 @@ class Cart extends CI_Controller {
 					'last_name'					=> $d->last_name,
 					'middle_name'				=> $d->middle_name,
 					'email'						=> $d->email ? $d->email : $this->session->userdata('current_subscriber_email'),
-					'msisdn'					=> $d->phone ? $d->phone : $this->session->userdata('current_subscriber_mobileno'),
+					'msisdn'					=> $d->phone ? trim($d->phone) : $this->session->userdata('current_subscriber_mobileno'),
 					// 'network_carrier'			=> $d->network_carrier,
 					'social_network_sitename' 	=> $d->sns_id,
 					'social_network_user_id'	=> $d->sn_uid,
