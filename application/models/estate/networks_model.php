@@ -19,7 +19,7 @@ class Networks_model extends CI_Model
             // echo $network; exit;
             $query = $this->db->select($what)
                                ->from('estate_network_number_prefixes')
-                               ->where('f_network', $network)
+                               ->where('network', $network)
                                ->get();
             $result = $query->result_array();
             // var_dump($result);

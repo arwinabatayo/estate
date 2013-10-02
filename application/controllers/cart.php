@@ -72,6 +72,7 @@ class Cart extends CI_Controller {
         $this->cart_model->update_cart_info($account_id, $info);
         echo json_encode($data);
     }
+   
 
     public function delete_cart()
     {
@@ -152,8 +153,6 @@ class Cart extends CI_Controller {
 
 		$d = (object) $this->input->post();
 
-
-
 		$account_id = $this->_data->account_id; 
 		$options = array();
 		$title  = '';
@@ -174,10 +173,8 @@ class Cart extends CI_Controller {
 		);
 
 		if( $d->product_id ) {
-
-
 			 $_fields = $this->products_model->get_product_fields($d->product_type,$d->product_id);
-			 $out['msg'] = 'product ok';
+
 
 			 $title  = $_fields['title'];
 			 $amount = $_fields['amount'];
@@ -218,7 +215,11 @@ class Cart extends CI_Controller {
 					'capacity' => $d->gadget_capacity,
 					'color'    => $d->gadget_color
 				);
-
+				
+				$d->product_id = $_fields['id']; 
+				
+				$amount = $this->home_model->getGadgetAmount($d->product_id,$d->gadget_color,$d->gadget_capacity); // get from gadget attribute table
+				
 				// remove existing gadget
 				$this->cart_model->remove_gadget_or_plan("gadget");
 			 }
@@ -854,5 +855,128 @@ class Cart extends CI_Controller {
 		echo json_encode($data); exit;
 		
 	}
+	public function update_gadget_attrs() {
+		$this->load->model('estate/products_model');
+	
+		$d = (object) $this->input->post();
 
+		$account_id = $this->_data->account_id; 
+		$options = array();
+		$title  = '';
+		$amount = '0.00';
+		$plan_pv = 0;
+		$pvcashout = 0;
+		$comboqty = 0;
+		$pv = 0;
+		$qty = 1;
+		$package_plan_combos = '';
+
+		$in_coexist['coexist'] = TRUE;
+		$boosterInCart = FALSE;
+		$cart_contents = $this->cart->contents();
+		$out = array(
+			'status' => 'failed',
+			'msg'    => 'Some error occured or the system is busy. Please try again later'
+		);
+	
+		$_fields = $this->products_model->get_product_fields($d->product_type,$d->product_id);
+
+		$title  = $_fields['title'];
+		$amount = $_fields['amount'];
+		//TODO:
+		$options=array(
+				'capacity' => $d->gadget_capacity,
+				'color'    => $d->gadget_color
+		);
+		
+		$d->product_id = $_fields['id'];
+		
+		$amount = $this->home_model->getGadgetAmount($d->product_id,$d->gadget_color,$d->gadget_capacity); // get from gadget attribute table
+		
+		// remove existing gadget
+		$this->cart_model->remove_gadget_or_plan("gadget");
+			
+		$cart_input = array(
+				'id'              => $d->product_type.'_'.$d->product_id,
+				'qty'             => $qty,
+				'price'           => $amount,
+				'this_pv_value'	  => intval($this_pv_value), // robert
+				'price_formatted' => 'Php '.number_format($amount,2),
+				'name'            => $title,
+				'product_id'      => $d->product_id,
+				'discount'        => $d->product_discount,
+				'product_type'    => $d->product_type,
+				'options'         => $options,
+		);
+		
+		// if kit type is prepaid, only retain gadget
+		$out['status'] = 'success';
+		// send a different flag when credit limit is exceeded
+		if ($credit_exceeded) {
+			$out['status'] = 'exceeds_limit';
+			$out['msg'] = 'credit_exceeded ';
+		}
+		
+		/* cart */
+		$out['status'] = 'success';
+		$out['rowid']  = $rowid = $this->cart->insert($cart_input);
+		$out['total']  = "P ".number_format($this->cart_model->total(false),2);
+
+		$out = array_merge($cart_input,$out);
+
+		/* db */
+		if($rowid){
+			$this->_data->cartItem  = $info = $this->_parse_contents();
+			$this->cart_model->insert_previous_info($account_id, $info);
+
+			$out['total_remaining_pv'] = $this->cart_model->remaining_pv(false);
+			
+			if($d->tochange == "color") {
+				$availableCapacity = $this->home_model->getCapacity($d->product_id, $d->gadget_color);
+					
+				$capacityCount = $availableCapacity['count'];
+				unset($availableCapacity['count']);
+				$x = 1;
+				$sRet = '<span>Data Capacity</span>';
+				foreach($availableCapacity as $capacities) {
+					$selected = "";
+					if($d->gadget_capacity == $capacities['dcid']) {
+						$selected = " checked";
+					}
+					$sRet .= '<input id="'.strtolower(str_replace(" ", "",$capacities['dcname'])).'" type="radio" name="capacity"
+								value="'.$capacities['dcid'].'"'.$selected.'>
+						<label for="'.strtolower(str_replace(" ", "",$capacities['dcname'])).'">'.$capacities['dcname'].'</label>';
+				}
+				$out['out'] = $sRet;
+			}
+		}else{
+			$out['status'] = 'failed';
+		}
+		
+		
+			
+		echo json_encode($out);
+	}
+	public function changeAttrCapacitySideBar() {
+		$sRet = "";
+		$this->load->model('estate/home_model');
+	
+		$d = (object) $this->input->post();
+	
+		$availableCapacity = $this->home_model->getCapacity($d->device, $d->color);
+			
+		$capacityCount = $availableCapacity['count'];
+		unset($availableCapacity['count']);
+		$x = 1;
+		$sRet = '<span>Data Capacity</span>';
+		foreach($availableCapacity as $capacities) {
+			$selected = "";
+			if($x == 1) { $selected = ' checked="checked"'; }
+			$sRet .= '<input id="'.strtolower(str_replace(" ", "",$capacities['dcname'])).'" type="radio" name="capacity"
+							value="'.$capacities['dcid'].'"'.$selected.'>
+					<label for="'.strtolower(str_replace(" ", "",$capacities['dcname'])).'">'.$capacities['dcname'].'</label>';
+			$x++;
+		}
+		echo $sRet;
+	}
 }

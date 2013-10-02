@@ -41,6 +41,7 @@ class Home_model extends CI_Model {
     			ON ega.colorid = egac.id
     			WHERE ega.gadget_id='{$deviceID}'
     			AND ega.is_active=1
+    			GROUP BY clid
     			ORDER BY clname");
     
 		$result = $query->result_array();
@@ -66,4 +67,20 @@ class Home_model extends CI_Model {
     	if(count($result) == 0) return FALSE;
     	return $result;
     }
+    function getGadgetAmount($deviceID, $colorID, $capacityID, $netConnectivityID=1) {
+    	$query = $this->db->query("SELECT amount
+    			FROM estate_gadget_attributes 
+    			WHERE gadget_id='{$deviceID}'
+    			AND colorid='{$colorID}'
+    			AND data_capacity_id='{$capacityID}'
+    			AND net_connectivity_id='{$netConnectivityID}'
+    			AND is_active=1
+    			ORDER BY date_created
+    			LIMIT 1");
+    	
+    	$row = $query->row();
+
+		return $row->amount;
+    }
 }
+
