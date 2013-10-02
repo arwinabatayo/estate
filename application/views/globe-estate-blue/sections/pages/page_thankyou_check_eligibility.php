@@ -28,8 +28,8 @@
 					</div>
 					<br />
 					<?php if($eligible_numbers){ ?>
-					<button class="blue-btn fl">Check Eligibility</button>
-					<button class="blue-btn fr">Exit</button>
+					<button class="blue-btn fl" onclick="window.location='<?php echo base_url() ?>'">Check Eligibility</button>
+					<button class="blue-btn fr" onclick="window.location='<?php echo base_url() ?>'">Exit</button>
 					<?php }else{ ?>
 						<p class="textcenter"><button class="blue-btn" onclick="window.location='<?php echo base_url() ?>'">Exit</button></p>
 					<?php } ?>

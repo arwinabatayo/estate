@@ -174,7 +174,7 @@ class Cart extends CI_Controller {
 
 		if( $d->product_id ) {
 			 $_fields = $this->products_model->get_product_fields($d->product_type,$d->product_id);
-			 $out['msg'] = 'product ok';
+
 
 			 $title  = $_fields['title'];
 			 $amount = $_fields['amount'];
