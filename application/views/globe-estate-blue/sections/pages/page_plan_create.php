@@ -10,8 +10,8 @@
 												</div>
 												<div class="accordion-link-holder fright" >
 													<div class="ot-toplinks fright accordion-link-holder textright" style="">
-														<a href="<?php echo base_url() ?>plan?setOrderConfig=true&plantype=retain">Retain Current Plan</a>&nbsp;
-														<a href="<?php echo base_url() ?>plan?setOrderConfig=true&plantype=package">Package Plan</a>
+														<?php if($_GET[ordertype]!='newline'){ ?><a href="<?php echo base_url() ?>plan?setOrderConfig=true<?=$_GET[ordertype]?"&ordertype=$_GET[ordertype]":''?>&plantype=retain">Retain Current Plan</a>&nbsp;<?php } //Lawrence 10-02-2013?>
+														<a href="<?php echo base_url() ?>plan?setOrderConfig=true<?=$_GET[ordertype]?"&ordertype=$_GET[ordertype]":''?>&plantype=package">Package Plan</a>
 													</div>
 												</div>
 												<div class="clear"></div><br />

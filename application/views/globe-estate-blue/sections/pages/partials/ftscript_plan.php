@@ -81,6 +81,100 @@
 
 			});
 			
+			//Lawrence 10-02-13
+            //BEGIN
+			$('button#biz_renew_button').click(function() {				
+					$.ajax({
+						url: base_url+'plan/BizRecontractingApplication',
+						data: {'none':'none'},
+						type:'post',
+						success: function(response){	                       
+							var resp = jQuery.parseJSON( response );
+							if(resp.status == 'success'){								
+                                $('#biz_recon_message').html(resp.msg);
+								$('#order-biz-recon-message').modal('show');
+							}	
+							else{
+								alert(resp.msg);
+							}	
+                            
+						}, 
+						error: function(){
+							alert('Some error occured or the system is busy. Please try again later');	
+						}
+					});
+                    
+					
+			});
+			$('button#btnBizGetNewline').click(function() {				
+					$.ajax({
+						url: base_url+'plan/RecordAddLinesQty',
+						data: {'lineqty': $( "#id_select option:selected" ).text()},
+						type:'post',
+						success: function(response){	                       
+							var resp = jQuery.parseJSON( response );
+							if(resp.status == 'success'){
+								window.location.href=base_url+'plan?setOrderConfig=true&ordertype=newline&plantype=create';						
+							}	
+							else{
+								alert(resp.msg);
+							}	
+                            
+						}, 
+						error: function(){
+							alert('Some error occured or the system is busy. Please try again later');	
+						}
+					});
+                    
+					
+			});
+			$('button#btnBizGetNewlineSubs').click(function() {
+                    <?php if ($SMBLI_switch){?>				
+					$.ajax({
+						url: base_url+'plan/RecordAddLinesQty',
+						data: {'lineqty': $( "#id_select option:selected" ).text()},
+						type:'post',
+						success: function(response){	                       
+							var resp = jQuery.parseJSON( response );
+							if(resp.status == 'success'){
+								window.location.href=base_url+'plan?setOrderConfig=true&ordertype=renew';						
+							}	
+							else{
+								alert(resp.msg);
+							}	
+                            
+						}, 
+						error: function(){
+							alert('Some error occured or the system is busy. Please try again later');	
+						}
+					});
+                    <?php }else{ ?>
+                   alert(base_url+'plan/bizNewLine');
+					$.ajax({
+						url: base_url+'plan/bizNewLine',
+						data: {'lineqty': $( "#id_select option:selected" ).text()},
+						type:'post',
+						success: function(response){	
+							var resp = jQuery.parseJSON( response );
+							if(resp.status == 'success'){
+                            
+                                $('#biz_message').html(resp.msg);
+								$('#order-thankyou').modal('show');
+							}else{
+								alert(resp.msg);
+							}
+							
+						}, 
+						error: function(){
+							alert('Some error occured or the system is busy. Please try again later');	
+						}
+					});
+                    <?php } ?>
+					
+			});
+            //END law
+            
+            
 			//ORDER TYPE
 		    $('#acc-order-type  button').click(function() { 
 	            //showPreloader();

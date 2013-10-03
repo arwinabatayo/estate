@@ -116,4 +116,27 @@ class Order_model extends CI_Model
     	// get recent order by account id
     }
 
+    //Lawrence 10-02-2013
+    function save_application($data=array(),$item)
+    {
+        $this->db->insert('estate_orders', $data);
+        $id = $this->db->insert_id();
+        $order	= array('order_number'=> date('U').$id);
+
+        $this->db->where('id', $id);
+        $this->db->update('estate_orders', $order);       
+        
+
+        $save['cid']     	    = '0';
+        $save['order_id']	    = (int) $id;
+        $save['product_id']     = (int) $item['product_id'];
+        $save['quantity'] 	    = (int) $item['qty'];
+        $save['product_type'] 	= $item['product_type'];
+
+        $this->db->insert('estate_order_items', $save);
+        
+        
+        return $order[order_number];
+    }
+    //=================================
 }

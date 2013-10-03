@@ -252,9 +252,14 @@ function get_coexist($product_id, $is_acceptable="0") {
 	}
 
 
-	function get_package_plan() {
+	function get_package_plan($cust_type=0) {//$cust_type=0  Lawrence 10-02-2013
 		$this->db->where('is_active', 1);
-
+                
+                //Lawrence 10-02-2013
+                if($cust_type)
+		  $this->db->where('customer_type',$cust_type );
+                //==========================================
+                
 		$query = $this->db->get('estate_package_plans');
 		$row = $query->result();
 
