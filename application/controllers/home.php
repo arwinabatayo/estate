@@ -508,7 +508,7 @@ class Home extends MY_Controller
             	// get order number by user email
             	$this->load->model('estate/order_model'); 
             	$order = $this->order_model->get_recent_order_by_email($email_to);
-            	var_dump($order);exit;
+
                 $refnum = $order['order_number'];
                 $sender = "no-reply@project-estate.com";
                 $subject = "myGlobe - Reference Number";
