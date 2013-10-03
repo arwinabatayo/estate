@@ -601,7 +601,7 @@ class Home extends MY_Controller
 		}
 	}
 
-	private function _globeApi_GetSubscriberByMSISDN($mobile_number)
+	private function _globeApi_GetSubscriberByMSISDN($msisdn)
 	{
 		$this->load->library('GlobeWebService','','api_globe');
 		
