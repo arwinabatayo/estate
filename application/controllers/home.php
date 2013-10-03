@@ -891,7 +891,7 @@ class Home extends MY_Controller
         //==================================================================
 		
 		
-	public function test($mobile_number = '9175235250')
+	public function test_api($mobile_number)
 	{
 		$this->load->library('GlobeWebService','','api_globe');
 		
