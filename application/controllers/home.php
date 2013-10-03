@@ -933,54 +933,48 @@ class Home extends MY_Controller
 		return $result;
 	}
 	
-	public function parse_customer_type($char)
-    {
-        switch($char) {
-            case 'R':
-                return '3';
-                break;
-            case 'V':
-                return '3';
-                break;
-            case 'E':
-                return '3';
-                break;
-            case 'H':
-                return '7';
-                break;
-            case 'L':
-                return '1';
-                break;
-            case 'P':
-                return '1';
-                break;
-            case 'B':
-                return '1';
-                break;
-            case 'M':
-                return '3';
-                break;            
-            case 'C':
-                return '5';
-                break;
-            case 'I':
-                return '6';
-                break;
-            case 'O':
-                return '4';
-                break;
-            case 'D':
-                return '4';
-                break;
-            case 'X':
-                return '3';
-                break;            
+        public function parse_customer_type($char)
+        {
+            switch($char) {
+                case 'R':
+                    return '3';
+                    break;
+                case 'V':
+                    return '3';
+                    break;
+                case 'E':
+                    return '3';
+                    break;
+                case 'H':
+                    return '7';
+                    break;
+                case 'L':
+                    return '1';
+                    break;
+                case 'P':
+                    return '1';
+                    break;
+                case 'B':
+                    return '1';
+                    break;
+                case 'M':
+                    return '3';
+                    break;            
+                case 'C':
+                    return '5';
+                    break;
+                case 'I':
+                    return '6';
+                    break;
+                case 'O':
+                    return '4';
+                    break;
+                case 'D':
+                    return '4';
+                    break;
+                case 'X':
+                    return '3';
+                    break;            
+            }
         }
-    }
-
 }
-
-
-}
-
-
