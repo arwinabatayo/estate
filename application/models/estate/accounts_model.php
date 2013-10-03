@@ -141,6 +141,16 @@ class Accounts_model extends CI_Model
 		return $this->session->userdata('subscriber_info');
 	}
 	
+	function add_account($data)
+	{
+		$this->db->insert('estate_accounts', $data);
+	}
+
+	function add_account_current_plan($data)
+	{
+		$this->db->insert('estate_account_current_plan', $data);
+	}
+	
 	
 
 	

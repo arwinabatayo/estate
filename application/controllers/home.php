@@ -601,9 +601,42 @@ class Home extends MY_Controller
 		}
 	}
 
-	private function _globeApi_GetSubscriberByMSISDN($mobile_number){
+	private function _globeApi_GetSubscriberByMSISDN($mobile_number)
+	{
+		$this->load->library('GlobeWebService','','api_globe');
+		
+		$subscriber_info = $this->api_globe->GetSubscriberAndAssignedProductByMsisdn($msisdn);
+		
+		if(!empty($subscriber_info['SubscriberSearchResultInfo'])) {
+			$subscriber_outstanding = $this->api_globe->GetOutstandingBalanceByMsisdn($msisdn);
+			$subscriber_lockin = $this->api_globe->GetProductQueryFiltered($msisdn);
+
+			$array_values = array(
+				'account_id' => $subscriber_info['PayChannelHeader']['PayChannelNumberInfo']['AccountNo'],
+				'full_name' => $subscriber_info['SubscriberSearchResultInfo']['NameLine1'],
+				'email' => $subscriber_info['BillingArrangmentHeader']['AddressInfo']['AddressElement4'],
+				'mobile_number' => $subscriber_info['SubscriberSearchResultInfo']['PrimaryResourceValue'],
+				'address' => $subscriber_info['AccountHeader']['AddressInfo']['AddressElement7'].' '.$subscriber_info['AccountHeader']['AddressInfo']['AddressElement9'].' '.$subscriber_info['AccountHeader']['AddressInfo']['AddressElement10'],
+				'zip' => $subscriber_info['AccountHeader']['AddressInfo']['AddressElement3'],
+				'street' => $subscriber_info['AccountHeader']['AddressInfo']['AddressElement7'],
+				'municipality' => $subscriber_info['AccountHeader']['AddressInfo']['AddressElement9'],
+				'city' => $subscriber_info['AccountHeader']['AddressInfo']['AddressElement10'],
+				'country' => $subscriber_info['AccountHeader']['AddressInfo']['AddressElement11'],
+				'billing_address' => $subscriber_info['AccountHeader']['AddressInfo']['AddressElement7'].' '.$subscriber_info['AccountHeader']['AddressInfo']['AddressElement9'].' '.$subscriber_info['AccountHeader']['AddressInfo']['AddressElement10'],
+				'lockin_duration' => $subscriber_lockin['APList']['AP']['7']['IAPList']['IAP']['APDetails']['AttrList']['Attr']['0']['Value'],
+				'outstanding_balance' => $subscriber_outstanding['AccountBalanceDt']['ArBalance'],
+				'overdue' => $subscriber_outstanding['OverDueBalance'],
+				'due_date' => date('Y-m-d', strtotime($subscriber_outstanding['DocInfo']['DueDate'])),
+				'credit_limit' => $subscriber_info['AccountHeader']['AccountingManagementInfo']['L9CreditLimit'],
+				'category_id' => $this->parse_customer_type($subscriber_info['SubscriberSearchResultInfo']['PrimaryResourceType']),
+				'current_plan' => $subscriber_info['AssignedProducts']['AssignedProduct']['0']['OfferName']['LocalizedValue'],
+				'status' => '1'
+			);
+			$result = true;
+		} else {
+			$result = false;
+		}		
 		//SAVE data to accounts_model
-		$result = true;
 		return $result;
 	}
 	
@@ -856,6 +889,46 @@ class Home extends MY_Controller
             return $this->email->send_email_api($email_to, $subject, $email_tpl, $msg, $sender ); 
         }
         //==================================================================
+		
+		
+	public function test($mobile_number = '9175235250')
+	{
+		$this->load->library('GlobeWebService','','api_globe');
+		
+		$subscriber_info = $this->api_globe->GetSubscriberAndAssignedProductByMsisdn($msisdn);
+		
+		if(!empty($subscriber_info['SubscriberSearchResultInfo'])) {
+			$subscriber_outstanding = $this->api_globe->GetOutstandingBalanceByMsisdn($msisdn);
+			$subscriber_lockin = $this->api_globe->GetProductQueryFiltered($msisdn);
+
+			$array_values = array(
+				'account_id' => $subscriber_info['PayChannelHeader']['PayChannelNumberInfo']['AccountNo'],
+				'full_name' => $subscriber_info['SubscriberSearchResultInfo']['NameLine1'],
+				'email' => $subscriber_info['BillingArrangmentHeader']['AddressInfo']['AddressElement4'],
+				'mobile_number' => $subscriber_info['SubscriberSearchResultInfo']['PrimaryResourceValue'],
+				'address' => $subscriber_info['AccountHeader']['AddressInfo']['AddressElement7'].' '.$subscriber_info['AccountHeader']['AddressInfo']['AddressElement9'].' '.$subscriber_info['AccountHeader']['AddressInfo']['AddressElement10'],
+				'zip' => $subscriber_info['AccountHeader']['AddressInfo']['AddressElement3'],
+				'street' => $subscriber_info['AccountHeader']['AddressInfo']['AddressElement7'],
+				'municipality' => $subscriber_info['AccountHeader']['AddressInfo']['AddressElement9'],
+				'city' => $subscriber_info['AccountHeader']['AddressInfo']['AddressElement10'],
+				'country' => $subscriber_info['AccountHeader']['AddressInfo']['AddressElement11'],
+				'billing_address' => $subscriber_info['AccountHeader']['AddressInfo']['AddressElement7'].' '.$subscriber_info['AccountHeader']['AddressInfo']['AddressElement9'].' '.$subscriber_info['AccountHeader']['AddressInfo']['AddressElement10'],
+				'lockin_duration' => $subscriber_lockin['APList']['AP']['7']['IAPList']['IAP']['APDetails']['AttrList']['Attr']['0']['Value'],
+				'outstanding_balance' => $subscriber_outstanding['AccountBalanceDt']['ArBalance'],
+				'overdue' => $subscriber_outstanding['OverDueBalance'],
+				'due_date' => date('Y-m-d', strtotime($subscriber_outstanding['DocInfo']['DueDate'])),
+				'credit_limit' => $subscriber_info['AccountHeader']['AccountingManagementInfo']['L9CreditLimit'],
+				'category_id' => $this->parse_customer_type($subscriber_info['SubscriberSearchResultInfo']['PrimaryResourceType']),
+				'current_plan' => $subscriber_info['AssignedProducts']['AssignedProduct']['0']['OfferName']['LocalizedValue'],
+				'status' => '1'
+			);
+			$result = true;
+		} else {
+			$result = false;
+		}		
+		//SAVE data to accounts_model
+		return $result;
+	}
 
 }
 
