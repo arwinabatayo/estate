@@ -196,8 +196,9 @@ class Order extends MY_Controller
 	}
 
 	//hardcode validation. TODO - use ci form validation - mark
-	function validate_address_info($post){
-
+	function validate_address_info($post)
+	{
+		/*
 		$isValid = true;
 		$msg = '';
 		$post = (array)$post;
@@ -228,7 +229,30 @@ class Order extends MY_Controller
 		}
 		
 		return array('msg'=>$msg,'result'=>$isValid);
+		*/
 		
+		//return array('msg'=> var_export($_POST,true) , 'result' => false);
+		
+		$this->form_validation->set_rules('unit','Room / Floor / House Number field is required.','trim|min_length[3]|required');
+		$this->form_validation->set_rules('street','Building Name / Street field is required.','trim|min_length[3]|required');
+		$this->form_validation->set_rules('barangay','Subdivision / Barangay field is required.','trim|min_length[3]|required');
+		$this->form_validation->set_rules('town','Municipality/Town field is required.','trim|min_length[3]|required');
+		$this->form_validation->set_rules('city','City/Province field is required.','trim|min_length[3]|required');
+		$this->form_validation->set_rules('postal','Postal Code/Zip Code field is required.','trim|is_natural_no_zero|exact_length[4]|required');
+		
+		$this->form_validation->set_rules('area','Area Code field is required.','trim|is_natural|min_length[2]|max_length[3]|required');
+		$this->form_validation->set_rules('landline','Telephone Number is required.','trim|is_natural|exact_length[7]|required');
+		$this->form_validation->set_rules('access_code','Mobile Area Code field is required.','trim|is_natural|min_length[2]|max_length[3]|required');
+		$this->form_validation->set_rules('mobile_number','Mobile Number field is required.','trim|is_natural|exact_length[11]|required');
+		
+		if (!$this->form_validation->run())
+		{
+			return array('msg' => validation_errors(' ','<br />'), 'result' => false);
+		}
+		else
+		{
+			return array('msg' => '', 'result' => true);
+		}
 	}
 	
 	function save_payment_shipping_config(){

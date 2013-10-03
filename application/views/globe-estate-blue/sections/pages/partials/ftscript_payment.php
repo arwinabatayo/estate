@@ -127,6 +127,7 @@
 								success: function(response){
 									var resp = jQuery.parseJSON( response );
 									//alert(JSON.stringify(resp));
+									//console.log(resp);
 									if(resp.status == 'success'){
 										alert('New shipping address saved!');
 										window.location.href= base_url + 'confirm-order';
@@ -138,8 +139,6 @@
 									if(shippingType == 'billing'){
 										window.location.href= base_url + 'confirm-order';
 									}
-									
-									
 								}, 
 								error: function(){
 									alert('Some error occured or the system is busy. Please try again later');	
