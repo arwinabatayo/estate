@@ -323,7 +323,7 @@
                     <div id="cashoutBox" class="cash-out">
                     	<span class="blue">YOUR CASHOUT</span>
                         <span class="black" id="cashoutLabel">
-							P <?php echo number_format($this->cart_model->total(false),2); ?>
+							P <?php echo number_format($this->cart_model->cashout_total(false),2); ?>
 						</span>
                     </div>                   
                 </div>

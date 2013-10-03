@@ -117,7 +117,7 @@ class Cart_model extends CI_Model
         $info = '';
         foreach($cart_contents as $kkk=>$vvv) {
            unset($vvv['subtotal']);
-           unset($vvv['rowid']);
+//            unset($vvv['rowid']); // update by robert
            $info[] = $vvv;
         }
         return $info;
@@ -247,6 +247,36 @@ class Cart_model extends CI_Model
 		}
 		return ($formated) ? $this->_format_price($cart_total) : $cart_total;
 	}
+	function plan_summary_total($formated=false) {
+		$cart_total = $this->cart->total();
+		
+		$aToAdd = array("plan","combos","boosters","addon");
+		
+		$cart_contents = $this->cart->contents();
+		
+		foreach($cart_contents as $k=>$v) {
+				
+			if(in_array(trim($cart_contents[$k]['product_type']), $aToAdd)) {
+				$cart_plan_summary_total += $cart_contents[$k]['subtotal'];
+			}
+		}
+		return ($formated) ? $this->_format_price($cart_plan_summary_total) : $cart_plan_summary_total;
+	}
+	
+	function cashout_total($formated=false) {
+		$cart_total = $this->cart->total();
+	
+		$aToAdd = array("gadget","accessories");
+	
+		$cart_contents = $this->cart->contents();
+	
+		foreach($cart_contents as $k=>$v) {
+			if(in_array(trim($cart_contents[$k]['product_type']), $aToAdd)) {
+				$cart_plan_summary_total += $cart_contents[$k]['subtotal'];
+			}
+		}
+		return ($formated) ? $this->_format_price($cart_plan_summary_total) : $cart_plan_summary_total;
+	}
 	
 	private function _format_price($price,$show_currency=true)
 	{
@@ -315,12 +345,36 @@ class Cart_model extends CI_Model
                         'gadget_name'   => $item['name'],
                         'gadget_price'  => $item['price_formatted'],
                         'gadget_specs'  => $item['options'],
-                        'id'     => $item['product_id'],
-                        'type'  => $item['product_type']
+                        'id'     		=> $item['product_id'],
+                        'type'  		=> $item['product_type'],
+                		'device_attr_id'=> $item['device_attr_id'], // robert 10.3
+                		'rowid'     	=> $item['rowid'], // robert 10.3
+                		'subtotal'     	=> $item['subtotal'] // robert 10.3
                     );
             }
         }
 
         return $data;
+    }
+    function get_plan_oncart() {
+    	$items = $this->parse_contents();
+    	foreach($items as $item){
+    		if ($item['product_type'] == 'plan') {
+    			$data = array( 'id'=> $item['product_id']);
+    		}
+    	}
+    
+    	return $data;
+    }
+    
+    function get_gadget_attr_id() {
+    	$cart_contents = $this->cart->contents();
+    	foreach($cart_contents as $k => $v) {
+    		if(trim($cart_contents[$k]['product_type']) == 'gadget') {
+    			$attr_id = intval($cart_contents[$k]['device_attr_id']);
+    		}
+    	}
+    	
+    	return $attr_id;
     }
 }
