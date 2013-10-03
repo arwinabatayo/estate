@@ -922,6 +922,7 @@ class Home extends MY_Controller
 				'current_plan' => $subscriber_info['AssignedProducts']['AssignedProduct']['0']['OfferName']['LocalizedValue'],
 				'status' => '1'
 			);
+			print_r($array_values);
 			$result = true;
 		} else {
 			$result = false;
