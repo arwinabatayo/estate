@@ -3,7 +3,7 @@
 		//Need to separate prod type into basket (accordion)
 		//TODO - add to table
 
-		$cartProdFiltered = array('accessories'=>array(),'addon'=>array(),'plan'=>array(), 'combos'=>array(), 'boosters'=>array(), 'package_plan'=>array()); //store it on each key(prod type)
+		$cartProdFiltered = array('gadget'=>array(),'accessories'=>array(),'addon'=>array(),'plan'=>array(), 'combos'=>array(), 'boosters'=>array(), 'package_plan'=>array()); //store it on each key(prod type)
 	
 		$cartItems = $this->cart->contents();
 		
