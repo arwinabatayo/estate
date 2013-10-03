@@ -199,7 +199,7 @@ body{ font-family: 'fs_elliot_cyrilliclight' }
 	/* ================
 		@CSS By: Aldrin
 	================ */
-.order-type{padding:20px;}
+ .order-type{padding:20px;}
  .order-type h2 {color:#0060b1; font-weight:bold; padding: 5px 0;}
  .order-type h2 img {margin-right:15px;}
  
@@ -695,6 +695,9 @@ body{ font-family: 'fs_elliot_cyrilliclight' }
  /*.c-s-less {background-color: #f39431; background-image: linear-gradient(to bottom, #f39431, #e18a30); background-repeat: repeat-x; border-radius:10px; border: 1px solid #d43f3a;} */
  .c-s-less a {display:block; background-color: #f39431; background-image: linear-gradient(to bottom, #f39431, #e18a30); background-repeat: repeat-x; color:#fff; padding:4px 12px;}
  
+ #multidevice {float:left; margin:10px 0 0 20px;}
+ .need-help {color:#6c6c6e; font-weight:bold; margin-left:20px;}
+ .need-help small {font-size:.8em;}
 	/* =======
 	   End CSS
 	   ==== */

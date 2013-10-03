@@ -29,7 +29,7 @@
 											
 											<hr/>
 											
-											<p class="pad-space">Lorem ipsum dolor sit amet, consectuer adipiscing elit. Cras justo nulla, commodo nec mauris ut,  interdum adipiscing  nisi. Duis ut matiis ligula.</p><br />
+											<p class="pad-space">Sorry, the information you provided is incomplete or may have been invalid.  Please fill out all the required forms before uploading </p><br />
 											
 											<form id="personal-info" onsubmit="return false">
 												<div class="pad-space">

@@ -3,7 +3,7 @@
     <div id="resetVerification" class="modal fade pop-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static" style="display:none">
       <div class="modal-body pop-content">
         <span class="pop-txtblue-large">Reset Verification Code</span>
-        <p>You have exceeded the number of attempts allowed for entering your verification code. Type the characters you see and click Reset button to get a new verification code.</p>
+        <p>You have exceeded the number of attempts allowed for entering your verification code.  To receive a new code, enter the characters  shown below, and click Reset.</p>
         <div class="pop-resetcode">
 			<span>Enter Characters You See</span><br/>
 			<input class="pop-inputreset" id="code_id" name="code_id" type="text" autocomplete="false">
@@ -68,13 +68,13 @@
       	<img src="<?php echo $assets_path ?>site-blue/images/pop-entermodile.png" />
         <br/><br/>
         <span class="pop-txtblue-large">Verify Phone Number</span>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
+        <p>We have sent an SMS containing a verification code to <strong>[mobile number]</strong>. This is to ensure security and verify ownership of the mobile number.<br /> Please enter the code in the space provided.</p>
         <div class="pop-verifycode">
 			<span>SMS Verification Code</span><br/>
 			<input id="verification_code" class="pop-inputvcode" type="text" val="">
             <span class="vcode-alert" style="display:none">
             	<i class="arrow"></i>
-            	Please retype your SMS verification code.
+            	The code you entered is invalid. Please try again.
             </span>
             <a class="pull-right" data-toggle="modal" data-target="#enterMobile" data-dismiss="modal">Resend Code</a>
         </div>

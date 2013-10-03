@@ -171,7 +171,7 @@
                     <span class="col-lg-3">Item Description</span>
                     <span class="col-lg-1">Qty</span>
                     <span class="col-lg-2">Unit Price</span>
-                    <span class="col-lg-2">% Discount</span>
+                    <span class="col-lg-2">Discount</span>
                     <span class="col-lg-2">Total</span>
                     
                     <div class="clr"></div>

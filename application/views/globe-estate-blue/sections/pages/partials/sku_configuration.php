@@ -27,12 +27,12 @@
 							<?php } else { ?>
 								<span class="pull-left"><?php echo $devices[0]['name']; ?></span>
 							<?php } ?>
-                            
+                            <div class="clr"></div>
                         </div>
                     </div>
                     <div class="row-fluid" id="colors">
                         <div class="spec-options offset1">
-                            <span class="flow-title2">Choose Color</span>
+                            <span class="flow-title2">Which color and data capacity<br /> would you like?</span>
                             <ul>
                             <?php $initialGadgetPreview =  "";
                             	foreach($colors as $attrColors) { 
@@ -56,7 +56,7 @@
                     </div>
                     <div class="row-fluid" id="capacity">
                         <div class="spec-options offset1">
-                            <span class="flow-title2">Choose Capacity</span>
+                            <span class="flow-title2">Data Capacity</span>
                             <ul>
                             <?php
                             	foreach($capacity as $attrCapacities) {
@@ -80,6 +80,11 @@
                     <div class="row-fluid text-center" id="continue">
                         <button class="blue-btn" id="btn-add-device-continue">Continue</button>
                     </div>
+					<div class="row-fluid">
+						<div class="offset1">
+							<br /><strong><a href="#">Go to comparison page</a></strong><br /><br />
+						</div>
+					</div>
                 </div>
                 <div class="span6 p-model text-center" id="gadgetpreview">
                     <img src="<?php echo base_url() ?>_assets/uploads/<?php echo $initialGadgetPreview; ?>" id="previewimg">

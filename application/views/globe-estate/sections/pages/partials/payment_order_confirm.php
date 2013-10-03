@@ -12,7 +12,7 @@
 	                <th>Item Description</th>
 	                <th class="textcenter">QTY</th>
 	                <th>Unit Price</th>
-	                <th>% Discount</th>
+	                <th>Discount</th>
 	                <th>Total</th>
 	              </tr>
 	            </thead>

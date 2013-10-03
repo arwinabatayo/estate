@@ -6,7 +6,7 @@
 		    <div style="background:linear-gradient(to bottom, #ffffff 0%,#d7e2f1 100%);">
 		      
 					<div class="pickup">
-							<h3 class="textcenter">How would you like to get your order?</h3>
+							<h3 class="textcenter">How would you like to receive your order?</h3>
 							<hr>
 							<div class="delivery-btn">
 								 <form method="POST" id="delorpickForm" onsubmit="return false">

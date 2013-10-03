@@ -9,7 +9,7 @@
                     	<td name="product" align="center" width="">Product</td>
                     	<td align="left" width="">Item Description</td>
                     	<td name="unit-price" align="left" width="">Unit Price</td>
-                    	<td name="discount" align="left" width="">% Discount</td>
+                    	<td name="discount" align="left" width="">Discount</td>
                     	<td align="left">Total</td>                                                                                                
                         <td>&nbsp;</td>
                     </tr>

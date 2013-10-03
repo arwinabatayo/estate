@@ -10,7 +10,7 @@
         <td>Item Description</td>
         <td>Qty</td>
         <td>Unit Price</td>
-        <td>% Discount</td>
+        <td>Discount</td>
         <td>Total</td>
     </tr>
     <?php foreach( $cart_contents as $v ) { ?>

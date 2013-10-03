@@ -29,7 +29,7 @@
 	            </div>
 	            <div class="span6 dbluebg" style="min-height: 460px;">
 	                <div class="row-fluid">
-	                    <span class="flow-title2">Thank you for your order.</span>
+	                    <span class="flow-title2">Thank you! We have received your payment and order.</span>
 	                </div>
 	                <div class="row-fluid">
 	                    <div class="link-printrec">
@@ -38,7 +38,7 @@
 	                    </div>
 	                </div>
 	                <div class="row-fluid">
-	                    <p class="flow-instruction">We successfuly received your payment &amp; will send you an email confirmation shortly with your reference number for checking of status.</p>
+	                    <p class="flow-instruction">An email will be sent to you shortly containing a reference number. You can use this to check the status of your order.</p>
 	                </div>
 	            </div>
 	        </div>

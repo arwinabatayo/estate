@@ -9,7 +9,7 @@
 									
 									<div class="clr"></div>
 									
-									<p class="ot-description">Vivamus a justo hendreit, vivera nibh eget, scelerisque est</p><br />
+									<p class="ot-description">APPLY FOR AN ADDITIONAL LINE Please complete the following forms to apply for a new line.</p><br />
 									
 									<div class="yellow-box">
 										

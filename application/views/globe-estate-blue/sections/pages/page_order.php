@@ -25,7 +25,7 @@
                                 <span class="span3">Item</span>
                                 <span class="span1">Qty.</span>
                                 <span class="span2">Unit</span>
-                                <span class="span2">% Discount</span>
+                                <span class="span2">Discount</span>
                                 <span class="span2">Total</span>
                                 
                                 <div class="clr"></div>

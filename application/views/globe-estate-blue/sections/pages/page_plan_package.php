@@ -15,7 +15,7 @@
 													</div>
 												</div>
 												<div class="clear"></div><br />
-												<label>Package Plan</label>
+												<label>There's a plan for every need, every budget!</label>
 						
 												<div class="main" style="width:100%;">
 													<ul id="og-grid" class="og-grid">

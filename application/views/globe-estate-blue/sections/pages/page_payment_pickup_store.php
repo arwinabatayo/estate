@@ -16,7 +16,7 @@
 							</div>
 							
 							<div class="p-select fr">
-								<label for="Choose your preferred location">Choose your preferred location</label>
+								<label for="Choose your preferred location">Search for nearest Globe Store</label>
 								<select name="" id="prefered_loc_search" class="p-location">
 									 <?php foreach( $stores_all as $val ) { ?>
                                                                           <option value="<?php echo $val['id']; ?>"><?php echo $val['name']; ?></option>

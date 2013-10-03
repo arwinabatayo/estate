@@ -7,7 +7,7 @@
 				<hr />	
 				<div style="margin-left:10%">
 					<h5>* Credit Card Number</h5>
-					<p>The 16-digits on the front of your credit card</p>
+					<p>The 16 digits found at the front of your credit card</p>
 					<p><input type="text" id="cc_num" name="cc_num" class="input-xlarge" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<img src="<?php echo $assets_url ?>site-blue/images/payment_cclogo.png" alt=""/>
 					</p>
@@ -16,7 +16,7 @@
 	
 				<div style="margin-left:10%">
 					<h5>*Expiration Date</h5>
-					<p>The date your credit card expires. Find this on the front of your credit card. </p>
+					<p>The month and year your credit card expires, found at the front of your credit card</p>
 					
 					<select class="input-small">
 						<option>01</option>
@@ -45,7 +45,7 @@
 				
 				<div style="margin-left:10%">
 					<h5>*Security Code <span style="color:gray">(or "CVC" or "CVV")</span></h5>
-					<p>The last 3 digits displayed on the back of your credit card</p>
+					<p>The last 3 or 4 digits of the series found at the back of your credit card</p>
 
 					<p><input type="text" id="ccv" name="ccv" class="input-xlarge" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<img src="<?php echo $assets_url ?>site-blue/images/payment_ccv.png" alt=""/>

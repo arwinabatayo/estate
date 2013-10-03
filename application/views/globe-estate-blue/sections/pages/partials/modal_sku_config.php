@@ -5,7 +5,7 @@
         <button type="button" class="close pop-close" data-dismiss="modal" aria-hidden="true">×</button>
         <div class="modal-body pop-content">
 			<img src="<?php echo $assets_url ?>images/pop-email.png" /><br/><br/>
-	            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><br/>
+	            <p>Please provide a valid email address to receive information and important announcements about your order.  We will then be verifying if your given email address is active.</p><br/>
 		         <form id="email-verification" onsubmit="return false">
 		            <span class="pop-txtblue-large">Enter Your Email</span>
 		            <input type="text" id="email" name="email" class="pop-email-input" />
@@ -21,9 +21,9 @@
         <div class="modal-body pop-content">
 			<img src="<?php echo $assets_url ?>images/pop-email-thankyou.png" /><br/><br/>
 	        <span class="pop-txtblue-large">Thank You</span>
-            <p class="pop-txtgrey-large">We have sent an email to <strong id="e_lbl">avargosino@yahoo.com</strong>.<br/>click on the link  found in your email to get verified.</p>
-			<p class="pop-txt-resend">Didn’t receive the verification email? <a data-toggle="modal" data-target="#emailConfirm" data-dismiss="modal">Resend link</a></p>
-            <p class="pop-txtblu-small">Note: Kindly make sure to verify your email address. <br/>Validity of this link is within 24 hours</p>
+            <p class="pop-txtgrey-large">We have sent an email to <strong id="e_lbl">avargosino@yahoo.com</strong>.<br />  Please click on the link found in your email to verify your account.</p>
+			<p class="pop-txt-resend">Didn't receive the verification email? <a data-toggle="modal" data-target="#emailConfirm" data-dismiss="modal">Resend link</a></p>
+            <p class="pop-txtblu-small">Note: Kindly make sure to verify your email address. <br/>The link will expire after 24 hours.</p>
             <div class="modal-footer">
 			  <button class="blue-btn" data-dismiss="modal">OK</button>
             </div>

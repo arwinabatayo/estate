@@ -1,9 +1,10 @@
 		<?php //print_r($eligible_numbers); ?>					  
 
 				<div class="check-eligibility">
-					<h2>Thank you for lorem Ipsum, dolor sit amet</h2>
+					<!--<h2>Thank you for lorem Ipsum, dolor sit amet</h2>-->
 					<?php if($eligible_numbers){ ?>	
-					<p>However our system shows that you have <?php echo count($eligible_numbers) ?> other numbers associated with this account. You may check the eligibility by selecting the number you want to add. If you wish to leave the page, you may select exit.</p>
+					<!--<p>However our system shows that you have <?php echo count($eligible_numbers) ?> other numbers associated with this account. You may check the eligibility by selecting the number you want to add. If you wish to leave the page, you may select exit.</p>-->
+					<p>You seem to have 3 other numbers associated with this account. Would you like to merge them into this account ?</p>
 					<?php } ?>	
 					<hr/>
 					

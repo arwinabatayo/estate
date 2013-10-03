@@ -23,7 +23,7 @@
 		                
 		                <div class="globe-dialog" id="dialog_enter_mobile" title="Enter Your Mobile Number">
 							<div class="span5 textleft noLeftMargin">
-								<p><i class="icon-mobile-phone icon-4x fleft"></i>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+								<p><i class="icon-mobile-phone icon-4x fleft"></i>Your email has been verified.<br />If you’re an existing Globe postpaid subscriber, please enter your 11-digit mobile number.</p>
 								<?php
 									$non_globe_id = "non-globe-new-line"; 
 									if ($is_reserve) {
@@ -68,7 +68,6 @@
 		                <div id="dialog_verify_mobile" title="Verify Mobile Number">
 							<div class="span5 textleft noLeftMargin">
 								<p><i class="icon-mobile-phone icon-4x fleft"></i>SMS successfully sent to you mobile number! - incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-					
 		                    </div>
 		                    
 							<div class="span4">

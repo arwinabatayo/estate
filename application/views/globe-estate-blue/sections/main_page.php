@@ -40,11 +40,23 @@
 					
 			?>
 			
-			
-			
-            <div class="row-fluid link-bottom">
+            <!--<div class="row-fluid link-bottom">
                 <a class="pull-left" href="<?php echo base_url() ?>">Go to Homepage</a>
-            </div>  
+            </div>-->
+			<div class="row-fluild link-bottom">
+				<div class="pull-left need-help">
+					<span>Need Assistance?</span><br />
+					<small>Get in touch with us on<br /> Twitter at <a href="http://twitter.com/talk2globe" target="_blank">@talk2GLOBE</a></small><br /><br />
+				</div>
+				
+				<ul class="pull-right">
+					<li><a>Contact Us</a></li>
+					<li>|</li>
+					<li><a>Live Chat</a></li>
+				</ul>	
+			</div>
+			
+			<div class="clr"></div>
 		</div>
 	</div>
 
