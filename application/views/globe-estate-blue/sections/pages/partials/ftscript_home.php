@@ -125,7 +125,7 @@
 		   				// show popup
 		   				$('#reserve-08').modal('hide');
 		   				$('#04-thank-you').modal( {show:true} );
-		   				setTimeout('$("#04-thank-you").modal({show:true}); window.location.href = base_url+resp.nxt_page;', 2000);		   				
+		   				setTimeout('$("#04-thank-you").modal("hide"); window.location.href = base_url+resp.nxt_page;', 2000);		   				
 		   			} else {
 		   				s.addClass('alert-'+resp.status);
 						s.html(resp.msg);

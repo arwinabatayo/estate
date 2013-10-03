@@ -235,7 +235,7 @@ class Home extends MY_Controller
 					$data['msg'] = "You must enter a valid Globe Mobile Number or an existing Globe Subscriber ".$mobile_number;
 					// var_dump($this->session->userdata); exit;
 					$order_cfg = $this->session->userdata('order_config');
-                    if ( @$order_cfg['order_type'] == 'reserve' ) {
+                    if ( $order_cfg['order_type'] == 'reserve' ) {
                         $data['status'] = "success";
                         $data['non_globe_reserve'] = 1;
 
@@ -486,7 +486,7 @@ class Home extends MY_Controller
             	// get order number by user email
             	$this->load->model('estate/order_model'); 
             	$order = $this->order_model->get_recent_order_by_email($email_to);
-
+            	var_dump($order);exit;
                 $refnum = $order['order_number'];
                 $sender = "no-reply@project-estate.com";
                 $subject = "myGlobe - Reference Number";

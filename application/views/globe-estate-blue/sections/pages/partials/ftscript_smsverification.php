@@ -45,8 +45,9 @@
 											$('#verifyNumber').modal( "hide" );
 											// open ty page, close after x secs and redirect to homepage
 											$('#04-thank-you').modal( {show:true} );
-											setTimeout('$("#04-thank-you").modal("hide"); window.location.href = base_url+resp.next_page;', 2000);
+											nxtpage = base_url+resp.next_page;
 											resp.next_page = '';
+											setTimeout('$("#04-thank-you").modal("hide"); window.location.href = nxtpage;', 2000);
 										} else if (resp.overdue_flag) {
 											// show overdue popup
 											// alert("You need to settle your overdue balance before you can proceed");
