@@ -114,6 +114,19 @@
 											$('.consultation-radio input').iCheck({
 												radioClass: 'iradio_flat-blue'
 											});
+										} else if(resp.non_globe==1) {
+											//GO TO NON-GLOBE STEPS
+												$('#enterMobile').modal('hide')
+												$( '#selectBuyType' ).modal( {show:true} );
+									
+												$("#new_line_plan").click(function(){
+													window.location = base_url+"plan?setOrderConfig=true&key=ordertype&val=newline&subscriber_flag=false"
+												});
+									
+												$("#new_line_prepaid_kit").click(function(){
+													window.location = base_url+"plan-summary"
+												});
+			
 										} else {
 											$( '#verifyNumber' ).modal( {show:true} );
 										}

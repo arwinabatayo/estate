@@ -131,12 +131,7 @@
                         	<button class="blue-btn" id="<?php echo $gobackBtnId; ?>" data-goto="<?php echo $goto; ?>" style="<?php echo $display; ?>">Go Back</button>
                         	<button class="blue-btn" id="<?php echo $changeBtnId; ?>">Continue</button>
                         	<br class="clear" />
-                        	<br />
-                            <ul class="">
-                                <li><a>Contact Us</a></li>
-                                <li>|</li>
-                                <li><a>Live Chat</a></li>
-                            </ul> 
+
                         </div>
 
                     </div>                             

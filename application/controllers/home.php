@@ -61,6 +61,11 @@ class Home extends MY_Controller
 	}
 		
 	public function sku_configuration() {	
+		
+		//- - - - re-INIT Cart
+			$this->cart->destroy();
+		//- - - -	
+		
 		$arrDeviceAttr = array();
 		
 		$this->load->model('estate/home_model');
@@ -152,7 +157,8 @@ class Home extends MY_Controller
 		$this->_data->show_breadcrumbs    =  false;
 		$this->_data->page = 'test';
 		
-		$acc_info = $this->accounts_model->get_account_info_by_id('9151178863');	
+		//$acc_info = $this->accounts_model->get_account_info_by_id('9151178863');	
+		$acc_info = $this->_validate_number('asd');	
 		
 		//$this->_initSubscriberInfo('9151178863');
 		//$acc_info  = $this->accounts_model->is_msisdn_exist('9151178863');
@@ -184,80 +190,123 @@ class Home extends MY_Controller
 			$mobile_number = $msisdn;
 		}
 		
+		$_debugMsg = '';
+		
 		$data = array(
-		  "status" => "success",
-		  "msg"  => ""
+		  'status' => "success",
+		  'msg'  => "",
+		  'non_globe'  => 0,
 		);
 
-		if($mobile_number) {
-			
-			if(!is_numeric($mobile_number)) {
+
+		$validation_result = $this->_validate_number($mobile_number);
+		
+
+		if( $validation_result['result'] == true ){
+		
+			//echo 'validation TRUE<br />';
+			$_debugMsg .= 'validation_result - PASS<br />';
 				
-				$data['status'] = "error";
-				$data['msg'] = "Mobile number should all be numeric";
+			if( $this->_check_if_globe_number($mobile_number)) {
 				
-			} else {                 
-                 $is_user_exist = $this->accounts_model->is_msisdn_exist($mobile_number);
-                  
-                 //NO need to check if using a globe mobile num, all data in estate_account is currently globe subscriber       
-				//if( $this->_check_if_globe_number($mobile_number) == TRUE && strlen($mobile_number) == 11) {	
-				if( $is_user_exist && strlen($mobile_number) == 11) {
+								
+				//-- -- GLOBE POST PAID
+				if( $this->_globeApi_GetSubscriberByMSISDN($mobile_number) == true ){
+
+						$_debugMsg .= '_globeApi_GetSubscriberByMSISDN() - PASS<br />';
+						$data['non_globe'] = 0;
 						
-						$data['status'] = 'success';
-						$data['msg']    = "SMS successfully sent to you mobile number";
 						$this->session->set_userdata('msisdn',$mobile_number);
 					
                         $this->load->library('GlobeWebService','','api_globe');
                         $verification_code = random_string('alnum', 6);
                         $message = "Please use this code ".$verification_code." to verify your account.";
                         
-                        if(IS_GLOBE_API_ENV && !DEV_ENV){
+                        if(!DEV_ENV){
 							$sms_status = $this->api_globe->api_send_sms($mobile_number, $message, "Project Esate");
 						}else{
 							$sms_status = TRUE;
 						}
-                       	// $sms_status = TRUE;
-                        
+  
+                        //--SMS SENT
                         if($sms_status == TRUE) {
+                            
+                            $_debugMsg .= 'api_globe->api_send_sms() - PASS<br />';
+                            
                             $this->load->model('estate/networks_model');
                             $this->networks_model->insert_sms_verification($mobile_number, $verification_code);
                             $this->session->unset_userdata('current_subscriber_mobileno');
                             $this->session->set_userdata('current_subscriber_mobileno', $mobile_number);
-                            $data['status'] = 'success';
+							
+							$data['status'] = 'success';
+							$data['msg']    = "SMS successfully sent to you mobile number";
                             
 
 							/* Temporary Code For SAT and UAT Purposes */
 							$email = $this->session->userdata('current_subscriber_email');
 							$this->load->library('GlobeWebService','','api_globe');
-							$email_status = $this->api_globe->SendEmail($email, "Project Estate SMS Verification Code", $verification_code);
+							
+							if(!DEV_ENV){
+								$email_status = $this->api_globe->SendEmail($email, "Project Estate SMS Verification Code", $verification_code);
+							}else{
+								$email_status = TRUE;
+							}
+							
+							if($email_status){
+								$_debugMsg .= 'api_globe->SendEmail() - PASS<br />';
+							}else{
+								$_debugMsg .= 'api_globe->SendEmail() - FAILED<br />';
+							}
+							
                         } else {
-                            $data['status'] = "error";
-							$data['msg'] = "Failed sending sms. Please try again.";
+                            $_debugMsg .= 'api_globe->api_send_sms() - FAILED<br />';
+                            $data['status'] = 'error';
+							$data['msg']     = "Failed sending sms. Please try again.";
                         }
+                     
+				}else{
 					
-				} else {
-					$data['status'] = "error";
-					//$v = var_dump($is_user_exist);
-					$data['msg'] = "You must enter a valid Globe Mobile Number or an existing Globe Subscriber ".$mobile_number;
-					// var_dump($this->session->userdata); exit;
-					$order_cfg = $this->session->userdata('order_config');
-                    if ( $order_cfg['order_type'] == 'reserve' ) {
-                        $data['status'] = "success";
-                        $data['non_globe_reserve'] = 1;
+					
+					//-- -- GLOBE PREPAID	
+					$data['status'] = "success";
+					$data['non_globe'] = 1;
+					$_debugMsg .= '_globeApi_GetSubscriberByMSISDN() - FAILED<br />';
+				}
 
-                        $data['mobile_number'] = $mobile_number;
-                        $data['email'] = $this->session->userdata('current_subscriber_email');
+			}else{
+				$_debugMsg .= '_check_if_globe_number() - FAILED<br />';
+				
+				//- - - - - NON-GLOBE. eg: smart,tnt
+				
+				$data['status'] = "success";
+				$data['non_globe'] = 1;
+					
+				$order_cfg = $this->session->userdata('order_config');
+				
+				if ( $order_cfg['order_type'] == 'reserve' ) {
+					$_debugMsg .= 'order_type - RESERVE<br />';
+					$data['status'] = "success";
+					$data['non_globe_reserve'] = 1;
 
-                        // save mobile number on session
-                        $this->session->unset_userdata('current_subscriber_mobileno');
-                        $this->session->set_userdata('current_subscriber_mobileno', $mobile_number);
-                    }
-				}            
-            }
-		} else {
+					$data['mobile_number'] = $mobile_number;
+					$data['email'] = $this->session->userdata('current_subscriber_email');
+
+					// save mobile number on session
+					$this->session->unset_userdata('current_subscriber_mobileno');
+					$this->session->set_userdata('current_subscriber_mobileno', $mobile_number);
+				}
+				
+				
+			}
+		
+		}else{
+			$_debugMsg .= '_validate_number - FAILED<br />';
 			$data['status'] = "error";
-			$data['msg'] = "Mobile number is required.";
+			$data['msg']    = $validation_result['msg'];
+		
 		}
+		
+		//echo $_debugMsg;
 		
 		echo json_encode($data);
 	}
@@ -508,7 +557,7 @@ class Home extends MY_Controller
             	// get order number by user email
             	$this->load->model('estate/order_model'); 
             	$order = $this->order_model->get_recent_order_by_email($email_to);
-            	var_dump($order);exit;
+
                 $refnum = $order['order_number'];
                 $sender = "no-reply@project-estate.com";
                 $subject = "myGlobe - Reference Number";
@@ -542,7 +591,7 @@ class Home extends MY_Controller
 		
 		$prefixes = '';
 		foreach($globe_prefixes as $v) {
-		   $prefixes[] = $v['f_number_prefix'];
+		   $prefixes[] = $v['number_prefix'];
 		}
 		$mobile_number_prefix = substr($mobile_number, 0, 4);
 		if(in_array($mobile_number_prefix, $prefixes)) {
@@ -550,6 +599,66 @@ class Home extends MY_Controller
 		} else {
 			return FALSE;
 		}
+	}
+
+	private function _globeApi_GetSubscriberByMSISDN($mobile_number)
+	{
+		$this->load->library('GlobeWebService','','api_globe');
+		
+		$subscriber_info = $this->api_globe->GetSubscriberAndAssignedProductByMsisdn($msisdn);
+		
+		if(!empty($subscriber_info['SubscriberSearchResultInfo'])) {
+			$subscriber_outstanding = $this->api_globe->GetOutstandingBalanceByMsisdn($msisdn);
+			$subscriber_lockin = $this->api_globe->GetProductQueryFiltered($msisdn);
+
+			$array_values = array(
+				'account_id' => $subscriber_info['PayChannelHeader']['PayChannelNumberInfo']['AccountNo'],
+				'full_name' => $subscriber_info['SubscriberSearchResultInfo']['NameLine1'],
+				'email' => $subscriber_info['BillingArrangmentHeader']['AddressInfo']['AddressElement4'],
+				'mobile_number' => $subscriber_info['SubscriberSearchResultInfo']['PrimaryResourceValue'],
+				'address' => $subscriber_info['AccountHeader']['AddressInfo']['AddressElement7'].' '.$subscriber_info['AccountHeader']['AddressInfo']['AddressElement9'].' '.$subscriber_info['AccountHeader']['AddressInfo']['AddressElement10'],
+				'zip' => $subscriber_info['AccountHeader']['AddressInfo']['AddressElement3'],
+				'street' => $subscriber_info['AccountHeader']['AddressInfo']['AddressElement7'],
+				'municipality' => $subscriber_info['AccountHeader']['AddressInfo']['AddressElement9'],
+				'city' => $subscriber_info['AccountHeader']['AddressInfo']['AddressElement10'],
+				'country' => $subscriber_info['AccountHeader']['AddressInfo']['AddressElement11'],
+				'billing_address' => $subscriber_info['AccountHeader']['AddressInfo']['AddressElement7'].' '.$subscriber_info['AccountHeader']['AddressInfo']['AddressElement9'].' '.$subscriber_info['AccountHeader']['AddressInfo']['AddressElement10'],
+				'lockin_duration' => $subscriber_lockin['APList']['AP']['7']['IAPList']['IAP']['APDetails']['AttrList']['Attr']['0']['Value'],
+				'outstanding_balance' => $subscriber_outstanding['AccountBalanceDt']['ArBalance'],
+				'overdue' => $subscriber_outstanding['OverDueBalance'],
+				'due_date' => date('Y-m-d', strtotime($subscriber_outstanding['DocInfo']['DueDate'])),
+				'credit_limit' => $subscriber_info['AccountHeader']['AccountingManagementInfo']['L9CreditLimit'],
+				'category_id' => $this->parse_customer_type($subscriber_info['SubscriberSearchResultInfo']['PrimaryResourceType']),
+				'current_plan' => $subscriber_info['AssignedProducts']['AssignedProduct']['0']['OfferName']['LocalizedValue'],
+				'status' => '1'
+			);
+			$result = true;
+		} else {
+			$result = false;
+		}		
+		//SAVE data to accounts_model
+		return $result;
+	}
+	
+	private function _validate_number($mobile_number)
+	{
+		$out = array(
+			'result' => true,
+			'msg'    => '',
+		);
+		
+		if( is_numeric($mobile_number) ){
+			if( strlen($mobile_number) == 11 ){
+				$out['result'] = true;
+			}else{
+				$out['msg'] = "You must enter a valid Mobile Number";
+				$out['result'] = false;	
+			}
+		}else{
+			$out['msg'] = "Mobile number is required or should be numeric";
+			$out['result'] = false;
+		}
+		return $out;
 	}
 
     // validate ref number - gellie
@@ -780,6 +889,48 @@ class Home extends MY_Controller
             return $this->email->send_email_api($email_to, $subject, $email_tpl, $msg, $sender ); 
         }
         //==================================================================
+		
+		
+	public function test_api($msisdn)
+	{
+		$this->load->library('GlobeWebService','','api_globe');
+		$msisdn = '9175235250';
+		
+		$subscriber_info = $this->api_globe->GetSubscriberAndAssignedProductByMsisdn($msisdn);
+		
+		if(!empty($subscriber_info['SubscriberSearchResultInfo'])) {
+			$subscriber_outstanding = $this->api_globe->GetOutstandingBalanceByMsisdn($msisdn);
+			$subscriber_lockin = $this->api_globe->GetProductQueryFiltered($msisdn);
+
+			$array_values = array(
+				'account_id' => $subscriber_info['PayChannelHeader']['PayChannelNumberInfo']['AccountNo'],
+				'full_name' => $subscriber_info['SubscriberSearchResultInfo']['NameLine1'],
+				'email' => $subscriber_info['BillingArrangmentHeader']['AddressInfo']['AddressElement4'],
+				'mobile_number' => $subscriber_info['SubscriberSearchResultInfo']['PrimaryResourceValue'],
+				'address' => $subscriber_info['AccountHeader']['AddressInfo']['AddressElement7'].' '.$subscriber_info['AccountHeader']['AddressInfo']['AddressElement9'].' '.$subscriber_info['AccountHeader']['AddressInfo']['AddressElement10'],
+				'zip' => $subscriber_info['AccountHeader']['AddressInfo']['AddressElement3'],
+				'street' => $subscriber_info['AccountHeader']['AddressInfo']['AddressElement7'],
+				'municipality' => $subscriber_info['AccountHeader']['AddressInfo']['AddressElement9'],
+				'city' => $subscriber_info['AccountHeader']['AddressInfo']['AddressElement10'],
+				'country' => $subscriber_info['AccountHeader']['AddressInfo']['AddressElement11'],
+				'billing_address' => $subscriber_info['AccountHeader']['AddressInfo']['AddressElement7'].' '.$subscriber_info['AccountHeader']['AddressInfo']['AddressElement9'].' '.$subscriber_info['AccountHeader']['AddressInfo']['AddressElement10'],
+				'lockin_duration' => $subscriber_lockin['APList']['AP']['7']['IAPList']['IAP']['APDetails']['AttrList']['Attr']['0']['Value'],
+				'outstanding_balance' => $subscriber_outstanding['AccountBalanceDt']['ArBalance'],
+				'overdue' => $subscriber_outstanding['OverDueBalance'],
+				'due_date' => date('Y-m-d', strtotime($subscriber_outstanding['DocInfo']['DueDate'])),
+				'credit_limit' => $subscriber_info['AccountHeader']['AccountingManagementInfo']['L9CreditLimit'],
+				'category_id' => $this->parse_customer_type($subscriber_info['SubscriberSearchResultInfo']['PrimaryResourceType']),
+				'current_plan' => $subscriber_info['AssignedProducts']['AssignedProduct']['0']['OfferName']['LocalizedValue'],
+				'status' => '1'
+			);
+			print_r($array_values);
+			$result = true;
+		} else {
+			$result = false;
+		}		
+		//SAVE data to accounts_model
+		return $result;
+	}
 
 }
 

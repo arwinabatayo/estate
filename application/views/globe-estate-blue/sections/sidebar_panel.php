@@ -25,9 +25,13 @@
 				$gadget_cash_out =  $item['gadget_cash_out'];
 			}
 		}
+		
+		$user = isset($account_info) ? $account_info : (object) $this->session->userdata('subscriber_info');
+
 	?>		
                 <div class="span3 left">
                 	<div class="chooseline">
+                        <?php if(isset($user->account_id)){ ?>
                         <div class="line">
                             <span>CHOOSE A LINE</span>
                             <label>
@@ -37,17 +41,11 @@
                                 </select>
                             </label>
                         </div>
+                        <?php } ?>
+                        
                         <div class="accordion" id="accordion2">
+							<?php if( isset($user->account_id) ){ ?>
                             <div class="accordion-group account-group account">
-								<?php
-									
-									$user = isset($account_info) ? $account_info : (object) $this->session->userdata('subscriber_info');
-									
-									//Temp Only
-									if(!$user){
-										$user = $this->accounts_model->get_account_info_by_id('9151178863',false);	
-									}
-								?>
 								
                               <div class="row-fluid accordion-heading">
                                 <a class="accordion-toggle account-name" data-toggle="collapse" data-target="#collapseOne">
@@ -104,6 +102,8 @@
                                 </div>
                               </div>
                             </div>
+                            <?php } ?>
+                            
                             <div class="accordion-group account-group addevice">
                               <div class="row-fluid accordion-heading">
                                 <a class="accordion-toggle account-name in collapse" data-toggle="collapse" data-target="#collapseTwo">
