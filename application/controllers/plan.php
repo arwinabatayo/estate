@@ -56,12 +56,22 @@ class Plan extends MY_Controller
 // 		$this->_data->plans_options = $query->result();
 		
 		$this->_data->account_m = $this->accounts_model;
-        //temporary token = d25c1265aee883d97ffeec28b7e852cb        
+        //temporary token = d25c1265aee883d97ffeec28b7e852cb   
+       
+                
+                //Lawrence 2013-10-02
+        	$user_info=$this->session->userdata('subscriber_info');
+                //===================     
         
 		$this->_data->combos_datas = $this->products_model->get_bundles(2);
 		$this->_data->boosters_datas = $this->products_model->get_bundles(1);
 		$this->_data->gadget_data = $this->cart_model->get_gadget_oncart();
-		$this->_data->package_plan_options = $this->products_model->get_package_plan();
+                
+                //Lawrence 2013-10-02
+		//$this->_data->package_plan_options = $this->products_model->get_package_plan();
+		$this->_data->package_plan_options = $this->products_model->get_package_plan($user_info[category_id]==1?3:$user_info[category_id]);
+                //==========================
+                
 		$this->_data->package_plan_bundle = $this->products_model->get_package_plan_bundle();
 		$this->_data->cart_contents = $this->cart->contents();
 		$this->_data->s_industry = $this->plans_model->getIndustry('s');
@@ -70,6 +80,24 @@ class Plan extends MY_Controller
 		if($this->input->get("get_new_line")){
 			$this->_data->new_line_flag = true;
 		}
+                
+                
+                //Lawrence Alfonso 09272013                
+                //==================================================                
+		$this->load->model('estate/switch_model','switch');
+                $SMBLI=$this->switch->get_switch("SMBLI",false);
+                $ENTIN=$this->switch->get_switch("ENTIN",false);
+                $SMBRE=$this->switch->get_switch("SMBRE",false);
+		if($this->session->userdata('current_category')==2||
+                   $this->session->userdata('current_category')==4||
+                   $this->session->userdata('current_category')==5)
+                      $this->_data->biz_line_flag = true;
+                
+                      $this->_data->SMBLI_switch  = $SMBLI->switch;
+                      $this->_data->ENTIN_switch  = $ENTIN->switch;
+                      $this->_data->SMBRE_switch  = $SMBRE->switch;
+                      $this->_data->user_category = $this->session->userdata('current_category');
+                //==================================================
 		
 		//echo "<pre>"; var_dump($this->_data); exit;
 		$this->load->view($this->_data->tpl_view, $this->_data);
@@ -96,8 +124,9 @@ class Plan extends MY_Controller
 		$this->load->model('estate/packageplan_model');
 
 		$plan_id = $this->input->post('plan_id');
+		$gadget_id = $this->input->post('gadget_id');
 
-		$this->_data->package_plan_gadget_cashout = $this->packageplan_model->get_package_plan_gadget_cashout($plan_id);
+		$this->_data->package_plan_gadget_cashout = $this->packageplan_model->get_package_plan_gadget_cashout($plan_id, $gadget_id);
 
 		//var_dump($this->_data->package_plan_gadget_cashout);
 		return $this->_data->package_plan_gadget_cashout;
@@ -168,6 +197,211 @@ class Plan extends MY_Controller
 		echo json_encode($data); exit;
 	}
 
+        
+    //Lawrence 10-02-2013
+    function bizNewLine()
+    {
+            $client=$this->session->userdata('subscriber_info');                      
+            $this->load->model('estate/managers_model','managers');
+            
+            $clienttmplate='view_notify_addline_client';            
+            
+            if($client['category_id']==2)//SMB
+            {
+                $tmplate='view_notify_tm_for_addline_client';
+                //Teritory Manager  18
+                $type="TM";  
+                $managers=$this->managers->get_manager_email_receivers(18);
+                if($managers){
+                    foreach($managers as $manager)
+                    {
+                        $tmp[]=$manager->username;
+                    }    
+                    $mails=implode(",", $tmp);                
+                }
+            }
+            elseif($client['category_id']==4||$client['category_id']==5)//Enterprise
+            {
+                $tmplate='view_notify_am_for_addline_client';
+                //Account Manager  13
+                $type="AM";
+                $managers=$this->managers->get_manager_email_receivers(13);
+                if($managers){
+                    foreach($managers as $manager)
+                    {
+                        $tmp[]=$manager->username;
+                    }    
+                    $mails=implode(",", $tmp);                
+                }
+            }
+            
+            
+	    $lineqty = $this->input->post('lineqty');
+            $cart = $this->cart->contents();
+            $cart=current($cart);
+            $this->load->model('estate/order_model','order');
+
+            $d['account_id']   = $client['account_id'];
+            $d['status']       = 2;
+            $d['subtotal']     = $cart[subtotal];
+            $d['total']        = $cart[price];
+            $d['date_ordered'] = date('Y-m-d h:i:s');
+            $d['order_type']   = 2; //Additional Line
+            $d['peso_value']   = $cart[price];
+
+            $i['product_id']   = $cart[product_id];
+            $i['qty']          = $lineqty;
+            $i['product_type'] = $cart[product_type];
+            $i['product_info'] = $cart[name];
+            $refnum=$this->order->save_application($d,$i);
+
+            
+            $cart = $this->cart->destroy();
+            
+            
+
+            $data['status'] ="success";
+            $data['msg'] = "An email has been sent to $type for your application approval.";
+
+           
+
+            $sender = "no-reply@project-estate.com";
+            $subject = "Globe Estate - New Line Request";
+
+
+            if($client['email'])
+                if (valid_email($client['email'])) {
+                    $msg = array(
+                        'name'              => $client['name'],
+                        'email'             => $client['email'],
+                        'refnum'            => $refnum
+                    );
+                    $this->email->send_email_api($client['email'], $subject, $clienttmplate, $msg, $sender );
+                }  
+            if($mails)                       
+                if (valid_email($_manager->username)) {
+                    $msg = array(
+                        'name'              => $client['name'],
+                        'email'             => $client['email'],
+                        'refnum'            => $refnum
+                    );
+                    $this->email->send_email_api($mails, $subject, $tmplate, $msg, $sender ); 
+                }
+            
+            
+            echo json_encode($data);
+    }        
+    function RecordAddLinesQty()
+    {
+        $this->session->set_userdata('subscriber_addline',$this->input->post('lineqty'));
+
+        $data['status'] ="success";  
+        $data['msg'] = "Testing by Law";                   
+        echo json_encode($data);
+    }
+    function BizRecontractingApplication()
+    {
+            $client=$this->session->userdata('subscriber_info');                      
+            $this->load->model('estate/managers_model','managers');
+            
+            $clienttmplate='view_notify_recon_client';
+            if($client['category_id']==2)//Business SMB
+            {
+                $tmplate='view_notify_gboc_for_recon_smb';
+                //GBOC   19
+                $type="GBOC";
+                $managers=$this->managers->get_manager_email_receivers(19);
+                if($managers){
+                    foreach($managers as $manager)
+                    {
+                        $tmp[]=$manager->username;
+                    }    
+                    $mails=implode(",", $tmp);                
+                }
+            }
+            elseif($client['category_id']==4)//Business Enterprise Corporation
+            {
+                $tmplate='view_notify_am_for_recon_bizcorp';
+                //Account Manager  13
+                $type="AM";
+                $managers=$this->managers->get_manager_email_receivers(13);
+                if($managers){
+                    foreach($managers as $manager)
+                    {
+                        $tmp[]=$manager->username;
+                    }    
+                    $mails=implode(",", $tmp);                
+                }
+            }
+            elseif($client['category_id']==5)//Business Enterprise Individual
+            {
+                $tmplate='view_notify_am_for_recon_bizind';
+                //Account Manager   13
+                $type="AM";
+                $managers=$this->managers->get_manager_email_receivers(13);
+                if($managers){
+                    foreach($managers as $manager)
+                    {
+                        $tmp[]=$manager->username;
+                    }    
+                    $mails=implode(",", $tmp);                
+                }
+            }
+            
+            $cart = $this->cart->contents();
+            $cart=current($cart);
+            $this->load->model('estate/order_model','order');
+
+            $d['account_id']   = $client['account_id'];
+            $d['status']       = 2;
+            $d['subtotal']     = $cart[subtotal];
+            $d['total']        = $cart[price];
+            $d['date_ordered'] = date('Y-m-d h:i:s');
+            $d['order_type']   = 1; //Recontracting
+            $d['peso_value']   = $cart[price];
+
+            $i['product_id']   = $cart[product_id];
+            $i['qty']          = 1;
+            $i['product_type'] = $cart[product_type];
+            $i['product_info'] = $cart[name];
+            $refnum=$this->order->save_application($d,$i);
+
+            
+            $cart = $this->cart->destroy();
+            
+            
+
+            $data['status'] ="success";
+            $data['msg'] = "An email has been sent to $type for your application approval.";
+
+           
+
+            $sender = "no-reply@project-estate.com";
+            $subject = "Globe Estate - New Line Request";
+
+
+            if($client['email'])
+                if (valid_email($client['email'])) {
+                    $msg = array(
+                        'name'              => $client[name],
+                        'email'             => $client[email],
+                        'refnum'            => $refnum
+                    );
+                    $this->email->send_email_api($client['email'], $subject, $clienttmplate, $msg, $sender );
+                }  
+            if($mails)                       
+                if (valid_email($_manager->username)) {
+                    $msg = array(
+                        'name'              => $client->name,
+                        'email'             => $client->email,
+                        'refnum'            => $refnum
+                    );
+                    $this->email->send_email_api($mails, $subject, $tmplate, $msg, $sender ); 
+                }
+            
+            
+            echo json_encode($data);
+    }
 
 
 }

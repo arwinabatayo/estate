@@ -36,6 +36,12 @@ class Home extends MY_Controller
 		$this->_data->page = 'landing';
 		$this->_data->process_button_text = "Buy Now!";
 		
+		//- - - - CLEAR ALL PREVIOUS TRANSACTION -  ES-66
+			$this->cart->destroy();
+			$this->session->unset_userdata('order_config');
+			$this->session->unset_userdata('subscriber_info');
+		//- - - - 
+		
 		if ($this->reserve_enabled) {
 			$this->cart_model->set_order_config(array('order_type'=>'reserve'));
 			$this->_data->process_button_text = "Reserve";
@@ -134,7 +140,7 @@ class Home extends MY_Controller
 			$sRet .= '<li><img src="'.base_url().'_assets/uploads/'.$capacities['dcimg'].'" />
 				<span>
 					<input id="'.strtolower(str_replace(" ", "",$capacities['dcname'])).'" type="radio" name="gadget_capacity" 
-							value="'.strtolower(str_replace(" ", "",$capacities['dcname'])).'"'.$selected.'>
+							value="'.$capacities['dcid'].'"'.$selected.'>
 					<label for="'.strtolower(str_replace(" ", "",$capacities['dcname'])).'">'.$capacities['dcname'].'</label>
 				</span></li>';
 			$x++;
@@ -235,7 +241,7 @@ class Home extends MY_Controller
 					$data['msg'] = "You must enter a valid Globe Mobile Number or an existing Globe Subscriber ".$mobile_number;
 					// var_dump($this->session->userdata); exit;
 					$order_cfg = $this->session->userdata('order_config');
-                    if ( @$order_cfg['order_type'] == 'reserve' ) {
+                    if ( $order_cfg['order_type'] == 'reserve' ) {
                         $data['status'] = "success";
                         $data['non_globe_reserve'] = 1;
 
@@ -299,6 +305,22 @@ class Home extends MY_Controller
 					$data['msg'] = "Successfully Verified. Page is redirecting please wait...";
 					$token =  md5('Globe0917'.'$4Lt*G'); //generate token/session here to access nextpage
 	                $this->networks_model->delete_sms_verification($mobile);
+                        
+                        
+                                        //Lawrence Alfonso 09262013
+                                        //Check if account type (estate_account_category)
+                                        //
+                                        $result=$this->processCategory();
+                                        $data['status'] = 'success';
+                                        if($result=='endsequence')
+                                        {
+                                            $data['status'] = 'end';
+                                            $data['msg']  = "An email has been successfully sent to your Relational Manager for your application's approval. <br>";
+                                            //$data['msg'] .= "Kindly check your email for the link back to this site. Use the reference number we sent to check the status of your application.";
+                                        }
+                                        //================================================
+                                        
+                                        
 				} else {
 					
 					$data['status'] = "error";
@@ -486,7 +508,7 @@ class Home extends MY_Controller
             	// get order number by user email
             	$this->load->model('estate/order_model'); 
             	$order = $this->order_model->get_recent_order_by_email($email_to);
-
+            	var_dump($order);exit;
                 $refnum = $order['order_number'];
                 $sender = "no-reply@project-estate.com";
                 $subject = "myGlobe - Reference Number";
@@ -662,6 +684,102 @@ class Home extends MY_Controller
     	echo json_encode($data); exit;
     }
 	
+	/*
+         * Lawrence Alfonso
+         * Check if Platinum/Business, Then create Order, Emails
+         * function ProcessCategory
+         * param:
+         *      mobiles number
+         */
+	function processCategory()
+        {
+                $this->load->model('estate/accounts_model','accounts');
+                $client=$this->session->userdata('subscriber_info');
+                
+                $account_id=$client['account_id'];
+                switch ($client[category_id])
+                {
+                    case 1:;//Platinum 
+                        
+                        if($client['rel_mngr_id'])
+                        {
+                            $this->load->model('estate/managers_model','managers');
+                            $rel_manager=$this->managers->get_manager_info($client['rel_mngr_id'],false);
+                            $ret='continue';
+                            if($rel_manager->user_type==12)
+                            {
+                                $cart = $this->cart->contents();
+                                $cart=current($cart);
+                                $this->load->model('estate/order_model','order');
+
+
+                                $d['account_id']   = $account_id;
+                                $d['status']       = 2;
+                                $d['subtotal']     = $cart[subtotal];
+                                $d['total']        = $cart[price];
+                                $d['date_ordered'] = date('Y-m-d h:i:s');
+                                $d['order_type']   = 0; //phone only
+                                $d['peso_value']   = $cart[price];
+
+                                $i['product_id']   = $cart[product_id];
+                                $i['qty']          = $cart[qty];
+                                $i['product_type'] = $cart[product_type];//todo
+                                $i['product_info'] = $cart[name];//todo
+                                $refnum=$this->order->save_application($d,$i);
+                                
+                                $this->_sendBizMail($rel_manager->username, "notify_rm_for_platinum_client",$refnum);                                
+                                $this->_sendBizMail($client[email], "notification_platinum_client",$refnum);
+                                $ret='endsequence';
+                                $cart = $this->cart->destroy();
+                            }
+                        }
+                        break;
+                    case 2:;//Business
+                        break;
+                    case 3:;//Personal
+                        break;
+                    case 4:;//SMB
+                        break;
+                    case 5:;//Enterprise Corporation
+                        break;
+                    case 6:;//Enterprise Individual
+                        break;
+                }
+            return $ret;
+        }
+        private function _sendBizMail($email_to, $flow_type,$refnum=0)
+        {
+
+            $this->load->library('email');
+
+            switch($flow_type) {
+                case 'notify_rm_for_platinum_client' :
+                    $refnum = $refnum;
+                    $sender = "no-reply@project-estate.com";
+                    $subject = "Platinum Application";
+                    $email_tpl = 'view_rm_platinum_client_app';
+
+                    $msg = array(
+                            'name'  => $email_to,
+                            'refnum'=> $refnum
+                        );
+                break;
+                case 'notification_platinum_client' :
+                    $refnum = $refnum;
+                    $sender = "no-reply@project-estate.com";
+                    $subject = "Platinum Application";
+                    $email_tpl = 'view_platinum_client_app';
+
+                    $msg = array(
+                            'name'  => $email_to,
+                            'refnum'=> $refnum
+                        );
+                break;
+            }
+
+            return $this->email->send_email_api($email_to, $subject, $email_tpl, $msg, $sender ); 
+        }
+        //==================================================================
 
 }
 

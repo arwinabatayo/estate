@@ -81,6 +81,100 @@
 
 			});
 			
+			//Lawrence 10-02-13
+            //BEGIN
+			$('button#biz_renew_button').click(function() {				
+					$.ajax({
+						url: base_url+'plan/BizRecontractingApplication',
+						data: {'none':'none'},
+						type:'post',
+						success: function(response){	                       
+							var resp = jQuery.parseJSON( response );
+							if(resp.status == 'success'){								
+                                $('#biz_recon_message').html(resp.msg);
+								$('#order-biz-recon-message').modal('show');
+							}	
+							else{
+								alert(resp.msg);
+							}	
+                            
+						}, 
+						error: function(){
+							alert('Some error occured or the system is busy. Please try again later');	
+						}
+					});
+                    
+					
+			});
+			$('button#btnBizGetNewline').click(function() {				
+					$.ajax({
+						url: base_url+'plan/RecordAddLinesQty',
+						data: {'lineqty': $( "#id_select option:selected" ).text()},
+						type:'post',
+						success: function(response){	                       
+							var resp = jQuery.parseJSON( response );
+							if(resp.status == 'success'){
+								window.location.href=base_url+'plan?setOrderConfig=true&ordertype=newline&plantype=create';						
+							}	
+							else{
+								alert(resp.msg);
+							}	
+                            
+						}, 
+						error: function(){
+							alert('Some error occured or the system is busy. Please try again later');	
+						}
+					});
+                    
+					
+			});
+			$('button#btnBizGetNewlineSubs').click(function() {
+                    <?php if ($SMBLI_switch){?>				
+					$.ajax({
+						url: base_url+'plan/RecordAddLinesQty',
+						data: {'lineqty': $( "#id_select option:selected" ).text()},
+						type:'post',
+						success: function(response){	                       
+							var resp = jQuery.parseJSON( response );
+							if(resp.status == 'success'){
+								window.location.href=base_url+'plan?setOrderConfig=true&ordertype=renew';						
+							}	
+							else{
+								alert(resp.msg);
+							}	
+                            
+						}, 
+						error: function(){
+							alert('Some error occured or the system is busy. Please try again later');	
+						}
+					});
+                    <?php }else{ ?>
+                   alert(base_url+'plan/bizNewLine');
+					$.ajax({
+						url: base_url+'plan/bizNewLine',
+						data: {'lineqty': $( "#id_select option:selected" ).text()},
+						type:'post',
+						success: function(response){	
+							var resp = jQuery.parseJSON( response );
+							if(resp.status == 'success'){
+                            
+                                $('#biz_message').html(resp.msg);
+								$('#order-thankyou').modal('show');
+							}else{
+								alert(resp.msg);
+							}
+							
+						}, 
+						error: function(){
+							alert('Some error occured or the system is busy. Please try again later');	
+						}
+					});
+                    <?php } ?>
+					
+			});
+            //END law
+            
+            
 			//ORDER TYPE
 		    $('#acc-order-type  button').click(function() { 
 	            //showPreloader();
@@ -245,6 +339,54 @@
 				$("a.btnAddPackagePlan").click(function(i){
 					var that = $(this);
 
+					$.ajax({
+						url: base_url+'plan/getpackageplancombos',
+						data: {'plan_id' : parseInt($(this).children("div").eq(0).text()) },
+						type:'post',
+						success: function(response){
+
+							var resp = jQuery.parseJSON( response );
+							//console.log(resp)
+							for(var ctr = 0; ctr < resp.length; ctr++){
+								//console.log(resp[ctr]['combo_type']);
+								var combo_type = resp[ctr]['category'].toLowerCase();
+
+								$(".combo-type-" + combo_type + "-desc").text(resp[ctr]['description']);
+								$(".combo-type-" + combo_type).css('display', 'block')
+
+							}
+
+							$("#combo-type").show();
+
+							var plan_payment = that.find("a").text().split("Plan ")[1];
+
+							//$("#PackagePlanCartWidget").html("<br /><p><b>Plan:</b> " + plan_payment + "</p><p><b>Monthly Payment:</b> " + plan_payment + "</p><p><b>Text:</b> " + $("#combo-type-text-desc").text() + "</p><p><b>Call:</b> " + $("#combo-type-call-desc").text() + "</p><p><b>Surf:</b> " + $("#combo-type-surf-desc").text() + "</p><p><b>IDD:</b> " + $("#combo-type-idd-desc").text() + "</p>");
+							//$("#PackagePlanCartWidget").slideDown();
+
+						},
+						error: function(){
+							alert('Some error occured or the system is busy. Please try again later');
+						}
+					});
+
+
+					$.ajax({
+						url: base_url + 'plan/getpackageplangadgetcashout',
+						data: {'plan_id' : parseInt($(this).children("div").eq(0).text()), 'gadget_id' : 7},
+						type: 'post',
+						success: function(response){
+							var resp = jQuery.parseJSON( response );
+
+							console.log(resp);
+
+							$(".dispalyTable ").eq(2).children("div").eq(1).text("CASHOUT " + resp[0].cashout_val)
+						},
+						error: function(){
+							alert('Some error occured or the system is busy. Please try again later');
+						}
+
+					});
+
 
 					//add to cart functionality for additional and new line
 
@@ -259,32 +401,42 @@
 						data: 'product_type=package_plan&product_id='+itemid+'&plan='+itemid+'&device=7',
 						type:'post',
 						success: function(response) {
-							//alert(response);
 							var resp = jQuery.parseJSON(response);
 
+							console.log(resp);
 
-							/*var cartItem = '<div id="prod-item-'+resp.rowid+'" class="itemPlan" style="display:none">'+
-							'<div class="fleft"><span class="productName block"><b>'+itemname+
-							'</b></span></div><span class="icoDelete"> <a class="btnDelete" href="javascript:void(0)" id="'+resp.rowid+'">'+
-							'<i class="icon-remove"></i></a> </span><br class="clear" /></div>\n';
+							var cartItem = '<div data-prod-type="plan" id="prod-item-'+resp.rowid+'" class="item" style="display:none" data-cashout="'+resp.price+'" data-pv="'+resp.this_pv_value+'">'+
+										'<div class="fleft">'+
+											'<span class="productName block">'+itemname+'</span>'+
+										'</div>'+
+										'<span class="icoDelete">'+
+											'<a class="btnDelete" href="javascript:void(0)" id="'+resp.rowid+'">'+
+												'<i class="icon-remove">&nbsp;X&nbsp;</i>'+
+											'</a>'+
+										'</span>'+
+										'<br class="clear" />'+
+									'</div>\n';
 						
-							if(resp.status == 'success' && resp.rowid){
-								$("#PlanCartWidget .itemPlan").remove();
+							if(resp.status == 'success' && resp.rowid) {
+								$("#PlanCartWidget .item").remove();
 								$("#PlanCartWidget").prepend(cartItem);
-								$('#prod-item-'+resp.rowid).show('slow');
+								$('#prod-item-'+resp.rowid).show();
 
-								
-								$("#cashoutLabel").html(resp.total).show('slow');
-								$("#pesovalLabel").attr('data-pv',resp.this_pv_value).html(resp.this_pv_value).show('slow');
-								
-								$('#cashoutBox,#pesovalBox').animate({backgroundColor: '#fff267'}, 'fast', function(){
-									$('#cashoutBox,#pesovalBox').animate({backgroundColor: '#F4F4F4'}, 'fast');
-								});
 								$("#plan_name").html(itemname);
 								$("#planid").attr('data-id',itemid);
 								$("#planid").attr('data-cashout',resp.total);
-								$('#prod-item-'+resp.rowid).show('slow');
-							}*/
+								$('#prod-item-'+resp.rowid).show();
+								
+								$('#prod-item-'+resp.rowid).animate({backgroundColor: '#fff267'}, 'fast', function(){
+									$('#prod-item-'+resp.rowid).animate({backgroundColor: 'transparent'}, 'fast');
+								});
+								
+								$('#pesovalueLabel').html(resp.total_remaining_pv);
+								$('#cashoutLabel').html(resp.total);
+								$('#cashoutBox').animate({backgroundColor: '#fff267'}, 'fast', function(){
+									$('#cashoutBox').animate({backgroundColor: '#F4F4F4'}, 'fast');
+								});
+							}
 							
 							
 						}, 
@@ -383,7 +535,6 @@
 				trigger: 'manual',
 				html:true,
 				content: function(){
-					alert();
 					return $('#get-prepaid-content').html();
 				}
 			}).click(function (e) {$(this).popover('toggle');});
@@ -398,11 +549,43 @@
 				var subs_flag = $("#subs_flag").val();
 				window.location = base_url+'addons'+subs_flag;
 			});
+<<<<<<< HEAD
 				
+=======
+
+>>>>>>> 1b1ba981df2b83b781f5fbcfd0f2acb740a024b6
 			$('button#retain, button#package').click(function(){
 				var subs_flag = $("#subs_flag").val();
 				window.location = base_url+'addons'+subs_flag;
 			});
+
+			$(document).on('click', '.cartWidget a.btnDelete', function(){
+				var rowid = $(this).attr('id');
+				var prodName = $(this).attr('rel');
+
+				if( !confirm('Are you sure you want to delete "'+prodName+'"?')) return;
+
+				$.ajax({
+					url: base_url+'cart/delete',
+					data: 'keyid='+rowid+'&type',
+					type:'post',
+					success: function(response){
+
+						var resp = jQuery.parseJSON( response );
+
+						if(resp.status == 'success'){
+							$('#prod-item-'+rowid).slideUp('slow', function(){ $(this).remove() });
+							$('#cashoutLabel').html(resp.total);
+						}else{
+							alert(resp.msg);
+						}
+					},
+					error: function(){
+						alert('Some error occured or the system is busy. Please try again later');
+					}
+				});
+
+		});
 
 
 

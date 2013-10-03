@@ -10,8 +10,8 @@
 												</div>
 												<div class="accordion-link-holder fright" >
 													<div class="ot-toplinks fright accordion-link-holder textright">
-														<a href="<?php echo base_url() ?>plan?setOrderConfig=true&plantype=create<?php echo $subscriber_flag; ?>">Create Your Own Plan</a>&nbsp;
-														<a href="<?php echo base_url() ?>plan?setOrderConfig=true&plantype=package<?php echo $subscriber_flag; ?>">Package Plan</a>
+														<a href="<?php echo base_url() ?>plan?setOrderConfig=true<?=$_GET[ordertype]?"&ordertype=$_GET[ordertype]":''?>&plantype=create<?php echo $subscriber_flag; ?>">Create Your Own Plan</a>&nbsp;
+														<a href="<?php echo base_url() ?>plan?setOrderConfig=true<?=$_GET[ordertype]?"&ordertype=$_GET[ordertype]":''?>&plantype=package<?php echo $subscriber_flag; ?>">Package Plan</a>
 													</div>
 												</div>
 												<div class="clear"></div><br />

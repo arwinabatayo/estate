@@ -86,18 +86,18 @@
                     </tr>
 					<tr>
 						<td>&nbsp;</td>
-						<td><div class="agree-check" style="position:relative; float:left;"><input tabindex="13" type="checkbox" id="flat-checkbox-1"></div> <p style="padding-left:25px;">I agree to the Terms & Conditions</p> <div class="clr"></div></td>
+						<td><div class="agree-check" style="position:relative; float:left;"><input tabindex="13" type="checkbox" id="flat-checkbox-1" id="iagreeterms" name="iagreeterms"></div> <p style="padding-left:25px;">I agree to the Terms & Conditions</p> <div class="clr"></div></td>
 					</tr>
                 </table>
                 <br />
                 <div class="plan-sum-btn">
 					 <?php if($current_method == 'confirm_order'){ ?>
 						
-						<button class="blue-btn pull-right" onclick="window.location.href='<?php echo base_url() ?>payment-method'">Continue</button>
+						<button class="blue-btn pull-right" id="confirm_order" data-url="<?php echo base_url() ?>payment-method">Continue</button>
                 	  
                 	  <?php }else{ ?>
                 	  
-						<button class="blue-btn pull-right" onclick="window.location.href='<?php echo base_url() ?>delivery-pickup'">Continue</button>
+						<button class="blue-btn pull-right" id="delivery_confirm" onclick="window.location.href='<?php echo base_url() ?>delivery-pickup'">Continue</button>
                 	  
                 	  <?php } ?>
                 </div>

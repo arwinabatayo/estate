@@ -64,7 +64,7 @@ class Order extends MY_Controller
 
 		$this->_data->account = $this->accounts_model->get_account_info_by_id('09173858958', false);
 
-		$this->_data->delivery_info = $this->getdeliveryinfo($order['tracking_id']);
+		$this->_data->delivery_info = $this->getdeliveryinfo($order['tracking_id'], $order['shipping_courier']);
 
 
 		$this->load->view($this->_data->tpl_view, $this->_data);
@@ -296,15 +296,85 @@ class Order extends MY_Controller
 		echo json_encode($d);
 	}
 
-	private function getdeliveryinfo($tracking_id)
+	private function getdeliveryinfo($tracking_id, $courier)
 	{
-		// TODO use track id to get delivery info
+		// TODO : use track id to get delivery info
+		// $courier = 'air21'
+		// $delivery_info = $this->delivery_info($tracking_id, $courier);
+		$delivery_info = array (
+
+			);
+
+		/*
+
+	Array
+	(
+	    [airwaybill] => 1683929327938
+	    [reference] => 1683929327938
+	    [0] => Array
+	        (
+	            [post_date] => July 05, 2013
+	            [post_time] => 09:42:00 PM
+	            [post_location] => CARGOHAUS
+	            [status] => Shipment returned on 07/05/2013 21:42.
+	            [code] => RUD
+	        )
+
+	    [1] => Array
+	        (
+	            [post_date] => July 04, 2013
+	            [post_time] => 11:28:00 AM
+	            [post_location] => LUCENA CITY
+	            [status] => Shipment is on Air 21 vehicle for delivery.
+	            [code] => VAN
+	        )
+
+	    [2] => Array
+	        (
+	            [post_date] => July 04, 2013
+	            [post_time] => 10:22:00 AM
+	            [post_location] => LUCENA CITY
+	            [status] => Shipment arrived at the Air 21 station on 07/04/2013 10:22.
+	            [code] => SIP
+	        )
+
+	    [3] => Array
+	        (
+	            [post_date] => July 04, 2013
+	            [post_time] => 12:52:00 AM
+	            [post_location] => MERVILLE WAREHOUSE
+	            [status] => Shipment departed our hub.
+	            [code] => ROP
+	        )
+
+	    [4] => Array
+	        (
+	            [post_date] => July 03, 2013
+	            [post_time] => 01:58:00 PM
+	            [post_location] => MANILA BULK
+	            [status] => Shipment departed the Air 21 station.
+	            [code] => SOP
+	        )
+
+	    [5] => Array
+	        (
+	            [post_date] => July 03, 2013
+	            [post_time] => 01:57:00 PM
+	            [post_location] => MANILA BULK
+	            [status] => Shipment has been manifested.
+	            [code] => MDE
+	        )
+
+		)
+		
+		*/
+
 		$_shp_date = "09/18/2013";
 		$_est_delivery_date = "09/20/2013";
 
 		$data = array(
 			'tracking_id'		=> $tracking_id,
-			'short_summary'		=> 'On Schedule',
+			// 'short_summary'		=> 'On Schedule',
 			'delivery_status_id'=> 'In-transit',
 			'delivery_dest'		=> 'Quezon City, Metro Manila',
 			'shipment_date'		=> $_shp_date,

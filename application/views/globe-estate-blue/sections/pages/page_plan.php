@@ -47,13 +47,17 @@
                                             <img src="<?php echo $assets_url ?>site-blue/images/retain-current-plan.png" />
                                             <span>Renew Contract</span>
                                             <blockquote>Lorem ipsum dolor sit amet, consectuer adispising  elit. Cras justo nulla, commodo nec mauris ut, interdum adipiscing  nisi</blockquote>
+                                            <?php if($user_category==4||$user_category==5&&!$ENTIN_switch||$user_category==2&&!$SMBRE_switch){ // Lawrence 10-02-2013?>                                            
+                                            <button class="blue-btn" id="biz_renew_button">Click here!</button>
+                                            <?php }else{?>
                                             <button class="blue-btn" onclick="window.location='<?php echo base_url() ?>plan?setOrderConfig=true&ordertype=renew'">Click here!</button>
+ 											<?php }?>
                                         </div>
                                         <div class="span4 ac-boxes o-content">
                                             <img src="<?php echo $assets_url ?>site-blue/images/get-a-new-line.png" />
                                             <span>Get additional Line</span>
                                             <blockquote>Lorem ipsum dolor sit amet, consectuer adispising  elit. Cras justo nulla, commodo nec mauris ut, interdum adipiscing  nisi</blockquote>  
-                                            <button class="blue-btn" onclick="window.location='<?php echo base_url() ?>plan?setOrderConfig=true&ordertype=newline'">Click here!</button>
+                                            <button class="blue-btn" onclick="window.location='<?php echo base_url() ?>plan?setOrderConfig=true&ordertype=newline<?=!$biz_line_flag?'&plantype=create':''?>'">Click here!</button>
                                         </div>
                                         <div class="span4 ac-boxes r-content">
                                             <img src="<?php echo $assets_url ?>site-blue/images/reset.png" />

@@ -1,5 +1,20 @@
 	
-	<!-- Modal -->
+	<!-- Modal -->    <?php //Lawrence 10-02-2013 id="order-biz-recon-message" ?>
+	<div id="order-biz-recon-message" class="modal hide fade pop-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-body pop-content">
+			<div class="o-i-icon"><img src="<?php echo $assets_path ?>site-blue/images/icons/icon_mail.png" width="150" height="150" alt=""/></div>
+			
+			<p class="pop-txtblue-large">Thank You</p>
+			
+			<p id="biz_recon_message"><!-- from ajax --></p>
+
+			<p>Kindly check your email for the link back to this site.  Use the reference  number we sent to check the status of your application.</p><br /><br />
+			
+			<p class="textcenter"><button class="blue-btn" onclick="closeModal(this);">Continue</button></p>
+			
+		</div>
+	</div>
+    
 	<div id="order-thankyou" class="modal hide fade pop-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-body pop-content">
 			<div class="o-i-icon"><img src="<?php echo $assets_path ?>site-blue/images/icons/icon_mail.png" width="150" height="150" alt=""/></div>

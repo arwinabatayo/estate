@@ -81,9 +81,17 @@ class Products_model extends CI_Model
 				$out['plan_total_pv'] = $row->total_pv;
 				
 			}else if( $type == 'gadget' ){
-
-				$out['title']  = 'iPhone 5';
-				$out['amount'] = 12500;	
+				$ids = explode("_", $id);
+				
+				$this->db->where('id', $ids[1]);
+				$this->db->where('is_active', '1');
+				
+				$query = $this->db->get('estate_gadgets');
+				$row = $query->row();
+				
+				$out['id']  = $row->id;
+				$out['title']  = $row->name;
+				$out['amount'] = '0.00';
 				
 			}else if($type == 'combos') {
 				
@@ -244,9 +252,14 @@ function get_coexist($product_id, $is_acceptable="0") {
 	}
 
 
-	function get_package_plan() {
+	function get_package_plan($cust_type=0) {//$cust_type=0  Lawrence 10-02-2013
 		$this->db->where('is_active', 1);
-
+                
+                //Lawrence 10-02-2013
+                if($cust_type)
+		  $this->db->where('customer_type',$cust_type );
+                //==========================================
+                
 		$query = $this->db->get('estate_package_plans');
 		$row = $query->result();
 
