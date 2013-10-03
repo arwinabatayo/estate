@@ -7,13 +7,12 @@
 
 class GlobeWebService
 {
-
+    
     /* Protected Variables */
-    protected $_sms = "http://10.225.10.4:8411/sms";
+    protected $_sms = "http://10.225.10.4:8211/sms";
     protected $_email = "http://10.225.10.4:8211/email";
-	protected $_billing = "http://WAR-scan.dc.isggt.net/billing";
-    protected $_ordering = "http://WAR-scan.dc.isggt.net/ordering";
-    protected $_crm = "http://10.225.10.4:8211/crmservice";
+    protected $_billing = "http://10.225.10.4:8211/billing";
+    protected $_ordering = "http://10.225.10.4:8211/ordering";
 
     /*
      * Api Send Sms
@@ -50,28 +49,28 @@ class GlobeWebService
         }
 
         $xml = '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:sms="http://www.globe.com/warcraft/wsdl/sms/">';
-		$xml .= '<soap:Header/>';
-		$xml .= '<soap:Body>';
-		$xml .= '<sms:SendSms>';
-		if(!empty($TransactionId)) $xml .= '<TransactionId>'.$TransactionId.'</TransactionId>';
-		$xml .= '<SmsMsgTxt>'.$SmsMsgTxt.'</SmsMsgTxt>';
-		$xml .= '<SmsSourceAddr>'.$SmsSourceAddr.'</SmsSourceAddr>';
-		$xml .= '<DestMobileNumber>'.$DestMobileNumber.'</DestMobileNumber>';	 
-		$xml .= '</sms:SendSms>';
-		$xml .= '</soap:Body>';
+	$xml .= '<soap:Header/>';
+	$xml .= '<soap:Body>';
+	$xml .= '<sms:SendSms>';
+	if(!empty($TransactionId)) $xml .= '<TransactionId>'.$TransactionId.'</TransactionId>';
+	$xml .= '<SmsMsgTxt>'.$SmsMsgTxt.'</SmsMsgTxt>';
+	$xml .= '<SmsSourceAddr>'.$SmsSourceAddr.'</SmsSourceAddr>';
+	$xml .= '<DestMobileNumber>'.$DestMobileNumber.'</DestMobileNumber>';	 
+	$xml .= '</sms:SendSms>';
+   	$xml .= '</soap:Body>';
         $xml .= '</soap:Envelope>';
         $xml_post_string = $xml;
         $headers = $this->_soap_headers($xml_post_string);       
 
         $xml_response = $this->_connect($this->_sms, $xml_post_string, $headers);
-		$result =  str_replace(array('<soap:Header>', '</soap:Header>', '<soap:Body>', '</soap:Body>'),"", $xml_response);
+	$result =  str_replace(array('<soap:Header>', '</soap:Header>', '<soap:Body>', '</soap:Body>'),"", $xml_response);
         $result_array = $this->_xml2array($result);
 
-		if(isset($result_array['soap:Envelope']['soap:Header']['soap:Body']['soap:Fault'])) {
-			return "Error: Please check your parameters";
-		} else {
-			return $result_array['soap:Envelope']['sms:SendSmsResponse']['SendSmsResult'];
-		}
+	if(isset($result_array['soap:Envelope']['soap:Header']['soap:Body']['soap:Fault'])) {
+		return "Error: Please check your parameters";
+	} else {
+		return $result_array['soap:Envelope']['sms:SendSmsResponse']['SendSmsResult'];
+	}
     }
     
     /*
@@ -117,7 +116,7 @@ class GlobeWebService
 		return $result_array['soapenv:Envelope']['soapenv:Body']['ema:sendEmailResponse']['SendEmailResult'];	 
 	 }
     }
-
+    
     /*
      * Get Subscriber And Assigned Product by Msisdn
      * @string $MSISDN required
