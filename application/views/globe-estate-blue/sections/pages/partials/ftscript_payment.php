@@ -40,7 +40,7 @@
 					
 					
 					
-					$("button#confirm_order").click(function(e) {
+					$("button#confirm_order, button#delivery_confirm").click(function(e) {
 						e.preventDefault();
 						var iAgree = $('input:checkbox[name=iagreeterms]');
 						if(iAgree.is(':checked') === false) {
