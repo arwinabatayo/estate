@@ -50,7 +50,9 @@ class Plan extends MY_Controller
 
 
 		/**  Robert for ultima **/
-		$this->_data->plan_options = $this->products_model->get_plans(1); // gadget id is need to get all details
+		$cart_gadget_details = $this->cart_model->get_gadget_oncart();
+		
+		$this->_data->plan_options = $this->products_model->get_plans($cart_gadget_details['id'],$cart_gadget_details['device_attr_id']); // gadget id is need to get all details
 		$this->_data->active_plan = $this->cart_model->get_active_plan();
 // 		$query = $this->db->query('SELECT * FROM estate_plans WHERE is_active="1"');
 // 		$this->_data->plans_options = $query->result();

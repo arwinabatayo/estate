@@ -894,6 +894,7 @@ class Home extends MY_Controller
 	public function test_api($msisdn)
 	{
 		$this->load->library('GlobeWebService','','api_globe');
+		$msisdn = '9175235250';
 		
 		$subscriber_info = $this->api_globe->GetSubscriberAndAssignedProductByMsisdn($msisdn);
 		

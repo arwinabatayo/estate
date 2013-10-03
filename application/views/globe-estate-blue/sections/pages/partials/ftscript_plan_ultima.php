@@ -28,7 +28,7 @@
 			
 			$.ajax({
 				url: base_url+'cart/addtocart',
-				data: 'product_type=plan&product_id='+itemid+'&plan='+itemid+'&plan_cashout='+plan_cashout+'&device=1',
+				data: 'product_type=plan&product_id='+itemid+'&plan='+itemid+'&plan_cashout='+plan_cashout,
 				type:'post',
 				success: function(response) {
 					//alert(response);

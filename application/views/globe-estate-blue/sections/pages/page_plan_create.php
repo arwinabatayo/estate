@@ -17,7 +17,7 @@
 												<div class="clear"></div><br />
 												<label>Create your own plan by selecting your own Combos.</label>
 						
-												<div class="main" style="width:100%;">
+												<div class="main" style="width:100%;" id="createPlan">
 													<ul id="og-grid" class="og-grid">
 													<?php if($plan_options){ ?>
 														<?php foreach($plan_options as $plan) { ?>

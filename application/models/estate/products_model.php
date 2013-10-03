@@ -77,7 +77,7 @@ class Products_model extends CI_Model
 				$query = $this->db->get('estate_plans');
 				$row = $query->row();
 				$out['title']  = $row->title;
-				$out['amount'] = number_format($row->amount,2);
+				$out['amount'] = $row->amount;
 				$out['plan_total_pv'] = $row->total_pv;
 				
 			}else if( $type == 'gadget' ){
@@ -147,20 +147,22 @@ class Products_model extends CI_Model
 	 * 
 	 * Robert
 	 */
-	function get_gadget_cash_out($plan_id,$gadget_id) {
+	function get_gadget_cash_out($plan_id, $gadget_id, $attr_id, $lockup_period_id=1) {
+		$cashout = 0;
+		if(!empty($plan_id)) {
+			$query = $this->db->query("SELECT * FROM estate_gadget_cash_out 
+								WHERE plan_id='{$plan_id}'
+								AND gadget_id='{$gadget_id}'
+								AND attr_id='{$attr_id}'
+								AND lockup_id='{$lockup_period_id}'");
+			$row = $query->row();
+			$cashout = $row->cashout_val;
+		} else {
+			$cashout = 0;
+		}
 		
-		
-		//var_dump($plan_id_where); exit;
-		$this->db->where('plan_id', $plan_id);
-		$this->db->where('gadget_id', $gadget_id);
-		
-		$query = $this->db->get('estate_gadget_cash_out');
 
-		$row = $query->row();
-
-		
-		
-		return $row->cashout_val;
+		return $cashout;
 	}
 	
 	/**
@@ -307,24 +309,27 @@ function get_coexist($product_id, $is_acceptable="0") {
 	/**
 	 * Robert functions for ULTIMA
 	 */
-	function get_plans($gadget_id, $is_active=1) {	
-		$query = $this->db->query("	SELECT 
-									esplan.id,
-									esplan.title,
-									esplan.description,
-									esplan.long_desc,
-									esplan.plan_cid,
-									esplan.total_pv,
-									esplan.max_gadget_pv,
-									esplan.amount, 
-									esgadcahout.cashout_val
-									FROM estate_plans esplan 
-									INNER JOIN estate_gadget_cash_out esgadcahout
-									ON esplan.id = esgadcahout.plan_id
-									WHERE esgadcahout.gadget_id = {$gadget_id}");
-		
-		$data = $query->result();
-		$query = $this->db->query("	SELECT FOUND_ROWS() AS 'count'");
+	function get_plans($gadget_id, $attr_id, $is_active=1) {	
+		if(!empty($gadget_id) || !empty($attr_id)) {
+			$query = $this->db->query("	SELECT 
+										esplan.id,
+										esplan.title,
+										esplan.description,
+										esplan.long_desc,
+										esplan.plan_cid,
+										esplan.total_pv,
+										esplan.max_gadget_pv,
+										esgadcahout.cashout_val, 
+										esgadcahout.cashout_val
+										FROM estate_plans esplan 
+										INNER JOIN estate_gadget_cash_out esgadcahout
+										ON esplan.id = esgadcahout.plan_id
+										WHERE esgadcahout.gadget_id = {$gadget_id} 
+										AND esgadcahout.attr_id = {$attr_id} GROUP BY esplan.id");
+	
+			$data = $query->result();
+			$query = $this->db->query("	SELECT FOUND_ROWS() AS 'count'");
+		}
 		return $data;
 	}
 // 	function get_plans_bundles($sBundle) {

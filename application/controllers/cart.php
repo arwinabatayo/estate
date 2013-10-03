@@ -72,7 +72,7 @@ class Cart extends CI_Controller {
         $this->cart_model->update_cart_info($account_id, $info);
         echo json_encode($data);
     }
-   
+    
 
     public function delete_cart()
     {
@@ -163,6 +163,7 @@ class Cart extends CI_Controller {
 		$pv = 0;
 		$qty = 1;
 		$package_plan_combos = '';
+		$attr_id = ''; // added 10.3 robert
 
 		$in_coexist['coexist'] = TRUE;
 		$boosterInCart = FALSE;
@@ -218,8 +219,11 @@ class Cart extends CI_Controller {
 				
 				$d->product_id = $_fields['id']; 
 				
-				$amount = $this->home_model->getGadgetAmount($d->product_id,$d->gadget_color,$d->gadget_capacity); // get from gadget attribute table
+				// amount for prepaid kit
+				$attr_id = $this->home_model->getGadgetAttrId($d->product_id,$d->gadget_color,$d->gadget_capacity); // 10/3 get attr id
+// 				$amount = $this->home_model->getGadgetAmount($d->product_id,$d->gadget_color,$d->gadget_capacity); // get from gadget attribute table
 				
+				$amount = "0.00"; // hack to set 0 as default
 				// remove existing gadget
 				$this->cart_model->remove_gadget_or_plan("gadget");
 			 }
@@ -229,18 +233,25 @@ class Cart extends CI_Controller {
 			 if( $d->product_type == 'plan' ) {
 
 				$plan_pv = $this->products_model->get_plan_pv($d->plan);
-// 				 $amount = number_format($this->products_model->get_gadget_cash_out($d->plan, $d->device),2);
-				if($d->plan_cashout == 0) {
-					$amount = "0.00";
-				} else {
-				 	$amount = $d->plan_cashout;
-				}
+				
 				 // remove existing plan
-				 $this->cart_model->remove_gadget_or_plan("plan");
-				 $out['plan_pv'] = $cart_input['plan_pv'] = $plan_pv;
+				$this->cart_model->remove_gadget_or_plan("plan");
+				$out['plan_pv'] = $cart_input['plan_pv'] = $plan_pv;
 
-
-				 $this_pv_value = $plan_pv;
+				$cart_gadget_details = $this->cart_model->get_gadget_oncart();
+				 
+				
+				$attr_id = $cart_gadget_details['device_attr_id'];
+				$device_id = $cart_gadget_details['id'];
+				
+				// update gadget cashout amount
+				$gadget_cashout = $this->products_model->get_gadget_cash_out($d->plan, $device_id, $attr_id);
+				
+				
+				$this->update_cart_amount($cart_gadget_details['rowid'], $gadget_cashout);
+			
+				
+				$this_pv_value = $plan_pv;
 			 }
 
 			 if( $d->product_type == 'combos' ) {
@@ -272,7 +283,6 @@ class Cart extends CI_Controller {
 			 		$remainingpv = abs($remainingPV);
 			 		$amount = "0.00";
 			 	}
-// 			 	print_r($in_coexist);
 			 }
 			 
 			 if( $d->product_type == 'boosters' ) {
@@ -337,6 +347,7 @@ class Cart extends CI_Controller {
 			
 			$cart_input = array(
 				'id'              => $d->product_type.'_'.$d->product_id,
+				'device_attr_id'  => $attr_id,
 				'qty'             => $qty,
 				'combos_qty'	  => $comboqty, // robert
 				'price'           => $amount,
@@ -364,7 +375,9 @@ class Cart extends CI_Controller {
 				//print_r($cart_input); exit;
 				if($boosterInCart == false) {
 					$out['rowid']  = $rowid = $this->cart->insert($cart_input);
-					$out['total']  = $this->cart_model->total(true);
+					//$out['total']  = $this->cart_model->total(true);
+					$out['total']  = $this->cart_model->cashout_total(true); // update Robert 10.3 for cashout
+					$out['plan_summary_total']  = $this->cart_model->plan_summary_total(true);
 	
 			       	$out = array_merge($cart_input,$out);
 	
@@ -507,7 +520,7 @@ class Cart extends CI_Controller {
 			/* cart */
 			$out['status'] = 'success';
 			$out['rowid']  = $rowid = $this->cart->insert($cart_input);
-			$out['total']  = "P ".number_format($this->cart_model->total(false),2);
+			$out['total']  = "P ".number_format($this->cart_model->cashout_total(false),2);
 
 			$out = array_merge($cart_input,$out);
 
@@ -631,7 +644,7 @@ class Cart extends CI_Controller {
 	            $this->cart_model->insert_previous_info($account_id, $info);
 	        }
 
-			$out['total']  = $this->cart_model->total(true);
+			$out['total']  = $this->cart_model->cashout_total(true);
 
 		}
 
@@ -840,7 +853,7 @@ class Cart extends CI_Controller {
 	
 	function check_credit_limit(){
 		
-		$amount = $this->cart_model->total(false);
+		$amount = $this->cart_model->cashout_total(false);
 		
 		$data['status'] = 'false';
 		
@@ -890,14 +903,29 @@ class Cart extends CI_Controller {
 		
 		$d->product_id = $_fields['id'];
 		
-		$amount = $this->home_model->getGadgetAmount($d->product_id,$d->gadget_color,$d->gadget_capacity); // get from gadget attribute table
+		// new attr Id
+		$attr_id = $this->home_model->getGadgetAttrId($d->product_id,$d->gadget_color,$d->gadget_capacity); // 10/3 get attr id
+		
+		// get gadget cart details
+		$cart_gadget_details = $this->cart_model->get_gadget_oncart();
+
+		// plan details checking if exist
+		$plan_details = $this->cart_model->get_plan_oncart();
+		
+		if(empty($plan_details)) { // no plan selected
+			$amount = "0.00";
+		} else {
+			$amount = $this->products_model->get_gadget_cash_out($plan_details['id'], $cart_gadget_details['id'], $attr_id);
+		}
 		
 		// remove existing gadget
 		$this->cart_model->remove_gadget_or_plan("gadget");
-			
+		
 		$cart_input = array(
 				'id'              => $d->product_type.'_'.$d->product_id,
+				'device_attr_id'  => $attr_id,
 				'qty'             => $qty,
+				'combos_qty'	  => $comboqty, // robert
 				'price'           => $amount,
 				'this_pv_value'	  => intval($this_pv_value), // robert
 				'price_formatted' => 'Php '.number_format($amount,2),
@@ -906,8 +934,8 @@ class Cart extends CI_Controller {
 				'discount'        => $d->product_discount,
 				'product_type'    => $d->product_type,
 				'options'         => $options,
+				'package_plan_combos'	=> $package_plan_combos,
 		);
-		
 		// if kit type is prepaid, only retain gadget
 		$out['status'] = 'success';
 		// send a different flag when credit limit is exceeded
@@ -919,7 +947,7 @@ class Cart extends CI_Controller {
 		/* cart */
 		$out['status'] = 'success';
 		$out['rowid']  = $rowid = $this->cart->insert($cart_input);
-		$out['total']  = "P ".number_format($this->cart_model->total(false),2);
+		$out['total']  = "P ".number_format($this->cart_model->cashout_total(false),2);
 
 		$out = array_merge($cart_input,$out);
 
@@ -978,4 +1006,41 @@ class Cart extends CI_Controller {
 		}
 		echo $sRet;
 	}
+	/**
+     * Added 
+     * @param unknown $key
+     * @param unknown $amount
+     */
+    public function update_cart_amount($key, $amount) {
+    	$account_id = $this->_data->account_id;
+    
+    	/* cart */
+    	$_data = array(
+    			'rowid' => $key,
+    			'price'   => $amount,
+    			'price_formatted' => "Php ".number_format($amount,2),
+    			'subtotal' => $amount,
+    	);
+    	/* db */
+    	$cart_contents = $this->cart->contents();
+    
+    	foreach($cart_contents as $k=> $v){
+    		if($k == $key) {
+    			foreach($_data as $kk => $vv) {
+    				$cart_contents[$k][$kk] = $vv;
+    			}
+    		}
+    	}
+    	$out['rowid']  = $rowid = $this->cart->insert($cart_contents);
+    	
+    	if($rowid){
+    		$this->_data->cartItem  = $info = $this->_parse_contents();
+    		$this->cart_model->insert_previous_info($account_id, $info);
+    	}else{
+    		$out['status'] = 'failed';
+    	}
+    	
+    	
+    }
+	
 }

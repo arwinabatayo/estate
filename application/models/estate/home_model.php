@@ -82,5 +82,21 @@ class Home_model extends CI_Model {
 
 		return $row->amount;
     }
+    
+    function getGadgetAttrId($deviceID, $colorID, $capacityID, $netConnectivityID=1) {
+    	$query = $this->db->query("SELECT id
+    			FROM estate_gadget_attributes
+    			WHERE gadget_id='{$deviceID}'
+    			AND colorid='{$colorID}'
+    			AND data_capacity_id='{$capacityID}'
+    			AND net_connectivity_id='{$netConnectivityID}'
+    			AND is_active=1
+    			ORDER BY date_created
+    			LIMIT 1");
+    			 
+		$row = $query->row();
+    
+    	return $row->id;
+    }
 }
 
