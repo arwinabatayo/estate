@@ -549,11 +549,7 @@
 				var subs_flag = $("#subs_flag").val();
 				window.location = base_url+'addons'+subs_flag;
 			});
-<<<<<<< HEAD
-				
-=======
 
->>>>>>> 1b1ba981df2b83b781f5fbcfd0f2acb740a024b6
 			$('button#retain, button#package').click(function(){
 				var subs_flag = $("#subs_flag").val();
 				window.location = base_url+'addons'+subs_flag;
